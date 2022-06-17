@@ -15,8 +15,14 @@
                 <title><xsl:value-of select="./@args" /></title>
                 <meta name="viewport" content="width=device-width, initial-scale=1" />
                 <style>
-                    a {
-                        margin: 0 2px;
+                    .btn {
+                        margin: 2px;
+                        padding: 2px 6px !important;
+                    }
+
+                    .badge {
+                        margin: 0px;
+                        padding: 2px 4px !important;
                     }
                 </style>
                 <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.1.3/css/bootstrap.min.css"/>
@@ -34,7 +40,7 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <xsl:for-each select="/nmaprun/host[status/@state='up']">
+                        <xsl:for-each select="host[status/@state='up']">
                             <tr>
                                 <td>
                                     <xsl:value-of select="address/@addr" />
