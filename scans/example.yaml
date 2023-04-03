@@ -1,0 +1,5 @@
+group1:
+  host1.local: [ssh, http]
+  host2.local: [ftp, https, 5432]
+group2:
+  host3: [ssh, ftp, 8006]

@@ -1,2 +1,3 @@
-scans/
-!example.yaml
+scans/*.yaml
+!scans/example.yaml
+scans/*.xml
