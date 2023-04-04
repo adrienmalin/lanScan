@@ -3,71 +3,78 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta http-equiv="refresh" content="300">
     <title>lanScan - <?=$site?></title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-aFq/bzH65dt+w6FI2ooMVUpc+21e0SRygnTpmBvdBgSdnuTN7QbdgL+OapgHtvPp" crossorigin="anonymous">
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha2/dist/js/bootstrap.bundle.min.js" integrity="sha384-qKXV1j0HvMUeCBQ+QVp7JcfGl760yU08IQ+GpUo5hlbpg51QRiuqHAJz8+BrxE/N" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.3/dist/jquery.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/fomantic-ui@2.9.2/dist/semantic.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/fomantic-ui@2.9.2/dist/semantic.min.js"></script>
     <style>
-        .navbar-brand img {
-            margin: 0 -8px 0 0;
+        #logo {
+          margin: 0 -.4rem 0 0;
         }
-        .card-body {
-            padding: .4rem;
+        .main.container {
+          margin-top: 5em;
+        }
+        .ui.dropdown, .ui.dropdown .menu > .item {
+          font-size: .85714286rem; 
+        }
+        .ui.label > .detail {
+            margin-left: .1em;
         }
     </style>
+    <script>
+        onload = function (event) {
+            $('.ui.dropdown').dropdown()
+        }
+    </script>
   </head>
   <body>
-    <header>
-        <nav class="navbar navbar-fixed-top navbar-nav navbar-dark bg-primary p-0 mb-3">
-            <a href="." class="navbar-brand">lan<img src="logo.svg" alt="S"/>can</a>
-        </nav>
+    <header class="ui fixed blue inverted menu">
+      <a href="." class="header item">lan<img id="logo" src="logo.svg" alt="S"/>can</a>
+      <div class="item"><?=$site?></div>
     </header>
-    <div class="container">
-        <div class="mb-3">
-            <h1><?=$site?></h1>
-            <?=$scan->runstats->finished["summary"]?>
-        </div>
+    <div class="ui main text container">
+        <p><?=$scan->runstats->finished["summary"]?></p>
 <?php foreach($conf as $conf_groupname => $conf_hosts) { ?>
-            <h2><?=$conf_groupname?></h2>
-            <div class="row row-cols-1 g-2">
+        <h1 class="ui header"><?=$conf_groupname?></h1>
+        <div class="ui cards">
 <?php
         foreach($conf_hosts as $conf_address => $conf_services) {
-            echo "                <!-- $conf_address -->\n";
+            echo "            <!-- $conf_address -->\n";
             $scan_host = $scan->xpath("host[hostnames/hostname/@name='$conf_address' or address/@addr='$conf_address']")[0];
-            $short_name = preg_match("/^[\d\.]+$/", $conf_address) ? $conf_address : strtok($conf_address, ".")." <small>(".$scan_host->address["addr"].")</small>";
             $address = count($scan_host->xpath("hostnames/hostname/@name")) ? $scan_host->xpath("hostnames/hostname/@name")[0] : $scan_host->xpath("address/@addr")[0];
             if ($scan_host->status["state"] =="up") {
 ?>
-                    <div class="col col-sm-6 col-md-4 col-lg-3 mb-2">
-                        <div class="card h-100">
-                            <div class="card-body">
-                                <div class="card-text" title="<?=$scan_host->hostnames->hostname["name"]?>"><?=$short_name?></div>
+            <div class="ui card">
+                <div class="content">
+                    <div class="header"><?=strtok($scan_host->hostnames->hostname["name"], ".")?></div>
+                    <div class="meta"><?=$scan_host->address["addr"]?></div>
 <?php
-               foreach($conf_services as $conf_service) {
+                foreach($conf_services as $conf_service) {
                     $scan_service = $scan_host->xpath("ports/port[service/@name='$conf_service' or @portid='$conf_service']")[0];
-                    $state = $scan_service->state["state"] == "open" ? "text-bg-primary" : "text-bg-danger";
+                    $state = $scan_service->state["state"] == "open" ? "primary" : "red";
                     switch($scan_service->service['name']) {
                         case "microsoft-ds":
                         case "netbios-ssn":
                             $shares = $scan_host->xpath("hostscript/script[@id='smb-enum-shares']/table[not(contains(@key, '$'))]");
                             if (count($shares)) {
 ?>
-                                    <div class="dropdown">
-                                        <button class="badge rounded-pill dropdown-toggle <?=$state?>" dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false"><?=$scan_service->service['name']?></button>
-                                        <ul class="dropdown-menu">
+                    <div class="ui dropdown <?=$state?> label">
+                        <?=$scan_service->service['name']?>
+                        <i class="dropdown icon"></i>
+                        <div class="menu">
 <?php
                                 foreach($shares as $share) {
 ?>
-                                            <li><a class='dropdown-item' href='file:////$address/<?=$share['key']?>'><?=$share['key']?></a></li>
+                            <a class='item' href='file:////$address/<?=$share['key']?>'><?=$share['key']?></a>
 <?php
                                 }
 ?>
-                                        </ul>
-                                    </div>
+                        </div>
+                    </div>
 <?php
                             } else {
 ?>
-                                    <span title=":<?=$scan_service['portid']?>" class="badge rounded-pill <?=$state?>"><?=$scan_service->service['name']?></span>
+                    <div class="ui <?=$state?> label"><?=$scan_service->service['name']?><div class="detail">:<?=$scan_service['portid']?></div></div>
 <?php
                             }
                         break;
@@ -76,49 +83,46 @@
                         case "ssh":
                         case "http":
 ?>
-                                    <a href="<?=$scan_service->service['name']?>://<?=$address?>:<?=$scan_service['portid']?>" class="badge rounded-pill <?=$state?>"><?=$scan_service->service['name']?></a>
+                    <a href="<?=$scan_service->service['name']?>://<?=$address?>:<?=$scan_service['portid']?>" class="ui <?=$state?> label"><?=$scan_service->service['name']?><div class="detail">:<?=$scan_service['portid']?></div></a>
 <?php
                         break;
                         case "https":
                         case "pve":
                         case "arkeia":
 ?>
-                                    <a href="https://<?=$address?>:<?=$scan_service['portid']?>" class="badge rounded-pill <?=$state?>"><?=$scan_service->service['name']?></a>
+                    <a href="https://<?=$address?>:<?=$scan_service['portid']?>" class="ui <?=$state?> label"><?=$scan_service->service['name']?><div class="detail">:<?=$scan_service['portid']?></div></a>
 <?php
                         break;
                         case "ms-wbt-server":
 ?>
-                                    <a href="rdp.php?v=<?=$address?>:<?=$scan_service['portid']?>" class="badge rounded-pill <?=$state?>"><?=$scan_service->service['name']?></a>
+                    <a href="rdp.php?v=<?=$address?>:<?=$scan_service['portid']?>" class="ui <?=$state?> label"><?=$scan_service->service['name']?><div class="detail">:<?=$scan_service['portid']?></div></a>
 <?php
                         break;
                         default:
 ?>
-                                    <span title=":<?=$scan_service['portid']?>" class="badge rounded-pill <?=$state?>"><?=$scan_service->service['name']?></span>
+                    <div class="ui <?=$state?> label"><?=$scan_service->service['name']?><div class="detail">:<?=$scan_service['portid']?></div></div>
 <?php
                     }
                 }
 ?>
-                                </div>
-                            </div>
-                        </div>
+                </div>
+            </div>
 <?php
         } else {
 ?>
-                <div class="col col-sm-6 col-md-4 col-lg-3 mb-2">
-                    <div class="card h-100 text-bg-danger">
-                        <div class="card-body">
-                            <div class="card-text" title="<?=$scan_host->hostnames->hostname["name"]?>"><?=$short_name?></div>
-                        </div>
-                    </div>
+            <div class="ui red card">
+                <div class="content">
+                    <div class="header"><?=strtok($scan_host->hostnames->hostname["name"], ".")?></div>
+                    <div class="meta"><?=$scan_host->address["addr"]?></div>
                 </div>
+            </div>
 <?php
         }
     }
 ?>
-            </div>
+        </div>
 <?php
 }
 ?>
-        </div>
     </body>
 </html>
