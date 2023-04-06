@@ -20,6 +20,11 @@
         .ui.mini button > .detail {
             margin-left: .1em;
         }
+        .content {
+            display: flex;
+            align-items: baseline;
+            gap: .5em;
+        }
     </style>
     <script>
         onload = function (event) {
@@ -38,7 +43,7 @@
         <h1 class="ui header"><?=$conf_groupname?></h1>
         <div class="ui mini cards">
 <?php
-        foreach($conf_hosts as $conf_address => $conf_services) {
+        if ($conf_hosts) foreach($conf_hosts as $conf_address => $conf_services) {
             echo "            <!-- $conf_address -->\n";
             $scan_host = $scan->xpath("host[hostnames/hostname/@name='$conf_address' or address/@addr='$conf_address']")[0];
             $address = count($scan_host->xpath("hostnames/hostname/@name")) ? $scan_host->xpath("hostnames/hostname/@name")[0] : $scan_host->xpath("address/@addr")[0];
@@ -46,13 +51,13 @@
 ?>
             <div class="ui card">
                 <div class="content">
-                    <div class="ui green left floated empty circular label"></div>
-                    <div class="right floated meta"><?=$scan_host->address["addr"]?></div>
+                    <div class="ui green empty circular label"></div>
+                    <div class="meta"><?=$scan_host->address["addr"]?></div>
                     <div class="header" title="<?=strtok($scan_host->hostnames->hostname["name"], ".")?>"><?=strtok($scan_host->hostnames->hostname["name"], ".")?></div>
                 </div>
                 <div class="ui inverted primary centered wrapped wrapping bottom attached mini menu">
 <?php
-                foreach($conf_services as $conf_service) {
+                if ($conf_services) foreach($conf_services as $conf_service) {
                     $scan_service = $scan_host->xpath("ports/port[service/@name='$conf_service' or @portid='$conf_service']")[0];
                     switch($scan_service->state["state"]) {
                         case "open": $state = "primary"; break;
@@ -66,7 +71,7 @@
                             if (count($shares)) {
 ?>
                     <div class="ui dropdown <?=$state?> item">
-                        <?=$scan_service->service['name']?><sup>:<?=$scan_service['portid']?></sup>
+                        <?=$scan_service->service['name']?><small>:<?=$scan_service['portid']?></small>
                         <i class="dropdown icon"></i>
                         <div class="menu">
 <?php
@@ -81,7 +86,7 @@
 <?php
                             } else {
 ?>
-                    <div class="ui <?=$state?> disabled item" disabled><?=$scan_service->service['name']?><sup>:<?=$scan_service['portid']?></sup></div>
+                    <div class="ui <?=$state?> disabled item" disabled><?=$scan_service->service['name']?><small>:<?=$scan_service['portid']?></small></div>
 <?php
                             }
                         break;
@@ -91,17 +96,17 @@
                         case "http":
                         case "https":
 ?>
-                    <a href="<?=$scan_service->service['name']?>://<?=$address?>:<?=$scan_service['portid']?>" class="ui <?=$state?> item"><?=$scan_service->service['name']?><sup>:<?=$scan_service['portid']?></sup></a>
+                    <a href="<?=$scan_service->service['name']?>://<?=$address?>:<?=$scan_service['portid']?>" class="ui <?=$state?> item"><?=$scan_service->service['name']?><small>:<?=$scan_service['portid']?></small></a>
 <?php
                         break;
                         case "ms-wbt-server":
 ?>
-                    <a href="rdp.php?v=<?=$address?>:<?=$scan_service['portid']?>" class="ui <?=$state?> item">msrdp<sup>:<?=$scan_service['portid']?></sup></a>
+                    <a href="rdp.php?v=<?=$address?>:<?=$scan_service['portid']?>" class="ui <?=$state?> item">rdp<small>:<?=$scan_service['portid']?></small></a>
 <?php
                         break;
                         default:
 ?>
-                    <div class="ui <?=$state?> disabled item" disabled><?=$scan_service->service['name']?><sup>:<?=$scan_service['portid']?></sup></div>
+                    <div class="ui <?=$state?> disabled item" disabled><?=$scan_service->service['name']?><small>:<?=$scan_service['portid']?></small></div>
 <?php
                     }
                 }
@@ -114,9 +119,10 @@
             <div class="ui red card">
                 <div class="content">
                     <div class="ui red empty circular label"></div>
-                    <div class="right floated meta"><?=$scan_host->address["addr"]?></div>
+                    <div class="meta"><?=$scan_host->address["addr"]?></div>
                     <div class="header" title="<?=$scan_host->hostnames->hostname["name"]?>"><?=strtok($scan_host->hostnames->hostname["name"], ".")?></div>
                 </div>
+                <div class="ui inverted red centered wrapped wrapping bottom attached mini menu"></div>
             </div>
 <?php
         }
