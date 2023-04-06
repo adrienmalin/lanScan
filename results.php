@@ -52,7 +52,7 @@
             <div class="ui card">
                 <div class="content">
                     <div class="ui green empty circular label"></div>
-                    <div class="meta"><?=$scan_host->address["addr"]?></div>
+                    <div><?=$scan_host->address["addr"]?></div>
                     <div class="header" title="<?=strtok($scan_host->hostnames->hostname["name"], ".")?>"><?=strtok($scan_host->hostnames->hostname["name"], ".")?></div>
                 </div>
                 <div class="ui inverted primary centered wrapped wrapping bottom attached mini menu">
@@ -119,10 +119,9 @@
             <div class="ui red card">
                 <div class="content">
                     <div class="ui red empty circular label"></div>
-                    <div class="meta"><?=$scan_host->address["addr"]?></div>
+                    <div ><?=$scan_host->address["addr"]?></div>
                     <div class="header" title="<?=$scan_host->hostnames->hostname["name"]?>"><?=strtok($scan_host->hostnames->hostname["name"], ".")?></div>
                 </div>
-                <div class="ui inverted red centered wrapped wrapping bottom attached mini menu"></div>
             </div>
 <?php
         }
