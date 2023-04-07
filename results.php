@@ -22,6 +22,7 @@
 }
 .ui.mini.cards > .card {
   width: inherit;
+  flex-grow: 1;
 }
 .ui.cards > .card > .content {
   display: flex;
