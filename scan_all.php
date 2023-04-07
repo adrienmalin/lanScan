@@ -1,5 +1,6 @@
 <?php
-mkdir("scans");
+if (!file_exists("scans")) mkdir("scans");
+
 foreach (scandir("./confs") as $file) {
     if (strrpos($file, ".yaml")) {
         $site = str_replace(".yaml", "", $file);

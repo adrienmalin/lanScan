@@ -8,23 +8,33 @@
     <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/fomantic-ui@2.9.2/dist/semantic.min.css">
     <script src="https://cdn.jsdelivr.net/npm/fomantic-ui@2.9.2/dist/semantic.min.js"></script>
     <style>
-        #logo {
-          margin: 0 -.4rem 0 0;
-        }
-        .main.container {
-          margin-top: 5em;
-        }
-        .ui.dropdown, .ui.dropdown .menu > .item {
-          font-size: .85714286rem;
-        }
-        .ui.mini button > .detail {
-            margin-left: .1em;
-        }
-        .content {
-            display: flex;
-            align-items: baseline;
-            gap: .5em;
-        }
+#logo {
+  margin: 0 -.4rem 0 0;
+}
+.main.container {
+  margin-top: 5em;
+}
+.ui.dropdown, .ui.dropdown .menu > .item {
+  font-size: .85714286rem;
+}
+.ui.mini button > .detail {
+  margin-left: .1em;
+}
+.ui.mini.cards > .card {
+  width: inherit;
+}
+.ui.cards > .card > .content {
+  display: flex;
+  align-items: baseline;
+  gap: .5em;
+  padding: .3em;
+}
+.ui.mini.menu .item {
+  padding: .6em;
+}
+.ui.mini.menu {
+  min-height: 1em;
+}
     </style>
     <script>
         onload = function (event) {
@@ -53,7 +63,7 @@
                 <div class="content">
                     <div class="ui green empty circular label"></div>
                     <div><?=$scan_host->address["addr"]?></div>
-                    <div class="header" title="<?=strtok($scan_host->hostnames->hostname["name"], ".")?>"><?=strtok($scan_host->hostnames->hostname["name"], ".")?></div>
+                    <div class="header" title="<?=$scan_host->hostnames->hostname["name"]?>"><?=strtok($scan_host->hostnames->hostname["name"], ".")?></div>
                 </div>
                 <div class="ui inverted primary centered wrapped wrapping bottom attached mini menu">
 <?php
