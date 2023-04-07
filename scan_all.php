@@ -1,8 +1,9 @@
 <?php
-foreach (scandir("./scans") as $file) {
+mkdir("scans");
+foreach (scandir("./confs") as $file) {
     if (strrpos($file, ".yaml")) {
         $site = str_replace(".yaml", "", $file);
-        $conf = yaml_parse_file("scans/$file");
+        $conf = yaml_parse_file("confs/$file");
 
         $targets = [];
         $services = [];

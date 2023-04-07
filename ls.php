@@ -22,7 +22,7 @@
     </header>
     <div class="ui main text container">
       <div class="ui link selection list">
-<?php foreach (scandir("./scans") as $file) {
+<?php foreach (scandir("./confs") as $file) {
     if (strrpos($file, ".yaml")) {
       $site = str_replace(".yaml", "", $file);
       if (file_exists("scans/$site.xml")) {
