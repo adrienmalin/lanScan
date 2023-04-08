@@ -63,7 +63,14 @@
         <xsl:choose>
             <xsl:when test="$scannedHost/status/@state='up'">
                 <div class="ui fluid mini action input success">
-                    <input type="text" value="{substring-before($scannedHost/hostnames/hostname/@name, '.')}" title="{$scannedHost/hostnames/hostname/@name} ({$scannedHost/address/@addr})" readonly="" />
+                    <xsl:choose>
+                        <xsl:when test="$scannedHost/hostnames/hostname/@name">
+                            <input type="text" value="{substring-before($scannedHost/hostnames/hostname/@name, '.')}" title="{$scannedHost/hostnames/hostname/@name} ({$scannedHost/address/@addr})" readonly="" />
+                        </xsl:when>
+                        <xsl:otherwise>
+                            <input type="text" value="{$scannedHost/address/@addr}" readonly="" />
+                        </xsl:otherwise>
+                    </xsl:choose>
                     <xsl:apply-templates select="service">
                         <xsl:with-param name="scannedHost" select="$scannedHost" />
                         <xsl:with-param name="scannedHostAddress" select="$scannedHostAddress" />
@@ -72,18 +79,14 @@
             </xsl:when>
             <xsl:otherwise>
                 <div class="ui fluid mini input error">
-                    <input type="text" title="{@address}" readonly="">
-                        <xsl:attribute name="value">
-                            <xsl:choose>
-                                <xsl:when test="contains('0123456789', substring(@address,1,1))">
-                                    <xsl:value-of select="@address"/>
-                                </xsl:when>
-                                <xsl:otherwise>
-                                    <xsl:value-of select="substring-before(@address, '.')"/>
-                                </xsl:otherwise>
-                            </xsl:choose>
-                        </xsl:attribute>
-                    </input>
+                    <xsl:choose>
+                        <xsl:when test="contains('0123456789', substring(@address,1,1))">
+                            <input type="text" value="{@address}" readonly=""/>
+                        </xsl:when>
+                        <xsl:otherwise>
+                            <input type="text" value="{substring-before(@address, '.')}" title="{@address}" readonly=""/>
+                        </xsl:otherwise>
+                    </xsl:choose>
                 </div>
             </xsl:otherwise>
         </xsl:choose>
