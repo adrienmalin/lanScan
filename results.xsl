@@ -21,9 +21,6 @@
 .main.container {
     margin-top: 5em;
 }
-.ui.grid > .column:not(.row) {
-    padding: .5em !important;
-}
         </style>
     </head>
     <body>
@@ -44,7 +41,7 @@
 
 <xsl:template match="group">
     <h1 class="ui header"><xsl:value-of select="@name"/></h1>
-    <div class="ui doubling stackable four column grid">
+    <div class="ui doubling stackable four column compact grid">
         <xsl:apply-templates select="host"/>
     </div>
 </xsl:template>
