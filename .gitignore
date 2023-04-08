@@ -1,3 +1,2 @@
-confs/*.yaml
-!confs/example.yaml
+site/
 scans/

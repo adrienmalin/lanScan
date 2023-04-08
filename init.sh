@@ -7,8 +7,8 @@
 ###
 
 echo "Nom du site ?"
-read name
+read site
 echo "Plage IP (xxx.xxx.xxx.xxx/xx) ?"
 read network
-nmap --script smb-enum-shares.nse -oX "confs/$name.xml" $network
-xsltproc toyaml.xsl "confs/$name.xml" > "confs/$name.yaml"
+nmap --script smb-enum-shares.nse -oX "scans/$site.xml" $network
+xsltproc --stringparam site "$site" --stringparam network $network toyaml.xsl "scans/$site.xml" > "site/$site.yaml"
