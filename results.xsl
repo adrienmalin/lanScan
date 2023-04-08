@@ -72,7 +72,18 @@
             </xsl:when>
             <xsl:otherwise>
                 <div class="ui fluid mini input error">
-                    <input type="text" value="{substring-before(@address, '.')}"  title="{@address}" readonly="" />
+                    <input type="text" title="{@address}" readonly="">
+                        <xsl:attribute name="value">
+                            <xsl:choose>
+                                <xsl:when test="contains('0123456789', substring(@address,1,1))">
+                                    <xsl:value-of select="@address"/>
+                                </xsl:when>
+                                <xsl:otherwise>
+                                    <xsl:value-of select="substring-before(@address, '.')"/>
+                                </xsl:otherwise>
+                            </xsl:choose>
+                        </xsl:attribute>
+                    </input>
                 </div>
             </xsl:otherwise>
         </xsl:choose>
