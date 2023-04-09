@@ -63,46 +63,38 @@
         </xsl:choose>
     </xsl:variable>
     <div class="column">
-        <xsl:choose>
-            <xsl:when test="$scannedHost/status/@state='up'">
-                <div class="ui fluid mini action input info">
+        <div>
+            <xsl:attribute name="class">
+                <xsl:choose>
+                    <xsl:when test="$scannedHost/status/@state='up'">ui fluid mini left icon action input info</xsl:when>
+                    <xsl:otherwise>ui fluid mini left icon action input error</xsl:otherwise>
+                </xsl:choose>
+            </xsl:attribute>
+            <i class="icon"><img class="ui image" src="http://{$scannedHostAddress}/favicon.ico" alt="" /></i>
+            <input type="text" readonly="">
+                <xsl:attribute name="value">
                     <xsl:choose>
-                        <xsl:when test="substring-before($scannedHost/hostnames/hostname/@name, '.')">
-                            <input type="text" value="{substring-before($scannedHost/hostnames/hostname/@name, '.')}" title="{$scannedHost/hostnames/hostname/@name} ({$scannedHost/address/@addr})" readonly="" />
-                        </xsl:when>
-                        <xsl:when test="$scannedHost/hostnames/hostname/@name">
-                            <input type="text" value="{$scannedHost/hostnames/hostname/@name}" title="{$scannedHost/address/@addr}" readonly="" />
-                        </xsl:when>
-                        <xsl:otherwise>
-                            <input type="text" value="{$scannedHost/address/@addr}" title="{$scannedHost/address/@addr}" readonly="" />
-                        </xsl:otherwise>
+                        <xsl:when test="substring-before($scannedHost/hostnames/hostname/@name, '.')"><xsl:value-of select="substring-before($scannedHost/hostnames/hostname/@name, '.')" /></xsl:when>
+                        <xsl:when test="$scannedHost/hostnames/hostname/@name"><xsl:value-of select="$scannedHost/hostnames/hostname/@name" /></xsl:when>
+                        <xsl:when test="$scannedHost/address/@addr"><xsl:value-of select="$scannedHost/address/@addr" /></xsl:when>
+                        <xsl:when test="contains('0123456789', substring(@address,1,1))"><xsl:value-of select="@address" /></xsl:when>
+                        <xsl:when test="substring-before(@address, '.')"><xsl:value-of select="substring-before(@address, '.')" /></xsl:when>
+                        <xsl:otherwise><xsl:value-of select="@address" /></xsl:otherwise>
                     </xsl:choose>
-                    <xsl:apply-templates select="service">
-                        <xsl:with-param name="scannedHost" select="$scannedHost" />
-                        <xsl:with-param name="scannedHostAddress" select="$scannedHostAddress" />
-                    </xsl:apply-templates>
-                </div>
-            </xsl:when>
-            <xsl:otherwise>
-                <div class="ui fluid mini action input error">
+                </xsl:attribute>
+                <xsl:attribute name="title">
                     <xsl:choose>
-                        <xsl:when test="contains('0123456789', substring(@address,1,1))">
-                            <input type="text" value="{@address}" title="{@address}" readonly=""/>
-                        </xsl:when>
-                        <xsl:when test="substring-before(@address, '.')">
-                            <input type="text" value="{substring-before(@address, '.')}" title="{@address}" readonly=""/>
-                        </xsl:when>
-                        <xsl:otherwise>
-                            <input type="text" value="{@address}" title="{@address}" readonly=""/>
-                        </xsl:otherwise>
+                        <xsl:when test="$scannedHost/hostnames/hostname/@name"><xsl:value-of select="$scannedHost/hostnames/hostname/@name" /> (<xsl:value-of select="$scannedHost/address/@addr" />)</xsl:when>
+                        <xsl:when test="$scannedHost/address/@addr"><xsl:value-of select="$scannedHost/address/@addr" /></xsl:when>
+                        <xsl:otherwise><xsl:value-of select="@address" /></xsl:otherwise>
                     </xsl:choose>
-                    <xsl:apply-templates select="service">
-                        <xsl:with-param name="scannedHost" select="$scannedHost" />
-                        <xsl:with-param name="scannedHostAddress" select="$scannedHostAddress" />
-                    </xsl:apply-templates>
-                </div>
-            </xsl:otherwise>
-        </xsl:choose>
+                </xsl:attribute>
+            </input>
+            <xsl:apply-templates select="service">
+                <xsl:with-param name="scannedHost" select="$scannedHost" />
+                <xsl:with-param name="scannedHostAddress" select="$scannedHostAddress" />
+            </xsl:apply-templates>
+        </div>
     </div>
 </xsl:template>
 

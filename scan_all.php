@@ -38,7 +38,7 @@ foreach (scandir("./site") as $file) {
         $services = array_keys($services);
         $xml->asXML("site/$site.xml");
 
-        exec("nmap -v -Pn -p ".join($services, ",")." --script smb-enum-shares.nse -oX 'scans/$site.xml' ".join($targets, " "));
+        exec("nmap -v -Pn -p ".join($services, ",")." --script smb-enum-shares.nse -oX 'scans/$site.xml' ".join($targets, " ")."\n");
     }
 };
 
