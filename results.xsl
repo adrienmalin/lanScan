@@ -74,7 +74,7 @@
                             <input type="text" value="{$scannedHost/hostnames/hostname/@name}" title="{$scannedHost/address/@addr}" readonly="" />
                         </xsl:when>
                         <xsl:otherwise>
-                            <input type="text" value="{$scannedHost/address/@addr}" readonly="" />
+                            <input type="text" value="{$scannedHost/address/@addr}" title="{$scannedHost/address/@addr}" readonly="" />
                         </xsl:otherwise>
                     </xsl:choose>
                     <xsl:apply-templates select="service">
@@ -87,10 +87,13 @@
                 <div class="ui fluid mini action input error">
                     <xsl:choose>
                         <xsl:when test="contains('0123456789', substring(@address,1,1))">
-                            <input type="text" value="{@address}" readonly=""/>
+                            <input type="text" value="{@address}" title="{@address}" readonly=""/>
+                        </xsl:when>
+                        <xsl:when test="substring-before(@address, '.')">
+                            <input type="text" value="{substring-before(@address, '.')}" title="{@address}" readonly=""/>
                         </xsl:when>
                         <xsl:otherwise>
-                            <input type="text" value="{substring-before(@address, '.')}" title="{@address}" readonly=""/>
+                            <input type="text" value="{@address}" title="{@address}" readonly=""/>
                         </xsl:otherwise>
                     </xsl:choose>
                     <xsl:apply-templates select="service">
