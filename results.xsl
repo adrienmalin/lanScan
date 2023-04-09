@@ -101,7 +101,6 @@
     <xsl:param name="scannedHostAddress" />
     <xsl:variable name="serviceName" select="@name"/>
     <xsl:variable name="scannedPort" select="$scannedHost/ports/port[service/@name=$serviceName or @portid=$serviceName]"/>
-    <xsl:comment><xsl:value-of select="@name"/>,<xsl:value-of select="$scannedPort/service/@name='ftp'"/></xsl:comment>
     <xsl:choose>
         <xsl:when test="$scannedPort/state/@state='open'">
             <xsl:choose>
