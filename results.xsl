@@ -67,8 +67,11 @@
             <xsl:when test="$scannedHost/status/@state='up'">
                 <div class="ui fluid mini action input info">
                     <xsl:choose>
-                        <xsl:when test="$scannedHost/hostnames/hostname/@name">
+                        <xsl:when test="substring-before($scannedHost/hostnames/hostname/@name, '.')">
                             <input type="text" value="{substring-before($scannedHost/hostnames/hostname/@name, '.')}" title="{$scannedHost/hostnames/hostname/@name} ({$scannedHost/address/@addr})" readonly="" />
+                        </xsl:when>
+                        <xsl:when test="$scannedHost/hostnames/hostname/@name">
+                            <input type="text" value="{$scannedHost/hostnames/hostname/@name}" title="{$scannedHost/address/@addr}" readonly="" />
                         </xsl:when>
                         <xsl:otherwise>
                             <input type="text" value="{$scannedHost/address/@addr}" readonly="" />
