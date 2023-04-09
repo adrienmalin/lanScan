@@ -21,6 +21,9 @@
 .main.container {
     margin-top: 5em;
 }
+.ui.mini.button {
+    padding: 1em;
+}
         </style>
     </head>
     <body>
