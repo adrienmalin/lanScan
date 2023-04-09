@@ -65,7 +65,7 @@
     <div class="column">
         <xsl:choose>
             <xsl:when test="$scannedHost/status/@state='up'">
-                <div class="ui fluid mini action input success">
+                <div class="ui fluid mini action input info">
                     <xsl:choose>
                         <xsl:when test="$scannedHost/hostnames/hostname/@name">
                             <input type="text" value="{substring-before($scannedHost/hostnames/hostname/@name, '.')}" title="{$scannedHost/hostnames/hostname/@name} ({$scannedHost/address/@addr})" readonly="" />
