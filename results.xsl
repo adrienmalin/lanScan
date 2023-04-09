@@ -84,7 +84,7 @@
                 </div>
             </xsl:when>
             <xsl:otherwise>
-                <div class="ui fluid mini input error">
+                <div class="ui fluid mini action input error">
                     <xsl:choose>
                         <xsl:when test="contains('0123456789', substring(@address,1,1))">
                             <input type="text" value="{@address}" readonly=""/>
@@ -93,6 +93,10 @@
                             <input type="text" value="{substring-before(@address, '.')}" title="{@address}" readonly=""/>
                         </xsl:otherwise>
                     </xsl:choose>
+                    <xsl:apply-templates select="service">
+                        <xsl:with-param name="scannedHost" select="$scannedHost" />
+                        <xsl:with-param name="scannedHostAddress" select="$scannedHostAddress" />
+                    </xsl:apply-templates>
                 </div>
             </xsl:otherwise>
         </xsl:choose>
@@ -109,7 +113,7 @@
             <xsl:choose>
                 <xsl:when test="($scannedPort/service/@name='microsoft-ds' or $scannedPort/service/@name='netbios-ssn') and $scannedHost/hostscript/script[@id='smb-enum-shares']/table[not(contains(@key, '$'))]">
                     <div class="ui primary dropdown mini button">
-                        <div class="text">smb</div>
+                        <div class="text"><xsl:value-of select="@name"/></div>
                         <i class="dropdown icon"></i>
                         <div class="menu">
                             <xsl:apply-templates select="$scannedHost/hostscript/script[@id='smb-enum-shares']/table[not(contains(@key, '$'))]">
@@ -120,23 +124,23 @@
                 </xsl:when>
                 <xsl:when test="$scannedPort/service/@name='ms-wbt-server'">
                     <a class="ui primary mini button" href="../rdp.php?v={$scannedHostAddress}:{$scannedPort/@portid}">
-                        rdp
+                        <xsl:value-of select="@name"/>
                     </a>
                 </xsl:when>
                 <xsl:when test="$scannedPort/service/@name='ftp' or $scannedPort/service/@name='ssh' or $scannedPort/service/@name='http' or $scannedPort/service/@name='https'">
-                    <a class="ui primary mini button" role="button" href="{$scannedPort/service/@name}://{$scannedHostAddress}:{$scannedPort/@portid}">
+                    <a class="ui primary mini button" href="{$scannedPort/service/@name}://{$scannedHostAddress}:{$scannedPort/@portid}">
                         <xsl:value-of select="@name"/>
                     </a>
                 </xsl:when>
                 <xsl:otherwise>
-                    <a class="ui disabled primary mini button" role="button">
+                    <a class="ui disabled primary mini button">
                         <xsl:value-of select="@name"/>
                     </a>
                 </xsl:otherwise>
             </xsl:choose>
         </xsl:when>
         <xsl:otherwise>
-            <a class="ui red disabled mini button" role="button">
+            <a class="ui red disabled mini button">
                 <xsl:value-of select="@name"/>
             </a>
         </xsl:otherwise>
