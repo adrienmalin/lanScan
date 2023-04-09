@@ -44,7 +44,7 @@
 
 <xsl:template match="group">
     <h1 class="ui header"><xsl:value-of select="@name"/></h1>
-    <div class="ui doubling stackable four column compact grid">
+    <div class="ui doubling stackable three column compact grid">
         <xsl:apply-templates select="host"/>
     </div>
 </xsl:template>
@@ -70,7 +70,14 @@
                     <xsl:otherwise>ui fluid mini left icon action input error</xsl:otherwise>
                 </xsl:choose>
             </xsl:attribute>
-            <i class="icon"><img class="ui image" src="http://{$scannedHostAddress}/favicon.ico" alt="" /></i>
+            <xsl:choose>
+                <xsl:when test="$scannedHost/ports/port/service/@name='http'">
+                    <i class="icon"><img class="ui image" src="http://{$scannedHostAddress}/favicon.ico" alt="" /></i>
+                </xsl:when>
+                <xsl:otherwise>
+                    <i class="server icon"></i>
+                </xsl:otherwise>
+            </xsl:choose>
             <input type="text" readonly="">
                 <xsl:attribute name="value">
                     <xsl:choose>
