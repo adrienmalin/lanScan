@@ -70,17 +70,7 @@
                     <xsl:otherwise>ui fluid mini left icon action input error</xsl:otherwise>
                 </xsl:choose>
             </xsl:attribute>
-            <xsl:choose>
-                <xsl:when test="$scannedHost/ports/port/service/@name='https'">
-                    <i class="icon"><img class="ui image" src="https://{$scannedHostAddress}/favicon.ico" alt="" /></i>
-                </xsl:when>
-                <xsl:when test="$scannedHost/ports/port/service/@name='http'">
-                    <i class="icon"><img class="ui image" src="http://{$scannedHostAddress}/favicon.ico" alt="" /></i>
-                </xsl:when>
-                <xsl:otherwise>
-                    <i class="server icon"></i>
-                </xsl:otherwise>
-            </xsl:choose>
+            <i class="icon"><img class="ui image" src="http://{$scannedHostAddress}/favicon.ico" alt="" /></i>
             <input type="text" readonly="">
                 <xsl:attribute name="value">
                     <xsl:choose>
