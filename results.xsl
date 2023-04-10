@@ -25,6 +25,7 @@
     padding: 1em;
 }
         </style>
+        <meta http-equiv="refresh" content="300" />
     </head>
     <body>
         <header class="ui fixed blue inverted menu">
@@ -70,7 +71,14 @@
                     <xsl:otherwise>ui fluid mini left icon action input error</xsl:otherwise>
                 </xsl:choose>
             </xsl:attribute>
-            <i class="icon"><img class="ui image" src="http://{$scannedHostAddress}/favicon.ico" alt="" /></i>
+            <xsl:choose>
+                <xsl:when test="$scannedHost/ports/port/script[@id='http-favicon-url']/@output">
+                    <i class="icon"><img class="ui image" src="{$scannedHost/ports/port/script[@id='http-favicon-url']/@output}" alt="" /></i>
+                </xsl:when>
+                <xsl:otherwise>
+                    <i class="server icon"></i>
+                </xsl:otherwise>
+            </xsl:choose>
             <input type="text" readonly="">
                 <xsl:attribute name="value">
                     <xsl:choose>

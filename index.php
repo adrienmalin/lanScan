@@ -22,14 +22,24 @@
     </header>
     <div class="ui main text container">
       <div class="ui link selection list">
-<?php foreach (scandir("./site") as $file) {
-    if (strrpos($file, ".xml")) {
+<?php
+if (! function_exists('str_ends_with')) {
+  function str_ends_with(string $haystack, string $needle): bool
+  {
+      $needle_len = strlen($needle);
+      return ($needle_len === 0 || 0 === substr_compare($haystack, $needle, - $needle_len));
+  }
+}
+
+foreach (scandir("./site") as $file) {
+    if (str_ends_with($file, ".xml")) {
       $site = str_replace(".xml", "", $file);
       if (file_exists("scans/$site.xml")) {
         echo "          <a href='site/$site.xml' class='item'>$site</a>\n";
       }
     }
-} ?>
+}
+?>
       </div>
     </div>
   </body>

@@ -1,8 +1,16 @@
 <?php
+if (! function_exists('str_ends_with')) {
+    function str_ends_with(string $haystack, string $needle): bool
+    {
+        $needle_len = strlen($needle);
+        return ($needle_len === 0 || 0 === substr_compare($haystack, $needle, - $needle_len));
+    }
+}
+
 if (!file_exists("scans")) mkdir("scans");
 
-foreach (scandir("./site") as $file) {
-    if (strrpos($file, ".yaml")) {
+foreach (scandir("./site/") as $file) {
+    if (str_ends_with($file, ".yaml")) {
         $site = str_replace(".yaml", "", $file);
         $yaml = yaml_parse_file("site/$file");
 
@@ -33,12 +41,12 @@ foreach (scandir("./site") as $file) {
                 }
             }
         }
-
-        $targets = array_keys($targets);
-        $services = array_keys($services);
         $xml->asXML("site/$site.xml");
 
-        exec("nmap -v -Pn -p ".join($services, ",")." --script smb-enum-shares.nse -oX 'scans/$site.xml' ".join($targets, " ")."\n");
+        $targets = join(array_keys($targets), " ");
+        $services = join(array_keys($services), ",");
+
+        exec("nmap -v -Pn -p $services --script smb-enum-shares.nse,http-errors,./http-favicon-url.nse --script-args=httpspider.maxpagecount=1 -oX 'scans/$site.xml' $targets\n");
     }
 };
 
