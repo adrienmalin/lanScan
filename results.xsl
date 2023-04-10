@@ -134,7 +134,7 @@
                     <a class="ui primary mini button" href="{$scannedPort/service/@name}://{$scannedHostAddress}:{$scannedPort/@portid}">
                         <xsl:attribute name="class">
                             <xsl:choose>
-                                <xsl:when test="$scannedPort/script[@id='http-status']>=400">ui red mini button</xsl:when>
+                                <xsl:when test="$scannedPort/script[@id='http-get']/elem[@key='status']>=400">ui red mini button</xsl:when>
                                 <xsl:otherwise>ui primary mini button</xsl:otherwise>
                             </xsl:choose>
                         </xsl:attribute>

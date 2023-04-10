@@ -8,11 +8,12 @@ if (! function_exists('str_ends_with')) {
 }
 
 if (!file_exists("scans")) mkdir("scans");
+if (!file_exists("site")) mkdir("site");
 
-foreach (scandir("./site/") as $file) {
+foreach (scandir("./confs/") as $file) {
     if (str_ends_with($file, ".yaml")) {
         $site = str_replace(".yaml", "", $file);
-        $yaml = yaml_parse_file("site/$file");
+        $yaml = yaml_parse_file("confs/$file");
 
         $targets = [];
         $services = [];
@@ -46,7 +47,7 @@ foreach (scandir("./site/") as $file) {
         $targets = join(array_keys($targets), " ");
         $services = join(array_keys($services), ",");
 
-        exec("nmap -v -Pn -p $services --script smb-enum-shares.nse,./http-status.nse,./http-favicon-url.nse --script-args=httpspider.maxpagecount=1 -oX 'scans/$site.xml' $targets\n");
+        exec("nmap -v -Pn -p $services --script smb-enum-shares.nse,./http-get.nse,./http-favicon-url.nse --script-args=httpspider.maxpagecount=1 -oX 'scans/$site.xml' $targets\n");
     }
 };
 
