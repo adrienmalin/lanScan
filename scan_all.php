@@ -42,12 +42,13 @@ foreach (scandir("./confs/") as $file) {
                 }
             }
         }
-        $xml->asXML("site/$site.xml");
 
         $targets = join(array_keys($targets), " ");
         $services = join(array_keys($services), ",");
 
         exec("nmap -v -Pn -p $services --script smb-enum-shares.nse,./http-get.nse,./http-favicon-url.nse --script-args=httpspider.maxpagecount=1 -oX 'scans/$site.xml' $targets\n");
+
+        $xml->asXML("site/$site.xml");
     }
 };
 
