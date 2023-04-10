@@ -132,6 +132,12 @@
                 </xsl:when>
                 <xsl:when test="$scannedPort/service/@name='ftp' or $scannedPort/service/@name='ssh' or $scannedPort/service/@name='http' or $scannedPort/service/@name='https'">
                     <a class="ui primary mini button" href="{$scannedPort/service/@name}://{$scannedHostAddress}:{$scannedPort/@portid}">
+                        <xsl:attribute name="class">
+                            <xsl:choose>
+                                <xsl:when test="$scannedPort/script[@id='http-status']>=400">ui red mini button</xsl:when>
+                                <xsl:otherwise>ui primary mini button</xsl:otherwise>
+                            </xsl:choose>
+                        </xsl:attribute>
                         <xsl:value-of select="@name"/>
                     </a>
                 </xsl:when>

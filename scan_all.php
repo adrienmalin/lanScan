@@ -46,7 +46,7 @@ foreach (scandir("./site/") as $file) {
         $targets = join(array_keys($targets), " ");
         $services = join(array_keys($services), ",");
 
-        exec("nmap -v -Pn -p $services --script smb-enum-shares.nse,http-errors,./http-favicon-url.nse --script-args=httpspider.maxpagecount=1 -oX 'scans/$site.xml' $targets\n");
+        exec("nmap -v -Pn -p $services --script smb-enum-shares.nse,./http-status.nse,./http-favicon-url.nse --script-args=httpspider.maxpagecount=1 -oX 'scans/$site.xml' $targets\n");
     }
 };
 

@@ -6,8 +6,6 @@ local stdnse = require "stdnse"
 local string = require "string"
 local url = require "url"
 
-local openssl = stdnse.silent_require "openssl"
-
 description = [[
 Gets the favicon url ("favorites icon").
 
@@ -43,21 +41,14 @@ categories = {"default", "discovery", "safe"}
 portrule = shortport.http
 
 action = function(host, port)
-  local md5sum,answer
+  local answer
   local match
-  local status, favicondb
+  local status
   local result
-  local favicondbfile="nselib/data/favicon-db"
   local index, icon
   local root = ""
   local url
   local hostname = host.targetname or (host.name ~= "" and host.name) or host.ip
-
-  status, favicondb = datafiles.parse_file( favicondbfile, {["^%s*([^%s#:]+)[%s:]+"] = "^%s*[^%s#:]+[%s:]+(.*)"})
-  if not status then
-    stdnse.debug1("Could not open file: %s", favicondbfile )
-    return
-  end
 
   if(stdnse.get_script_args('favicon.root')) then
     root = stdnse.get_script_args('favicon.root')
