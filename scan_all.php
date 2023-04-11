@@ -46,7 +46,8 @@ XML
         $targets = join(array_keys($targets), " ");
         $services = join(array_keys($services), ",");
 
-        exec("nmap -v -Pn -p $services --script smb-enum-shares,./http-get.nse,./http-favicon-url.nse -oX '".__DIR__."/scans/$site.xml' $targets\n");
+        exec("nmap -v -Pn -p $services --script smb-enum-shares,./http-get.nse,./http-favicon-url.nse -oX '".__DIR__."/scans/tmp.xml' $targets\n");
+        rename(__DIR__."/scans/tmp.xml", __DIR__."/scans/$site.xml");
 
         $xml->asXML(__DIR__."/site/$site.xml");
     }
