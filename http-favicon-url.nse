@@ -44,7 +44,6 @@ action = function(host, port)
   local answer
   local match
   local status
-  local result
   local index, icon
   local root = ""
   local url
@@ -94,12 +93,12 @@ action = function(host, port)
 
   --- check for 200 response code
   if answer and answer.status == 200 then
-    result = url
+    return url
   else
     stdnse.debug1("No favicon found.")
     return
   end --- status == 200
-  return result
+  return
 end
 
 local function dirname(path)

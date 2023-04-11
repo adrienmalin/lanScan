@@ -25,7 +25,7 @@ categories = {"discovery", "intrusive"}
 author = "Adrien Malingrey"
 license = "Same as Nmap--See https://nmap.org/book/man-legal.html"
 
-portrule = shortport.http
+portrule = shortport.service({"http", "https", "ssl"})
 
 
 local http = require "http"
@@ -33,10 +33,15 @@ local stdnse = require "stdnse"
 
 action = function(host, port)
   local path = ""
+  local scheme = ""
 
   if(stdnse.get_script_args('http-get.path')) then
     path = "/" .. stdnse.get_script_args('http-get.path')
   end
 
-  return http.get( host, port, "/" .. path )
+  if (port.service == "ssl") then scheme = "https"
+  else scheme = port.service
+  end
+
+  return http.get_url( scheme.."://"..(host.name or host.ip)..":"..port.number.."/"..path, {redirect_ok=true} )
 end

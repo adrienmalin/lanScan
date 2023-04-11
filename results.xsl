@@ -125,45 +125,38 @@
     <xsl:param name="scannedHostAddress" />
     <xsl:variable name="serviceName" select="@name"/>
     <xsl:variable name="scannedPort" select="$scannedHost/ports/port[service/@name=$serviceName or @portid=$serviceName]"/>
+    <xsl:variable name="state">
+        <xsl:choose>
+            <xsl:when test="$scannedPort/script[@id='http-get']/elem[@key='status']>=400">red</xsl:when>
+            <xsl:when test="$scannedPort/state/@state='filtered'">yellow</xsl:when>
+            <xsl:when test="$scannedPort/state/@state='open'">primary</xsl:when>
+            <xsl:otherwise>red</xsl:otherwise>
+        </xsl:choose>
+    </xsl:variable>
     <xsl:choose>
-        <xsl:when test="$scannedPort/state/@state='open'">
-            <xsl:choose>
-                <xsl:when test="($scannedPort/service/@name='microsoft-ds' or $scannedPort/service/@name='netbios-ssn' or $scannedPort/service/@name='smb') and $scannedHost/hostscript/script[@id='smb-enum-shares']/table[not(contains(@key, '$'))]">
-                    <div class="ui primary dropdown mini button">
-                        <div class="text"><xsl:value-of select="@name"/></div>
-                        <i class="dropdown icon"></i>
-                        <div class="menu">
-                            <xsl:apply-templates select="$scannedHost/hostscript/script[@id='smb-enum-shares']/table[not(contains(@key, '$'))]">
-                                <xsl:with-param name="scannedHostAddress" select="$scannedHostAddress" />
-                            </xsl:apply-templates>
-                        </div>
-                    </div>
-                </xsl:when>
-                <xsl:when test="$scannedPort/service/@name='ms-wbt-server' or $scannedPort/service/@name='rdp'">
-                    <a class="ui primary mini button" href="../rdp.php?v={$scannedHostAddress}:{$scannedPort/@portid}">
-                        <xsl:value-of select="@name"/>
-                    </a>
-                </xsl:when>
-                <xsl:when test="$scannedPort/service/@name='ftp' or $scannedPort/service/@name='ssh' or $scannedPort/service/@name='http' or $scannedPort/service/@name='https'">
-                    <a class="ui primary mini button" href="{$scannedPort/service/@name}://{$scannedHostAddress}:{$scannedPort/@portid}">
-                        <xsl:attribute name="class">
-                            <xsl:choose>
-                                <xsl:when test="$scannedPort/script[@id='http-get']/elem[@key='status']>=400">ui red mini button</xsl:when>
-                                <xsl:otherwise>ui primary mini button</xsl:otherwise>
-                            </xsl:choose>
-                        </xsl:attribute>
-                        <xsl:value-of select="@name"/>
-                    </a>
-                </xsl:when>
-                <xsl:otherwise>
-                    <a class="ui disabled primary mini button">
-                        <xsl:value-of select="@name"/>
-                    </a>
-                </xsl:otherwise>
-            </xsl:choose>
+        <xsl:when test="($scannedPort/service/@name='microsoft-ds' or $scannedPort/service/@name='netbios-ssn' or $scannedPort/service/@name='smb') and $scannedHost/hostscript/script[@id='smb-enum-shares']/table[not(contains(@key, '$'))]">
+            <div class="ui {$state} dropdown mini button" title="{$scannedPort/@protocol}/{$scannedPort/@portid} {$scannedPort/service/@name} {$scannedPort/state/@state}">
+                <div class="text"><xsl:value-of select="@name"/></div>
+                <i class="dropdown icon"></i>
+                <div class="menu">
+                    <xsl:apply-templates select="$scannedHost/hostscript/script[@id='smb-enum-shares']/table[not(contains(@key, '$'))]">
+                        <xsl:with-param name="scannedHostAddress" select="$scannedHostAddress" />
+                    </xsl:apply-templates>
+                </div>
+            </div>
+        </xsl:when>
+        <xsl:when test="$scannedPort/service/@name='ms-wbt-server' or $scannedPort/service/@name='rdp'">
+            <a class="ui {$state} mini button" href="../rdp.php?v={$scannedHostAddress}:{$scannedPort/@portid}" title="{$scannedPort/@protocol}/{$scannedPort/@portid} {$scannedPort/service/@name} {$scannedPort/state/@state}">
+                <xsl:value-of select="@name"/>
+            </a>
+        </xsl:when>
+        <xsl:when test="$scannedPort/service/@name='ftp' or $scannedPort/service/@name='ssh' or $scannedPort/service/@name='http' or $scannedPort/service/@name='https'">
+            <a class="ui {$state} mini button" href="{$scannedPort/service/@name}://{$scannedHostAddress}:{$scannedPort/@portid}"  target="_blank" title="{$scannedPort/@protocol}/{$scannedPort/@portid} {$scannedPort/service/@name} {$scannedPort/state/@state}">
+                <xsl:value-of select="@name"/>
+            </a>
         </xsl:when>
         <xsl:otherwise>
-            <a class="ui red disabled mini button">
+            <a class="ui disabled {$state} mini button" title="{$scannedPort/@protocol}/{$scannedPort/@portid} {$scannedPort/service/@name} {$scannedPort/state/@state}">
                 <xsl:value-of select="@name"/>
             </a>
         </xsl:otherwise>

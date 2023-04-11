@@ -9,10 +9,10 @@ if (! function_exists('str_ends_with')) {
 if (!file_exists("scans")) mkdir("scans");
 if (!file_exists("site")) mkdir("site");
 
-foreach (scandir("./confs/") as $file) {
+foreach (scandir(__DIR__."/confs/") as $file) {
     if (str_ends_with($file, ".yaml")) {
         $site = str_replace(".yaml", "", $file);
-        $yaml = yaml_parse_file("confs/$file");
+        $yaml = yaml_parse_file(__DIR__."/confs/$file");
 
         $targets = [];
         $services = [];
@@ -46,9 +46,9 @@ XML
         $targets = join(array_keys($targets), " ");
         $services = join(array_keys($services), ",");
 
-        exec("nmap -v -Pn -p $services --script smb-enum-shares,./http-get.nse,./http-favicon-url.nse -oX 'scans/$site.xml' $targets\n");
+        exec("nmap -v -Pn -p $services --script smb-enum-shares,./http-get.nse,./http-favicon-url.nse -oX '".__DIR__."/scans/$site.xml' $targets\n");
 
-        $xml->asXML("site/$site.xml");
+        $xml->asXML(__DIR__."/site/$site.xml");
     }
 }
 ?>
