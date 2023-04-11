@@ -24,6 +24,17 @@
 .ui.mini.button {
     padding: 1em;
 }
+
+.icon {
+    display: flex !important;
+    align-items: center;
+}
+
+.icon > img {
+    width: 16px;
+    height: 16px;
+    margin: auto;
+}
         </style>
         <meta http-equiv="refresh" content="300" />
     </head>
@@ -45,7 +56,7 @@
 
 <xsl:template match="group">
     <h1 class="ui header"><xsl:value-of select="@name"/></h1>
-    <div class="ui doubling stackable three column compact grid">
+    <div class="ui doubling stackable four column compact grid">
         <xsl:apply-templates select="host"/>
     </div>
 </xsl:template>
@@ -57,6 +68,9 @@
         <xsl:choose>
             <xsl:when test="$scannedHost/hostnames/hostname/@name">
                 <xsl:value-of select="$scannedHost/hostnames/hostname/@name" />
+            </xsl:when>
+            <xsl:when test="$scannedHost/address/@addr">
+                <xsl:value-of select="$scannedHost/address/@addr" />
             </xsl:when>
             <xsl:otherwise>
                 <xsl:value-of select="$scannedHost/address/@addr" />
@@ -114,7 +128,7 @@
     <xsl:choose>
         <xsl:when test="$scannedPort/state/@state='open'">
             <xsl:choose>
-                <xsl:when test="($scannedPort/service/@name='microsoft-ds' or $scannedPort/service/@name='netbios-ssn') and $scannedHost/hostscript/script[@id='smb-enum-shares']/table[not(contains(@key, '$'))]">
+                <xsl:when test="($scannedPort/service/@name='microsoft-ds' or $scannedPort/service/@name='netbios-ssn' or $scannedPort/service/@name='smb') and $scannedHost/hostscript/script[@id='smb-enum-shares']/table[not(contains(@key, '$'))]">
                     <div class="ui primary dropdown mini button">
                         <div class="text"><xsl:value-of select="@name"/></div>
                         <i class="dropdown icon"></i>
@@ -125,7 +139,7 @@
                         </div>
                     </div>
                 </xsl:when>
-                <xsl:when test="$scannedPort/service/@name='ms-wbt-server'">
+                <xsl:when test="$scannedPort/service/@name='ms-wbt-server' or $scannedPort/service/@name='rdp'">
                     <a class="ui primary mini button" href="../rdp.php?v={$scannedHostAddress}:{$scannedPort/@portid}">
                         <xsl:value-of select="@name"/>
                     </a>
