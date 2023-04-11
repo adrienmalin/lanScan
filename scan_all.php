@@ -1,7 +1,6 @@
 <?php
 if (! function_exists('str_ends_with')) {
-    function str_ends_with(string $haystack, string $needle): bool
-    {
+    function str_ends_with(string $haystack, string $needle): bool {
         $needle_len = strlen($needle);
         return ($needle_len === 0 || 0 === substr_compare($haystack, $needle, - $needle_len));
     }
@@ -19,10 +18,10 @@ foreach (scandir("./confs/") as $file) {
         $services = [];
 
         $xml = new SimpleXMLElement(<<<XML
-        <?xml version="1.0"?>
-        <?xml-stylesheet href='../results.xsl' type='text/xsl'?>
-        <lanScanConf/>
-        XML);
+<?xml version="1.0"?>
+<?xml-stylesheet href='../results.xsl' type='text/xsl'?>
+<lanScanConf/>
+XML;);
         $xml->addChild("scan path='scans/$site.xml'");
 
         foreach ($yaml as $siteName => $groups) {
@@ -46,10 +45,9 @@ foreach (scandir("./confs/") as $file) {
         $targets = join(array_keys($targets), " ");
         $services = join(array_keys($services), ",");
 
-        exec("nmap -v -Pn -p $services --script smb-enum-shares.nse,./http-get.nse,./http-favicon-url.nse --script-args=httpspider.maxpagecount=1 -oX 'scans/$site.xml' $targets\n");
+        exec("nmap -v -Pn -p $services --script smb-enum-shares,./http-get.nse,./http-favicon-url.nse -oX 'scans/$site.xml' $targets\n");
 
         $xml->asXML("site/$site.xml");
     }
-};
-
+}
 ?>
