@@ -21,7 +21,8 @@ foreach (scandir("./confs/") as $file) {
 <?xml version="1.0"?>
 <?xml-stylesheet href='../results.xsl' type='text/xsl'?>
 <lanScanConf/>
-XML;);
+XML
+);
         $xml->addChild("scan path='scans/$site.xml'");
 
         foreach ($yaml as $siteName => $groups) {
