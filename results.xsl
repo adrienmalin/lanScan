@@ -5,12 +5,12 @@
     version="1.1">
 <xsl:output method="html" encoding="UTF-8" indent="yes" />
 
-<xsl:variable name="scan" select="document(string(lanScanConf/scan/@path))/nmaprun"/>
+<xsl:variable name="scan" select="document(string(lanScanConf/@scanpath))/nmaprun"/>
 
 <xsl:template match="lanScanConf">
 <html lang="fr">
     <head>
-        <title>lanScan - <xsl:value-of select="@name"/></title>
+        <title>lanScan - <xsl:value-of select="@site"/></title>
         <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.3/dist/jquery.min.js"></script>
         <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/fomantic-ui@2.9.2/dist/semantic.min.css" />
         <script src="https://cdn.jsdelivr.net/npm/fomantic-ui@2.9.2/dist/semantic.min.js"></script>
@@ -41,7 +41,7 @@
     <body>
         <header class="ui fixed blue inverted menu">
             <a href="." class="header item">lan<img id="logo" src="../logo.svg" alt="S"/>can</a>
-            <div class="item"><xsl:value-of select="@name"/></div>
+            <div class="item"><xsl:value-of select="@site"/></div>
         </header>
         <div class="ui main container">
             <p><xsl:value-of select="$scan/runstats/finished/@summary"/></p>
@@ -133,9 +133,18 @@
             <xsl:otherwise>red</xsl:otherwise>
         </xsl:choose>
     </xsl:variable>
+    <xsl:variable name="title">
+        <xsl:value-of select="$scannedPort/@portid"/>
+        <xsl:text>/</xsl:text>
+        <xsl:value-of select="$scannedPort/@protocol"/>
+        <xsl:text> </xsl:text>
+        <xsl:value-of select="$scannedPort/service/@name"/>
+        <xsl:text> </xsl:text>
+        <xsl:value-of select="$scannedPort/state/@state"/>
+    </xsl:variable>
     <xsl:choose>
         <xsl:when test="($scannedPort/service/@name='microsoft-ds' or $scannedPort/service/@name='netbios-ssn' or $scannedPort/service/@name='smb') and $scannedHost/hostscript/script[@id='smb-enum-shares']/table[not(contains(@key, '$'))]">
-            <div class="ui {$state} dropdown mini button" title="{$scannedPort/@protocol}/{$scannedPort/@portid} {$scannedPort/service/@name} {$scannedPort/state/@state}">
+            <div class="ui {$state} dropdown mini button" title="{$title}">
                 <div class="text"><xsl:value-of select="@name"/></div>
                 <i class="dropdown icon"></i>
                 <div class="menu">
@@ -146,17 +155,17 @@
             </div>
         </xsl:when>
         <xsl:when test="$scannedPort/service/@name='ms-wbt-server' or $scannedPort/service/@name='rdp'">
-            <a class="ui {$state} mini button" href="../rdp.php?v={$scannedHostAddress}:{$scannedPort/@portid}" title="{$scannedPort/@protocol}/{$scannedPort/@portid} {$scannedPort/service/@name} {$scannedPort/state/@state}">
+            <a class="ui {$state} mini button" href="../rdp.php?v={$scannedHostAddress}:{$scannedPort/@portid}" title="{$title}">
                 <xsl:value-of select="@name"/>
             </a>
         </xsl:when>
         <xsl:when test="$scannedPort/service/@name='ftp' or $scannedPort/service/@name='ssh' or $scannedPort/service/@name='http' or $scannedPort/service/@name='https'">
-            <a class="ui {$state} mini button" href="{$scannedPort/service/@name}://{$scannedHostAddress}:{$scannedPort/@portid}"  target="_blank" title="{$scannedPort/@protocol}/{$scannedPort/@portid} {$scannedPort/service/@name} {$scannedPort/state/@state}">
+            <a class="ui {$state} mini button" href="{$scannedPort/service/@name}://{$scannedHostAddress}:{$scannedPort/@portid}"  target="_blank" title="{$title}">
                 <xsl:value-of select="@name"/>
             </a>
         </xsl:when>
         <xsl:otherwise>
-            <a class="ui disabled {$state} mini button" title="{$scannedPort/@protocol}/{$scannedPort/@portid} {$scannedPort/service/@name} {$scannedPort/state/@state}">
+            <a class="ui disabled {$state} mini button" title="{$title}">
                 <xsl:value-of select="@name"/>
             </a>
         </xsl:otherwise>

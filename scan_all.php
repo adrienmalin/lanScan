@@ -23,14 +23,15 @@ foreach (scandir(__DIR__."/confs") as $file) {
 <lanScanConf/>
 XML
 );
-        $xml->addChild("scan path='scans/$site.xml'");
-
-        foreach ($yaml as $siteName => $groups) {
-            $xml->addAttribute("name", $siteName);
-            if ($groups) foreach ($groups as $groupName => $hosts) {
+        $xml->addAttribute("scanpath", "scans/$site.xml");
+    
+        foreach ($yaml as $key => $value) {
+            if ($key == "site") {
+                $xml->addAttribute("site", $value);
+            } else {
                 $xmlGroup = $xml->addChild("group");
-                $xmlGroup->addAttribute("name", $groupName);
-                if ($hosts) foreach($hosts as $hostaddress => $servicesList) {
+                $xmlGroup->addAttribute("name", $key);
+                foreach($value as $hostaddress => $servicesList) {
                     $targets[$hostaddress] = true;
                     $xmlHost = $xmlGroup->addChild("host");
                     $xmlHost->addAttribute("address", $hostaddress);
@@ -46,7 +47,7 @@ XML
         $targets = join(array_keys($targets), " ");
         $services = join(array_keys($services), ",");
 
-        exec("nmap -v -Pn -p $services --script smb-enum-shares,./http-get.nse,./http-favicon-url.nse -oX '".__DIR__."/scans/tmp.xml' $targets\n");
+        exec("nmap -v -Pn -p $services --script smb-enum-shares,".__DIR__."/nmap -oX '".__DIR__."/scans/tmp.xml' $targets\n");
         rename(__DIR__."/scans/tmp.xml", __DIR__."/scans/$site.xml");
 
         $xml->asXML(__DIR__."/site/$site.xml");

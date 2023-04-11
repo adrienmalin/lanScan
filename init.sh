@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 ###
 #
@@ -6,9 +6,14 @@
 #
 ###
 
+DIR="$(dirname -- "$0")"
+
 echo "Nom du site ?"
 read site
+filename="${site/ /_}"
 echo "Adresse réseau CIDR (xxx.xxx.xxx.xxx/xx) ?"
 read network
-nmap --script smb-enum-shares.nse -oX "scans/$site.xml" $network
-xsltproc --stringparam site "$site" --stringparam network $network toyaml.xsl "scans/$site.xml" > "confs/$site.yaml"
+
+
+nmap --script smb-enum-shares.nse -oX "scans/$filename.xml" $network
+xsltproc --stringparam site "$site" --stringparam network $network toyaml.xsl "$DIR/scans/$filename.xml" > "$DIR/confs/$filename.yaml"
