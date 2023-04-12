@@ -32,16 +32,19 @@ local http = require "http"
 local stdnse = require "stdnse"
 
 action = function(host, port)
-  local path = ""
   local scheme = ""
+  local hostaddress = (host.name ~= '' and host.name) or host.ip
+  local path = ""
+
+  if (port.service == "ssl") then
+    scheme = "https"
+  else
+    scheme = port.service
+  end
 
   if(stdnse.get_script_args('http-get.path')) then
     path = "/" .. stdnse.get_script_args('http-get.path')
   end
 
-  if (port.service == "ssl") then scheme = "https"
-  else scheme = port.service
-  end
-
-  return http.get_url( scheme.."://"..(host.name or host.ip)..":"..port.number.."/"..path, {redirect_ok=true} )
+  return http.get_url(scheme.."://"..hostaddress..":"..port.number.."/"..path)
 end

@@ -6,13 +6,15 @@ if (! function_exists('str_ends_with')) {
     }
 }
 
-if (!file_exists(__DIR__."/scans")) mkdir(__DIR__."/scans");
-if (!file_exists(__DIR__."/site")) mkdir(__DIR__."/site");
+$__DIR__ = __DIR__;
 
-foreach (scandir(__DIR__."/confs") as $file) {
+if (!file_exists("$__DIR__/scans")) mkdir("$__DIR__/scans");
+if (!file_exists("$__DIR__/site")) mkdir("$__DIR__/site");
+
+foreach (scandir("$__DIR__/confs") as $file) {
     if (str_ends_with($file, ".yaml")) {
         $site = str_replace(".yaml", "", $file);
-        $yaml = yaml_parse_file(__DIR__."/confs/$file");
+        $yaml = yaml_parse_file("$__DIR__/confs/$file");
 
         $targets = [];
         $services = [];
@@ -47,10 +49,10 @@ XML
         $targets = join(array_keys($targets), " ");
         $services = join(array_keys($services), ",");
 
-        exec("nmap -v -Pn -p $services --script smb-enum-shares,".__DIR__."/nmap -oX '".__DIR__."/scans/tmp.xml' $targets\n");
-        rename(__DIR__."/scans/tmp.xml", __DIR__."/scans/$site.xml");
+        exec("nmap -v -Pn -p $services --script smb-enum-shares,'$__DIR__/nmap' -oX '$__DIR__/scans/tmp.xml' $targets");
+        rename("$__DIR__/scans/tmp.xml", "$__DIR__/scans/$site.xml");
 
-        $xml->asXML(__DIR__."/site/$site.xml");
+        $xml->asXML("$__DIR__/site/$site.xml");
     }
 }
 ?>

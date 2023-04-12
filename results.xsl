@@ -3,7 +3,7 @@
     xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
     xmlns:xs="http://www.w3.org/2001/XMLSchema"
     version="1.1">
-<xsl:output method="html" encoding="UTF-8" indent="yes" />
+<xsl:output method="html" encoding="UTF-8" indent="yes"/>
 
 <xsl:variable name="scan" select="document(string(lanScanConf/@scanpath))/nmaprun"/>
 
@@ -12,7 +12,7 @@
     <head>
         <title>lanScan - <xsl:value-of select="@site"/></title>
         <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.3/dist/jquery.min.js"></script>
-        <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/fomantic-ui@2.9.2/dist/semantic.min.css" />
+        <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/fomantic-ui@2.9.2/dist/semantic.min.css"/>
         <script src="https://cdn.jsdelivr.net/npm/fomantic-ui@2.9.2/dist/semantic.min.js"></script>
         <style>
 #logo {
@@ -36,7 +36,7 @@
     margin: auto;
 }
         </style>
-        <meta http-equiv="refresh" content="300" />
+        <meta http-equiv="refresh" content="300"/>
     </head>
     <body>
         <header class="ui fixed blue inverted menu">
@@ -67,13 +67,13 @@
     <xsl:variable name="scannedHostAddress">
         <xsl:choose>
             <xsl:when test="$scannedHost/hostnames/hostname/@name">
-                <xsl:value-of select="$scannedHost/hostnames/hostname/@name" />
+                <xsl:value-of select="$scannedHost/hostnames/hostname/@name"/>
             </xsl:when>
             <xsl:when test="$scannedHost/address/@addr">
-                <xsl:value-of select="$scannedHost/address/@addr" />
+                <xsl:value-of select="$scannedHost/address/@addr"/>
             </xsl:when>
             <xsl:otherwise>
-                <xsl:value-of select="$scannedHost/address/@addr" />
+                <xsl:value-of select="$scannedHost/address/@addr"/>
             </xsl:otherwise>
         </xsl:choose>
     </xsl:variable>
@@ -87,7 +87,7 @@
             </xsl:attribute>
             <xsl:choose>
                 <xsl:when test="$scannedHost/ports/port/script[@id='http-favicon-url']/@output">
-                    <i class="icon"><img class="ui image" src="{$scannedHost/ports/port/script[@id='http-favicon-url']/@output}" alt="" /></i>
+                    <i class="icon"><img class="ui image" src="{$scannedHost/ports/port/script[@id='http-favicon-url']/@output}" alt=""/></i>
                 </xsl:when>
                 <xsl:otherwise>
                     <i class="server icon"></i>
@@ -96,33 +96,33 @@
             <input type="text" readonly="">
                 <xsl:attribute name="value">
                     <xsl:choose>
-                        <xsl:when test="substring-before($scannedHost/hostnames/hostname/@name, '.')"><xsl:value-of select="substring-before($scannedHost/hostnames/hostname/@name, '.')" /></xsl:when>
-                        <xsl:when test="$scannedHost/hostnames/hostname/@name"><xsl:value-of select="$scannedHost/hostnames/hostname/@name" /></xsl:when>
-                        <xsl:when test="$scannedHost/address/@addr"><xsl:value-of select="$scannedHost/address/@addr" /></xsl:when>
-                        <xsl:when test="contains('0123456789', substring(@address,1,1))"><xsl:value-of select="@address" /></xsl:when>
-                        <xsl:when test="substring-before(@address, '.')"><xsl:value-of select="substring-before(@address, '.')" /></xsl:when>
-                        <xsl:otherwise><xsl:value-of select="@address" /></xsl:otherwise>
+                        <xsl:when test="substring-before($scannedHost/hostnames/hostname/@name, '.')"><xsl:value-of select="substring-before($scannedHost/hostnames/hostname/@name, '.')"/></xsl:when>
+                        <xsl:when test="$scannedHost/hostnames/hostname/@name"><xsl:value-of select="$scannedHost/hostnames/hostname/@name"/></xsl:when>
+                        <xsl:when test="$scannedHost/address/@addr"><xsl:value-of select="$scannedHost/address/@addr"/></xsl:when>
+                        <xsl:when test="contains('0123456789', substring(@address,1,1))"><xsl:value-of select="@address"/></xsl:when>
+                        <xsl:when test="substring-before(@address, '.')"><xsl:value-of select="substring-before(@address, '.')"/></xsl:when>
+                        <xsl:otherwise><xsl:value-of select="@address"/></xsl:otherwise>
                     </xsl:choose>
                 </xsl:attribute>
                 <xsl:attribute name="title">
                     <xsl:choose>
-                        <xsl:when test="$scannedHost/hostnames/hostname/@name"><xsl:value-of select="$scannedHost/hostnames/hostname/@name" /> (<xsl:value-of select="$scannedHost/address/@addr" />)</xsl:when>
-                        <xsl:when test="$scannedHost/address/@addr"><xsl:value-of select="$scannedHost/address/@addr" /></xsl:when>
-                        <xsl:otherwise><xsl:value-of select="@address" /></xsl:otherwise>
+                        <xsl:when test="$scannedHost/hostnames/hostname/@name"><xsl:value-of select="$scannedHost/hostnames/hostname/@name"/> (<xsl:value-of select="$scannedHost/address/@addr"/>)</xsl:when>
+                        <xsl:when test="$scannedHost/address/@addr"><xsl:value-of select="$scannedHost/address/@addr"/></xsl:when>
+                        <xsl:otherwise><xsl:value-of select="@address"/></xsl:otherwise>
                     </xsl:choose>
                 </xsl:attribute>
             </input>
             <xsl:apply-templates select="service">
-                <xsl:with-param name="scannedHost" select="$scannedHost" />
-                <xsl:with-param name="scannedHostAddress" select="$scannedHostAddress" />
+                <xsl:with-param name="scannedHost" select="$scannedHost"/>
+                <xsl:with-param name="scannedHostAddress" select="$scannedHostAddress"/>
             </xsl:apply-templates>
         </div>
     </div>
 </xsl:template>
 
 <xsl:template match="service">
-    <xsl:param name="scannedHost" />
-    <xsl:param name="scannedHostAddress" />
+    <xsl:param name="scannedHost"/>
+    <xsl:param name="scannedHostAddress"/>
     <xsl:variable name="serviceName" select="@name"/>
     <xsl:variable name="scannedPort" select="$scannedHost/ports/port[service/@name=$serviceName or @portid=$serviceName]"/>
     <xsl:variable name="state">
@@ -141,6 +141,10 @@
         <xsl:value-of select="$scannedPort/service/@name"/>
         <xsl:text> </xsl:text>
         <xsl:value-of select="$scannedPort/state/@state"/>
+        <xsl:if test="$scannedPort/script[@id='http-get']/elem[@key='status-line']">
+            <xsl:text> HTTP Statut </xsl:text>
+            <xsl:value-of select="$scannedPort/script[@id='http-get']/elem[@key='status-line']"/>
+        </xsl:if>
     </xsl:variable>
     <xsl:choose>
         <xsl:when test="($scannedPort/service/@name='microsoft-ds' or $scannedPort/service/@name='netbios-ssn' or $scannedPort/service/@name='smb') and $scannedHost/hostscript/script[@id='smb-enum-shares']/table[not(contains(@key, '$'))]">
@@ -149,7 +153,7 @@
                 <i class="dropdown icon"></i>
                 <div class="menu">
                     <xsl:apply-templates select="$scannedHost/hostscript/script[@id='smb-enum-shares']/table[not(contains(@key, '$'))]">
-                        <xsl:with-param name="scannedHostAddress" select="$scannedHostAddress" />
+                        <xsl:with-param name="scannedHost" select="$scannedHost"/>
                     </xsl:apply-templates>
                 </div>
             </div>
@@ -174,9 +178,21 @@
 
 
 <xsl:template match="table">
-    <xsl:param name="scannedHostAddress" />
-    <a class="item" href="file:///{@key}" target="_blank" rel="noopener noreferrer">
-        <xsl:value-of select="@key" />
+    <xsl:param name="scannedHost"/>
+    <xsl:variable name="path">
+        <xsl:choose>
+            <xsl:when test="$scannedHost/hostnames/hostname/@name and contains(@key, $scannedHost/address/@addr)">
+                <xsl:text>\\</xsl:text>
+                <xsl:value-of select="$scannedHost/hostnames/hostname/@name"/>
+                <xsl:value-of select="substring-after(@key, $scannedHost/address/@addr)"/>
+            </xsl:when>
+            <xsl:otherwise>
+                <xsl:value-of select="@key"/>
+            </xsl:otherwise>
+        </xsl:choose>
+    </xsl:variable>
+    <a class="item" href="file:///{$path}" target="_blank" rel="noopener noreferrer">
+        <xsl:value-of select="elem[@key='Comment']"/>
     </a>
 </xsl:template>
 
