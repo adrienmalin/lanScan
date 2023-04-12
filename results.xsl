@@ -142,7 +142,7 @@
         <xsl:text> </xsl:text>
         <xsl:value-of select="$scannedPort/state/@state"/>
         <xsl:if test="$scannedPort/script[@id='http-get']/elem[@key='status-line']">
-            <xsl:text> HTTP Statut </xsl:text>
+            <xsl:text> </xsl:text>
             <xsl:value-of select="$scannedPort/script[@id='http-get']/elem[@key='status-line']"/>
         </xsl:if>
     </xsl:variable>

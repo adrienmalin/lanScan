@@ -49,8 +49,7 @@ XML
         $targets = join(array_keys($targets), " ");
         $services = join(array_keys($services), ",");
 
-        exec("nmap -v -Pn -p $services --script smb-enum-shares,'$__DIR__/nmap' -oX '$__DIR__/scans/tmp.xml' $targets");
-        rename("$__DIR__/scans/tmp.xml", "$__DIR__/scans/$site.xml");
+        `nmap -v -Pn -p $services --script smb-enum-shares,'$__DIR__/nmap' -oX '$__DIR__/scans/tmp.xml' $targets && mv '$__DIR__/scans/tmp.xml' '$__DIR__/scans/$site.xml'`;
 
         $xml->asXML("$__DIR__/site/$site.xml");
     }
