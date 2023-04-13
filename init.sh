@@ -16,4 +16,4 @@ read network
 
 
 nmap --script smb-enum-shares.nse -oX "scans/$filename.xml" $network
-xsltproc --stringparam site "$site" --stringparam network $network toyaml.xsl "$DIR/scans/$filename.xml" > "$DIR/confs/$filename.yaml"
+xsltproc --stringparam site "$site" --stringparam network $network to_yaml.xsl "$DIR/scans/$filename.xml" > "$DIR/confs/$filename.yaml"
