@@ -10,15 +10,8 @@ Get and return a page info
 -- @usage nmap -p80 --script http-get.nse --script-args http-get.path=/ <target>
 --
 -- @output
--- body:<html>...</html>
 -- status: 200
 -- status-line: HTTP/1.1 200 OK\x0D
--- header: ...
--- rawheader: ...
--- cookies: 
-
--- ssl: false
--- version: 1.1
 ---
 
 categories = {"discovery", "intrusive"}
@@ -36,6 +29,7 @@ action = function(host, port)
   local hostaddress = (host.name ~= '' and host.name) or host.ip
   local path = ""
   local answer
+  local favicon = "/favicon.ico"
 
   if (port.service == "ssl") then
     scheme = "https"
@@ -48,5 +42,52 @@ action = function(host, port)
   end
 
   answer = http.get_url(scheme.."://"..hostaddress..":"..port.number.."/"..path)
-  return {status=answer.status, ["status-line"]=answer["status-line"]}
+
+  if (answer and answer.status == 200) then
+    favicon_relative_uri = parseIcon(answer.body) or "/favicon.ico"
+  end
+  
+  favicon_absolute_uri = scheme.."://"..hostaddress..":"..port.number.."/"..favicon_relative_uri
+  favicon = http.get_url(favicon_absolute_uri)
+
+  if (favicon and favicon.status == 200) then
+    return {status=answer.status, ["status-line"]=answer["status-line"], favicon=favicon_absolute_uri}
+  else
+    return {status=answer.status, ["status-line"]=answer["status-line"]}
+  end
+end
+
+--- function taken from http_favicon.nse by Vlatko Kosturjak
+
+function parseIcon( body )
+  local _, i, j
+  local rel, href, word
+
+  -- Loop through link elements.
+  i = 0
+  while i do
+    _, i = string.find(body, "<%s*[Ll][Ii][Nn][Kk]%s", i + 1)
+    if not i then
+      return nil
+    end
+    -- Loop through attributes.
+    j = i
+    while true do
+      local name, quote, value
+      _, j, name, quote, value = string.find(body, "^%s*(%w+)%s*=%s*([\"'])(.-)%2", j + 1)
+      if not j then
+        break
+      end
+      if string.lower(name) == "rel" then
+        rel = value
+      elseif string.lower(name) == "href" then
+        href = value
+      end
+    end
+    for word in string.gmatch(rel or "", "%S+") do
+      if string.lower(word) == "icon" then
+        return href
+      end
+    end
+  end
 end
