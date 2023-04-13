@@ -35,6 +35,7 @@ action = function(host, port)
   local scheme = ""
   local hostaddress = (host.name ~= '' and host.name) or host.ip
   local path = ""
+  local answer
 
   if (port.service == "ssl") then
     scheme = "https"
@@ -46,5 +47,6 @@ action = function(host, port)
     path = "/" .. stdnse.get_script_args('http-get.path')
   end
 
-  return http.get_url(scheme.."://"..hostaddress..":"..port.number.."/"..path)
+  answer = http.get_url(scheme.."://"..hostaddress..":"..port.number.."/"..path)
+  return {status=answer.status, ["status-line"]=answer["status-line"]}
 end
