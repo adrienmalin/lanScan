@@ -24,12 +24,10 @@
 .ui.mini.button {
     padding: 1em;
 }
-
 .icon {
     display: flex !important;
     align-items: center;
 }
-
 .icon > img {
     width: 16px;
     height: 16px;
@@ -78,16 +76,16 @@
         </xsl:choose>
     </xsl:variable>
     <div class="column">
-        <div>
-            <xsl:attribute name="class">
-                <xsl:choose>
-                    <xsl:when test="$scannedHost/status/@state='up'">ui fluid mini left icon action input info</xsl:when>
-                    <xsl:otherwise>ui fluid mini left icon action input error</xsl:otherwise>
-                </xsl:choose>
-            </xsl:attribute>
+        <xsl:variable name="status">
             <xsl:choose>
-                <xsl:when test="$scannedHost/ports/port/script[@id='http-favicon-url']/@output">
-                    <i class="icon"><img class="ui image" src="{$scannedHost/ports/port/script[@id='http-favicon-url']/@output}" alt=""/></i>
+                <xsl:when test="$scannedHost/status/@state='up'">info</xsl:when>
+                <xsl:otherwise>error</xsl:otherwise>
+            </xsl:choose>
+        </xsl:variable>
+        <div class="ui fluid mini left icon action input {$status}">
+            <xsl:choose>
+                <xsl:when test="$scannedHost/ports/port/script[@id='http-get']/elem[@key='favicon']">
+                    <i class="icon"><img class="ui image" src="{$scannedHost/ports/port/script[@id='http-get']/elem[@key='favicon']}" alt=""/></i>
                 </xsl:when>
                 <xsl:otherwise>
                     <i class="server icon"></i>
@@ -124,7 +122,7 @@
     <xsl:param name="scannedHost"/>
     <xsl:param name="scannedHostAddress"/>
     <xsl:variable name="serviceName" select="@name"/>
-    <xsl:variable name="scannedPort" select="$scannedHost/ports/port[service/@name=$serviceName or @portid=$serviceName]"/>
+    <xsl:variable name="scannedPort" select="$scannedHost/ports/port[service/@name=$serviceName or @portid=$serviceName][1]"/>
     <xsl:variable name="state">
         <xsl:choose>
             <xsl:when test="$scannedPort/script[@id='http-get']/elem[@key='status']>=400">red</xsl:when>
@@ -138,9 +136,9 @@
         <xsl:text>/</xsl:text>
         <xsl:value-of select="$scannedPort/@protocol"/>
         <xsl:text> </xsl:text>
-        <xsl:value-of select="$scannedPort/service/@name"/>
-        <xsl:text> </xsl:text>
         <xsl:value-of select="$scannedPort/state/@state"/>
+        <xsl:text> </xsl:text>
+        <xsl:value-of select="$scannedPort/service/@name"/>
         <xsl:if test="$scannedPort/script[@id='http-get']/elem[@key='status-line']">
             <xsl:text> </xsl:text>
             <xsl:value-of select="$scannedPort/script[@id='http-get']/elem[@key='status-line']"/>

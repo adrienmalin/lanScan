@@ -44,7 +44,7 @@ action = function(host, port)
   answer = http.get_url(scheme.."://"..hostaddress..":"..port.number.."/"..path)
 
   if (answer and answer.status == 200) then
-    favicon_relative_uri = parseIcon(answer.body) or "/favicon.ico"
+    favicon_relative_uri = parseIcon(answer.body) or "favicon.ico"
   end
   
   favicon_absolute_uri = scheme.."://"..hostaddress..":"..port.number.."/"..favicon_relative_uri
