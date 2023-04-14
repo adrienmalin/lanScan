@@ -34,7 +34,7 @@
     margin: auto;
 }
         </style>
-        <meta http-equiv="refresh" content="300"/>
+        <meta http-equiv="refresh" content="60"/>
     </head>
     <body>
         <header class="ui fixed blue inverted menu">
