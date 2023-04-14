@@ -46,13 +46,19 @@
                 <xsl:when test="$scan/runstats/finished/@errormsg">
                     <div class="ui negative icon message">
                         <i class="exclamation triangle icon"></i>
-                        <div class="header">Erreur</div>
-                        <p><xsl:value-of select="$scan/runstats/finished/@errormsg"/></p>
+                        <div class="content">
+                            <div class="header" style="text-transform: capitalize"><xsl:value-of select="$scan/runstats/finished/@exit"/></div>
+                            <p><xsl:value-of select="$scan/runstats/finished/@errormsg"/></p>
+                        </div>
                     </div>
                 </xsl:when>
                 <xsl:when test="$scan/runstats/finished/@summary">
-                    <div class="ui message">
-                        <p><xsl:value-of select="$scan/runstats/finished/@summary"/></p>
+                    <div class="ui icon message">
+                        <i class="sitemap icon"></i>
+                        <div class="content">
+                            <div class="header" style="text-transform: capitalize"><xsl:value-of select="$scan/runstats/finished/@exit"/></div>
+                            <p><xsl:value-of select="$scan/runstats/finished/@summary"/></p>
+                        </div>
                     </div>
                 </xsl:when>
             </xsl:choose>
