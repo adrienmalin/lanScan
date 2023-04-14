@@ -29,7 +29,6 @@ action = function(host, port)
   local hostaddress = (host.name ~= '' and host.name) or host.ip
   local path = "/"
   local uri
-  local answer
   local favicon_relative_uri = "/favicon.ico"
   local favicon
 
@@ -44,12 +43,19 @@ action = function(host, port)
   end
 
   uri = scheme.."://"..hostaddress..":"..port.number..path
-  answer = http.get_url(uri)
+  local answer = http.get_url(uri)
+
+  local info = {status=answer.status, ["status-line"]=answer["status-line"]}
 
   if (answer and answer.status == 200) then
     stdnse.debug1("[SUCCESS] Load page %s", uri)
-    favicon_relative_uri = parseIcon(answer.body) or "favicon.ico"
+    -- Taken from http-title.nse by Diman Todorov
+    local title = string.match(answer.body, "<[Tt][Ii][Tt][Ll][Ee][^>]*>([^<]*)</[Tt][Ii][Tt][Ll][Ee]>")
+    if (title) then
+      info.title = title
+    end
     stdnse.debug1("[INFO] Try favicon %s", favicon_relative_uri)
+    favicon_relative_uri = parseIcon(answer.body) or "favicon.ico"
   else
     stdnse.debug1("[ERROR] Can't load page %s", uri)
   end
@@ -59,11 +65,12 @@ action = function(host, port)
 
   if (favicon and favicon.status == 200) then
     stdnse.debug1("[SUCCESS] Load favicon %s", favicon_absolute_uri)
-    return {status=answer.status, ["status-line"]=answer["status-line"], favicon=favicon_absolute_uri}
+    info.favicon = favicon_absolute_uri
   else
     stdnse.debug1("[ERROR] Can't load favicon %s", favicon_absolute_uri)
-    return {status=answer.status, ["status-line"]=answer["status-line"]}
   end
+  
+  return info
 end
 
 --- function taken from http_favicon.nse by Vlatko Kosturjak

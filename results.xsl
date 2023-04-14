@@ -145,6 +145,7 @@
         </xsl:choose>
     </xsl:variable>
     <xsl:variable name="title">
+
         <xsl:value-of select="$scannedPort/@portid"/>
         <xsl:text>/</xsl:text>
         <xsl:value-of select="$scannedPort/@protocol"/>
@@ -152,9 +153,10 @@
         <xsl:value-of select="$scannedPort/state/@state"/>
         <xsl:text> </xsl:text>
         <xsl:value-of select="$scannedPort/service/@name"/>
-        <xsl:if test="$scannedPort/script[@id='http-info']/elem[@key='status-line']">
+        <xsl:if test="$scannedPort/script[@id='http-info']">
             <xsl:text> </xsl:text>
             <xsl:value-of select="$scannedPort/script[@id='http-info']/elem[@key='status-line']"/>
+            <xsl:value-of select="$scannedPort/script[@id='http-info']/elem[@key='title']"/>
         </xsl:if>
     </xsl:variable>
     <xsl:choose>
