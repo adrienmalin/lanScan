@@ -42,7 +42,18 @@
             <div class="item"><xsl:value-of select="@site"/></div>
         </header>
         <div class="ui main container">
-            <p><xsl:value-of select="$scan/runstats/finished/@summary"/></p>
+            <xsl:choose>
+                <xsl:when test="$scan/runstats/finished/@errormsg">
+                    <div class="ui negative message">
+                        <div class="header">Erreur</div>
+                    <p><xsl:value-of select="$scan/runstats/finished/@errormsg"/></p></div>
+                </xsl:when>
+                <xsl:when test="$scan/runstats/finished/@summary">
+                    <div class="ui message">
+                        <p><xsl:value-of select="$scan/runstats/finished/@summary"/></p>
+                    </div>
+                </xsl:when>
+            </xsl:choose>
             <xsl:apply-templates select="group"/>
         </div>
         <script>
