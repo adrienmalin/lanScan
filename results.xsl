@@ -39,7 +39,7 @@
     <body>
         <header class="ui fixed blue inverted menu">
             <a href="." class="header item">lan<img id="logo" src="../logo.svg" alt="S"/>can</a>
-            <div class="item"><xsl:value-of select="@site"/></div>
+            <div class="header center item"><xsl:value-of select="@site"/></div>
         </header>
         <div class="ui main container">
             <xsl:choose>
