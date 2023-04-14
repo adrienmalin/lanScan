@@ -44,9 +44,11 @@
         <div class="ui main container">
             <xsl:choose>
                 <xsl:when test="$scan/runstats/finished/@errormsg">
-                    <div class="ui negative message">
+                    <div class="ui negative icon message">
+                        <i class="exclamation triangle icon"></i>
                         <div class="header">Erreur</div>
-                    <p><xsl:value-of select="$scan/runstats/finished/@errormsg"/></p></div>
+                        <p><xsl:value-of select="$scan/runstats/finished/@errormsg"/></p>
+                    </div>
                 </xsl:when>
                 <xsl:when test="$scan/runstats/finished/@summary">
                     <div class="ui message">
@@ -95,8 +97,8 @@
         </xsl:variable>
         <div class="ui fluid mini left icon action input {$status}">
             <xsl:choose>
-                <xsl:when test="$scannedHost/ports/port/script[@id='http-get']/elem[@key='favicon']">
-                    <i class="icon"><img class="ui image" src="{$scannedHost/ports/port/script[@id='http-get']/elem[@key='favicon']}" alt=""/></i>
+                <xsl:when test="$scannedHost/ports/port/script[@id='http-info']/elem[@key='favicon']">
+                    <i class="icon"><img class="ui image" src="{$scannedHost/ports/port/script[@id='http-info']/elem[@key='favicon']}" alt=""/></i>
                 </xsl:when>
                 <xsl:otherwise>
                     <i class="server icon"></i>
@@ -136,7 +138,7 @@
     <xsl:variable name="scannedPort" select="$scannedHost/ports/port[service/@name=$serviceName or @portid=$serviceName][1]"/>
     <xsl:variable name="state">
         <xsl:choose>
-            <xsl:when test="$scannedPort/script[@id='http-get']/elem[@key='status']>=400">red</xsl:when>
+            <xsl:when test="$scannedPort/script[@id='http-info']/elem[@key='status']>=400">red</xsl:when>
             <xsl:when test="$scannedPort/state/@state='filtered'">yellow</xsl:when>
             <xsl:when test="$scannedPort/state/@state='open'">primary</xsl:when>
             <xsl:otherwise>red</xsl:otherwise>
@@ -150,9 +152,9 @@
         <xsl:value-of select="$scannedPort/state/@state"/>
         <xsl:text> </xsl:text>
         <xsl:value-of select="$scannedPort/service/@name"/>
-        <xsl:if test="$scannedPort/script[@id='http-get']/elem[@key='status-line']">
+        <xsl:if test="$scannedPort/script[@id='http-info']/elem[@key='status-line']">
             <xsl:text> </xsl:text>
-            <xsl:value-of select="$scannedPort/script[@id='http-get']/elem[@key='status-line']"/>
+            <xsl:value-of select="$scannedPort/script[@id='http-info']/elem[@key='status-line']"/>
         </xsl:if>
     </xsl:variable>
     <xsl:choose>

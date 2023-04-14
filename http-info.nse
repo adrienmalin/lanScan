@@ -27,9 +27,10 @@ local stdnse = require "stdnse"
 action = function(host, port)
   local scheme = ""
   local hostaddress = (host.name ~= '' and host.name) or host.ip
-  local path = ""
+  local path = "/"
+  local uri
   local answer
-  local favicon_relative_uri = "favicon.ico"
+  local favicon_relative_uri = "/favicon.ico"
   local favicon
 
   if (port.service == "ssl") then
@@ -39,21 +40,28 @@ action = function(host, port)
   end
 
   if(stdnse.get_script_args('http-get.path')) then
-    path = "/" .. stdnse.get_script_args('http-info.path')
+    path = stdnse.get_script_args('http-info.path')
   end
 
-  answer = http.get_url(scheme.."://"..hostaddress..":"..port.number.."/"..path)
+  uri = scheme.."://"..hostaddress..":"..port.number..path
+  answer = http.get_url(uri)
 
   if (answer and answer.status == 200) then
+    stdnse.debug1("[SUCCESS] Load page %s", uri)
     favicon_relative_uri = parseIcon(answer.body) or "favicon.ico"
+    stdnse.debug1("[INFO] Try favicon %s", favicon_relative_uri)
+  else
+    stdnse.debug1("[ERROR] Can't load page %s", uri)
   end
   
-  favicon_absolute_uri = scheme.."://"..hostaddress..":"..port.number.."/"..favicon_relative_uri
+  favicon_absolute_uri = scheme.."://"..hostaddress..":"..port.number..favicon_relative_uri
   favicon = http.get_url(favicon_absolute_uri)
 
   if (favicon and favicon.status == 200) then
+    stdnse.debug1("[SUCCESS] Load favicon %s", favicon_absolute_uri)
     return {status=answer.status, ["status-line"]=answer["status-line"], favicon=favicon_absolute_uri}
   else
+    stdnse.debug1("[ERROR] Can't load favicon %s", favicon_absolute_uri)
     return {status=answer.status, ["status-line"]=answer["status-line"]}
   end
 end
