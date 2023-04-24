@@ -112,7 +112,7 @@
             </xsl:choose>
             <input type="text" readonly="" value="{substring-before($scannedHost/hostnames/hostname/@name, '.')}"
                 title="{$scannedHost/hostnames/hostname/@name}" placeholder="{$scannedHost/address/@addr}"
-                onfocus="this.value='{$scannedHost/hostnames/hostname/@name}'; this.select()"
+                onfocus="this.value='{$scannedHostAddress}'; this.select()"
                 onblur="this.value='{substring-before($scannedHost/hostnames/hostname/@name, '.')}'"
             />
             <xsl:apply-templates select="service">
