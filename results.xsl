@@ -111,7 +111,7 @@
                 </xsl:otherwise>
             </xsl:choose>
             <input type="text" readonly="" value="{substring-before($scannedHost/hostnames/hostname/@name, '.')}"
-                title="{$scannedHost/hostnames/hostname/@name}" placeholder="{$scannedHost/address/@addr}"
+                title="{$scannedHost/hostnames/hostname/@name} ({$scannedHost/address/@addr})" placeholder="{$scannedHost/address/@addr}"
                 onfocus="this.value='{$scannedHostAddress}'; this.select()"
                 onblur="this.value='{substring-before($scannedHost/hostnames/hostname/@name, '.')}'"
             />
