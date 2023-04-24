@@ -38,7 +38,7 @@
     </head>
     <body>
         <header class="ui fixed blue inverted menu">
-            <a href="." class="header item">lan<img id="logo" src="../logo.svg" alt="S"/>can</a>
+            <a href=".." class="header item">lan<img id="logo" src="../logo.svg" alt="S"/>can</a>
             <div class="header center item"><xsl:value-of select="@site"/></div>
         </header>
         <div class="ui main container">
@@ -110,25 +110,7 @@
                     <i class="server icon"></i>
                 </xsl:otherwise>
             </xsl:choose>
-            <input type="text" readonly="">
-                <xsl:attribute name="value">
-                    <xsl:choose>
-                        <xsl:when test="substring-before($scannedHost/hostnames/hostname/@name, '.')"><xsl:value-of select="substring-before($scannedHost/hostnames/hostname/@name, '.')"/></xsl:when>
-                        <xsl:when test="$scannedHost/hostnames/hostname/@name"><xsl:value-of select="$scannedHost/hostnames/hostname/@name"/></xsl:when>
-                        <xsl:when test="$scannedHost/address/@addr"><xsl:value-of select="$scannedHost/address/@addr"/></xsl:when>
-                        <xsl:when test="contains('0123456789', substring(@address,1,1))"><xsl:value-of select="@address"/></xsl:when>
-                        <xsl:when test="substring-before(@address, '.')"><xsl:value-of select="substring-before(@address, '.')"/></xsl:when>
-                        <xsl:otherwise><xsl:value-of select="@address"/></xsl:otherwise>
-                    </xsl:choose>
-                </xsl:attribute>
-                <xsl:attribute name="title">
-                    <xsl:choose>
-                        <xsl:when test="$scannedHost/hostnames/hostname/@name"><xsl:value-of select="$scannedHost/hostnames/hostname/@name"/> (<xsl:value-of select="$scannedHost/address/@addr"/>)</xsl:when>
-                        <xsl:when test="$scannedHost/address/@addr"><xsl:value-of select="$scannedHost/address/@addr"/></xsl:when>
-                        <xsl:otherwise><xsl:value-of select="@address"/></xsl:otherwise>
-                    </xsl:choose>
-                </xsl:attribute>
-            </input>
+            <input type="text" readonly="" value="{substring-before($scannedHost/hostnames/hostname/@name, '.')}" title="{$scannedHost/hostnames/hostname/@name}" placeholder="{$scannedHost/address/@addr}" />
             <xsl:apply-templates select="service">
                 <xsl:with-param name="scannedHost" select="$scannedHost"/>
                 <xsl:with-param name="scannedHostAddress" select="$scannedHostAddress"/>
