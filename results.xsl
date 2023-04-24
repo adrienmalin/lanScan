@@ -110,7 +110,9 @@
                     <i class="server icon"></i>
                 </xsl:otherwise>
             </xsl:choose>
-            <input type="text" readonly="" value="{substring-before($scannedHost/hostnames/hostname/@name, '.')}" title="{$scannedHost/hostnames/hostname/@name}" placeholder="{$scannedHost/address/@addr}" />
+            <input type="text" readonly="" value="{substring-before($scannedHost/hostnames/hostname/@name, '.')}"
+                title="{$scannedHost/hostnames/hostname/@name}" placeholder="{$scannedHost/address/@addr}"
+                onfocus="this.value='{$scannedHost/hostnames/hostname/@name}'" onblur="this.value='{substring-before($scannedHost/hostnames/hostname/@name, '.')}'"/>
             <xsl:apply-templates select="service">
                 <xsl:with-param name="scannedHost" select="$scannedHost"/>
                 <xsl:with-param name="scannedHostAddress" select="$scannedHostAddress"/>
