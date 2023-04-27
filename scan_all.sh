@@ -1,13 +1,11 @@
 #!/usr/bin/env bash
 
-DIR="$(dirname -- "$0")"
+DIR="$(dirname -- $0)"
 
 mkdir -p "$DIR"/scans
 mkdir -p "$DIR"/site
 
 for conf in "$DIR"/confs/*.yaml
 do
-    site="$(basename ${conf/.yaml/})"
-    php "$DIR/nmap_cmd.php" $conf | sh
-    mv "$DIR/scans/.~$site.xml" "$DIR/scans/$site.xml"
+    ./scan.sh "$conf"
 done
