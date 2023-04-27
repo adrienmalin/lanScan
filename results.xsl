@@ -130,7 +130,8 @@
     <xsl:variable name="scannedPort" select="$scannedHost/ports/port[service/@name=$serviceName or @portid=$serviceName][1]"/>
     <xsl:variable name="state">
         <xsl:choose>
-            <xsl:when test="$scannedPort/script[@id='http-info']/elem[@key='status']>=400">red</xsl:when>
+            <xsl:when test="$scannedPort/script[@id='http-info']/elem[@key='status']>=500">red</xsl:when>
+            <xsl:when test="$scannedPort/script[@id='http-info']/elem[@key='status']>=400">yellow</xsl:when>
             <xsl:when test="$scannedPort/state/@state='filtered'">yellow</xsl:when>
             <xsl:when test="$scannedPort/state/@state='open'">primary</xsl:when>
             <xsl:otherwise>red</xsl:otherwise>
