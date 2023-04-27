@@ -39,5 +39,5 @@ $xml->asXML("site/$site.xml");
 $targets = join(array_keys($targets), " ");
 $services = join(array_keys($services), ",");
 
-echo ("nmap -Pn -p $services --script $__DIR__/http-info.nse -oX $__DIR__/scans/.~$site.xml $targets");
+echo ("nmap -v -Pn -p $services --script $__DIR__/http-info.nse -oX $__DIR__/scans/.~$site.xml $targets");
 ?>
