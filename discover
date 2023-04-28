@@ -1,0 +1,17 @@
+#!/usr/bin/env bash
+
+###
+#
+# Scan un réseau avec nmap pour créer un fichier de configuration
+# Usage : ./discover <network> avec network en notation CIDR XXX.XXX.XXX.XXX/XX
+#
+###
+
+DIR="$(dirname -- "$0")"
+network="$1"
+filename="${network/\//_}"
+
+mkdir -p "$DIR/scans"
+nmap -F -oX "$DIR/scans/$filename.xml" $network
+mkdir -p "$DIR/configs"
+xsltproc --stringparam network "$network" to_config.xsl "$DIR/scans/$filename.xml" > "$DIR/configs/$filename.yaml"

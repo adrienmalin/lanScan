@@ -1,0 +1,14 @@
+---
+title: Titre
+
+group:
+  - name: Réseau 192.168.1.0/24
+    host:
+      - address: 192.168.1.27
+        service: []
+      - address: 192.168.1.71
+        service: []
+      - address: biblio.malingrey.fr
+        service: [smtp, domain, http, imap, https, submission, imaps, ssh, mysql, blackice-icecap, snet-sensor-mgmt]
+      - address: 192.168.1.254
+        service: [ftp, domain, http, https, microsoft-ds, rtsp, wsdapi]

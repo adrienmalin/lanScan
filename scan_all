@@ -5,7 +5,7 @@ DIR="$(dirname -- $0)"
 mkdir -p "$DIR"/scans
 mkdir -p "$DIR"/site
 
-for conf in "$DIR"/confs/*.yaml
+for conf in "$DIR"/configs/*.yaml
 do
-    ./scan.sh "$conf"
+    ./scan "$conf"
 done
