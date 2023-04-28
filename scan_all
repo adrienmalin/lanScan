@@ -8,5 +8,5 @@ mkdir -p "$DIR"/site
 for config in "$DIR"/configs/*.yaml
 do
     echo $config
-    ./scan "$config"
+    ./scan "$config" &
 done
