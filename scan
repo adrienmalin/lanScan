@@ -1,12 +1,9 @@
 #!/usr/bin/env bash
 
 export DIR="$(dirname -- "$0")"
-echo $DIR
-conf="$1"
-echo $conf
+config="$1"
 
-site="$(basename ${conf/.yaml/})"
-echo $site
-php to_XML.php "$conf" > "$DIR/site/$site.xml"
+site="$(basename ${config/.yaml/})"
+php to_XML.php "$config" > "$DIR/site/$site.xml"
 xsltproc nmap_cmd.xsl "$DIR/site/$site.xml" | sh
 mv "$DIR/scans/$site.xml.tmp" "$DIR/scans/$site.xml"

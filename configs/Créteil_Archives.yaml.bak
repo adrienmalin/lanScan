@@ -1,9 +1,0 @@
----
-Créteil Archives:
-  VMWare:
-    win-drieat-9401.auth.ad.e2.rie.gouv.fr: [microsoft-ds, ms-wbt-server]
-    win-drieat-9403.auth.ad.e2.rie.gouv.fr: [microsoft-ds, ms-wbt-server]
-  Proxmox:
-    10.94.8.21: [ssh, 80]
-  Physiques:
-    10.94.8.20: [domain, ms-wbt-server]

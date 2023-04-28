@@ -5,12 +5,12 @@
     version="1.1">
 <xsl:output method="html" encoding="UTF-8" indent="yes"/>
 
-<xsl:variable name="scan" select="document(string(lanScanConfig/@scanpath))/nmaprun"/>
+<xsl:variable name="scan" select="document(string(lanScan/@scanpath))/nmaprun"/>
 
-<xsl:template match="lanScanConfig">
+<xsl:template match="lanScan">
 <html lang="fr">
     <head>
-        <title>lanScan - <xsl:value-of select="@title"/></title>
+        <title>lanScan - <xsl:value-of select="@site"/></title>
         <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.3/dist/jquery.min.js"></script>
         <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/fomantic-ui@2.9.2/dist/semantic.min.css"/>
         <script src="https://cdn.jsdelivr.net/npm/fomantic-ui@2.9.2/dist/semantic.min.js"></script>
@@ -39,7 +39,7 @@
     <body>
         <header class="ui fixed blue inverted menu">
             <a href=".." class="header item">lan<img id="logo" src="../logo.svg" alt="S"/>can</a>
-            <div class="header center item"><xsl:value-of select="@title"/></div>
+            <div class="header center item"><xsl:value-of select="@site"/></div>
         </header>
         <div class="ui main container">
             <xsl:choose>
@@ -62,7 +62,7 @@
                     </div>
                 </xsl:when>
             </xsl:choose>
-            <xsl:apply-templates select="group"/>
+            <xsl:apply-templates select="hosts"/>
         </div>
         <script>
             $('.ui.dropdown').dropdown()
@@ -71,7 +71,7 @@
 </html>
 </xsl:template>
 
-<xsl:template match="group">
+<xsl:template match="hosts">
     <h1 class="ui header"><xsl:value-of select="@name"/></h1>
     <div class="ui doubling stackable four column compact grid">
         <xsl:apply-templates select="host"/>
