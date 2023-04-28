@@ -90,7 +90,7 @@
                 <xsl:value-of select="$scannedHost/address/@addr"/>
             </xsl:when>
             <xsl:otherwise>
-                <xsl:value-of select="$scannedHost/address/@addr"/>
+                <xsl:value-of select="$address"/>
             </xsl:otherwise>
         </xsl:choose>
     </xsl:variable>
