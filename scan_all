@@ -1,12 +1,15 @@
 #!/usr/bin/env bash
 
-DIR="$(dirname -- $0)"
+pushd "$(dirname -- $0)" > /dev/null
 
-mkdir -p "$DIR"/scans
-mkdir -p "$DIR"/site
+mkdir -p scans
+mkdir -p site
 
-for config in "$DIR"/configs/*.yaml
+for config in configs/*.yaml
 do
-    echo $config
-    ./scan "$config" &
+    site="$(basename ${config/.yaml/})"
+    echo "Scan $site"
+    ./scan "$site" &
 done
+
+popd > /dev/null

@@ -3,17 +3,23 @@
 ###
 #
 # Scan un réseau avec nmap pour créer un fichier de configuration
-# Usage : ./discover <network> avec network en notation CIDR XXX.XXX.XXX.XXX/XX
+# Usage : ./discover <reseau> avec reseau en notation CIDR XXX.XXX.XXX.XXX/XX
 #
 ###
 
-DIR="$(dirname -- "$0")"
+if [ "$#" -ne 1 ]; then
+    echo -e "Usage : ./discover <CIDR>\navec <CIDR> l'adresse réseau en notation CIDR (XXX.XXX.XXX.XXX/XX)"  >&2
+    exit 1
+fi
+
+pushd "$(dirname -- "$0")" > /dev/null
 network="$1"
-filename="${network/\//_}"
+site="${network/\//_}"
 
-mkdir -p "$DIR/scans"
-nmap -F -oX "$DIR/scans/$filename.xml" $network
-mkdir -p "$DIR/configs"
-xsltproc --stringparam network "$network" to_config.xsl "$DIR/scans/$filename.xml" > "$DIR/configs/$filename.yaml"
-php to_XML.php "$DIR/configs/$filename.yaml" > "$DIR/site/$site.xml"
+mkdir -p "scans"
+nmap -F -oX "scans/$site.xml" $network
+mkdir -p "configs"
+xsltproc --stringparam network "$network" to_config.xsl "scans/$site.xml" > "configs/$site.yaml"
+php to_XML.php "configs/$site.yaml" > "site/$site.xml"
 
+popd > /dev/null
