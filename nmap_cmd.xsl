@@ -7,9 +7,9 @@
 
 <xsl:param name="site"/>
 
-<xsl:template match="lanScanConfig">
+<xsl:template match="lanScan">
 <xsl:text>nmap -v -T4 -p </xsl:text>
-<xsl:apply-templates select="//service"/>
+<xsl:apply-templates select="//service[not(.=preceding::*)]" />
 <xsl:text> --script "$DIR/http-info.nse" -oX "$DIR/</xsl:text>
 <xsl:value-of select="@scanpath"/>
 <xsl:text>.tmp" </xsl:text>

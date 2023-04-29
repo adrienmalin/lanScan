@@ -7,7 +7,7 @@ $conf = yaml_parse_file($file);
 
 $xml = new DomDocument("1.0");
 $xml->appendChild($xml->createProcessingInstruction("xml-stylesheet", "href='../results.xsl' type='text/xsl'"));
-$root = $xml->appendChild($xml->createElement("lanScanConfig"));
+$root = $xml->appendChild($xml->createElement("lanScan"));
 $root->setAttribute("scanpath", "scans/$site.xml");
 
 function appendArray($document, $node, $array) {

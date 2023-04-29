@@ -11,9 +11,9 @@ Il peut être généré en scannant un réseau (en notation CIDR) avec : `./disc
 ## Exemple 
 ```yaml
 ---
-title: Nom du site
+site: Nom du site
 
-group:
+hosts:
   - name: Nom du premier groupe
     host:
       - address: host1.local
