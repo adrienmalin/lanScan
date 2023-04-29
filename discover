@@ -15,3 +15,5 @@ mkdir -p "$DIR/scans"
 nmap -F -oX "$DIR/scans/$filename.xml" $network
 mkdir -p "$DIR/configs"
 xsltproc --stringparam network "$network" to_config.xsl "$DIR/scans/$filename.xml" > "$DIR/configs/$filename.yaml"
+php to_XML.php "$DIR/configs/$filename.yaml" > "$DIR/site/$site.xml"
+
