@@ -10,7 +10,11 @@
 <xsl:template match="lanScan">
 <xsl:text>nmap -v -T4 -p </xsl:text>
 <xsl:apply-templates select="//service[not(.=preceding::*)]" />
+<<<<<<< HEAD
 <xsl:text> --script nse/ -oX "</xsl:text>
+=======
+<xsl:text> --script "nse/" -oX "</xsl:text>
+>>>>>>> 5378e16e2468588a441a1e37ceb38239f0851374
 <xsl:value-of select="@scanpath"/>
 <xsl:text>.tmp" </xsl:text>
 <xsl:apply-templates select="//host"/>
