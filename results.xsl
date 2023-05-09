@@ -94,6 +94,12 @@
             </xsl:otherwise>
         </xsl:choose>
     </xsl:variable>
+    <xsl:variable name="name">
+        <xsl:choose>
+            <xsl:when test="@name"><xsl:value-of select="@name"/></xsl:when>
+            <xsl:when test="$scannedHost/hostnames/hostname/@name"><xsl:value-of select="substring-before($scannedHost/hostnames/hostname/@name, '.')"/></xsl:when>
+        </xsl:choose>
+    </xsl:variable>
     <div class="column">
         <xsl:variable name="status">
             <xsl:choose>
@@ -110,10 +116,9 @@
                     <i class="server icon"></i>
                 </xsl:otherwise>
             </xsl:choose>
-            <input type="text" readonly="" value="{substring-before($scannedHost/hostnames/hostname/@name, '.')}"
-                title="{$scannedHost/hostnames/hostname/@name} ({$scannedHost/address/@addr})" placeholder="{$scannedHost/address/@addr}"
-                onfocus="this.value='{$scannedHostAddress}'; this.select()"
-                onblur="this.value='{substring-before($scannedHost/hostnames/hostname/@name, '.')}'"
+            <input type="text" readonly="" value="{$name}" placeholder="{$scannedHost/address/@addr}"
+            title="{@comment} {$scannedHost/hostnames/hostname/@name} ({$scannedHost/address/@addr}) "
+                onfocus="this.value='{$scannedHostAddress}'; this.select()" onblur="this.value='{$name}'"
             />
             <xsl:apply-templates select="service">
                 <xsl:with-param name="scannedHost" select="$scannedHost"/>
@@ -145,9 +150,8 @@
         <xsl:value-of select="$scannedPort/state/@state"/>
         <xsl:text> </xsl:text>
         <xsl:value-of select="$scannedPort/service/@name"/>
-        <xsl:if test="$scannedPort/script[@id='http-info']">
-            <xsl:text> </xsl:text>
-            <xsl:value-of select="$scannedPort/script[@id='http-info']/elem[@key='status-line']"/>
+        <xsl:if test="$scannedPort/script[@id='http-info']"><xsl:text>
+</xsl:text><xsl:value-of select="$scannedPort/script[@id='http-info']/elem[@key='status-line']"/>
             <xsl:value-of select="$scannedPort/script[@id='http-info']/elem[@key='title']"/>
         </xsl:if>
     </xsl:variable>
@@ -163,7 +167,7 @@
                 </div>
             </div>
         </xsl:when>
-        <xsl:when test="$scannedPort/service/@name='ms-wbt-server' or $scannedPort/service/@name='rdp'">
+        <xsl:when test="$scannedPort/service/@name='ms-wbt-server' or $scannedPort/service/@name='msrpc'">
             <a class="ui {$state} mini button" href="../rdp.php?v={$scannedHostAddress}:{$scannedPort/@portid}" title="{$title}">
                 <xsl:value-of select="$serviceName"/>
             </a>
