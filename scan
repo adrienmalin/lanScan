@@ -8,8 +8,8 @@ fi
 pushd "$(dirname -- "$0")" > /dev/null
 site="$(basename ${1/.yaml/})"
 
-php "to_XML.php" "configs/$site.yaml" > "site/$site.xml"
-eval $(xsltproc "nmap_cmd.xsl" "site/$site.xml")
-mv "scans/$site.xml.tmp" "scans/$site.xml"
+php "to_XML.php" "configs/$site.yaml" > "site/$site.xml" \
+&& eval $(xsltproc "nmap_cmd.xsl" "site/$site.xml") \
+&& mv "scans/$site.xml.tmp" "scans/$site.xml"
 
 popd  > /dev/null
