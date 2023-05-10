@@ -33,6 +33,21 @@
     height: 16px;
     margin: auto;
 }
+
+.share-size.primary {
+    --bg: #1678c2;
+}
+
+.share-size.item {
+    --bg: white;
+}
+
+.share-size {
+    --free-ratio: calc(var(--free) / var(--total));
+    --used-percent: calc(100% - 100%*var(--free-ratio));
+    --color: hsl(calc(120*var(--free-ratio)) 100% 50%);
+    background: linear-gradient(to right, var(--color) var(--used-percent), var(--bg) var(--used-percent), var(--bg)) !important;
+}
         </style>
         <meta http-equiv="refresh" content="60"/>
     </head>
@@ -156,13 +171,14 @@
         </xsl:if>
     </xsl:variable>
     <xsl:choose>
-        <xsl:when test="($scannedPort/service/@name='microsoft-ds' or $scannedPort/service/@name='netbios-ssn' or $scannedPort/service/@name='smb') and $scannedHost/hostscript/script[@id='smb-enum-shares']/table[not(contains(@key, '$'))]">
-            <div class="ui {$state} dropdown mini button" title="{$title}">
-                <div class="text"><xsl:value-of select="@name"/></div>
+        <xsl:when test="($scannedPort/service/@name='microsoft-ds' or $scannedPort/service/@name='netbios-ssn' or $scannedPort/service/@name='smb') and $scannedHost/hostscript/script[@id='smb-shares-size']">
+            <div class="ui {$state} dropdown mini button share-size" title="{$title}" style="--free:{$scannedHost/hostscript/script[@id='smb-shares-size']/table/elem[@key='FreeSize']}; --total:{$scannedHost/hostscript/script[@id='smb-shares-size']/table/elem[@key='TotalSize']}">
+                <xsl:value-of select="$serviceName"/>
                 <i class="dropdown icon"></i>
                 <div class="menu">
-                    <xsl:apply-templates select="$scannedHost/hostscript/script[@id='smb-enum-shares']/table[not(contains(@key, '$'))]">
-                        <xsl:with-param name="scannedHost" select="$scannedHost"/>
+                    <!-- xsl:apply-templates select="$scannedHost/hostscript/script[@id='smb-shares-size']/table[not(contains(@key, '$'))]" -->
+                    <xsl:apply-templates select="$scannedHost/hostscript/script[@id='smb-shares-size']/table">
+                        <xsl:with-param name="scannedHostAddress" select="$scannedHostAddress"/>
                     </xsl:apply-templates>
                 </div>
             </div>
@@ -187,21 +203,9 @@
 
 
 <xsl:template match="table">
-    <xsl:param name="scannedHost"/>
-    <xsl:variable name="path">
-        <xsl:choose>
-            <xsl:when test="$scannedHost/hostnames/hostname/@name and contains(@key, $scannedHost/address/@addr)">
-                <xsl:text>\\</xsl:text>
-                <xsl:value-of select="$scannedHost/hostnames/hostname/@name"/>
-                <xsl:value-of select="substring-after(@key, $scannedHost/address/@addr)"/>
-            </xsl:when>
-            <xsl:otherwise>
-                <xsl:value-of select="@key"/>
-            </xsl:otherwise>
-        </xsl:choose>
-    </xsl:variable>
-    <a class="item" href="file:///{$path}" target="_blank" rel="noopener noreferrer">
-        <xsl:value-of select="elem[@key='Comment']"/>
+    <xsl:param name="scannedHostAddress"/>
+    <a class="item share-size" href="file://///{$scannedHostAddress}/{@key}" target="_blank" rel="noopener noreferrer" style="--free:{elem[@key='FreeSize']}; --total:{elem[@key='TotalSize']}">
+        <xsl:value-of select="@key"/>
     </a>
 </xsl:template>
 
