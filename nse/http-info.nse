@@ -7,7 +7,7 @@ Get and return a page info
 ---
 -- @args http-get.path Path to get. Default /.
 --
--- @usage nmap -p80 --script http-info.nse --script-args http-info.path=/ <target>
+-- @usage nmap -p80 --script http-info.nse --script-args http-info.path=/ <host>
 --
 -- @output
 -- status: 200

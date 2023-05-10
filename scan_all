@@ -9,7 +9,7 @@ for config in configs/*.yaml
 do
     site="$(basename ${config/.yaml/})"
     echo "Scan $site"
-    ./scan "$site" &
+    ./scan "$site"
 done
 
 popd > /dev/null
