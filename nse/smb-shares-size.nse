@@ -10,11 +10,11 @@ Return free and total size in octets of each SMB shares
 ---
 -- @args See the documentation for the smbauth library.
 --
--- @usage nmap -p445 --script smb-shares-du.nse <host>
+-- @usage nmap -p445 --script smb-shares-size.nse <host>
 --
 -- @output
 -- Host script results:
--- | smb-shares-du:
+-- | smb-shares-size:
 -- |   data:
 -- |     FreeSize: 38495883264
 -- |     TotalSize: 500961574912
