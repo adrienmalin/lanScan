@@ -164,18 +164,28 @@
     </xsl:variable>
     <xsl:choose>
         <xsl:when test="($scannedPort/service/@name='microsoft-ds' or $scannedPort/service/@name='netbios-ssn' or $scannedPort/service/@name='smb') and $scannedHost/hostscript/script[@id='smb-shares-size']">
-            <div class="ui {$state} dropdown mini button share-size" title="{$title}" style="--free:{$scannedHost/hostscript/script[@id='smb-shares-size']/table/elem[@key='FreeSize']}; --total:{$scannedHost/hostscript/script[@id='smb-shares-size']/table/elem[@key='TotalSize']}">
+            <div class="ui {$state} dropdown mini button share-size" title="{$title}">
+                <xsl:attribute name="style">
+                    <xsl:for-each select="$scannedHost/hostscript/script[@id='smb-shares-size']/table">
+                        <xsl:sort select="elem[@key='FreeSize'] div elem[@key='TotalSize']" order="ascending"/>
+                        <xsl:if test="position()=1">
+                            <xsl:text>--free: </xsl:text>
+                            <xsl:value-of select="elem[@key='FreeSize']"/>
+                            <xsl:text>; --total: </xsl:text>
+                            <xsl:value-of select="elem[@key='TotalSize']"/>
+                        </xsl:if>
+                    </xsl:for-each>
+                </xsl:attribute>
                 <xsl:value-of select="$serviceName"/>
                 <i class="dropdown icon"></i>
                 <div class="menu">
-                    <!-- xsl:apply-templates select="$scannedHost/hostscript/script[@id='smb-shares-size']/table[not(contains(@key, '$'))]" -->
                     <xsl:apply-templates select="$scannedHost/hostscript/script[@id='smb-shares-size']/table">
                         <xsl:with-param name="scannedHostAddress" select="$scannedHostAddress"/>
                     </xsl:apply-templates>
                 </div>
             </div>
         </xsl:when>
-        <xsl:when test="$scannedPort/service/@name='ms-wbt-server' or $scannedPort/service/@name='msrpc'">
+        <xsl:when test="$scannedPort/service/@name='ms-wbt-server' or $scannedPort/service/@name='rdp'">
             <a class="ui {$state} mini button" href="../rdp.php?v={$scannedHostAddress}:{$scannedPort/@portid}" title="{$title}">
                 <xsl:value-of select="$serviceName"/>
             </a>
@@ -196,7 +206,7 @@
 
 <xsl:template match="table">
     <xsl:param name="scannedHostAddress"/>
-    <a class="item share-size" href="file://///{$scannedHostAddress}/{@key}" target="_blank" rel="noopener noreferrer" style="--free:{elem[@key='FreeSize']}; --total:{elem[@key='TotalSize']}">
+    <a class="item share-size" href="file://///{$scannedHostAddress}/{@key}" target="_blank" rel="noopener noreferrer" style="--free: {elem[@key='FreeSize']}; --total: {elem[@key='TotalSize']}">
         <xsl:value-of select="@key"/>
     </a>
 </xsl:template>
