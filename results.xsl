@@ -34,11 +34,11 @@
     margin: auto;
 }
 
-.share-size.primary {
-    --bg: #1678c2;
+.button.share-size {
+    --bg: #21ba45;
 }
 
-.share-size.item {
+.item.share-size {
     --bg: white;
 }
 
@@ -118,7 +118,7 @@
     <div class="column">
         <xsl:variable name="status">
             <xsl:choose>
-                <xsl:when test="$scannedHost/status/@state='up'">info</xsl:when>
+                <xsl:when test="$scannedHost/status/@state='up'">success</xsl:when>
                 <xsl:otherwise>error</xsl:otherwise>
             </xsl:choose>
         </xsl:variable>
@@ -153,7 +153,7 @@
             <xsl:when test="$scannedPort/script[@id='http-info']/elem[@key='status']>=500">red</xsl:when>
             <xsl:when test="$scannedPort/script[@id='http-info']/elem[@key='status']>=400">yellow</xsl:when>
             <xsl:when test="$scannedPort/state/@state='filtered'">yellow</xsl:when>
-            <xsl:when test="$scannedPort/state/@state='open'">primary</xsl:when>
+            <xsl:when test="$scannedPort/state/@state='open'">green</xsl:when>
             <xsl:otherwise>red</xsl:otherwise>
         </xsl:choose>
     </xsl:variable>

@@ -43,12 +43,13 @@ action = function(host)
   -- Get more information on each share
   for i = 1, #shares, 1 do
     local share = shares[i]
-
-    local status, result = get_share_info(host, share)
-    response[share] = result
+    if (share ~= nil) then
+      local status, result = get_share_info(host, share)
+      if (status) then
+        response[share] = result
+      end
+    end
   end
-
-  --table.sort(response)
 
   return response
 end
