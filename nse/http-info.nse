@@ -43,7 +43,8 @@ action = function(host, port)
   end
 
   uri = scheme.."://"..hostaddress..":"..port.number..path
-  local answer = http.get_url(uri)
+  stdnse.debug1("Try to download %s", uri)
+  local answer = http.get_url(uri, {})
 
   local info = {status=answer.status, ["status-line"]=answer["status-line"]}
 
@@ -61,7 +62,7 @@ action = function(host, port)
   end
   
   favicon_absolute_uri = scheme.."://"..hostaddress..":"..port.number..favicon_relative_uri
-  favicon = http.get_url(favicon_absolute_uri)
+  favicon = http.get_url(favicon_absolute_uri, {})
 
   if (favicon and favicon.status == 200) then
     stdnse.debug1("[SUCCESS] Load favicon %s", favicon_absolute_uri)
