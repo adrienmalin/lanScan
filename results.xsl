@@ -34,19 +34,11 @@
     margin: auto;
 }
 
-.button.share-size {
-    --bg: #21ba45;
-}
-
-.item.share-size {
-    --bg: white;
-}
-
 .share-size {
     --free-ratio: calc(var(--free) / var(--total));
     --used-percent: calc(100% - 100%*var(--free-ratio));
     --color: hsl(calc(120*var(--free-ratio)) 100% 50%);
-    background: linear-gradient(to right, var(--color) var(--used-percent), var(--bg) var(--used-percent), var(--bg)) !important;
+    background-image: linear-gradient(to right, var(--color) var(--used-percent), transparent var(--used-percent), transparent) !important;
 }
         </style>
         <meta http-equiv="refresh" content="60"/>
