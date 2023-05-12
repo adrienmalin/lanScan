@@ -1,5 +1,6 @@
 local stdnse    = require "stdnse"
 local smb       = require "smb"
+local smb2      = require "smb2"
 local msrpc     = require "msrpc"
 local bin       = require "bin"
 local shortport = require "shortport"
@@ -146,7 +147,11 @@ function send_transaction2(smbstate, sub_command, function_parameters, function_
   stdnse.debug2("SMB: Sending SMB_COM_TRANSACTION2")
   local result, err = smb.smb_send(smbstate, header, parameters, data, overrides)
   if(result == false) then
-    return false, err
+    stdnse.debug1("SMB: Try SMBv2 connexion")
+    local result, err = smb2.smb2_send(smbstate, header, parameters, data, overrides)
+    if(result == false) then
+      return false, err
+    end
   end
 
   return true
@@ -157,7 +162,11 @@ function receive_transaction2(smbstate)
   -- Read the result
   local status, header, parameters, data = smb.smb_read(smbstate)
   if(status ~= true) then
-    return false, header
+    stdnse.debug1("SMB: Try SMBv2 connexion")
+    local status, header, parameters, data = smb2.smb2_read(smbstate)
+      if(status ~= true) then
+        return false, header
+      end
   end
 
   -- Check if it worked
