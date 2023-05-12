@@ -142,10 +142,8 @@
     <xsl:variable name="scannedPort" select="$scannedHost/ports/port[service/@name=$serviceName or @portid=$serviceName][1]"/>
     <xsl:variable name="state">
         <xsl:choose>
-            <xsl:when test="$scannedPort/script[@id='http-info']/elem[@key='status']>=500">red</xsl:when>
-            <xsl:when test="$scannedPort/script[@id='http-info']/elem[@key='status']>=400">yellow</xsl:when>
-            <xsl:when test="$scannedPort/state/@state='filtered'">yellow</xsl:when>
             <xsl:when test="$scannedPort/state/@state='open'">green</xsl:when>
+            <xsl:when test="$scannedPort/state/@state='filtered'">yellow</xsl:when>
             <xsl:otherwise>red</xsl:otherwise>
         </xsl:choose>
     </xsl:variable>
@@ -157,16 +155,12 @@
         <xsl:value-of select="$scannedPort/state/@state"/>
         <xsl:text> </xsl:text>
         <xsl:value-of select="$scannedPort/service/@name"/>
-        <xsl:if test="$scannedPort/script[@id='http-info']"><xsl:text>
-</xsl:text><xsl:value-of select="$scannedPort/script[@id='http-info']/elem[@key='status-line']"/>
-            <xsl:value-of select="$scannedPort/script[@id='http-info']/elem[@key='title']"/>
-        </xsl:if>
     </xsl:variable>
     <xsl:choose>
-        <xsl:when test="($scannedPort/service/@name='microsoft-ds' or $scannedPort/service/@name='netbios-ssn' or $scannedPort/service/@name='smb') and $scannedHost/hostscript/script[@id='smb-shares-size']">
+        <xsl:when test="$scannedPort/script[@id='smb-shares-size']/table">
             <div class="ui {$state} dropdown mini button share-size" title="{$title}">
                 <xsl:attribute name="style">
-                    <xsl:for-each select="$scannedHost/hostscript/script[@id='smb-shares-size']/table">
+                    <xsl:for-each select="$scannedPort/script[@id='smb-shares-size']/table">
                         <xsl:sort select="elem[@key='FreeSize'] div elem[@key='TotalSize']" order="ascending"/>
                         <xsl:if test="position()=1">
                             <xsl:text>--free: </xsl:text>
@@ -179,7 +173,7 @@
                 <xsl:value-of select="$serviceName"/>
                 <i class="dropdown icon"></i>
                 <div class="menu">
-                    <xsl:apply-templates select="$scannedHost/hostscript/script[@id='smb-shares-size']/table">
+                    <xsl:apply-templates select="$scannedPort/script[@id='smb-shares-size']/table">
                         <xsl:with-param name="scannedHostAddress" select="$scannedHostAddress"/>
                     </xsl:apply-templates>
                 </div>
@@ -187,6 +181,20 @@
         </xsl:when>
         <xsl:when test="$scannedPort/service/@name='ms-wbt-server' or $scannedPort/service/@name='rdp'">
             <a class="ui {$state} mini button" href="../rdp.php?v={$scannedHostAddress}:{$scannedPort/@portid}" title="{$title}">
+                <xsl:value-of select="$serviceName"/>
+            </a>
+        </xsl:when>
+        <xsl:when test="$scannedPort/script[@id='http-info']">
+            <xsl:variable name="status">
+                <xsl:choose>
+                    <xsl:when test="$scannedPort/script[@id='http-info']/elem[@key='status']>=500">red</xsl:when>
+                    <xsl:when test="$scannedPort/script[@id='http-info']/elem[@key='status']>=400">yellow</xsl:when>
+                    <xsl:when test="$scannedPort/script[@id='http-info']/elem[@key='status']>=200">green</xsl:when>
+                    <xsl:otherwise>red</xsl:otherwise>
+                </xsl:choose>
+            </xsl:variable>
+            <a class="ui {$status} mini button" href="{$scannedPort/service/@name}://{$scannedHostAddress}:{$scannedPort/@portid}"  target="_blank"
+            title="{$scannedPort/script[@id='http-info']/elem[@key='title' or @key='status-line']}">
                 <xsl:value-of select="$serviceName"/>
             </a>
         </xsl:when>

@@ -20,7 +20,6 @@ license = "Same as Nmap--See https://nmap.org/book/man-legal.html"
 
 portrule = shortport.service({"http", "https", "ssl"})
 
-
 local http = require "http"
 local stdnse = require "stdnse"
 
