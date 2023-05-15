@@ -69,7 +69,7 @@
                     </div>
                 </xsl:when>
             </xsl:choose>
-            <xsl:apply-templates select="hosts"/>
+            <xsl:apply-templates select="group"/>
         </div>
         <script>
             $('.ui.dropdown').dropdown()
@@ -78,7 +78,7 @@
 </html>
 </xsl:template>
 
-<xsl:template match="hosts">
+<xsl:template match="group">
     <h1 class="ui header"><xsl:value-of select="@name"/></h1>
     <div class="ui doubling stackable four column compact grid">
         <xsl:apply-templates select="host"/>

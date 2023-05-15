@@ -11,7 +11,7 @@
 <xsl:text>---
 site: Nom du site
 
-hosts:
+group:
   - name: Réseau </xsl:text><xsl:value-of select="$network"/><xsl:text>
     host:
 </xsl:text>
