@@ -10,7 +10,7 @@
 <xsl:template match="lanScan">
 <html lang="fr">
     <head>
-        <title>lanScan - <xsl:value-of select="@site"/></title>
+        <title><xsl:value-of select="@site"/> - lanScan</title>
         <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.3/dist/jquery.min.js"></script>
         <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/fomantic-ui@2.9.2/dist/semantic.min.css"/>
         <script src="https://cdn.jsdelivr.net/npm/fomantic-ui@2.9.2/dist/semantic.min.js"></script>
