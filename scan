@@ -6,9 +6,9 @@ if [ "$#" -ne 1 ]; then
 fi
 
 pushd "$(dirname -- "$0")" > /dev/null
-site="$(basename ${1/.yaml/})"
+site="$(basename ${1/.yml/})"
 
-php "to_XML.php" "configs/$site.yaml" > "site/$site.xml" \
+php "to_XML.php" "configs/$site.yml" > "site/$site.xml" \
 && eval $(xsltproc "nmap_cmd.xsl" "site/$site.xml") \
 && mv "scans/$site.xml.tmp" "scans/$site.xml"
 

@@ -1,6 +1,6 @@
 <?php
 $file = $argv[1];
-$site = basename($file, ".yaml");
+$site = basename($file, ".yml");
 $__DIR__ = __DIR__;
 
 $conf = yaml_parse_file($file);

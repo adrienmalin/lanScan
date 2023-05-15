@@ -19,7 +19,7 @@ site="${network/\//_}"
 mkdir -p "scans"
 nmap -F -oX "scans/$site.xml" $network
 mkdir -p "configs"
-xsltproc --stringparam network "$network" to_config.xsl "scans/$site.xml" > "configs/$site.yaml"
-php to_XML.php "configs/$site.yaml" > "site/$site.xml"
+xsltproc --stringparam network "$network" to_config.xsl "scans/$site.xml" > "configs/$site.yml"
+php to_XML.php "configs/$site.yml" > "site/$site.xml"
 
 popd > /dev/null
