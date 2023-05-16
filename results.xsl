@@ -80,7 +80,7 @@
 
 <xsl:template match="group">
     <h1 class="ui header"><xsl:value-of select="@name"/></h1>
-    <div class="ui doubling stackable four column compact grid">
+    <div class="ui doubling stackable five column compact grid">
         <xsl:apply-templates select="host"/>
     </div>
 </xsl:template>

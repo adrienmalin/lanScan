@@ -16,6 +16,7 @@ group:
     host:
 </xsl:text>
 <xsl:apply-templates select="host"/>
+<xsl:text>...</xsl:text>
 </xsl:template>
 
 <xsl:template match="host">
