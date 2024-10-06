@@ -1,0 +1,31 @@
+.header svg {
+    margin: -.5em -.4em -.5em -.4em;
+    fill: currentColor;
+}
+
+.main.container {
+    margin-top: 7em;
+}
+
+.tagify {
+    width: 100%;
+    border-radius: .28571429rem;
+    --tags-focus-border-color: #85b7d9;
+    --placeholder-color: rgba(191,191,191,.87);
+    --placeholder-color-focus: rgba(115,115,115,.87);
+}
+
+.ui.label {
+    margin: .14285714em;
+}
+
+.ui.label > .detail {
+    margin-left: .3em;
+}
+
+.share-size {
+    --free-ratio: calc(var(--free) / var(--total));
+    --used-percent: calc(100% - 100%*var(--free-ratio));
+    --color: hsl(calc(120*var(--free-ratio)) 100% 50%);
+    background-image: linear-gradient(to right, var(--color) var(--used-percent), transparent var(--used-percent), transparent) !important;
+}
