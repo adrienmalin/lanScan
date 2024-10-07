@@ -31,7 +31,7 @@ $targets = filter_input(INPUT_GET, 'targets', FILTER_VALIDATE_REGEXP, [
               <div class="ui icon input">
                   <form id="newScanForm" class="ui form" method="get" action="scan.php">
                       <input class="prompt" type="text" name="targets" placeholder="Scanner un réseau..." required="" autocomplete="off" title="Les cibles peuvent être spécifiées par des noms d'hôtes, des adresses IP, des adresses de réseaux, etc.
-Exemple: scanme.nmap.org microsoft.com/24 192.168.0.1 10.0-255.0-255.1-254" pattern="[a-zA-Z0-9._\/ \-]+" value="<?=$targets; ?>" />
+Exemple: <?=$_SERVER['REMOTE_ADDR']; ?>/24 <?=$_SERVER['SERVER_NAME']; ?>" pattern="[a-zA-Z0-9._\/ \-]+" value="<?=$targets; ?>" />
                   </form>
                   <i class="satellite dish icon"></i>
               </div>
@@ -49,7 +49,8 @@ if (!file_exists($SCANS_DIR)) {
 }
 foreach (scandir($SCANS_DIR) as $scan) {
     if (substr($scan, -9) == '_init.xml') {
-        echo "<li><a class='item' href='$SCANS_DIR/$scan'>".str_replace('!', '/', substr_replace($scan, '', -9))."</a></li>\n";
+        $targets = str_replace('!', '/', substr_replace($scan, '', -9));
+        echo "<li><a class='item' href='scan.php?targets=".urlencode($targets)."'>$targets</a></li>\n";
     }
 }
 ?>
