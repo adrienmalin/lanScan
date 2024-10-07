@@ -1,13 +1,6 @@
 <?php
-$name = filter_input(INPUT_GET, 'name', FILTER_VALIDATE_REGEXP, [
-  'flags' => FILTER_NULL_ON_FAILURE,
-  'options' => ['regexp' => '/^[^<>:"\/|?]+$/'],
-]);
+include_once 'common.php';
 
-$targets = filter_input(INPUT_GET, 'targets', FILTER_VALIDATE_REGEXP, [
-  'flags' => FILTER_NULL_ON_FAILURE,
-  'options' => ['regexp' => '/^[\da-zA-Z.:\/_ -]+$/'],
-]);
 if (!$targets) {
     $targets = $_SERVER['SERVER_NAME'].' '.$_SERVER['REMOTE_ADDR'];
 }

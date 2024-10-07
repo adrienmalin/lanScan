@@ -31,7 +31,7 @@
 
             <body>
                 <nav class="ui inverted teal fixed menu">
-                    <a class="header item" href=".">
+                    <a class="header item" href="./?targets={$targets}">
                         <xsl:text>lan</xsl:text>
                         <svg class="logo" version="1.1" id="Layer_1" x="0px" y="0px" viewBox="0 0 24 24" xml:space="preserve" width="40" height="40"
                             xmlns="http://www.w3.org/2000/svg"
@@ -83,18 +83,21 @@
                         <xsl:text>can</xsl:text>
                     </a>
 
-                    <div class="right menu">
-                        <iconsearch class="ui right aligned search category item">
-                            <div class="ui icon input">
-                                <form id="newScanForm" class="ui form" method="get" action="scan.php">
-                                    <input class="prompt" type="text" name="targets" placeholder="Scanner un réseau..." required="" autocomplete="off" title="Les cibles peuvent être spécifiées par des noms d'hôtes, des adresses IP, des adresses de réseaux, etc.
-Exemple: scanme.nmap.org microsoft.com/24 192.168.0.1 10.0-255.0-255.1-254" pattern="[a-zA-Z0-9._\/ \-]+" value="{$targets}" />
-                                </form>
-                                <i class="satellite dish icon"></i>
-                            </div>
-                            <div class="results"></div>
-                        </iconsearch>
-                    </div>
+                    <form class="right menu">
+                      <div class="ui category search item">
+                        <div class="ui icon input">
+                          <input class="prompt" type="text" id="targetsInput" name="targets" required=""
+                            pattern="[a-zA-Z0-9._\/ \-]+" value="{$targets}" placeholder="Scanner un réseau..."
+                            title="Les cibles peuvent être spécifiées par des noms d'hôtes, des adresses IP, des adresses de réseaux, etc.
+Exemple: 192.168.1.0/24 scanme.nmap.org"/>
+                          <i class="satellite dish icon"></i>
+                          <button style="display:none" type="submit" formaction="scan.php" formmethod="get"></button>
+                        </div>
+                      </div>
+                      <div class="item" >
+                        <button class="ui teal button" type="submit" formaction="scan-options.php" formmethod="get">Options</button>
+                      </div>
+                    </form>
                 </nav>
 
                 <main class="ui main container">
@@ -246,7 +249,7 @@ Exemple: scanme.nmap.org microsoft.com/24 192.168.0.1 10.0-255.0-255.1-254" patt
                 </xsl:attribute>
             </xsl:if>
             <xsl:if test="service/@name='ms-wbt-server'">
-                <xsl:attribute name="href">rdp.php?v=<xsl:value-of select="$hostAddress" />:<xsl:value-of select="@portid" />
+                <xsl:attribute name="href">rdp.php?v=<xsl:value-of select="$hostAddress" />&amp;p=<xsl:value-of select="@portid" />
             </xsl:attribute>
         </xsl:if>
         <xsl:if test="(service/@name='microsoft-ds' or service/@name='netbios-ssn') and ../../hostscript/script[@id='smb-shares-size']/table">

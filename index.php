@@ -1,11 +1,4 @@
-<?php
-include_once 'config.php';
-
-$targets = filter_input(INPUT_GET, 'targets', FILTER_VALIDATE_REGEXP, [
-  'flags' => FILTER_NULL_ON_FAILURE,
-  'options' => ['regexp' => '/^[\da-zA-Z.:\/_ -]+$/'],
-]);
-?>
+<?php include_once 'common.php'; ?>
 <!DOCTYPE html>
 <html lang="fr">
 
@@ -27,18 +20,21 @@ $targets = filter_input(INPUT_GET, 'targets', FILTER_VALIDATE_REGEXP, [
       <a class="header item" href=".">
         lan<?php include 'logo.svg'; ?>can
       </a>
-      <div class="right menu">
-          <iconsearch class="ui right aligned search category item">
-              <div class="ui icon input">
-                  <form id="newScanForm" class="ui form" method="get" action="scan.php">
-                      <input class="prompt" type="text" name="targets" placeholder="Scanner un réseau..." required="" autocomplete="off" title="Les cibles peuvent être spécifiées par des noms d'hôtes, des adresses IP, des adresses de réseaux, etc.
-Exemple: <?=$_SERVER['REMOTE_ADDR']; ?>/24 <?=$_SERVER['SERVER_NAME']; ?>" pattern="[a-zA-Z0-9._\/ \-]+" value="<?=$targets; ?>" />
-                  </form>
-                  <i class="satellite dish icon"></i>
-              </div>
-              <div class="results"></div>
-          </iconsearch>
-      </div>
+      <form class="right menu">
+        <div class="ui category search item">
+          <div class="ui icon input">
+            <input class="prompt" type="text" id="targetsInput" name="targets" required=""
+            pattern="[a-zA-Z0-9._\/ \-]+" value="<?=$targets; ?>" placeholder="Scanner un réseau..."
+            title="Les cibles peuvent être spécifiées par des noms d'hôtes, des adresses IP, des adresses de réseaux, etc.
+Exemple: <?=$_SERVER['REMOTE_ADDR']; ?>/24 <?=$_SERVER['SERVER_NAME']; ?>"/>
+            <i class="satellite dish icon"></i>
+            <button style="display:none" type="submit" formaction="scan.php" formmethod="get"></button>
+          </div>
+        </div>
+        <div class="item" >
+          <button class="ui teal button" type="submit" formaction="scan-options.php" formmethod="get">Options</button>
+        </div>
+      </form>
     </nav>
 
     <main class="ui main container">
