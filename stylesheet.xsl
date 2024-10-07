@@ -4,7 +4,6 @@
     <xsl:output method="html" encoding="UTF-8" />
     <xsl:output indent="yes" />
     <xsl:strip-space elements='*' />
-    <xsl:param name="basedir" />
     <xsl:param name="targets" />
     <xsl:param name="compareWith" />
     <xsl:variable name="current" select="./nmaprun" />
@@ -20,7 +19,7 @@
                 <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/fomantic-ui@2.9.3/dist/semantic.min.css" />
                 <link href="https://cdn.jsdelivr.net/npm/@yaireo/tagify/dist/tagify.css" rel="stylesheet" type="text/css" />
                 <link href="https://cdn.datatables.net/v/dt/jszip-3.10.1/dt-2.1.8/b-3.1.2/b-html5-3.1.2/b-print-3.1.2/fh-4.0.1/r-3.0.3/datatables.css" rel="stylesheet" />
-                <link href="{$basedir}/style.css" rel="stylesheet" type="text/css" />
+                <link href="style.css" rel="stylesheet" type="text/css" />
                 <script src="https://code.jquery.com/jquery-3.7.1.js"></script>
                 <script src="https://cdnjs.cloudflare.com/ajax/libs/fomantic-ui/2.9.2/semantic.min.js"></script>
                 <script src="https://cdn.jsdelivr.net/npm/@yaireo/tagify"></script>
@@ -32,7 +31,7 @@
 
             <body>
                 <nav class="ui inverted teal fixed menu">
-                    <a class="header item" href="{$basedir}">
+                    <a class="header item" href=".">
                         <xsl:text>lan</xsl:text>
                         <svg class="logo" version="1.1" id="Layer_1" x="0px" y="0px" viewBox="0 0 24 24" xml:space="preserve" width="40" height="40"
                             xmlns="http://www.w3.org/2000/svg"
@@ -87,7 +86,7 @@
                     <div class="right menu">
                         <iconsearch class="ui right aligned search category item">
                             <div class="ui icon input">
-                                <form id="newScanForm" class="ui form" method="get" action="{$basedir}/scan.php">
+                                <form id="newScanForm" class="ui form" method="get" action="scan.php">
                                     <input class="prompt" type="text" name="targets" placeholder="Scanner un réseau..." required="" autocomplete="off" title="Les cibles peuvent être spécifiées par des noms d'hôtes, des adresses IP, des adresses de réseaux, etc.
 Exemple: scanme.nmap.org microsoft.com/24 192.168.0.1 10.0-255.0-255.1-254" pattern="[a-zA-Z0-9._\/ \-]+" value="{$targets}" />
                                 </form>

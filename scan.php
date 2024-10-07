@@ -1,5 +1,9 @@
 <?php
 
+ini_set('display_errors', '1');
+ini_set('display_startup_errors', '1');
+error_reporting(E_ALL);
+
 include_once 'config.php';
 
 $targets = filter_input(INPUT_GET, 'targets', FILTER_VALIDATE_REGEXP, [
@@ -11,12 +15,11 @@ if (!$targets) {
     exit('Paramètre targets manquant.');
 }
 
-$basedir = "{$_SERVER['REQUEST_SCHEME']}://{$_SERVER['SERVER_NAME']}:{$_SERVER['SERVER_PORT']}".dirname($_SERVER['REQUEST_URI']);
-
 $dir = $SCANS_DIR;
 if (!file_exists($SCANS_DIR)) {
     mkdir($SCANS_DIR);
 }
+
 $initPath = "$SCANS_DIR/".str_replace('/', '!', $targets).'_init.xml';
 if (file_exists($initPath)) {
     $currentPath = ("$SCANS_DIR/".str_replace('/', '!', $targets).'_current.xml');
@@ -25,28 +28,29 @@ if (file_exists($initPath)) {
     $initPath = '';
 }
 
-$stylesheetUrl = "$basedir/stylesheet.xsl";
+$result = `nmap $NMAP_OPTIONS --stylesheet stylesheet.xsl -oX - $targets`;
 
-$command = "NMAPDIR=./nmap nmap $NMAP_OPTIONS -oX ".escapeshellarg($currentPath)." --stylesheet $basedir/stylesheet.xsl $targets";
+if ($result) {
+    $xml = new DOMDocument();
+    $xml->loadXML($result);
+    $xml->insertBefore($xml->createProcessingInstruction('xslt-param', "name='targets' value='$targets'"), $xml->documentElement);
 
-exec($command, $output, $retval);
+    $dir = $SCANS_DIR;
+    if (!file_exists($SCANS_DIR)) {
+        mkdir($SCANS_DIR);
+    }
+    
+    $path = "$SCANS_DIR/".str_replace('/', '!', $targets).'.xml';
+    if (!file_exists($path)) {
+        $xml->insertBefore($xml->createProcessingInstruction('xslt-param', "name='compareWith' value=''"), $xml->documentElement);
+        $xml->save($path);
+    } else {
+        $xml->insertBefore($xml->createProcessingInstruction('xslt-param', "name='compareWith' value='$path'"), $xml->documentElement);
+    }
 
-if (!file_exists($currentPath)) {
+    header('Content-type: text/xml');
+    exit($xml->saveXML());
+} else {
     http_response_code(500);
-    exit(implode("<br/>\n", $output));
+    exit();
 }
-
-// Add params
-$xml = new DOMDocument();
-$xml->load($currentPath);
-$processingInstruction = $xml->createProcessingInstruction('xslt-param', "name='targets' value='$targets'");
-$xml->insertBefore($processingInstruction, $xml->documentElement);
-$processingInstruction = $xml->createProcessingInstruction('xslt-param', "name='basedir' value='$basedir'");
-$xml->insertBefore($processingInstruction, $xml->documentElement);
-$processingInstruction = $xml->createProcessingInstruction('xslt-param', "name='compareWith' value='$initPath'");
-$xml->insertBefore($processingInstruction, $xml->documentElement);
-$xml->save($currentPath);
-
-//header('Location: '.$currentPath);
-header('Content-type: text/xml');
-exit($xml->saveXML());

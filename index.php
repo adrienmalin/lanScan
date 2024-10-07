@@ -49,8 +49,8 @@ if (!file_exists($SCANS_DIR)) {
     mkdir($SCANS_DIR);
 }
 foreach (scandir($SCANS_DIR) as $scan) {
-    if (substr($scan, -9) == '_init.xml') {
-        $targets = str_replace('!', '/', substr_replace($scan, '', -9));
+    if (substr($scan, -4) == '.xml') {
+        $targets = str_replace('!', '/', substr_replace($scan, '', -4));
         echo "<li><a class='item' href='scan.php?targets=".urlencode($targets)."'>$targets</a></li>\n";
     }
 }
