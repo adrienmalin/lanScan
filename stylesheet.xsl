@@ -14,6 +14,7 @@
         <html lang="fr">
             <head>
                 <meta charset="utf-8" />
+                <meta http-equiv="refresh" content="60"/>
                 <title>lanScan - <xsl:value-of select="$targets" />
                 </title>
                 <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/fomantic-ui@2.9.3/dist/semantic.min.css" />
@@ -123,7 +124,7 @@ Exemple: scanme.nmap.org microsoft.com/24 192.168.0.1 10.0-255.0-255.1-254" patt
                         </div>
                     </xsl:if>
 
-                    <table id="scanResultsTable" style="width:100%" role="grid" class="ui sortable table">
+                    <table id="scanResultsTable" style="width:100%" role="grid" class="ui sortable small table">
                         <thead>
                             <tr>
                                 <th>Etat</th>

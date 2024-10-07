@@ -27,7 +27,7 @@ categories = {"discovery", "intrusive"}
 author = "Adrien Malingrey"
 license = "Same as Nmap--See https://nmap.org/book/man-legal.html"
 
-portrule = shortport.service({"microsoft-ds", "netbios-ssn"})
+portrule = shortport.service({"microsoft-ds", "netbios-ssn", "smb"})
 
 
 action = function(host)
