@@ -35,11 +35,12 @@ if (!$targets) {
     </nav>
 
     <main class="ui main container">
+    <div class="ui segment">
         <form id="newScanForm" class="ui form" method="get" action="scan.php">
           <h1 class="header">Nouveau scan</h1>
             <div class="field">
               <label for="nameInput">Nom</label>
-              <input id="nameInput" type="text" name="name" placeholder="Réseau local" pattern='[^&lt;&gt;:&quot;\\\/\|@?]+' required=""
+              <input id="nameInput" type="text" name="name" placeholder="Réseau local" pattern='[^&lt;&gt;:&quot;\\\/\|@?]+'
                 title='Nom de fichier valide (ne contenant pas les caractères &lt;&gt;:&quot;\/|@?)'
                 value="<?= htmlspecialchars($name); ?>">
             </div>
@@ -52,6 +53,7 @@ if (!$targets) {
             </div>
             <button id="newScanSubmitButton" type="submit" class="ui fluid large teal submit button">Démarrer</button>
         </form>
+      </div>
     </main>
       <script>
         tagify = new Tagify(targetsInput, {
