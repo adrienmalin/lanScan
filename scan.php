@@ -1,9 +1,4 @@
 <?php
-
-ini_set('display_errors', '1');
-ini_set('display_startup_errors', '1');
-error_reporting(E_ALL);
-
 include_once 'config.php';
 
 $targets = filter_input(INPUT_GET, 'targets', FILTER_VALIDATE_REGEXP, [
@@ -28,7 +23,9 @@ if (file_exists($initPath)) {
     $initPath = '';
 }
 
-$result = `nmap $NMAP_OPTIONS --stylesheet stylesheet.xsl -oX - $targets`;
+$basedir = "{$_SERVER['REQUEST_SCHEME']}://{$_SERVER['SERVER_NAME']}:{$_SERVER['SERVER_PORT']}".dirname($_SERVER['REQUEST_URI']);
+
+$result = `nmap $NMAP_OPTIONS --stylesheet $basedir/stylesheet.xsl -oX - $targets`;
 
 if ($result) {
     $xml = new DOMDocument();

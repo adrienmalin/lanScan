@@ -242,16 +242,11 @@ Exemple: scanme.nmap.org microsoft.com/24 192.168.0.1 10.0-255.0-255.1-254" patt
             </xsl:attribute>
             <xsl:if test="service/@name='ftp' or service/@name='ssh' or service/@name='http' or service/@name='https'">
                 <xsl:attribute name="href">
-                    <xsl:value-of select="service/@name" />
-://                    <xsl:value-of select="$hostAddress" />
-:                    <xsl:value-of select="@portid" />
+                    <xsl:value-of select="service/@name" />://<xsl:value-of select="$hostAddress" />:<xsl:value-of select="@portid" />
                 </xsl:attribute>
             </xsl:if>
             <xsl:if test="service/@name='ms-wbt-server'">
-                <xsl:attribute name="href">
-                    <xsl:value-of select="$basedir" />
-/rdp.php?v=<xsl:value-of select="$hostAddress" />
-:                <xsl:value-of select="@portid" />
+                <xsl:attribute name="href">rdp.php?v=<xsl:value-of select="$hostAddress" />:<xsl:value-of select="@portid" />
             </xsl:attribute>
         </xsl:if>
         <xsl:if test="(service/@name='microsoft-ds' or service/@name='netbios-ssn') and ../../hostscript/script[@id='smb-shares-size']/table">
