@@ -12,6 +12,7 @@ $targets = filter_input(INPUT_GET, 'targets', FILTER_VALIDATE_REGEXP, [
   <head>
     <meta charset="utf-8" />
     <title>lanScan</title>
+    <link rel="icon" href="favicon.ico"/>
     <script src="https://cdn.jsdelivr.net/npm/jquery@3.7.1/dist/jquery.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/fomantic-ui@2.9.3/dist/semantic.min.js"></script>
     <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/fomantic-ui@2.9.3/dist/semantic.min.css" />

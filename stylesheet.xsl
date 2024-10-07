@@ -15,8 +15,8 @@
             <head>
                 <meta charset="utf-8" />
                 <meta http-equiv="refresh" content="60"/>
-                <title>lanScan - <xsl:value-of select="$targets" />
-                </title>
+                <title>lanScan - <xsl:value-of select="$targets" /></title>
+                <link rel="icon" href="favicon.ico"/>
                 <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/fomantic-ui@2.9.3/dist/semantic.min.css" />
                 <link href="https://cdn.jsdelivr.net/npm/@yaireo/tagify/dist/tagify.css" rel="stylesheet" type="text/css" />
                 <link href="https://cdn.datatables.net/v/dt/jszip-3.10.1/dt-2.1.8/b-3.1.2/b-html5-3.1.2/b-print-3.1.2/fh-4.0.1/r-3.0.3/datatables.css" rel="stylesheet" />
