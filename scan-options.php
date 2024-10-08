@@ -50,7 +50,7 @@ Exemples: <?=$_SERVER['REMOTE_ADDR']; ?>/24 <?=$_SERVER['SERVER_NAME']; ?>" />
           </div>
           <div class="field">
             <label>Ping TCP SYN</label>
-            <input type="text" id="PSInput" name="PS" placeholder="Port" list="servicesList" pattern="([0-9\-]+|[a-z\-]+)(,[0-9\-]+|,[a-z\-]+)*"
+            <input type="text" id="PSInput" name="PS" placeholder="Ports" list="servicesList" pattern="([0-9\-]+|[a-z\-]+)(,[0-9\-]+|,[a-z\-]+)*"
               title="Liste de ports ex: 22,23,25,80,113,1050,35000">
           </div>
         </fieldset>
@@ -59,7 +59,7 @@ Exemples: <?=$_SERVER['REMOTE_ADDR']; ?>/24 <?=$_SERVER['SERVER_NAME']; ?>" />
           <legend class="ui header">Techniques de scan</legend>
           <div class="field">
             <label>Ne scanner que les ports</label>
-            <input type="text" id="pInput" name="p" placeholder="Port" list="servicesList" pattern="(([TU]:)?[0-9\-]+|[a-z\-]+)(,([TU]:)?[0-9\-]+|,[a-z\-]+)*"
+            <input type="text" id="pInput" name="p" placeholder="Ports" list="servicesList" pattern="(([TU]:)?[0-9\-]+|[a-z\-]+)(,([TU]:)?[0-9\-]+|,[a-z\-]+)*"
               title="Liste de ports ex: ssh,ftp,U:53,111,137,T:21-25,80,139,8080">
           </div>
         </fieldset>
@@ -91,16 +91,23 @@ foreach ($services as $name => $port) {
     <script>
       new Tagify(targetsInput, {
         pattern: /^[a-zA-Z\d._/-]+$/,
-        delimiters: " ",
+        delimiters: ",| ",
         originalInputValueFormat: tags => tags.map(tag => tag.value).join(' '),
-        whitelist: Array.from(targetsInput.list.options).map(option => option.value),
+        whitelist: Array.from(targetsList.options).map(option => option.value),
+      })
+
+      new Tagify(PSInput, {
+        pattern: /^([\d-]+|[a-z-]+)$/,
+        delimiters: ",| ",
+        originalInputValueFormat: tags => tags.map(tag => tag.value).join(','),
+        whitelist: Array.from(servicesList.options).map(option => option.value),
       })
 
       new Tagify(pInput, {
         pattern: /^(([TU]:)?[\d-]+|[a-z-]+)$/,
-        delimiters: ",",
+        delimiters: ",| ",
         originalInputValueFormat: tags => tags.map(tag => tag.value).join(','),
-        whitelist: Array.from(pInput.list.options).map(option => option.value),
+        whitelist: Array.from(servicesList.options).map(option => option.value),
       })
 
       newScanForm.onsubmit = function (event) {
