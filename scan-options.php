@@ -41,7 +41,7 @@ Exemples: <?=$_SERVER['REMOTE_ADDR']; ?>/24 <?=$_SERVER['SERVER_NAME']; ?>" />
         </div>
 
         <fieldset class="ui segment">
-          <legend class="ui header">Découverte des hôtes</legend>
+          <h3 class="ui header">Découverte des hôtes</h3>
           <div class="inline field">
             <div class="ui checkbox">
               <input type="checkbox" id="PnInput" name="Pn"/>
@@ -56,7 +56,7 @@ Exemples: <?=$_SERVER['REMOTE_ADDR']; ?>/24 <?=$_SERVER['SERVER_NAME']; ?>" />
         </fieldset>
 
         <fieldset class="ui segment">
-          <legend class="ui header">Techniques de scan</legend>
+          <h3 class="ui header">Techniques de scan</h3>
           <div class="field">
             <label>Ne scanner que les ports</label>
             <input type="text" id="pInput" name="p" placeholder="Ports" list="servicesList" pattern="(([TU]:)?[0-9\-]+|[a-z\-]+)(,([TU]:)?[0-9\-]+|,[a-z\-]+)*"
@@ -89,25 +89,30 @@ foreach ($services as $name => $port) {
       </datalist>
     </main>
     <script>
+      const hostPattern = /^[a-zA-Z\d._\/\-]+$/
+      const portPattern = /^([\d-]+|[a-z\-]+)$/
+      const protocolePortPattern = /^(([TU]:)?[\d\-]+|[a-z\-]+)$/
+
+      const targetsWhitelist = Array.from(targetsList.options).map(option => option.value)
+      const servicesWhitelist = Array.from(servicesList.options).map(option => option.value)
+
       new Tagify(targetsInput, {
-        pattern: /^[a-zA-Z\d._/-]+$/,
-        delimiters: ",| ",
+        validate: (data) => hostPattern.test(data.value),
+        delimiters: " ",
         originalInputValueFormat: tags => tags.map(tag => tag.value).join(' '),
-        whitelist: Array.from(targetsList.options).map(option => option.value),
+        whitelist: targetsWhitelist,
       })
 
       new Tagify(PSInput, {
-        pattern: /^([\d-]+|[a-z-]+)$/,
-        delimiters: ",| ",
+        validate: (data) => portPattern.test(data.value),
         originalInputValueFormat: tags => tags.map(tag => tag.value).join(','),
-        whitelist: Array.from(servicesList.options).map(option => option.value),
+        whitelist: servicesWhitelist,
       })
 
       new Tagify(pInput, {
-        pattern: /^(([TU]:)?[\d-]+|[a-z-]+)$/,
-        delimiters: ",| ",
+        validate: (data) => protocolePortPattern.test(data.value),
         originalInputValueFormat: tags => tags.map(tag => tag.value).join(','),
-        whitelist: Array.from(servicesList.options).map(option => option.value),
+        whitelist: servicesWhitelist,
       })
 
       newScanForm.onsubmit = function (event) {
