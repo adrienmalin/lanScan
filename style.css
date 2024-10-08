@@ -27,6 +27,10 @@
     margin-left: .3em;
 }
 
+.ui.ui.form .field .fields .field:not(:only-child) .ui.checkbox {
+    margin-top: 0;
+}
+
 .share-size {
     --free-ratio: calc(var(--free) / var(--total));
     --used-percent: calc(100% - 100%*var(--free-ratio));

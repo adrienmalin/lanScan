@@ -26,7 +26,7 @@
             <input class="prompt" type="text" id="targetsInput" name="targets" required="" oninput="hiddenInput.value=this.value"
             pattern="[a-zA-Z0-9._\/ \-]+" value="<?=$targets; ?>" placeholder="Scanner un réseau..."
             title="Les cibles peuvent être spécifiées par des noms d'hôtes, des adresses IP, des adresses de réseaux, etc.
-Exemples: <?=$_SERVER['REMOTE_ADDR']; ?>/24 <?=$_SERVER['SERVER_NAME']; ?>"/>
+Exemples: <?=$_SERVER['REMOTE_ADDR']; ?>/24 <?=$_SERVER['SERVER_NAME']; ?> 10.0-255.0-255.1-254"/>
             <i class="satellite dish icon"></i>
             <button style="display:none" type="submit" formaction="scan.php" formmethod="get"></button>
           </div>
