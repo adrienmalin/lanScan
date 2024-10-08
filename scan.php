@@ -1,33 +1,22 @@
 <?php
 
 include_once 'config.php';
+include_once 'filter_inputs.php';
 
-$targets = filter_input(INPUT_GET, 'targets', FILTER_VALIDATE_REGEXP, [
-    'flags' => FILTER_NULL_ON_FAILURE,
-    'options' => ['regexp' => "/^[\da-zA-Z.:\/_ -]+$/"],
-]);
+if (!$targets) {
+    http_response_code(400);
+    exit('Paramètre manquant : targets');
+}
 
-$name = filter_input(INPUT_GET, 'name', FILTER_VALIDATE_REGEXP, [
-    'flags' => FILTER_NULL_ON_FAILURE,
-    'options' => ['regexp' => '/^[^@<>:"\/|!?]+$/'],
-]);
-
-$dir = $SCANS_DIR;
 if (!file_exists($SCANS_DIR)) {
     mkdir($SCANS_DIR);
 }
 
-$initPath = "$SCANS_DIR/".str_replace('/', '!', $targets).'_init.xml';
-if (file_exists($initPath)) {
-    $currentPath = ("$SCANS_DIR/".str_replace('/', '!', $targets).'_current.xml');
-} else {
-    $currentPath = $initPath;
-    $initPath = '';
-}
-
 $basedir = "{$_SERVER['REQUEST_SCHEME']}://{$_SERVER['SERVER_NAME']}:{$_SERVER['SERVER_PORT']}".dirname($_SERVER['REQUEST_URI']);
 
-$result = `nmap $NMAP_OPTIONS --stylesheet $basedir/stylesheet.xsl -oX - $targets`;
+$args = str_replace('=', ' ', http_build_query($input_args, '', ' '));
+
+$result = `nmap $args --stylesheet $basedir/stylesheet.xsl -oX - $targets`;
 if (!$result) {
     http_response_code(500);
     exit();

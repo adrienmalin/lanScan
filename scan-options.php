@@ -1,4 +1,4 @@
-<?php include_once 'common.php'; ?>
+<?php include_once 'filter_inputs.php'; ?>
 <!DOCTYPE html>
 <html lang="fr">
 
