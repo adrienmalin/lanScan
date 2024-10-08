@@ -40,9 +40,9 @@ Exemples: <?=$_SERVER['REMOTE_ADDR']; ?>/24 <?=$_SERVER['SERVER_NAME']; ?> 10.0-
 
     <main class="ui main container">
         <div class="ui large relaxed card">
-          <div class="content"><div class="header">Scans</div></div>
           <div class="content">
-            <div class="ui link divided list">
+            <div class="header">Précédents scans</div>
+            <div class="ui divided link list">
 <?php
 if (!file_exists($SCANS_DIR)) {
     mkdir($SCANS_DIR);
