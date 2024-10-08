@@ -1,4 +1,7 @@
-<?php include_once 'filter_inputs.php'; ?>
+<?php
+include_once 'config.php';
+include_once 'filter_inputs.php';
+?>
 <!DOCTYPE html>
 <html lang="fr">
 
