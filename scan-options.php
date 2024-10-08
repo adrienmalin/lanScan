@@ -36,30 +36,43 @@
         <div class="required field">
           <label for="targetsInput">Cibles</label>
           <input id="targetsInput" type="text" name="targets" placeholder="Cibles" required=""
-            pattern="[a-zA-Z0-9._\/ \-]+" value="<?= htmlspecialchars($targets); ?>" list="targetsList" title="Les cibles peuvent être spécifiées par des noms d'hôtes, des adresses IP, des adresses de réseaux, etc.
+            pattern="[a-zA-Z0-9._\/ \-]+" value="<?= htmlspecialchars($targets); ?>" list="targetsList"
+            title="Les cibles peuvent être spécifiées par des noms d'hôtes, des adresses IP, des adresses de réseaux, etc.
 Exemples: <?=$_SERVER['REMOTE_ADDR']; ?>/24 <?=$_SERVER['SERVER_NAME']; ?>" />
         </div>
 
         <fieldset class="ui segment">
-          <h3 class="ui header">Découverte des hôtes</h3>
+          <h3 class="header">Découverte des hôtes</h3>
           <div class="inline field">
             <div class="ui checkbox">
-              <input type="checkbox" id="PnInput" name="Pn"/>
-              <label for="PnInput">Tous les hôtes</label>
+              <input type="checkbox" id="PnCheckbox" name="Pn"/>
+              <label for="PnCheckbox">Tous les hôtes</label>
             </div>
           </div>
           <div class="field">
-            <label>Ping TCP SYN</label>
-            <input type="text" id="PSInput" name="PS" placeholder="Ports" list="servicesList" pattern="([0-9\-]+|[a-z\-]+)(,[0-9\-]+|,[a-z\-]+)*"
+            <label>
+              <div class="ui checkbox">
+                <input type="checkbox" id="PSCheckbox" onchange="PSInput.disabled = !this.checked"/>
+                <label for="PSCheckbox">Ping TCP SYN</label>
+              </div>
+            </label>
+            <input type="text" id="PSInput" name="PS" placeholder="Ports" list="servicesList" disabled
+              pattern="([0-9\-]+|[a-z\-]+)(,[0-9\-]+|,[a-z\-]+)*"
               title="Liste de ports ex: 22,23,25,80,113,1050,35000">
           </div>
         </fieldset>
 
         <fieldset class="ui segment">
-          <h3 class="ui header">Techniques de scan</h3>
+          <h3 class="header">Techniques de scan</h3>
           <div class="field">
-            <label>Ne scanner que les ports</label>
-            <input type="text" id="pInput" name="p" placeholder="Ports" list="servicesList" pattern="(([TU]:)?[0-9\-]+|[a-z\-]+)(,([TU]:)?[0-9\-]+|,[a-z\-]+)*"
+            <label>
+              <div class="ui checkbox">
+                <input type="checkbox" id="pCheckbox" onchange="pInput.disabled = !this.checked"/>
+                <label for="pCheckbox">Ne scanner que les ports</label>
+              </div>
+            </label>
+            <input type="text" id="pInput" name="p" placeholder="Ports" list="servicesList" disabled
+              pattern="(([TU]:)?[0-9\-]+|[a-z\-]+)(,([TU]:)?[0-9\-]+|,[a-z\-]+)*"
               title="Liste de ports ex: ssh,ftp,U:53,111,137,T:21-25,80,139,8080">
           </div>
         </fieldset>
@@ -89,31 +102,36 @@ foreach ($services as $name => $port) {
       </datalist>
     </main>
     <script>
-      const hostPattern = /^[a-zA-Z\d._\/\-]+$/
-      const portPattern = /^([\d-]+|[a-z\-]+)$/
-      const protocolePortPattern = /^(([TU]:)?[\d\-]+|[a-z\-]+)$/
-
       const targetsWhitelist = Array.from(targetsList.options).map(option => option.value)
       const servicesWhitelist = Array.from(servicesList.options).map(option => option.value)
 
-      new Tagify(targetsInput, {
-        validate: (data) => hostPattern.test(data.value),
-        delimiters: " ",
+      var targetsTagify = new Tagify(targetsInput, {
+        delimiters: " |,",
         originalInputValueFormat: tags => tags.map(tag => tag.value).join(' '),
         whitelist: targetsWhitelist,
       })
 
-      new Tagify(PSInput, {
-        validate: (data) => portPattern.test(data.value),
+      var PSTagify = new Tagify(PSInput, {
+        delimiters: " |,",
         originalInputValueFormat: tags => tags.map(tag => tag.value).join(','),
         whitelist: servicesWhitelist,
       })
+      PSCheckbox.onchange = () => {
+        PSInput.disabled = !PSCheckbox.checked
+        PSTagify.setDisabled(!PSCheckbox.checked)
+      }
+      PSCheckbox.onchange()
 
-      new Tagify(pInput, {
-        validate: (data) => protocolePortPattern.test(data.value),
+      var pTagify = new Tagify(pInput, {
+        delimiters: " |,",
         originalInputValueFormat: tags => tags.map(tag => tag.value).join(','),
         whitelist: servicesWhitelist,
       })
+      pCheckbox.onchange = () => {
+        pInput.disabled = !pCheckbox.checked
+        pTagify.setDisabled(!pCheckbox.checked)
+      }
+      pCheckbox.onchange()
 
       newScanForm.onsubmit = function (event) {
         if (this.checkValidity()) {
