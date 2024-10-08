@@ -13,9 +13,10 @@
         <html lang="fr">
             <head>
                 <meta charset="utf-8" />
-                <meta http-equiv="refresh" content="60"/>
-                <title>lanScan - <xsl:value-of select="$targets" /></title>
-                <link rel="icon" href="favicon.ico"/>
+                <meta http-equiv="refresh" content="60" />
+                <title>lanScan - <xsl:value-of select="$targets" />
+                </title>
+                <link rel="icon" href="favicon.ico" />
                 <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/fomantic-ui@2.9.3/dist/semantic.min.css" />
                 <link href="https://cdn.jsdelivr.net/npm/@yaireo/tagify/dist/tagify.css" rel="stylesheet" type="text/css" />
                 <link href="https://cdn.datatables.net/v/dt/jszip-3.10.1/dt-2.1.8/b-3.1.2/b-html5-3.1.2/b-print-3.1.2/fh-4.0.1/r-3.0.3/datatables.css" rel="stylesheet" />
@@ -82,22 +83,22 @@
                         </svg>
                         <xsl:text>can</xsl:text>
                     </a>
-
-                    <form class="right menu">
-                      <div class="ui category search item">
-                        <div class="ui icon input">
-                          <input class="prompt" type="text" id="targetsInput" name="targets" required=""
-                            pattern="[a-zA-Z0-9._\/ \-]+" value="{$targets}" placeholder="Scanner un réseau..."
-                            title="Les cibles peuvent être spécifiées par des noms d'hôtes, des adresses IP, des adresses de réseaux, etc.
-Exemple: 192.168.1.0/24 scanme.nmap.org"/>
-                          <i class="satellite dish icon"></i>
+                    <div class="right menu">
+                      <form class="ui category search item" onsubmit="targetsInputDiv.classList.add('loading')">
+                        <div id="targetsInputDiv" class="ui icon input">
+                          <input class="prompt" type="text" id="targetsInput" name="targets" required="" oninput="hiddenInput.value=this.value"
+                          pattern="[a-zA-Z0-9._\/ \-]+" value="{$targets}" placeholder="Scanner un réseau..."
+                          title="Les cibles peuvent être spécifiées par des noms d'hôtes, des adresses IP, des adresses de réseaux, etc.
+Exemples: 192.168.1.0/24 scanme.nmap.org"/>
+                        <i class="satellite dish icon"></i>
                           <button style="display:none" type="submit" formaction="scan.php" formmethod="get"></button>
                         </div>
-                      </div>
-                      <div class="item" >
-                        <button class="ui teal button" type="submit" formaction="scan-options.php" formmethod="get">Options</button>
-                      </div>
-                    </form>
+                      </form>
+                      <form class="item" method="get" action="scan-options.php">
+                        <input id="hiddenInput" type="hidden" name="targets" value="{$targets}"/>
+                        <button class="ui teal submit button" type="submit">Options</button>
+                      </form>
+                    </div>
                 </nav>
 
                 <main class="ui main container">
@@ -115,12 +116,9 @@ Exemple: 192.168.1.0/24 scanme.nmap.org"/>
                         </div>
                     </xsl:if>
 
-                    <h1 class="ui header">
-                        <xsl:value-of select="$targets" />
-                    </h1>
-
                     <xsl:if test="$init">
                         <div class="ui info message">
+                            <i class="calendar icon"></i>
                             <xsl:text>Comparaison avec le scan de </xsl:text>
                             <xsl:value-of select="$init/runstats/finished/@timestr" />
                         </div>
@@ -245,11 +243,14 @@ Exemple: 192.168.1.0/24 scanme.nmap.org"/>
             </xsl:attribute>
             <xsl:if test="service/@name='ftp' or service/@name='ssh' or service/@name='http' or service/@name='https'">
                 <xsl:attribute name="href">
-                    <xsl:value-of select="service/@name" />://<xsl:value-of select="$hostAddress" />:<xsl:value-of select="@portid" />
+                    <xsl:value-of select="service/@name" />
+://                    <xsl:value-of select="$hostAddress" />
+:                    <xsl:value-of select="@portid" />
                 </xsl:attribute>
             </xsl:if>
             <xsl:if test="service/@name='ms-wbt-server'">
-                <xsl:attribute name="href">rdp.php?v=<xsl:value-of select="$hostAddress" />&amp;p=<xsl:value-of select="@portid" />
+                <xsl:attribute name="href">rdp.php?v=<xsl:value-of select="$hostAddress" />
+&amp;p=<xsl:value-of select="@portid" />
             </xsl:attribute>
         </xsl:if>
         <xsl:if test="(service/@name='microsoft-ds' or service/@name='netbios-ssn') and ../../hostscript/script[@id='smb-shares-size']/table">

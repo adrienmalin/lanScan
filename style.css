@@ -15,6 +15,10 @@
     --placeholder-color-focus: rgba(115,115,115,.87);
 }
 
+.ui.table {
+    caption-side: bottom;
+}
+
 .ui.label {
     margin: .14285714em;
 }

@@ -20,26 +20,29 @@
       <a class="header item" href=".">
         lan<?php include 'logo.svg'; ?>can
       </a>
-      <form class="right menu">
-        <div class="ui category search item">
-          <div class="ui icon input">
-            <input class="prompt" type="text" id="targetsInput" name="targets" required=""
+      <div class="right menu">
+        <form class="ui category search item" onsubmit="targetsInputDiv.classList.add('loading')">
+          <div id="targetsInputDiv" class="ui icon input">
+            <input class="prompt" type="text" id="targetsInput" name="targets" required="" oninput="hiddenInput.value=this.value"
             pattern="[a-zA-Z0-9._\/ \-]+" value="<?=$targets; ?>" placeholder="Scanner un réseau..."
             title="Les cibles peuvent être spécifiées par des noms d'hôtes, des adresses IP, des adresses de réseaux, etc.
-Exemple: <?=$_SERVER['REMOTE_ADDR']; ?>/24 <?=$_SERVER['SERVER_NAME']; ?>"/>
+Exemples: <?=$_SERVER['REMOTE_ADDR']; ?>/24 <?=$_SERVER['SERVER_NAME']; ?>"/>
             <i class="satellite dish icon"></i>
             <button style="display:none" type="submit" formaction="scan.php" formmethod="get"></button>
           </div>
-        </div>
-        <div class="item" >
-          <button class="ui teal button" type="submit" formaction="scan-options.php" formmethod="get">Options</button>
-        </div>
-      </form>
+        </form>
+        <form class="item" method="get" action="scan-options.php">
+          <input id="hiddenInput" type="hidden" name="targets" value="<?=$targets; ?>"/>
+          <button class="ui teal submit button" type="submit">Options</button>
+        </form>
+      </div>
     </nav>
 
     <main class="ui main container">
-      <h1 class="ui header">Scans</h1>
-        <ul class="ui large relaxed link list">
+        <div class="ui large relaxed card">
+          <div class="content"><div class="header">Scans</div></div>
+          <div class="content">
+            <div class="ui link divided list">
 <?php
 if (!file_exists($SCANS_DIR)) {
     mkdir($SCANS_DIR);
@@ -47,11 +50,13 @@ if (!file_exists($SCANS_DIR)) {
 foreach (scandir($SCANS_DIR) as $scan) {
     if (substr($scan, -4) == '.xml') {
         $targets = str_replace('!', '/', substr_replace($scan, '', -4));
-        echo "<li><a class='item' href='scan.php?targets=".urlencode($targets)."'>$targets</a></li>\n";
+        echo "<a class='item' href='scan.php?targets=".urlencode($targets)."'>$targets</a>\n";
     }
 }
 ?>
-      </ul>
+          </div>
+        </div>
+      </div>
     </main>
   </body>
 
