@@ -36,6 +36,8 @@ Exemples: <?=$_SERVER['REMOTE_ADDR']; ?>/24 <?=$_SERVER['SERVER_NAME']; ?> 10.0-
         </form>
         <form class="item" method="get" action="scan-options.php">
           <input id="hiddenInput" type="hidden" name="targets" value="<?=$targets; ?>"/>
+          <input id="hiddenInput" type="hidden" name="name" value="<?=$name; ?>"/>
+          <?='<input type="hidden" name="'.str_replace('=', '" value="', http_build_query($input_args, '', '/><input type="hidden" name="')).'"/>'; ?>
           <button class="ui teal submit button" type="submit">Options</button>
         </form>
       </div>
