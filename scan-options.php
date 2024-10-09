@@ -1,4 +1,7 @@
-<?php include_once 'filter_inputs.php'; ?>
+<?php
+include_once 'config.php';
+include_once 'filter_inputs.php';
+?>
 <!DOCTYPE html>
 <html lang="fr">
 
@@ -26,7 +29,7 @@
 
     <main class="ui main container">
       <form id="newScanForm" class="ui form" method="get" action="scan.php">
-        <h1 class="header">Nouveau scan</h1>
+        <h1 class="header">Scanner un réseau avec Nmap</h1>
         <!--<div class="field">
               <label for="nameInput">Nom</label>
               <input id="nameInput" type="text" name="name" placeholder="Réseau local" pattern='[^&lt;&gt;:&quot;\\\/\|@?]+'
@@ -105,7 +108,6 @@ Exemples: <?=$_SERVER['REMOTE_ADDR']; ?>/24,<?=$_SERVER['SERVER_NAME']; ?>,10.0-
                 pattern="([0-9\-]+|[a-z\-]+)(,[0-9\-]+|,[a-z\-]+)*" value="31338"
                 title="Liste de ports ex: 22,23,25,80,113,1050,35000">
             </div>
-
             <div class="inline fields">
               <label>Ping ICMP</label>
               <div class="field">
@@ -127,7 +129,6 @@ Exemples: <?=$_SERVER['REMOTE_ADDR']; ?>/24,<?=$_SERVER['SERVER_NAME']; ?>,10.0-
                 </div>
               </div>
             </div>
-
             <div class="field">
               <div class="ui checkbox">
                 <input type="checkbox" id="PRCheckbox" name="-PR"/>
@@ -142,12 +143,24 @@ Exemples: <?=$_SERVER['REMOTE_ADDR']; ?>/24,<?=$_SERVER['SERVER_NAME']; ?>,10.0-
               <label>
                 <div class="ui checkbox">
                   <input type="checkbox" id="pCheckbox" onchange="pInput.disabled = !this.checked"/>
-                  <label for="pCheckbox">Ne scanner que les ports</label>
+                  <label for="pCheckbox">Scanner les ports</label>
                 </div>
               </label>
               <input type="text" id="pInput" name="-p" placeholder="Ports" list="servicesList" disabled
-                pattern="(([TU]:)?[0-9\-]+|[a-z\-]+)(,([TU]:)?[0-9\-]+|,[a-z\-]+)*"
+                pattern="(([TU]:)?[0-9\-]+|[a-z\-]+)(,([TU]:)?[0-9\-]+|,[a-z\-]+)*" value="1-1024"
                 title="Liste de ports ex: ssh,ftp,U:53,111,137,T:21-25,80,139,8080">
+            </div>
+            <div class="field">
+              <div class="ui checkbox">
+                <input type="checkbox" id="FCheckbox" name="-F"/>
+                <label for="FCheckbox">Scanner les ports connus</label>
+              </div>
+            </div>
+            <div class="field">
+              <div class="ui checkbox">
+                <input type="checkbox" id="rCheckbox" name="-r"/>
+                <label for="rCheckbox">Ne pas mélanger les ports</label>
+              </div>
             </div>
           </div>
 
@@ -160,6 +173,17 @@ Exemples: <?=$_SERVER['REMOTE_ADDR']; ?>/24,<?=$_SERVER['SERVER_NAME']; ?>,10.0-
         <option value="<?=$_SERVER['REMOTE_ADDR']; ?>"></option>
         <option value="192.168.1.0/24"></option>
         <option value="<?=$_SERVER['SERVER_NAME']; ?>"></option>
+<?php
+if (!file_exists($SCANS_DIR)) {
+    mkdir($SCANS_DIR);
+}
+foreach (scandir($SCANS_DIR) as $scan) {
+    if (substr($scan, -4) == '.xml') {
+        $targets = str_replace('!', '/', substr_replace($scan, '', -4));
+        echo "        <option value='$targets'></option>\n";
+    }
+}
+?>
       </datalist>
       <datalist id='servicesList'>
 <?php

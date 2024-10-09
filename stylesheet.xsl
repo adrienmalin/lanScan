@@ -4,12 +4,13 @@
     <xsl:output method="html" encoding="UTF-8" />
     <xsl:output indent="yes" />
     <xsl:strip-space elements='*' />
-    <xsl:param name="targets" />
     <xsl:param name="compareWith" />
     <xsl:variable name="current" select="./nmaprun" />
     <xsl:variable name="init" select="document(string($compareWith))/nmaprun" />
 
     <xsl:template match="nmaprun">
+        <xsl:variable name="targets" select="substring-after(./@args, '-oX - ')"/>
+        <xsl:variable name="basedir" select="substring-before(substring-after(./@args, '--stylesheet '), '/stylesheet.xsl')"/>
         <html lang="fr">
             <head>
                 <meta charset="utf-8" />

@@ -24,7 +24,6 @@ if (!$result) {
 
 $xml = new DOMDocument();
 $xml->loadXML($result);
-$xml->insertBefore($xml->createProcessingInstruction('xslt-param', "name='targets' value='$targets'"), $xml->documentElement);
 
 $dir = $SCANS_DIR;
 if (!file_exists($SCANS_DIR)) {
