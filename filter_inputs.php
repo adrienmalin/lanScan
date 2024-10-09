@@ -108,4 +108,4 @@ $input_args = filter_input_array(INPUT_GET, [
   '-V' => ['filter' => FILTER_VALIDATE_BOOLEAN, 'flags' => FILTER_NULL_ON_FAILURE],
   '--unprivileged' => ['filter' => FILTER_VALIDATE_BOOLEAN, 'flags' => FILTER_NULL_ON_FAILURE],
   '-h' => ['filter' => FILTER_VALIDATE_BOOLEAN, 'flags' => FILTER_NULL_ON_FAILURE],
-], false);
+], false) ?: $DEFAULT_ARGS;
