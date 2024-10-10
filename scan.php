@@ -16,7 +16,6 @@ $basedir = "{$_SERVER['REQUEST_SCHEME']}://{$_SERVER['SERVER_NAME']}:{$_SERVER['
 
 $args = '';
 foreach ($inputs as $name => $value) {
-    echo "$name : $value $args<br>";
     if (is_null($value)) {
         http_response_code(400);
         exit("Valeur incorecte pour le paramètre $option : " . filter_input(INPUT_GET, $option, FILTER_SANITIZE_FULL_SPECIAL_CHARS));
