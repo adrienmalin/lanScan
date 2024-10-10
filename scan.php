@@ -45,9 +45,7 @@ if (!file_exists($SCANS_DIR)) {
 $path = "$SCANS_DIR/".str_replace('/', '!', $targets).'.xml';
 if (!file_exists($path)) {
     $xml->insertBefore($xml->createProcessingInstruction('xslt-param', "name='compareWith' value=''"), $xml->documentElement);
-    $xml->
-
-    save($path);
+    $xml->save($path);
 } else {
     $xml->insertBefore($xml->createProcessingInstruction('xslt-param', "name='compareWith' value='$path'"), $xml->documentElement);
 }

@@ -107,20 +107,6 @@ Exemples: 192.168.1.0/24 scanme.nmap.org 10.0-255.0-255.1-254"/>
                 </nav>
 
                 <main class="ui main container">
-                    <xsl:if test="runstats/finished/@errormsg">
-                        <div class="ui negative icon message">
-                            <i class="exclamation triangle icon"></i>
-                            <div class="content">
-                                <div class="header" style="text-transform: capitalize">
-                                    <xsl:value-of select="runstats/finished/@exit"/>
-                                </div>
-                                <p>
-                                    <xsl:value-of select="runstats/finished/@errormsg"/>
-                                </p>
-                            </div>
-                        </div>
-                    </xsl:if>
-
                     <table id="scanResultsTable" style="width:100%" role="grid" class="ui sortable small table">
                         <thead>
                             <tr>
@@ -160,15 +146,6 @@ table.order([1, 'asc']).draw()
 
 $('.ui.dropdown').dropdown()
 
-<xsl:if test="$init">
-    $.toast({
-        message: 'Comparaison avec les résultats du <xsl:value-of select="$init/runstats/finished/@timestr"/>',
-        class: 'info',
-        showIcon: 'calendar',
-        displayTime: 10000,
-        closeIcon: true,
-    })
-</xsl:if>
                     <xsl:if test="runstats/finished/@summary">
 $.toast({
     title: '<xsl:value-of select="runstats/finished/@exit"/>',
@@ -185,6 +162,15 @@ $.toast({
     showIcon: 'exclamation triangle',
     class: 'error',
     displayTime: 'auto',
+    closeIcon: true,
+})
+                        </xsl:if>
+                        <xsl:if test="$init">
+$.toast({
+    message: 'Comparaison avec les résultats du <xsl:value-of select="$init/runstats/finished/@timestr"/>',
+    class: 'info',
+    showIcon: 'calendar',
+    displayTime: 10000,
     closeIcon: true,
 })
                         </xsl:if>
@@ -207,9 +193,17 @@ $.toast({
             <td>
                 <xsl:choose>
                     <xsl:when test="$currentHost">
-                        <xsl:value-of select="$currentHost/status/@state"/>
+                        <div>
+                            <xsl:attribute name="class">
+                                <xsl:choose>
+                                    <xsl:when test="$currentHost/status/@state='up'">ui green circular label</xsl:when>
+                                    <xsl:otherwise>ui red circular label</xsl:otherwise>
+                                </xsl:choose>
+                            </xsl:attribute>
+                            <xsl:value-of select="$currentHost/status/@state"/>
+                        </div>
                     </xsl:when>
-                    <xsl:otherwise>down</xsl:otherwise>
+                    <xsl:otherwise><div class="ui red circular label">down</div></xsl:otherwise>
                 </xsl:choose>
             </td>
             <td>
@@ -312,4 +306,5 @@ $.toast({
         <xsl:value-of select="@key"/>
     </a>
 </xsl:template>
+
 </xsl:stylesheet>
