@@ -8,24 +8,40 @@
     <xsl:output indent="yes"/>
     <xsl:strip-space elements='*'/>
 
+    <xsl:param name="name"/>
+    <xsl:param name="scansDir"/>
     <xsl:param name="compareWith"/>
+    <xsl:variable name="nameOrCompareWith">
+        <xsl:choose>
+            <xsl:when test="$name"><xsl:value-of select="$name"/></xsl:when>
+            <xsl:when test="$compareWith"><xsl:value-of select="$compareWith"/></xsl:when>
+        </xsl:choose>
+    </xsl:variable>
     <xsl:variable name="current" select="./nmaprun"/>
-    <xsl:variable name="init" select="document(string($compareWith))/nmaprun"/>
+    <xsl:variable name="basedir" select="substring-before(substring-after(processing-instruction('xml-stylesheet'),'href=&quot;'),'/stylesheet.xsl&quot;')"/>
+    <xsl:variable name="init" select="document(concat($scansDir, '/', $compareWith, '.xml'))/nmaprun"/>
 
     <xsl:template match="nmaprun">
-        <xsl:variable name="targets" select="substring-after(./@args, '-oX - ')"/>
-        <xsl:variable name="basedir" select="substring-before(substring-after(./@args, '--stylesheet '), '/stylesheet.xsl')"/>
+        <xsl:variable name="targets" select="substring-after(@args, '-oX - ')"/>
+        <xsl:variable name="PS" select="substring-before(substring-after(@args, '-PS'), ' -')"/>
+        <xsl:variable name="F" select="contains(@args, '-F')"/>
+        
         <html lang="fr">
             <head>
                 <meta charset="utf-8"/>
                 <meta http-equiv="refresh" content="60"/>
-                <title>lanScan - <xsl:value-of select="$targets"/>
+                <title>
+                    <xsl:text>lanScan - </xsl:text>
+                    <xsl:choose>
+                        <xsl:when test="string-length($nameOrCompareWith)"><xsl:value-of select="$nameOrCompareWith"/></xsl:when>
+                        <xsl:otherwise><xsl:value-of select="$targets"/></xsl:otherwise>
+                    </xsl:choose>
                 </title>
-                <link rel="icon" href="favicon.ico"/>
+                <link rel="icon" href="{$basedir}/favicon.ico"/>
                 <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/fomantic-ui@2.9.3/dist/semantic.min.css"/>
                 <link href="https://cdn.jsdelivr.net/npm/@yaireo/tagify/dist/tagify.css" rel="stylesheet" type="text/css"/>
                 <link href="https://cdn.datatables.net/v/dt/jszip-3.10.1/dt-2.1.8/b-3.1.2/b-html5-3.1.2/b-print-3.1.2/fh-4.0.1/r-3.0.3/datatables.css" rel="stylesheet"/>
-                <link href="style.css" rel="stylesheet" type="text/css"/>
+                <link href="{$basedir}/style.css" rel="stylesheet" type="text/css"/>
                 <script src="https://code.jquery.com/jquery-3.7.1.js"></script>
                 <script src="https://cdnjs.cloudflare.com/ajax/libs/fomantic-ui/2.9.2/semantic.min.js"></script>
                 <script src="https://cdn.jsdelivr.net/npm/@yaireo/tagify"></script>
@@ -90,23 +106,37 @@
                     </a>
                     <div class="right menu">
                       <form class="ui category search item" onsubmit="targetsInputDiv.classList.add('loading')">
-                        <div id="targetsInputDiv" class="ui icon input">
-                          <input class="prompt" type="text" id="targetsInput" name="targets" required="" oninput="hiddenInput.value=this.value"
-                          pattern="[a-zA-Z0-9._\/ \-]+" value="{$targets}" placeholder="Scanner un réseau..."
-                          title="Les cibles peuvent être spécifiées par des noms d'hôtes, des adresses IP, des adresses de réseaux, etc.
+                        <div class="fiels">
+                          <div id="targetsInputDiv" class="ui icon input">
+                            <input class="prompt" type="text" id="targetsInput" name="targets" oninput="hiddenInput.value=this.value" required=""
+                              pattern="[a-zA-Z0-9._\/ \-]+" value="{$targets}" placeholder="Scanner un réseau..."
+                              title="Les cibles peuvent être spécifiées par des noms d'hôtes, des adresses IP, des adresses de réseaux, etc.
 Exemples: 192.168.1.0/24 scanme.nmap.org 10.0-255.0-255.1-254"/>
-                        <i class="satellite dish icon"></i>
-                          <button style="display:none" type="submit" formaction="scan.php" formmethod="get"></button>
+                              <i class="satellite dish icon"></i>
+                          </div>
+                          <xsl:if test="$PS"><input type="hidden" name="PS" value="{$PS}"/></xsl:if>
+                          <xsl:if test="$F"><input type="hidden" name="F" value="on"/></xsl:if>
+                          <xsl:if test="string-length($nameOrCompareWith)"><input type="hidden" name="compareWith" value="{$nameOrCompareWith}"/></xsl:if>
+                          <button style="display: none;" type="submit" formmethod="get" formaction="{$basedir}/scan.php"></button>
+                          <button class="ui teal icon submit button" type="submit" formmethod="get" formaction="{$basedir}/options.php" onclick="targetsInput.required=false">
+                            <i class="sliders horizontal icon"></i>
+                          </button>
                         </div>
-                      </form>
-                      <form class="item" method="get" action="scan-options.php">
-                        <input id="hiddenInput" type="hidden" name="targets" value="{$targets}"/>
-                        <button class="ui teal submit button" type="submit">Options</button>
                       </form>
                     </div>
                 </nav>
 
                 <main class="ui main container">
+                    <h1 class="ui header">
+                        <xsl:choose>
+                            <xsl:when test="string-length($nameOrCompareWith)">
+                                <xsl:value-of select="$nameOrCompareWith"/>
+                                <div class="sub header"><xsl:value-of select="$targets"/></div>
+                            </xsl:when>
+                            <xsl:otherwise><xsl:value-of select="$targets"/></xsl:otherwise>
+                        </xsl:choose>
+                    </h1>
+
                     <table id="scanResultsTable" style="width:100%" role="grid" class="ui sortable small table">
                         <thead>
                             <tr>
@@ -153,6 +183,7 @@ $.toast({
     showIcon: 'satellite dish',
     displayTime: 'auto',
     closeIcon: true,
+    position: 'bottom right',
 })
                     </xsl:if>
                     <xsl:if test="runstats/finished/@errormsg">
@@ -163,15 +194,18 @@ $.toast({
     class: 'error',
     displayTime: 'auto',
     closeIcon: true,
+    position: 'bottom right',
 })
                         </xsl:if>
                         <xsl:if test="$init">
 $.toast({
+    title: '<xsl:value-of select="$compareWith"/>',
     message: 'Comparaison avec les résultats du <xsl:value-of select="$init/runstats/finished/@timestr"/>',
     class: 'info',
     showIcon: 'calendar',
     displayTime: 10000,
     closeIcon: true,
+    position: 'bottom right',
 })
                         </xsl:if>
                 </script>
