@@ -24,6 +24,13 @@ include_once 'filter_inputs.php';
     <a class="ui teal button item" href=".">
       lan<?php include 'logo.svg'; ?>can
     </a>
+    <div class="right menu">
+      <div class="item">
+        <a class="ui teal icon button" href="https://nmap.org/man/fr/index.html" target="_blank">
+          <i class="question circle icon"></i>
+        </a>
+      </div>
+    </div>
   </nav>
 
   <main class="ui main container">
@@ -34,7 +41,7 @@ include_once 'filter_inputs.php';
         <label for="targetsInput" title="Les cibles peuvent être spécifiées par des noms d'hôtes, des adresses IP, des adresses de réseaux, etc.
 Exemples: <?= $_SERVER['REMOTE_ADDR']; ?>/24 <?= $_SERVER['SERVER_NAME']; ?> 10.0-255.0-255.1-254">Cibles</label>
         <input id="targetsInput" type="text" name="targets" placeholder="Cibles" required
-          pattern="[a-zA-Z0-9._\/ \-]+" value="<?= $targets; ?>" list="targetsList"
+          pattern="[a-zA-Z0-9._\/ \-]+" value="<?= $lan; ?>" list="targetsList"
           title="Les cibles peuvent être spécifiées par des noms d'hôtes, des adresses IP, des adresses de réseaux, etc.
 Exemples: <?= $_SERVER['REMOTE_ADDR']; ?>/24 <?= $_SERVER['SERVER_NAME']; ?> 10.0-255.0-255.1-254" />
       </div>
@@ -200,14 +207,15 @@ Exemples: <?= $_SERVER['REMOTE_ADDR']; ?>/24 <?= $_SERVER['SERVER_NAME']; ?> 10.
             <select class="ui dropdown" id="compareWithSelect" name="compareWith" value="<?= $compareWith ?>">
               <option value="">Précédent scan</option>
 <?php
-if (!file_exists($SCANS_DIR)) mkdir($SCANS_DIR);
-foreach (scandir($SCANS_DIR) as $filename) {
+if (!file_exists($SCANSDIR)) mkdir($SCANSDIR);
+foreach (scandir($SCANSDIR) as $filename) {
   if (substr($filename, -4) === '.xml') {
     $name = substr($filename, 0, -4);
-    if ($name == $compareWith) {
-      echo "              <option value='$name' selected>$name</option>\n";
+    $URL = "$BASEDIR/$SCANSDIR/$filename";
+    if ($URL == $compareWith) {
+      echo "              <option value='$URL' selected>$name</option>\n";
     } else {
-      echo "              <option value='$name'>$name</option>\n";
+      echo "              <option value='$URL'>$name</option>\n";
     }
   }
 }
@@ -222,10 +230,11 @@ foreach (scandir($SCANS_DIR) as $filename) {
 foreach (scandir('.') as $filename) {
   if (substr($filename, -4) === '.xsl') {
     $name = substr($filename, 0, -4);
-    if (isset($inputs["stylesheet"]) && $name == $inputs["stylesheet"]) {
-      echo "              <option value='$name' selected>$name</option>\n";
+    $URL = "$BASEDIR/$filename";
+    if (isset($inputs["stylesheet"]) && $URL == $inputs["stylesheet"]) {
+      echo "              <option value='$URL' selected>$name</option>\n";
     } else {
-      echo "              <option value='$name'>$name</option>\n";
+      echo "              <option value='$URL'>$name</option>\n";
     }
   }
 }
@@ -248,7 +257,7 @@ foreach (scandir('.') as $filename) {
   </datalist>
   <datalist id='servicesList'>
     <?php
-    $nmap_services = file("$NMAP_DATADIR/nmap-services");
+    $nmap_services = file("$DATADIR/nmap-services");
     $services = [];
     foreach ($nmap_services as $service) {
       if (0 !== strpos($service, '#')) {
@@ -275,6 +284,7 @@ foreach (scandir('.') as $filename) {
 
     $(".ui.accordion").accordion()
 
+    $("#stylesheetSelect").dropdown()
     $("#compareWithSelect").dropdown({
       clearable: true
     })

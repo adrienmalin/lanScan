@@ -3,22 +3,23 @@
 include_once 'config.php';
 include_once 'filter_inputs.php';
 
-if (!$targets) {
+if ($targets) {
+    $options = $inputs;
+} else if ($lan) {
+    $targets = $lan;
+    $options = $LANSCAN_OPTIONS;
+} else if ($host) {
+    $targets = $host;
+    $options = $HOSTSCAN_OPTIONS;
+} else {
     http_response_code(400);
-    die('Paramètre manquant : targets');
+    die('Paramètre manquant : targets, lan ou host');
 }
 
-if (!file_exists($SCANS_DIR)) {
-    mkdir($SCANS_DIR);
-}
-
-if (isset($inputs["stylesheet"])) {
-    $basedir = "{$_SERVER['REQUEST_SCHEME']}://{$_SERVER['SERVER_NAME']}:{$_SERVER['SERVER_PORT']}" . dirname($_SERVER['REQUEST_URI']);
-    $inputs["stylesheet"] = "$basedir/{$inputs["stylesheet"]}.xsl";
-}
+if (!file_exists($SCANSDIR)) mkdir($SCANSDIR);
 
 $args = '';
-foreach ($inputs as $arg => $value) {
+foreach ($options as $arg => $value) {
     if (is_null($value)) {
         http_response_code(400);
         die("Valeur incorecte pour le paramètre $arg : " . filter_input(INPUT_GET, $arg, FILTER_SANITIZE_FULL_SPECIAL_CHARS));
@@ -45,12 +46,13 @@ $xml = new DOMDocument();
 $xml->load($tempPath);
 `rm "$tempPath"`;
 
-$xml->insertBefore($xml->createProcessingInstruction('xslt-param', "name='saveAs' value='".htmlentities($saveAs, ENT_QUOTES)."'"), $xml->documentElement);
-$xml->insertBefore($xml->createProcessingInstruction('xslt-param', "name='scansDir' value='".htmlentities($SCANS_DIR, ENT_QUOTES)."'"), $xml->documentElement);
+$saveAsURL = $saveAs? "$BASEDIR/$SCANSDIR/$saveAs.xml" : "";
+$xml->insertBefore($xml->createProcessingInstruction('xslt-param', "name='saveAs' value='".htmlentities($saveAsURL, ENT_QUOTES)."'"), $xml->documentElement);
+$xml->insertBefore($xml->createProcessingInstruction('xslt-param', "name='scansDir' value='".htmlentities($SCANSDIR, ENT_QUOTES)."'"), $xml->documentElement);
 $xml->insertBefore($xml->createProcessingInstruction('xslt-param', "name='compareWith' value='".htmlentities($compareWith, ENT_QUOTES)."'"), $xml->documentElement);
 
 if ($saveAs) {
-    $path = "$SCANS_DIR/$saveAs.xml";
+    $path = "$SCANSDIR/$saveAs.xml";
     $xml->save($path);
 
     header("Location: $path");

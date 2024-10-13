@@ -1,10 +1,18 @@
 <?php
 
-$SCANS_DIR = 'scans';
-$DEFAULT_ARGS = [
-    'PS' => 'ssh,http,https,msrpc,microsoft-ds',
-    'F' => true,
-    'T5' => true,
-    'stylesheet' => 'lanScan.xls'
+$BASEDIR = "{$_SERVER['REQUEST_SCHEME']}://{$_SERVER['SERVER_NAME']}:{$_SERVER['SERVER_PORT']}" . dirname($_SERVER['REQUEST_URI']);
+
+$LANSCAN_OPTIONS = [
+    'PS'         => 'ssh,http,https,msrpc,microsoft-ds',
+    'F'          => true,
+    'T5'         => true,
+    'stylesheet' => "$BASEDIR/lanScan.xsl"
 ];
-$NMAP_DATADIR = '/usr/share/nmap';
+
+$HOSTSCAN_OPTIONS = [
+    'sV'         => true,
+    'stylesheet' => "$BASEDIR/hostScan.xsl"
+];
+
+$SCANSDIR = 'scans';
+$DATADIR  = '/usr/share/nmap';

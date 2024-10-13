@@ -25,31 +25,26 @@ include_once 'filter_inputs.php';
     </a>
     <form class="right menu">
       <div class="ui category search item">
-        <div id="targetsInputDiv" class="ui icon input">
-          <input class="prompt" type="text" id="targetsInput" name="targets" oninput="hiddenInput.value=this.value" required
-            pattern="[a-zA-Z0-9._\/ \-]+" value="<?= $targets; ?>" placeholder="Scanner un réseau..."
-            title="Les cibles peuvent être spécifiées par des noms d'hôtes, des adresses IP, des adresses de réseaux, etc.
+          <div id="lanInputDiv" class="ui icon input">
+            <input class="prompt" type="text" id="lanInput" name="lan" required
+              pattern="[a-zA-Z0-9._\/ \-]+" value="<?= $targets; ?>" placeholder="Scanner un réseau..."
+              title="Les cibles peuvent être spécifiées par des noms d'hôtes, des adresses IP, des adresses de réseaux, etc.
 Exemples: <?= $_SERVER['REMOTE_ADDR']; ?>/24 <?= $_SERVER['SERVER_NAME']; ?> 10.0-255.0-255.1-254" />
-          <i class="satellite dish icon"></i>
-        </div>
-<?php
-foreach($inputs as $name => $value) {
-echo "          <input type='hidden' name='$name' value='$value'/>\n";
-}
-?>
-        <button style="display: none;" type="submit" formmethod="get" formaction="scan.php" onsubmit="targetsInputDiv.classList.add('loading')"></button>
+            <i class="satellite dish icon"></i>
+          </div>
+          <button style="display: none;" type="submit" formmethod="get" formaction="scan.php" onsubmit="lanInput.classList.add('loading')"></button>
       </div>
       <div class="item">
-        <button class="ui teal icon submit button" type="submit" formmethod="get" formaction="options.php" onclick="targetsInput.required=false">
-          <i class="sliders horizontal icon"></i>
-        </button>
+          <button class="ui teal icon submit button" type="submit" formmethod="get" formaction="options.php" onclick="lanInput.required=false">
+              <i class="sliders horizontal icon"></i>
+          </button>
       </div>
       <div class="item">
         <a class="ui teal icon button" href="https://nmap.org/man/fr/index.html" target="_blank">
           <i class="question circle icon"></i>
         </a>
-      </form>
-    </div>
+      </div>
+    </form>
   </nav>
 
   <main class="ui main container">
@@ -58,13 +53,13 @@ echo "          <input type='hidden' name='$name' value='$value'/>\n";
       <div class="content">
         <div class="ui divided link list">
 <?php
-if (!file_exists($SCANS_DIR)) {
-  mkdir($SCANS_DIR);
+if (!file_exists($SCANSDIR)) {
+  mkdir($SCANSDIR);
 }
-foreach (scandir($SCANS_DIR) as $filename) {
+foreach (scandir($SCANSDIR) as $filename) {
   if (substr($filename, -4) == '.xml') {
     $name = str_replace('!', '/', substr_replace($filename, '', -4));
-    echo "<a class='item' href='".htmlentities("$SCANS_DIR/$filename", ENT_QUOTES)."'>$name</a>\n";
+    echo "<a class='item' href='".htmlentities("$SCANSDIR/$filename", ENT_QUOTES)."'>$name</a>\n";
   }
 }
 ?>
