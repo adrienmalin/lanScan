@@ -23,12 +23,26 @@
     <xsl:variable name="init" select="document(concat($scansDir, '/', $compareWith, '.xml'))/nmaprun"/>
 
     <xsl:template match="nmaprun">
-        <xsl:variable name="targets" select="substring-after(@args, '/tmp ')"/>
+        <xsl:variable name="targets" select="substring-after(@args, '/.tmp ')"/>
         
         <html lang="fr">
             <head>
                 <meta charset="utf-8"/>
-                <meta http-equiv="refresh" content="60"/>
+                <meta http-equiv="refresh">
+                    <xsl:attribute name="content">
+                        <xsl:text>60;URL=</xsl:text>
+                        <xsl:value-of select="$basedir"/>
+                        <xsl:text>/scan.php?targets=</xsl:text>
+                        <xsl:value-of select="$targets"/>
+                        <xsl:text>&amp;</xsl:text>
+                        <xsl:call-template name="optionsList">
+                            <xsl:with-param name="argList" select="substring-before(substring-after(@args, ' -'), ' --stylesheet')"/>
+                            <xsl:with-param name="asURL" select="true()"/>
+                        </xsl:call-template>
+                        <xsl:text>compareWith=</xsl:text>
+                        <xsl:value-of select="$name"/>
+                    </xsl:attribute>
+                </meta>
                 <title>
                     <xsl:text>lanScan - </xsl:text>
                     <xsl:choose>
@@ -113,8 +127,8 @@
 Exemples: 192.168.1.0/24 scanme.nmap.org 10.0-255.0-255.1-254"/>
                                     <i class="satellite dish icon"></i>
                                 </div>
-                                <xsl:call-template name="inputList">
-                                    <xsl:with-param name="argList" select="substring-before(substring-after(@args, 'nmap -'), ' --stylesheet')"/>
+                                <xsl:call-template name="optionsList">
+                                    <xsl:with-param name="argList" select="substring-before(substring-after(@args, ' -'), ' --stylesheet')"/>
                                 </xsl:call-template>
                                 <xsl:if test="string-length($name)"><input type="hidden" name="compareWith" value="{$name}"/></xsl:if>
                                 <button style="display: none;" type="submit" formmethod="get" formaction="{$basedir}/scan.php" onsubmit="targetsInputDiv.classList.add('loading')"></button>
@@ -213,8 +227,9 @@ $.toast({
         </html>
     </xsl:template>
 
-    <xsl:template name="inputList">
+    <xsl:template name="optionsList">
         <xsl:param name="argList"/>
+        <xsl:param name="asURL" select="false()"/>
         <xsl:variable name="nextArgs" select="substring-after($argList, ' -')"/>
         <xsl:variable name="argAndValue">
             <xsl:choose>
@@ -232,12 +247,14 @@ $.toast({
                         <xsl:call-template name="input">
                             <xsl:with-param name="name" select="substring(substring-before($argAndValue, ' '), 2)"/>
                             <xsl:with-param name="value" select="substring-after($argAndValue, ' ')"/>
+                            <xsl:with-param name="asURL" select="$asURL"/>
                         </xsl:call-template>
                     </xsl:when>
                     <xsl:otherwise>
                         <xsl:call-template name="input">
                             <xsl:with-param name="name" select="substring($argAndValue, 2)"/>
                             <xsl:with-param name="value" select="on"/>
+                            <xsl:with-param name="asURL" select="$asURL"/>
                         </xsl:call-template>
                     </xsl:otherwise>
                 </xsl:choose>
@@ -248,12 +265,14 @@ $.toast({
                         <xsl:call-template name="input">
                             <xsl:with-param name="name" select="substring($argAndValue, 1, 2)"/>
                             <xsl:with-param name="value" select="substring($argAndValue, 3)"/>
+                            <xsl:with-param name="asURL" select="$asURL"/>
                         </xsl:call-template>
                     </xsl:when>
                     <xsl:otherwise>
                         <xsl:call-template name="input">
                             <xsl:with-param name="name" select="substring($argAndValue, 1, 1)"/>
                             <xsl:with-param name="value" select="substring($argAndValue, 2)"/>
+                            <xsl:with-param name="asURL" select="$asURL"/>
                         </xsl:call-template>
                     </xsl:otherwise>
                 </xsl:choose>
@@ -261,8 +280,9 @@ $.toast({
         </xsl:choose>
 
         <xsl:if test="$nextArgs">
-            <xsl:call-template name="inputList">
-                <xsl:with-param name="argList" select="substring-after($argList, ' -')"/>
+            <xsl:call-template name="optionsList">
+                <xsl:with-param name="argList" select="$nextArgs"/>
+                <xsl:with-param name="asURL" select="$asURL"/>
             </xsl:call-template>
         </xsl:if>
     </xsl:template>
@@ -270,14 +290,28 @@ $.toast({
     <xsl:template name="input">
         <xsl:param name="name"/>
         <xsl:param name="value"/>
-        <input type="hidden" name="{$name}">
-            <xsl:attribute name="value">
+        <xsl:param name="asURL"/>
+        <xsl:choose>
+            <xsl:when test="$asURL">
+                <xsl:value-of select="$name"/>
+                <xsl:text>=</xsl:text>
                 <xsl:choose>
                     <xsl:when test="$value"><xsl:value-of select="$value"/></xsl:when>
                     <xsl:otherwise>on</xsl:otherwise>
                 </xsl:choose>
-            </xsl:attribute>
-        </input>
+                <xsl:text>&amp;</xsl:text>
+            </xsl:when>
+            <xsl:otherwise>
+                <input type="hidden" name="{$name}">
+                    <xsl:attribute name="value">
+                        <xsl:choose>
+                            <xsl:when test="$value"><xsl:value-of select="$value"/></xsl:when>
+                            <xsl:otherwise>on</xsl:otherwise>
+                        </xsl:choose>
+                    </xsl:attribute>
+                </input>
+            </xsl:otherwise>
+        </xsl:choose>
     </xsl:template>
 
     <xsl:template match="host">

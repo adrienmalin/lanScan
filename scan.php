@@ -29,14 +29,14 @@ foreach ($inputs as $arg => $value) {
 }
 
 $basedir = "{$_SERVER['REQUEST_SCHEME']}://{$_SERVER['SERVER_NAME']}:{$_SERVER['SERVER_PORT']}" . dirname($_SERVER['REQUEST_URI']);
-exec("nmap$args --stylesheet $basedir/stylesheet.xsl -oX $SCANS_DIR/tmp $targets 2>&1", $stderr, $code);
+exec("nmap$args --stylesheet $basedir/stylesheet.xsl -oX $SCANS_DIR/.tmp $targets 2>&1", $stderr, $code);
 if ($code) {
     http_response_code(500);
     die(implode("<br/>\n", $stderr));
 }
 
 $xml = new DOMDocument();
-$xml->load("$SCANS_DIR/tmp");
+$xml->load("$SCANS_DIR/.tmp");
 
 $xml->insertBefore($xml->createProcessingInstruction('xslt-param', "name='saveAs' value='".htmlentities($saveAs, ENT_QUOTES)."'"), $xml->documentElement);
 $xml->insertBefore($xml->createProcessingInstruction('xslt-param', "name='scansDir' value='".htmlentities($SCANS_DIR, ENT_QUOTES)."'"), $xml->documentElement);
