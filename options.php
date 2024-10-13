@@ -21,13 +21,13 @@ include_once 'filter_inputs.php';
 
 <body>
   <nav class="ui inverted teal fixed menu">
-    <a class="header item" href=".">
+    <a class="ui teal button item" href=".">
       lan<?php include 'logo.svg'; ?>can
     </a>
   </nav>
 
   <main class="ui main container">
-    <h1 class="header">Scanner un réseau avec Nmap</h1>
+    <h1 class="header">Scanner un réseau</h1>
 
     <form id="newScanForm" class="ui form" method="get" action="scan.php">
       <div class="required field">
@@ -205,6 +205,24 @@ foreach (scandir($SCANS_DIR) as $filename) {
   if (substr($filename, -4) === '.xml') {
     $name = substr($filename, 0, -4);
     if ($name == $compareWith) {
+      echo "              <option value='$name' selected>$name</option>\n";
+    } else {
+      echo "              <option value='$name'>$name</option>\n";
+    }
+  }
+}
+?>
+            </select>
+          </div>
+
+          <div class="field" title="--stylesheet">
+            <label for="stylesheetSelect">Feuille de style</label>
+            <select class="ui dropdown" id="stylesheetSelect" name="stylesheet" value="<?= $inputs["stylesheet"] ?? ""?>">
+<?php
+foreach (scandir('.') as $filename) {
+  if (substr($filename, -4) === '.xsl') {
+    $name = substr($filename, 0, -4);
+    if (isset($inputs["stylesheet"]) && $name == $inputs["stylesheet"]) {
       echo "              <option value='$name' selected>$name</option>\n";
     } else {
       echo "              <option value='$name'>$name</option>\n";

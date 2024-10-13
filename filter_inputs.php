@@ -1,5 +1,11 @@
 <?php
 
+$hostsListRegex          = "/^[\da-zA-Z-.,:\/]+$/";
+$protocolePortsListRegex = "/^(([TU]:)?[0-9\-]+|[a-z\-]+)(,([TU]:)?[0-9\-]+|,[a-z\-]+)*$/";
+$portsListRegex          = "/^([0-9\-]+|[a-z\-]+)(,[0-9\-]+|,[a-z\-]+)*$/";
+$tempoRegex              = "/^\d+[smh]?$/";
+$fileNameRegex           = '/^[^<>:"\/|?]+$/';
+
 $targets = filter_input(INPUT_GET, 'targets', FILTER_VALIDATE_REGEXP, [
   'flags'   => FILTER_NULL_ON_FAILURE,
   'options' => ['regexp' => "/^[\da-zA-Z-. \/]+$/"],
@@ -7,18 +13,13 @@ $targets = filter_input(INPUT_GET, 'targets', FILTER_VALIDATE_REGEXP, [
 
 $saveAs = filter_input(INPUT_GET, 'saveAs', FILTER_VALIDATE_REGEXP, [
   'flags'   => FILTER_NULL_ON_FAILURE,
-  'options' => ['regexp' => '/^[^<>:"\/|?]+$/'],
+  'options' => ['regexp' => $fileNameRegex],
 ]);
 
 $compareWith = filter_input(INPUT_GET, 'compareWith', FILTER_VALIDATE_REGEXP, [
   'flags'   => FILTER_NULL_ON_FAILURE,
-  'options' => ['regexp' => '/^[^<>:"\/|?]+$/'],
+  'options' => ['regexp' => $fileNameRegex],
 ]);
-
-$hostsListRegex          = "/^[\da-zA-Z-.,:\/]+$/";
-$protocolePortsListRegex = "/^(([TU]:)?[0-9\-]+|[a-z\-]+)(,([TU]:)?[0-9\-]+|,[a-z\-]+)*$/";
-$portsListRegex          = "/^([0-9\-]+|[a-z\-]+)(,[0-9\-]+|,[a-z\-]+)*$/";
-$tempoRegex              = "/^\d+[smh]?$/";
 
 $inputs = filter_input_array(INPUT_GET, [
   'iR'      => ['filter' => FILTER_VALIDATE_INT],
@@ -110,4 +111,5 @@ $inputs = filter_input_array(INPUT_GET, [
   'V'            => ['filter' => FILTER_VALIDATE_BOOLEAN],
   'unprivileged' => ['filter' => FILTER_VALIDATE_BOOLEAN],
   'h'            => ['filter' => FILTER_VALIDATE_BOOLEAN],
+  'stylesheet'   => ['filter' => FILTER_VALIDATE_REGEXP, 'options' => ['regexp' => $fileNameRegex]],
 ], false) ?: $DEFAULT_ARGS;

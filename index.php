@@ -19,40 +19,38 @@ include_once 'filter_inputs.php';
 </head>
 
 <body>
-  <form>
-    <nav class="ui inverted teal fixed menu">
-      <button class="ui teal button item" type="submit" formmethod="get" formaction="." onclick="targetsInput.required=false">
-        lan<?php include 'logo.svg'; ?>can
-      </button>
-      <div class="right menu">
-        <div class="ui category search item">
-          <div id="targetsInputDiv" class="ui icon input">
-            <input class="prompt" type="text" id="targetsInput" name="targets" oninput="hiddenInput.value=this.value" required
-              pattern="[a-zA-Z0-9._\/ \-]+" value="<?= $targets; ?>" placeholder="Scanner un réseau..."
-              title="Les cibles peuvent être spécifiées par des noms d'hôtes, des adresses IP, des adresses de réseaux, etc.
+  <nav class="ui inverted teal fixed menu">
+    <a class="ui teal button item" href=".">
+      lan<?php include 'logo.svg'; ?>can
+    </a>
+    <form class="right menu">
+      <div class="ui category search item">
+        <div id="targetsInputDiv" class="ui icon input">
+          <input class="prompt" type="text" id="targetsInput" name="targets" oninput="hiddenInput.value=this.value" required
+            pattern="[a-zA-Z0-9._\/ \-]+" value="<?= $targets; ?>" placeholder="Scanner un réseau..."
+            title="Les cibles peuvent être spécifiées par des noms d'hôtes, des adresses IP, des adresses de réseaux, etc.
 Exemples: <?= $_SERVER['REMOTE_ADDR']; ?>/24 <?= $_SERVER['SERVER_NAME']; ?> 10.0-255.0-255.1-254" />
-            <i class="satellite dish icon"></i>
-          </div>
+          <i class="satellite dish icon"></i>
+        </div>
 <?php
 foreach($inputs as $name => $value) {
-  echo "          <input type='hidden' name='$name' value='$value'/>\n";
+echo "          <input type='hidden' name='$name' value='$value'/>\n";
 }
 ?>
-          <button style="display: none;" type="submit" formmethod="get" formaction="scan.php" onsubmit="targetsInputDiv.classList.add('loading')"></button>
-        </div>
-        <div class="item">
-          <button class="ui teal icon submit button" type="submit" formmethod="get" formaction="options.php" onclick="targetsInput.required=false">
-            <i class="sliders horizontal icon"></i>
-          </button>
-        </div>
-        <div class="item">
-          <a class="ui teal icon button" href="https://nmap.org/man/fr/index.html" target="_blank">
-            <i class="question circle icon"></i>
-          </a>
-        </div>
+        <button style="display: none;" type="submit" formmethod="get" formaction="scan.php" onsubmit="targetsInputDiv.classList.add('loading')"></button>
       </div>
-    </nav>
-  </form>
+      <div class="item">
+        <button class="ui teal icon submit button" type="submit" formmethod="get" formaction="options.php" onclick="targetsInput.required=false">
+          <i class="sliders horizontal icon"></i>
+        </button>
+      </div>
+      <div class="item">
+        <a class="ui teal icon button" href="https://nmap.org/man/fr/index.html" target="_blank">
+          <i class="question circle icon"></i>
+        </a>
+      </form>
+    </div>
+  </nav>
 
   <main class="ui main container">
     <h1 class="ui header">Précédents scans</h1>
