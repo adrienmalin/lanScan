@@ -8,9 +8,9 @@
     <xsl:output indent="yes"/>
     <xsl:strip-space elements='*'/>
 
-    <xsl:param name="saveAs"/>
-    <xsl:param name="scansDir"/>
-    <xsl:param name="compareWith"/>
+    <xsl:param name="saveAs" select=""/>
+    <xsl:param name="scansDir" select="scans"/>
+    <xsl:param name="compareWith" select=""/>
     <xsl:variable name="name">
         <xsl:choose>
             <xsl:when test="$saveAs"><xsl:value-of select="$saveAs"/></xsl:when>
@@ -228,7 +228,7 @@ $.toast({
     </xsl:template>
 
     <xsl:template name="optionsList">
-        <xsl:param name="argList"/>
+        <xsl:param name="argList" select=""/>
         <xsl:param name="asURL" select="false()"/>
         <xsl:variable name="nextArgs" select="substring-after($argList, ' -')"/>
         <xsl:variable name="argAndValue">
@@ -289,8 +289,8 @@ $.toast({
 
     <xsl:template name="input">
         <xsl:param name="name"/>
-        <xsl:param name="value"/>
-        <xsl:param name="asURL"/>
+        <xsl:param name="value" select=""/>
+        <xsl:param name="asURL" select="false()"/>
         <xsl:choose>
             <xsl:when test="$asURL">
                 <xsl:value-of select="$name"/>
