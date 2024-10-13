@@ -5,7 +5,7 @@ $targets = filter_input(INPUT_GET, 'targets', FILTER_VALIDATE_REGEXP, [
   'options' => ['regexp' => "/^[\da-zA-Z-. \/]+$/"],
 ]);
 
-$name = filter_input(INPUT_GET, 'name', FILTER_VALIDATE_REGEXP, [
+$saveAs = filter_input(INPUT_GET, 'saveAs', FILTER_VALIDATE_REGEXP, [
   'flags'   => FILTER_NULL_ON_FAILURE,
   'options' => ['regexp' => '/^[^<>:"\/|?]+$/'],
 ]);
@@ -49,10 +49,6 @@ $inputs = filter_input_array(INPUT_GET, [
   'sF'         => ['filter' => FILTER_VALIDATE_BOOLEAN],
   'sN'         => ['filter' => FILTER_VALIDATE_BOOLEAN],
   'sX'         => ['filter' => FILTER_VALIDATE_BOOLEAN],
-  'PU'         => ['filter' => FILTER_VALIDATE_BOOLEAN],
-  'PM'         => ['filter' => FILTER_VALIDATE_BOOLEAN],
-  'PM'         => ['filter' => FILTER_VALIDATE_BOOLEAN],
-  'PM'         => ['filter' => FILTER_VALIDATE_BOOLEAN],
   'scanflags'  => ['filter' => FILTER_VALIDATE_REGEXP, 'options' => ['regexp' => "/^([URG|ACK|PSH|RST|SYN|FIN]+)$|^([0-2]?\d?\d)$/"]],
   'sI'         => ['filter' => FILTER_VALIDATE_REGEXP, 'options' => ['regexp' => "/^[a-zA-Z\d:.-]+(:\d+)?$/"]],
   'sO'         => ['filter' => FILTER_VALIDATE_BOOLEAN],
@@ -110,7 +106,6 @@ $inputs = filter_input_array(INPUT_GET, [
     //'6' => ['filter' => FILTER_VALIDATE_BOOLEAN],
   'A'            => ['filter' => FILTER_VALIDATE_BOOLEAN],
   'send-eth'     => ['filter' => FILTER_VALIDATE_BOOLEAN],
-  'send-ip'      => ['filter' => FILTER_VALIDATE_BOOLEAN],
   'privileged'   => ['filter' => FILTER_VALIDATE_BOOLEAN],
   'V'            => ['filter' => FILTER_VALIDATE_BOOLEAN],
   'unprivileged' => ['filter' => FILTER_VALIDATE_BOOLEAN],

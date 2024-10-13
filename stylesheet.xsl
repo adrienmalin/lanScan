@@ -8,13 +8,14 @@
     <xsl:output indent="yes"/>
     <xsl:strip-space elements='*'/>
 
-    <xsl:param name="name"/>
+    <xsl:param name="saveAs"/>
     <xsl:param name="scansDir"/>
     <xsl:param name="compareWith"/>
-    <xsl:variable name="nameOrCompareWith">
+    <xsl:variable name="name">
         <xsl:choose>
-            <xsl:when test="$name"><xsl:value-of select="$name"/></xsl:when>
+            <xsl:when test="$saveAs"><xsl:value-of select="$saveAs"/></xsl:when>
             <xsl:when test="$compareWith"><xsl:value-of select="$compareWith"/></xsl:when>
+            <xsl:otherwise><xsl:value-of select="false"/></xsl:otherwise>
         </xsl:choose>
     </xsl:variable>
     <xsl:variable name="current" select="./nmaprun"/>
@@ -33,7 +34,7 @@
                 <title>
                     <xsl:text>lanScan - </xsl:text>
                     <xsl:choose>
-                        <xsl:when test="string-length($nameOrCompareWith)"><xsl:value-of select="$nameOrCompareWith"/></xsl:when>
+                        <xsl:when test="$name"><xsl:value-of select="$name"/></xsl:when>
                         <xsl:otherwise><xsl:value-of select="$targets"/></xsl:otherwise>
                     </xsl:choose>
                 </title>
@@ -52,85 +53,85 @@
             </head>
 
             <body>
-                <nav class="ui inverted teal fixed menu">
-                    <a class="header item" href="./?targets={$targets}">
-                        <xsl:text>lan</xsl:text>
-                        <svg class="logo" version="1.1" id="Layer_1" x="0px" y="0px" viewBox="0 0 24 24" xml:space="preserve" width="40" height="40"
-                            xmlns="http://www.w3.org/2000/svg"
-                            xmlns:svg="http://www.w3.org/2000/svg">
-                            <defs id="defs206"/>
-                            <g id="g998" transform="matrix(0,0.04687491,-0.04687491,0,24,2.2682373e-5)">
-                                <g id="g147">
-                                    <g id="g145">
-                                        <path d="m 322.065,92.046 c -46.24,0 -83.851,37.619 -83.851,83.857 v 168.712 c 0,25.224 -21.148,45.745 -46.372,45.745 -25.224,0 -46.372,-20.521 -46.372,-45.745 V 199.464 h -38.114 v 145.151 c 0,46.24 38.246,83.859 84.486,83.859 46.24,0 84.486,-37.619 84.486,-83.859 V 175.903 c 0,-25.223 20.514,-45.743 45.737,-45.743 25.223,0 45.737,20.521 45.737,45.743 v 134.092 h 38.114 V 175.903 c 0,-46.239 -37.611,-83.857 -83.851,-83.857 z" id="path143"/>
+                <form>
+                    <nav class="ui inverted teal fixed menu">
+                        <button class="ui teal button item" type="submit" formmethod="get" formaction=".">
+                            <xsl:text>lan</xsl:text>
+                            <svg class="logo" version="1.1" id="Layer_1" x="0px" y="0px" viewBox="0 0 24 24" xml:space="preserve" width="40" height="40"
+                                xmlns="http://www.w3.org/2000/svg"
+                                xmlns:svg="http://www.w3.org/2000/svg">
+                                <defs id="defs206"/>
+                                <g id="g998" transform="matrix(0,0.04687491,-0.04687491,0,24,2.2682373e-5)">
+                                    <g id="g147">
+                                        <g id="g145">
+                                            <path d="m 322.065,92.046 c -46.24,0 -83.851,37.619 -83.851,83.857 v 168.712 c 0,25.224 -21.148,45.745 -46.372,45.745 -25.224,0 -46.372,-20.521 -46.372,-45.745 V 199.464 h -38.114 v 145.151 c 0,46.24 38.246,83.859 84.486,83.859 46.24,0 84.486,-37.619 84.486,-83.859 V 175.903 c 0,-25.223 20.514,-45.743 45.737,-45.743 25.223,0 45.737,20.521 45.737,45.743 v 134.092 h 38.114 V 175.903 c 0,-46.239 -37.611,-83.857 -83.851,-83.857 z" id="path143"/>
+                                        </g>
                                     </g>
-                                </g>
-                                <g id="g153">
-                                    <g id="g151">
-                                        <path d="M 144.198,0 H 108.625 C 98.101,0 89.568,8.746 89.568,19.271 c 0,1.157 0.121,2.328 0.318,3.598 h 73.052 c 0.197,-1.27 0.318,-2.441 0.318,-3.598 C 163.256,8.746 154.723,0 144.198,0 Z" id="path149"/>
+                                    <g id="g153">
+                                        <g id="g151">
+                                            <path d="M 144.198,0 H 108.625 C 98.101,0 89.568,8.746 89.568,19.271 c 0,1.157 0.121,2.328 0.318,3.598 h 73.052 c 0.197,-1.27 0.318,-2.441 0.318,-3.598 C 163.256,8.746 154.723,0 144.198,0 Z" id="path149"/>
+                                        </g>
                                     </g>
-                                </g>
-                                <g id="g159">
-                                    <g id="g157">
-                                        <path d="m 420.183,486.591 h -71.731 c -0.626,2.541 -0.978,4.077 -0.978,6.176 0,10.525 8.532,19.234 19.057,19.234 h 35.573 c 10.525,0 19.057,-8.709 19.057,-19.234 0,-2.098 -0.352,-3.635 -0.978,-6.176 z" id="path155"/>
+                                    <g id="g159">
+                                        <g id="g157">
+                                            <path d="m 420.183,486.591 h -71.731 c -0.626,2.541 -0.978,4.077 -0.978,6.176 0,10.525 8.532,19.234 19.057,19.234 h 35.573 c 10.525,0 19.057,-8.709 19.057,-19.234 0,-2.098 -0.352,-3.635 -0.978,-6.176 z" id="path155"/>
+                                        </g>
                                     </g>
-                                </g>
-                                <g id="g165">
-                                    <g id="g163">
-                                        <rect x="87.027" y="41.925999" width="80.040001" height="138.481" id="rect161"/>
+                                    <g id="g165">
+                                        <g id="g163">
+                                            <rect x="87.027" y="41.925999" width="80.040001" height="138.481" id="rect161"/>
+                                        </g>
                                     </g>
-                                </g>
-                                <g id="g171">
-                                    <g id="g169">
-                                        <rect x="344.93301" y="329.052" width="80.040001" height="138.481" id="rect167"/>
+                                    <g id="g171">
+                                        <g id="g169">
+                                            <rect x="344.93301" y="329.052" width="80.040001" height="138.481" id="rect167"/>
+                                        </g>
                                     </g>
+                                    <g id="g173"></g>
+                                    <g id="g175"></g>
+                                    <g id="g177"></g>
+                                    <g id="g179"></g>
+                                    <g id="g181"></g>
+                                    <g id="g183"></g>
+                                    <g id="g185"></g>
+                                    <g id="g187"></g>
+                                    <g id="g189"></g>
+                                    <g id="g191"></g>
+                                    <g id="g193"></g>
+                                    <g id="g195"></g>
+                                    <g id="g197"></g>
+                                    <g id="g199"></g>
+                                    <g id="g201"></g>
                                 </g>
-                                <g id="g173"></g>
-                                <g id="g175"></g>
-                                <g id="g177"></g>
-                                <g id="g179"></g>
-                                <g id="g181"></g>
-                                <g id="g183"></g>
-                                <g id="g185"></g>
-                                <g id="g187"></g>
-                                <g id="g189"></g>
-                                <g id="g191"></g>
-                                <g id="g193"></g>
-                                <g id="g195"></g>
-                                <g id="g197"></g>
-                                <g id="g199"></g>
-                                <g id="g201"></g>
-                            </g>
-                        </svg>
-                        <xsl:text>can</xsl:text>
-                    </a>
-                    <div class="right menu">
-                      <form class="ui category search item" onsubmit="targetsInputDiv.classList.add('loading')">
-                        <div class="fiels">
-                          <div id="targetsInputDiv" class="ui icon input">
-                            <input class="prompt" type="text" id="targetsInput" name="targets" oninput="hiddenInput.value=this.value" required=""
-                              pattern="[a-zA-Z0-9._\/ \-]+" value="{$targets}" placeholder="Scanner un réseau..."
-                              title="Les cibles peuvent être spécifiées par des noms d'hôtes, des adresses IP, des adresses de réseaux, etc.
+                            </svg>
+                            <xsl:text>can</xsl:text>
+                        </button>
+                        <div class="right menu">
+                            <div class="ui category search item">
+                                <div id="targetsInputDiv" class="ui icon input">
+                                <input class="prompt" type="text" id="targetsInput" name="targets" oninput="hiddenInput.value=this.value" required=""
+                                    pattern="[a-zA-Z0-9._\/ \-]+" value="{$targets}" placeholder="Scanner un réseau..."
+                                    title="Les cibles peuvent être spécifiées par des noms d'hôtes, des adresses IP, des adresses de réseaux, etc.
 Exemples: 192.168.1.0/24 scanme.nmap.org 10.0-255.0-255.1-254"/>
-                              <i class="satellite dish icon"></i>
-                          </div>
-                          <xsl:if test="$PS"><input type="hidden" name="PS" value="{$PS}"/></xsl:if>
-                          <xsl:if test="$F"><input type="hidden" name="F" value="on"/></xsl:if>
-                          <xsl:if test="string-length($nameOrCompareWith)"><input type="hidden" name="compareWith" value="{$nameOrCompareWith}"/></xsl:if>
-                          <button style="display: none;" type="submit" formmethod="get" formaction="{$basedir}/scan.php"></button>
-                          <button class="ui teal icon submit button" type="submit" formmethod="get" formaction="{$basedir}/options.php" onclick="targetsInput.required=false">
-                            <i class="sliders horizontal icon"></i>
-                          </button>
+                                    <i class="satellite dish icon"></i>
+                                </div>
+                                <xsl:if test="$PS"><input type="hidden" name="PS" value="{$PS}"/></xsl:if>
+                                <xsl:if test="$F"><input type="hidden" name="F" value="on"/></xsl:if>
+                                <xsl:if test="$name"><input type="hidden" name="compareWith" value="{$name}"/></xsl:if>
+                                <button style="display: none;" type="submit" formmethod="get" formaction="{$basedir}/scan.php" onsubmit="targetsInputDiv.classList.add('loading')"></button>
+                                <button class="ui teal icon submit button" type="submit" formmethod="get" formaction="{$basedir}/options.php" onclick="targetsInput.required=false">
+                                <i class="sliders horizontal icon"></i>
+                                </button>
+                            </div>
                         </div>
-                      </form>
-                    </div>
-                </nav>
+                    </nav>
+                </form>
 
                 <main class="ui main container">
                     <h1 class="ui header">
                         <xsl:choose>
-                            <xsl:when test="string-length($nameOrCompareWith)">
-                                <xsl:value-of select="$nameOrCompareWith"/>
+                            <xsl:when test="$name">
+                                <xsl:value-of select="$name"/>
                                 <div class="sub header"><xsl:value-of select="$targets"/></div>
                             </xsl:when>
                             <xsl:otherwise><xsl:value-of select="$targets"/></xsl:otherwise>

@@ -40,10 +40,10 @@ Exemples: <?= $_SERVER['REMOTE_ADDR']; ?>/24 <?= $_SERVER['SERVER_NAME']; ?> 10.
       </div>
 
       <div class="field">
-        <label for="nameInput">Enregistrer sous le nom</label>
-        <input id="nameInput" type="text" name="name" placeholder="Réseau local" pattern='[^&lt;&gt;:&quot;\\\/\|@?]+'
-          title='Caractères interdits :  &lt;&gt;:&quot;\/|@?'
-          value="<?= htmlspecialchars($name); ?>">
+        <label for="saveAsInput">Enregistrer sous le nom</label>
+        <input id="saveAsInput" type="text" name="saveAs" placeholder="Réseau local" pattern='[^&lt;&gt;:&quot;\\\/\|@?]+'
+          title="Caractères interdits :  &lt;&gt;:&quot;\/|@?"
+          value="<?= htmlentities($saveAs, ENT_QUOTES); ?>">
       </div>
 
       <div class="ui styled fluid accordion field">
@@ -225,25 +225,6 @@ foreach (scandir($SCANS_DIR) as $filename) {
 
       <button type="submit" class="ui teal submit button">Démarrer</button>
     </form>
-  
-    <h2 class="ui header">Précédents scans</h2>
-    <div class="ui fluid relaxed card">
-      <div class="content">
-        <div class="ui divided link list">
-          <?php
-          if (!file_exists($SCANS_DIR)) {
-            mkdir($SCANS_DIR);
-          }
-          foreach (scandir($SCANS_DIR) as $scan) {
-            if (substr($scan, -4) == '.xml') {
-              $targets = str_replace('!', '/', substr_replace($scan, '', -4));
-              echo "<a class='item' href='scan.php?targets=" . urlencode($targets) . "'>$targets</a>\n";
-            }
-          }
-          ?>
-        </div>
-      </div>
-    </div>
   </main>
 
   <datalist id='targetsList'>
