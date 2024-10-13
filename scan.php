@@ -29,21 +29,23 @@ foreach ($inputs as $arg => $value) {
 }
 
 $basedir = "{$_SERVER['REQUEST_SCHEME']}://{$_SERVER['SERVER_NAME']}:{$_SERVER['SERVER_PORT']}" . dirname($_SERVER['REQUEST_URI']);
-exec("nmap$args --stylesheet $basedir/stylesheet.xsl -oX $SCANS_DIR/.tmp $targets 2>&1", $stderr, $code);
+
+$tempPath = tempnam(sys_get_temp_dir(), 'scan_').".xml";
+exec("nmap$args --stylesheet $basedir/stylesheet.xsl -oX '$tempPath' $targets 2>&1", $stderr, $code);
 if ($code) {
     http_response_code(500);
     die(implode("<br/>\n", $stderr));
 }
 
 $xml = new DOMDocument();
-$xml->load("$SCANS_DIR/.tmp");
+$xml->load($tempPath);
+`rm "$tempPath"`;
 
 $xml->insertBefore($xml->createProcessingInstruction('xslt-param', "name='saveAs' value='".htmlentities($saveAs, ENT_QUOTES)."'"), $xml->documentElement);
 $xml->insertBefore($xml->createProcessingInstruction('xslt-param', "name='scansDir' value='".htmlentities($SCANS_DIR, ENT_QUOTES)."'"), $xml->documentElement);
 $xml->insertBefore($xml->createProcessingInstruction('xslt-param', "name='compareWith' value='".htmlentities($compareWith, ENT_QUOTES)."'"), $xml->documentElement);
 
 if ($saveAs) {
-    if (!file_exists($SCANS_DIR)) mkdir($SCANS_DIR);
     $path = "$SCANS_DIR/$saveAs.xml";
     $xml->save($path);
 

@@ -23,7 +23,7 @@
     <xsl:variable name="init" select="document(concat($scansDir, '/', $compareWith, '.xml'))/nmaprun"/>
 
     <xsl:template match="nmaprun">
-        <xsl:variable name="targets" select="substring-after(@args, '/.tmp ')"/>
+        <xsl:variable name="targets" select="substring-after(@args, '.xml ')"/>
         
         <html lang="fr">
             <head>
@@ -67,7 +67,7 @@
             <body>
                 <form>
                     <nav class="ui inverted teal fixed menu">
-                        <button class="ui teal button item" type="submit" formmethod="get" formaction="{$basedir}">
+                        <button class="ui teal button item" type="submit" formmethod="get" formaction="{$basedir}"  onclick="targetsInput.required=false">
                             <xsl:text>lan</xsl:text>
                             <svg class="logo" version="1.1" id="Layer_1" x="0px" y="0px" viewBox="0 0 24 24" xml:space="preserve" width="40" height="40"
                                 xmlns="http://www.w3.org/2000/svg"
@@ -132,9 +132,16 @@ Exemples: 192.168.1.0/24 scanme.nmap.org 10.0-255.0-255.1-254"/>
                                 </xsl:call-template>
                                 <xsl:if test="string-length($name)"><input type="hidden" name="compareWith" value="{$name}"/></xsl:if>
                                 <button style="display: none;" type="submit" formmethod="get" formaction="{$basedir}/scan.php" onsubmit="targetsInputDiv.classList.add('loading')"></button>
+                            </div>
+                            <div class="item">
                                 <button class="ui teal icon submit button" type="submit" formmethod="get" formaction="{$basedir}/options.php" onclick="targetsInput.required=false">
-                                <i class="sliders horizontal icon"></i>
+                                    <i class="sliders horizontal icon"></i>
                                 </button>
+                            </div>
+                            <div class="item">
+                                <a class="ui teal icon button" href="https://nmap.org/man/fr/index.html" target="_blank">
+                                <i class="question circle icon"></i>
+                                </a>
                             </div>
                         </div>
                     </nav>

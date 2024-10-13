@@ -21,7 +21,7 @@ include_once 'filter_inputs.php';
 <body>
   <form>
     <nav class="ui inverted teal fixed menu">
-      <button class="ui teal button item" type="submit" formmethod="get" formaction=".">
+      <button class="ui teal button item" type="submit" formmethod="get" formaction="." onclick="targetsInput.required=false">
         lan<?php include 'logo.svg'; ?>can
       </button>
       <div class="right menu">
@@ -39,9 +39,16 @@ foreach($inputs as $name => $value) {
 }
 ?>
           <button style="display: none;" type="submit" formmethod="get" formaction="scan.php" onsubmit="targetsInputDiv.classList.add('loading')"></button>
+        </div>
+        <div class="item">
           <button class="ui teal icon submit button" type="submit" formmethod="get" formaction="options.php" onclick="targetsInput.required=false">
             <i class="sliders horizontal icon"></i>
           </button>
+        </div>
+        <div class="item">
+          <a class="ui teal icon button" href="https://nmap.org/man/fr/index.html" target="_blank">
+            <i class="question circle icon"></i>
+          </a>
         </div>
       </div>
     </nav>
