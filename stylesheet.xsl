@@ -15,7 +15,7 @@
         <xsl:choose>
             <xsl:when test="$saveAs"><xsl:value-of select="$saveAs"/></xsl:when>
             <xsl:when test="$compareWith"><xsl:value-of select="$compareWith"/></xsl:when>
-            <xsl:otherwise><xsl:value-of select="false"/></xsl:otherwise>
+            <xsl:otherwise></xsl:otherwise>
         </xsl:choose>
     </xsl:variable>
     <xsl:variable name="current" select="./nmaprun"/>
@@ -23,9 +23,7 @@
     <xsl:variable name="init" select="document(concat($scansDir, '/', $compareWith, '.xml'))/nmaprun"/>
 
     <xsl:template match="nmaprun">
-        <xsl:variable name="targets" select="substring-after(@args, '-oX - ')"/>
-        <xsl:variable name="PS" select="substring-before(substring-after(@args, '-PS'), ' -')"/>
-        <xsl:variable name="F" select="contains(@args, '-F')"/>
+        <xsl:variable name="targets" select="substring-after(@args, '/tmp ')"/>
         
         <html lang="fr">
             <head>
@@ -34,7 +32,7 @@
                 <title>
                     <xsl:text>lanScan - </xsl:text>
                     <xsl:choose>
-                        <xsl:when test="$name"><xsl:value-of select="$name"/></xsl:when>
+                        <xsl:when test="string-length($name)"><xsl:value-of select="$name"/></xsl:when>
                         <xsl:otherwise><xsl:value-of select="$targets"/></xsl:otherwise>
                     </xsl:choose>
                 </title>
@@ -55,7 +53,7 @@
             <body>
                 <form>
                     <nav class="ui inverted teal fixed menu">
-                        <button class="ui teal button item" type="submit" formmethod="get" formaction=".">
+                        <button class="ui teal button item" type="submit" formmethod="get" formaction="{$basedir}">
                             <xsl:text>lan</xsl:text>
                             <svg class="logo" version="1.1" id="Layer_1" x="0px" y="0px" viewBox="0 0 24 24" xml:space="preserve" width="40" height="40"
                                 xmlns="http://www.w3.org/2000/svg"
@@ -115,9 +113,10 @@
 Exemples: 192.168.1.0/24 scanme.nmap.org 10.0-255.0-255.1-254"/>
                                     <i class="satellite dish icon"></i>
                                 </div>
-                                <xsl:if test="$PS"><input type="hidden" name="PS" value="{$PS}"/></xsl:if>
-                                <xsl:if test="$F"><input type="hidden" name="F" value="on"/></xsl:if>
-                                <xsl:if test="$name"><input type="hidden" name="compareWith" value="{$name}"/></xsl:if>
+                                <xsl:call-template name="inputList">
+                                    <xsl:with-param name="argList" select="substring-before(substring-after(@args, 'nmap -'), ' --stylesheet')"/>
+                                </xsl:call-template>
+                                <xsl:if test="string-length($name)"><input type="hidden" name="compareWith" value="{$name}"/></xsl:if>
                                 <button style="display: none;" type="submit" formmethod="get" formaction="{$basedir}/scan.php" onsubmit="targetsInputDiv.classList.add('loading')"></button>
                                 <button class="ui teal icon submit button" type="submit" formmethod="get" formaction="{$basedir}/options.php" onclick="targetsInput.required=false">
                                 <i class="sliders horizontal icon"></i>
@@ -130,7 +129,7 @@ Exemples: 192.168.1.0/24 scanme.nmap.org 10.0-255.0-255.1-254"/>
                 <main class="ui main container">
                     <h1 class="ui header">
                         <xsl:choose>
-                            <xsl:when test="$name">
+                            <xsl:when test="string-length($name)">
                                 <xsl:value-of select="$name"/>
                                 <div class="sub header"><xsl:value-of select="$targets"/></div>
                             </xsl:when>
@@ -212,6 +211,73 @@ $.toast({
                 </script>
             </body>
         </html>
+    </xsl:template>
+
+    <xsl:template name="inputList">
+        <xsl:param name="argList"/>
+        <xsl:variable name="nextArgs" select="substring-after($argList, ' -')"/>
+        <xsl:variable name="argAndValue">
+            <xsl:choose>
+                <xsl:when test="$nextArgs">
+                    <xsl:value-of select="substring-before($argList, ' -')"/>
+                </xsl:when>
+                <xsl:otherwise><xsl:value-of select="$argList"/></xsl:otherwise>
+            </xsl:choose>
+        </xsl:variable>
+
+        <xsl:choose>
+            <xsl:when test="starts-with($argAndValue, '-')">
+                <xsl:choose>
+                    <xsl:when test="contains($argAndValue, ' ')">
+                        <xsl:call-template name="input">
+                            <xsl:with-param name="name" select="substring(substring-before($argAndValue, ' '), 2)"/>
+                            <xsl:with-param name="value" select="substring-after($argAndValue, ' ')"/>
+                        </xsl:call-template>
+                    </xsl:when>
+                    <xsl:otherwise>
+                        <xsl:call-template name="input">
+                            <xsl:with-param name="name" select="substring($argAndValue, 2)"/>
+                            <xsl:with-param name="value" select="on"/>
+                        </xsl:call-template>
+                    </xsl:otherwise>
+                </xsl:choose>
+            </xsl:when>
+            <xsl:otherwise>
+                <xsl:choose>
+                    <xsl:when test="starts-with($argAndValue, 'P') or starts-with($argAndValue, 's') or starts-with($argAndValue, 'o')">
+                        <xsl:call-template name="input">
+                            <xsl:with-param name="name" select="substring($argAndValue, 1, 2)"/>
+                            <xsl:with-param name="value" select="substring($argAndValue, 3)"/>
+                        </xsl:call-template>
+                    </xsl:when>
+                    <xsl:otherwise>
+                        <xsl:call-template name="input">
+                            <xsl:with-param name="name" select="substring($argAndValue, 1, 1)"/>
+                            <xsl:with-param name="value" select="substring($argAndValue, 2)"/>
+                        </xsl:call-template>
+                    </xsl:otherwise>
+                </xsl:choose>
+            </xsl:otherwise>
+        </xsl:choose>
+
+        <xsl:if test="$nextArgs">
+            <xsl:call-template name="inputList">
+                <xsl:with-param name="argList" select="substring-after($argList, ' -')"/>
+            </xsl:call-template>
+        </xsl:if>
+    </xsl:template>
+
+    <xsl:template name="input">
+        <xsl:param name="name"/>
+        <xsl:param name="value"/>
+        <input type="hidden" name="{$name}">
+            <xsl:attribute name="value">
+                <xsl:choose>
+                    <xsl:when test="$value"><xsl:value-of select="$value"/></xsl:when>
+                    <xsl:otherwise>on</xsl:otherwise>
+                </xsl:choose>
+            </xsl:attribute>
+        </input>
     </xsl:template>
 
     <xsl:template match="host">
