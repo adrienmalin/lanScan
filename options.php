@@ -62,19 +62,19 @@ Exemples: <?= $_SERVER['REMOTE_ADDR']; ?>/24 <?= $_SERVER['SERVER_NAME']; ?> 10.
           <div class="fields">
             <div class="field" title="-PS">
               <label for="PSInput">TCP SYN</label>
-              <input type="text" id="PSInput" name="-PS" placeholder="Ports" list="servicesList"
+              <input type="text" id="PSInput" name="PS" placeholder="Ports" list="servicesList"
                 pattern="([0-9\-]+|[a-z\-]+)(,[0-9\-]+|,[a-z\-]+)*" value="<?= $inputs['PS'] ?? "" ?>"
                 title="Liste de ports ex: 22,23,25,80,200-1024,60000-">
             </div>
             <div class="field" title="-PA">
               <label for="PAInput">TCP ACK</label>
-              <input type="text" id="PAInput" name="-PA" placeholder="Ports" list="servicesList"
+              <input type="text" id="PAInput" name="PA" placeholder="Ports" list="servicesList"
                 pattern="([0-9\-]+|[a-z\-]+)(,[0-9\-]+|,[a-z\-]+)*" value="<?= $inputs['PA'] ?? "" ?>"
                 title="Liste de ports ex: 22,23,25,80,200-1024,60000-">
             </div>
             <div class="field" title="-PU">
               <label for="PUInput">UDP</label>
-              <input type="text" id="PUInput" name="-PU" placeholder="Ports" list="servicesList"
+              <input type="text" id="PUInput" name="PU" placeholder="Ports" list="servicesList"
                 pattern="([0-9\-]+|[a-z\-]+)(,[0-9\-]+|,[a-z\-]+)*" value="<?= $inputs['PU'] ?? "" ?>"
                 title="Liste de ports ex: 22,23,25,80,200-1024,60000-">
             </div>
@@ -85,7 +85,7 @@ Exemples: <?= $_SERVER['REMOTE_ADDR']; ?>/24 <?= $_SERVER['SERVER_NAME']; ?> 10.
             <div class="inline fields">
               <div class="field" title="-PE">
                 <div class="ui toggle checkbox">
-                  <input type="checkbox" id="PECheckbox" name="-PE" <?= $inputs['PE'] ?? false ? 'checked' : ''; ?> />
+                  <input type="checkbox" id="PECheckbox" name="PE" <?= $inputs['PE'] ?? false ? 'checked' : ''; ?> />
                   <label for="PECheckbox">Echo request</label>
                 </div>
               </div>
@@ -102,47 +102,41 @@ Exemples: <?= $_SERVER['REMOTE_ADDR']; ?>/24 <?= $_SERVER['SERVER_NAME']; ?> 10.
                 </div>
               </div>
             </div>
-
-            <div class="field" title="--exclude">
-              <label for="excludeInput">Exclure les hôtes ou réseaux</label>
-              <input type="text" id="excludeInput" name="exclude" placeholder="Hôte/réseau" list="targetsList"
-                pattern="[a-zA-Z0-9._\/,\-]*" value="<?= $inputs['exclude'] ?? "" ?>">
-            </div>
           </div>
 
           <div class="field" title="-PO">
             <label for="POInput" title="PO">Protocole IP (par type)</label>
-            <input type="text" id="POInput" name="P0" placeholder="Protocole"
+            <input type="text" id="POInput" name="PO" placeholder="Protocole"
               pattern="[0-9,\-]+" value="<?= $inputs['PO'] ?? "" ?>"
               title="[num de protocole]">
           </div>
 
           <div class="fields">
-            <div class="field">
+            <div class="inline field" title="-PR">
               <div class="ui toggle checkbox">
                 <input type="checkbox" id="PRCheckbox" name="PR" <?= $inputs['PR'] ?? false ? 'checked' : ''; ?> />
-                <label for="PRCheckbox" title="PR">Ping ARP</label>
+                <label for="PRCheckbox">Ping ARP</label>
               </div>
             </div>
-            <div class="field">
+            <div class="inline field" title="--send-ip">
               <div class="ui toggle checkbox">
                 <input type="checkbox" id="sendIPCheckbox" name="send-ip" <?= $inputs['send-ip'] ?? false ? 'checked' : ''; ?> />
-                <label for="sendIPCheckbox" title="send-ip">Pas de scan ARP</label>
+                <label for="sendIPCheckbox">Pas de scan ARP</label>
               </div>
             </div>
           </div>
 
           <div class="fields">
-            <div class="field">
+            <div class="inline field" title="-n">
               <div class="ui toggle checkbox">
                 <input type="checkbox" id="nCheckbox" name="n" <?= $inputs['n'] ?? false ? 'checked' : ''; ?> />
-                <label for="nCheckbox" title="n">Ne jamais résoudre les noms DNS</label>
+                <label for="nCheckbox">Ne jamais résoudre les noms DNS</label>
               </div>
             </div>
-            <div class="field">
+            <div class="inline field" title="-R">
               <div class="ui toggle checkbox">
                 <input type="checkbox" id="RCheckbox" name="R" <?= $inputs['R'] ?? false ? 'checked' : ''; ?> />
-                <label for="nCheckbox" title="R">Toujours résoudre les noms DNS<br />(par défault seuls les hôtes actifs sont résolus)</label>
+                <label for="nCheckbox">Toujours résoudre les noms DNS<br />(par défault seuls les hôtes actifs sont résolus)</label>
               </div>
             </div>
           </div>
@@ -173,25 +167,25 @@ Exemples: <?= $_SERVER['REMOTE_ADDR']; ?>/24 <?= $_SERVER['SERVER_NAME']; ?> 10.
             </div>
           </div>
 
-          <div class="field">
+          <div class="inline field" title="-F">
             <div class="ui toggle checkbox">
               <input type="checkbox" id="FCheckbox" name="F" <?= $inputs['F'] ?? false ? 'checked' : ''; ?>
                 onchange="pInput.disabled = FCheckbox.checked" />
-              <label for="FCheckbox" title="F">Scanner les ports connus</label>
+              <label for="FCheckbox">Scanner les ports connus</label>
             </div>
           </div>
 
-          <div class="field">
-            <label for="pInput" title="p">Scanner les ports</label>
+          <div class="inline field" title="-p">
+            <label for="pInput">Scanner les ports</label>
             <input type="text" id="pInput" name="p" placeholder="Ports" list="servicesList" <?= $inputs['F'] ?? false ? 'disabled' : ''; ?>
               pattern="(([TU]:)?[0-9\-]+|[a-z\-]+)(,([TU]:)?[0-9\-]+|,[a-z\-]+)*" value="<?= $inputs['p'] ?? "" ?>"
               title="Liste de ports ex: ssh,ftp,U:53,111,137,T:21-25,80,139,8080">
           </div>
 
-          <div class="field">
+          <div class="inline field" title="-r">
             <div class="ui toggle checkbox">
               <input type="checkbox" id="rCheckbox" name="r" <?= $inputs['r'] ?? false ? 'checked' : ''; ?> />
-              <label for="rCheckbox" title="r">Ne pas mélanger les ports</label>
+              <label for="rCheckbox">Ne pas mélanger les ports</label>
             </div>
           </div>
         </div>
@@ -270,8 +264,12 @@ foreach (scandir($SCANS_DIR) as $filename) {
     new TagsInput(PAInput)
     new TagsInput(PUInput)
     new TagsInput(POInput)
-    new TagsInput(pInput)
+    var pTagsInput = new TagsInput(pInput)
     new TagsInput(dnsServersInput)
+    FCheckbox.onchange = () => {
+      pInput.disabled = FCheckbox.checked
+      pTagsInput.setDisabled(FCheckbox.checked)
+    }
 
     newScanForm.onsubmit = function(event) {
       if (this.checkValidity()) {
