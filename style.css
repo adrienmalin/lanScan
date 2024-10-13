@@ -4,7 +4,8 @@ svg {
 }
 
 .main.container {
-    margin-top: 7em;
+    padding-top: 7em;
+    min-height: calc(100vh - 4.4285em - 2px);
 }
 
 .tagify {

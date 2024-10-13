@@ -172,6 +172,11 @@ Exemples: 192.168.1.0/24 scanme.nmap.org 10.0-255.0-255.1-254"/>
                         </tbody>
                     </table>
                 </main>
+                
+                <footer class="ui footer segment">
+                  lanScan est basé sur <a href="https://nmap.org/" target="_blank">Nmap</a>
+                </footer>
+
                 <script>
 DataTable.ext.type.detect.unshift(function (d) {
     return /[\d]+\.[\d]+\.[\d]+\.[\d]+/.test(d)

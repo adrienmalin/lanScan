@@ -74,6 +74,9 @@ foreach (scandir($SCANS_DIR) as $filename) {
       </div>
     </div>
   </main>
+  <footer class="ui footer segment">
+    lanScan est basé sur <a href="https://nmap.org/" target="_blank">Nmap</a>
+  </footer>
 </body>
 
 </html>

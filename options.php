@@ -220,6 +220,9 @@ foreach (scandir($SCANS_DIR) as $filename) {
       <button type="submit" class="ui teal submit button">Démarrer</button>
     </form>
   </main>
+  <footer class="ui footer segment">
+    lanScan est basé sur <a href="https://nmap.org/" target="_blank">Nmap</a>
+  </footer>
 
   <datalist id='targetsList'>
     <option value="<?= $_SERVER['REMOTE_ADDR']; ?>/24"></option>
