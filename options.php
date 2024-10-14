@@ -46,14 +46,25 @@ Exemples: <?= $_SERVER['REMOTE_ADDR']; ?>/24 <?= $_SERVER['SERVER_NAME']; ?> 10.
 Exemples: <?= $_SERVER['REMOTE_ADDR']; ?>/24 <?= $_SERVER['SERVER_NAME']; ?> 10.0-255.0-255.1-254" />
       </div>
 
-      <div class="field">
-        <label for="saveAsInput">Enregistrer sous le nom</label>
-        <input id="saveAsInput" type="text" name="saveAs" placeholder="Réseau local" pattern='[^&lt;&gt;:&quot;\\\/\|@?]+'
-          title="Caractères interdits :  &lt;&gt;:&quot;\/|@?"
-          value="<?= htmlentities($saveAs, ENT_QUOTES); ?>">
-      </div>
-
       <div class="ui styled fluid accordion field">
+        <div class="title">
+          <i class="icon dropdown"></i>
+          Spécification des cibles
+        </div>
+        <div class="content">
+          <div class="field" title="--exclude">
+            <label for="excludeInput">Exclure les hôtes ou réseaux</label>
+            <input type="text" id="excludeInput" name="exclude" placeholder="Hôte/réseau" list="targetsList"
+              pattern="[a-zA-Z0-9._\/,\-]*" value="<?= $inputs['exclude'] ?? "" ?>">
+          </div>
+          
+          <div class="field" title="-iR">
+            <label for="iRInput">Nombre de cibles au hasard</label>
+            <input type="number" min="0" id="iRInput" name="iR" placeholder="Nombre de cibles"
+              value="<?= $inputs['iR'] ?? "" ?>">
+          </div>
+        </div>
+
         <div class="title">
           <i class="icon dropdown"></i>
           Découverte des hôtes actifs
@@ -154,12 +165,6 @@ Exemples: <?= $_SERVER['REMOTE_ADDR']; ?>/24 <?= $_SERVER['SERVER_NAME']; ?> 10.
               pattern="[a-zA-Z0-9._,\-]*" value="<?= $inputs['dns-servers'] ?? "" ?>"
               title="serv1[,serv2],...">
           </div>
-
-          <div class="field" title="--exclude">
-            <label for="excludeInput">Exclure les hôtes ou réseaux</label>
-            <input type="text" id="excludeInput" name="exclude" placeholder="Hôte/réseau" list="targetsList"
-              pattern="[a-zA-Z0-9._\/,\-]*" value="<?= $inputs['exclude'] ?? "" ?>">
-          </div>
         </div>
 
         <div class="title">
@@ -202,6 +207,25 @@ Exemples: <?= $_SERVER['REMOTE_ADDR']; ?>/24 <?= $_SERVER['SERVER_NAME']; ?> 10.
           Divers
         </div>
         <div class="content">
+          <div class="field" title="--stylesheet">
+            <label for="stylesheetSelect">Feuille de style</label>
+            <select class="ui dropdown" id="stylesheetSelect" name="stylesheet" value="<?= $inputs["stylesheet"] ?? ""?>">
+<?php
+foreach (scandir('.') as $filename) {
+  if (substr($filename, -4) === '.xsl') {
+    $name = substr($filename, 0, -4);
+    $URL = "$BASEDIR/$filename";
+    if (isset($inputs["stylesheet"]) && $URL == $inputs["stylesheet"]) {
+      echo "              <option value='$URL' selected>$name</option>\n";
+    } else {
+      echo "              <option value='$URL'>$name</option>\n";
+    }
+  }
+}
+?>
+            </select>
+          </div>
+
           <div class="field">
             <label for="compareWithSelect">Comparer avec un précédent scan</label>
             <select class="ui dropdown" id="compareWithSelect" name="compareWith" value="<?= $compareWith ?>">
@@ -222,26 +246,14 @@ foreach (scandir($SCANSDIR) as $filename) {
 ?>
             </select>
           </div>
-
-          <div class="field" title="--stylesheet">
-            <label for="stylesheetSelect">Feuille de style</label>
-            <select class="ui dropdown" id="stylesheetSelect" name="stylesheet" value="<?= $inputs["stylesheet"] ?? ""?>">
-<?php
-foreach (scandir('.') as $filename) {
-  if (substr($filename, -4) === '.xsl') {
-    $name = substr($filename, 0, -4);
-    $URL = "$BASEDIR/$filename";
-    if (isset($inputs["stylesheet"]) && $URL == $inputs["stylesheet"]) {
-      echo "              <option value='$URL' selected>$name</option>\n";
-    } else {
-      echo "              <option value='$URL'>$name</option>\n";
-    }
-  }
-}
-?>
-            </select>
-          </div>
         </div>
+      </div>
+
+      <div class="field">
+        <label for="saveAsInput">Enregistrer sous le nom</label>
+        <input id="saveAsInput" type="text" name="saveAs" placeholder="Réseau local" pattern='[^&lt;&gt;:&quot;\\\/\|@?]+'
+          title="Caractères interdits :  &lt;&gt;:&quot;\/|@?"
+          value="<?= htmlentities($saveAs, ENT_QUOTES); ?>">
       </div>
 
       <button type="submit" class="ui teal submit button">Démarrer</button>
