@@ -214,7 +214,7 @@ Exemples: <?= $_SERVER['REMOTE_ADDR']; ?>/24 <?= $_SERVER['SERVER_NAME']; ?> 10.
 foreach (scandir('.') as $filename) {
   if (substr($filename, -4) === '.xsl') {
     $name = substr($filename, 0, -4);
-    $URL = "$BASEDIR/$filename";
+    $URL = htmlentities("$BASEDIR/$filename", ENT_QUOTES);
     if (isset($inputs["stylesheet"]) && $URL == $inputs["stylesheet"]) {
       echo "              <option value='$URL' selected>$name</option>\n";
     } else {
@@ -235,7 +235,7 @@ if (!file_exists($SCANSDIR)) mkdir($SCANSDIR);
 foreach (scandir($SCANSDIR) as $filename) {
   if (substr($filename, -4) === '.xml') {
     $name = substr($filename, 0, -4);
-    $URL = "$BASEDIR/$SCANSDIR/$filename";
+    $URL = htmlentities("$BASEDIR/$SCANSDIR/$filename", ENT_QUOTES);
     if ($URL == $compareWith) {
       echo "              <option value='$URL' selected>$name</option>\n";
     } else {
@@ -269,17 +269,17 @@ foreach (scandir($SCANSDIR) as $filename) {
   </datalist>
   <datalist id='servicesList'>
     <?php
-    $nmap_services = file("$DATADIR/nmap-services");
-    $services = [];
-    foreach ($nmap_services as $service) {
-      if (0 !== strpos($service, '#')) {
-        [$name, $port] = explode("\t", $service);
-        $services[$name] = explode("/", $port);
-      }
-    }
-    foreach ($services as $name => [$portid, $protocol]) {
-      echo "       <option value='$name'></option>\n";
-    }
+$nmap_services = file("$DATADIR/nmap-services");
+$services = [];
+foreach ($nmap_services as $service) {
+  if (0 !== strpos($service, '#')) {
+    [$name, $port] = explode("\t", $service);
+    $services[$name] = explode("/", $port);
+  }
+}
+foreach ($services as $name => [$portid, $protocol]) {
+  echo "       <option value='$name'>$name</option>\n";
+}
     ?>
   </datalist>
   
