@@ -10,6 +10,8 @@ $LANSCAN_OPTIONS = [
 ];
 
 $HOSTSCAN_OPTIONS = [
+    'Pn'         => true,
+    'F'          => true,
     'sV'         => true,
     'stylesheet' => "$BASEDIR/hostScan.xsl"
 ];

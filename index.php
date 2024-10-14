@@ -23,16 +23,16 @@ include_once 'filter_inputs.php';
     <a class="ui teal button item" href=".">
       lan<?php include 'logo.svg'; ?>can
     </a>
-    <form class="right menu">
+    <form class="right menu" onsubmit="targetsInputDiv.classList.add('loading')">
       <div class="ui category search item">
-          <div id="lanInputDiv" class="ui icon input">
-            <input class="prompt" type="text" id="lanInput" name="lan" required
+          <div id="targetsInputDiv" class="ui icon input">
+            <input class="prompt" type="text" id="targetsInput" name="lan" required
               pattern="[a-zA-Z0-9._\/ \-]+" value="<?= $targets; ?>" placeholder="Scanner un réseau..."
               title="Les cibles peuvent être spécifiées par des noms d'hôtes, des adresses IP, des adresses de réseaux, etc.
 Exemples: <?= $_SERVER['REMOTE_ADDR']; ?>/24 <?= $_SERVER['SERVER_NAME']; ?> 10.0-255.0-255.1-254" />
             <i class="satellite dish icon"></i>
           </div>
-          <button style="display: none;" type="submit" formmethod="get" formaction="scan.php" onsubmit="lanInput.classList.add('loading')"></button>
+          <button style="display: none;" type="submit" formmethod="get" formaction="scan.php"></button>
       </div>
       <div class="item">
           <button class="ui teal icon submit button" type="submit" formmethod="get" formaction="options.php" onclick="lanInput.required=false">
