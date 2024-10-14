@@ -8,6 +8,10 @@ svg {
     min-height: calc(100vh - 4.4285em - 2px);
 }
 
+footer {
+    margin-bottom: 0;
+}
+
 .tagify {
     width: 100%;
     border-radius: .28571429rem;
