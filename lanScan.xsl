@@ -116,7 +116,7 @@ Exemples: 192.168.1.0/24 scanme.nmap.org 10.0-255.0-255.1-254"/>
                                 <th>Adresse IP</th>
                                 <th>Nom</th>
                                 <th class="ten wide">Services</th>
-                                <th>Scanner</th>
+                                <th>Scanner les services</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -243,14 +243,14 @@ $.toast({
                 </xsl:apply-templates>
             </td>
             <td>
-                <a class="ui right labeled mini teal icon button" onclick="this.getElementsByTagName('i')[0].className = 'loading spinner icon'">
+                <a class="ui mini icon labeled teal button" onclick="this.getElementsByTagName('i')[0].className = 'loading spinner icon'">
                     <xsl:attribute name="href">
                         <xsl:value-of select="$basedir"/>
                         <xsl:text>/scan.php?host=</xsl:text>
                         <xsl:value-of select="$hostAddress"/>
                     </xsl:attribute>
                     <i class="satellite dish icon"></i>
-                    <xsl:text>Scanner</xsl:text>
+                    <xsl:text>Services</xsl:text>
                 </a>
             </td>
         </tr>

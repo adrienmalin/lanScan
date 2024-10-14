@@ -3,15 +3,7 @@
 include_once 'config.php';
 include_once 'filter_inputs.php';
 
-if ($targets) {
-    $options = $inputs;
-} else if ($lan) {
-    $targets = $lan;
-    $options = $LANSCAN_OPTIONS;
-} else if ($host) {
-    $targets = $host;
-    $options = $HOSTSCAN_OPTIONS;
-} else {
+if (!$targets) {
     http_response_code(400);
     die('Paramètre manquant : targets, lan ou host');
 }
@@ -19,7 +11,7 @@ if ($targets) {
 if (!file_exists($SCANSDIR)) mkdir($SCANSDIR);
 
 $args = '';
-foreach ($options as $arg => $value) {
+foreach ($inputs as $arg => $value) {
     if (is_null($value)) {
         http_response_code(400);
         die("Valeur incorecte pour le paramètre $arg : " . filter_input(INPUT_GET, $arg, FILTER_SANITIZE_FULL_SPECIAL_CHARS));

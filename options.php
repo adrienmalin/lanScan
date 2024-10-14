@@ -41,7 +41,7 @@ include_once 'filter_inputs.php';
         <label for="targetsInput" title="Les cibles peuvent être spécifiées par des noms d'hôtes, des adresses IP, des adresses de réseaux, etc.
 Exemples: <?= $_SERVER['REMOTE_ADDR']; ?>/24 <?= $_SERVER['SERVER_NAME']; ?> 10.0-255.0-255.1-254">Cibles</label>
         <input id="targetsInput" type="text" name="targets" placeholder="Cibles" required
-          pattern="[a-zA-Z0-9._\/ \-]+" value="<?= $targets ?? $lan ?? $host; ?>" list="targetsList"
+          pattern="[a-zA-Z0-9._\/ \-]+" value="<?= $targets; ?>" list="targetsList"
           title="Les cibles peuvent être spécifiées par des noms d'hôtes, des adresses IP, des adresses de réseaux, etc.
 Exemples: <?= $_SERVER['REMOTE_ADDR']; ?>/24 <?= $_SERVER['SERVER_NAME']; ?> 10.0-255.0-255.1-254" />
       </div>
@@ -164,7 +164,7 @@ Exemples: <?= $_SERVER['REMOTE_ADDR']; ?>/24 <?= $_SERVER['SERVER_NAME']; ?> 10.
 
         <div class="title">
           <i class="icon dropdown"></i>
-          Techniques de scan
+          Spécifications des ports et ordre du scan
         </div>
         <div class="content">
           <div class="inline field" title="-sP">

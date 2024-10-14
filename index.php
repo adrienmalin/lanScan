@@ -35,7 +35,7 @@ Exemples: <?= $_SERVER['REMOTE_ADDR']; ?>/24 <?= $_SERVER['SERVER_NAME']; ?> 10.
           <button style="display: none;" type="submit" formmethod="get" formaction="scan.php"></button>
       </div>
       <div class="item">
-          <button class="ui teal icon submit button" type="submit" formmethod="get" formaction="options.php" onclick="lanInput.required=false">
+          <button class="ui teal icon submit button" type="submit" formmethod="get" formaction="options.php" onclick="targetsInput.required=false">
               <i class="sliders horizontal icon"></i>
           </button>
       </div>
@@ -48,7 +48,7 @@ Exemples: <?= $_SERVER['REMOTE_ADDR']; ?>/24 <?= $_SERVER['SERVER_NAME']; ?> 10.
   </nav>
 
   <main class="ui main container">
-    <h1 class="ui header">Précédents scans</h1>
+    <h1 class="ui header">Scans enregistrés</h1>
     <div class="ui large relaxed card">
       <div class="content">
         <div class="ui divided link list">
