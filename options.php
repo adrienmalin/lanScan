@@ -246,6 +246,15 @@ foreach (scandir($SCANSDIR) as $filename) {
 ?>
             </select>
           </div>
+          
+          <div class="field">
+            <label for="refreshPeriodInput">Rafraîchir toutes les</label>
+            <div class="ui right labeled input">
+              <input type="number" min="0" id="refreshPeriodInput" name="refreshPeriod" placeholder="Période"
+                value="<?= $refreshPeriod ?? "" ?>">
+              <div class="ui label">secondes</div>
+            </div>
+          </div>
         </div>
       </div>
 

@@ -7,12 +7,12 @@ $portsListRegex          = "/^([0-9\-]+|[a-z\-]+)(,[0-9\-]+|,[a-z\-]+)*$/";
 $tempoRegex              = "/^\d+[smh]?$/";
 $fileNameRegex           = '/^[^<>:"\/|?]+$/';
 
-$targets = filter_input(INPUT_GET, 'targets', FILTER_VALIDATE_REGEXP, ['options' => ['regexp' => $targetsListRegex]]);
-$lan = filter_input(INPUT_GET, 'lan', FILTER_VALIDATE_REGEXP, ['options' => ['regexp' => $targetsListRegex]]);
-$host = filter_input(INPUT_GET, 'host', FILTER_VALIDATE_REGEXP, ['options' => ['regexp' => $targetsListRegex]]);
-$saveAs = filter_input(INPUT_GET, 'saveAs', FILTER_VALIDATE_REGEXP, ['options' => ['regexp' => $fileNameRegex]]);
-$compareWith = filter_input(INPUT_GET, 'compareWith', FILTER_VALIDATE_URL);
-
+$targets       = filter_input(INPUT_GET, 'targets', FILTER_VALIDATE_REGEXP, ['options' => ['regexp' => $targetsListRegex]]);
+$lan           = filter_input(INPUT_GET, 'lan', FILTER_VALIDATE_REGEXP, ['options' => ['regexp' => $targetsListRegex]]);
+$host          = filter_input(INPUT_GET, 'host', FILTER_VALIDATE_REGEXP, ['options' => ['regexp' => $targetsListRegex]]);
+$saveAs        = filter_input(INPUT_GET, 'saveAs', FILTER_VALIDATE_REGEXP, ['options' => ['regexp' => $fileNameRegex]]);
+$compareWith   = filter_input(INPUT_GET, 'compareWith', FILTER_VALIDATE_URL);
+$refreshPeriod = filter_input(INPUT_GET, 'refreshPeriod', FILTER_VALIDATE_INT, ['options' => ['min_range' => 0]]) ?? $refreshPeriod;
 
 if ($lan) {
   $targets = $lan;
@@ -22,7 +22,7 @@ if ($lan) {
   $inputs = $HOSTSCAN_OPTIONS;
 } else {
   $inputs = filter_input_array(INPUT_GET, [
-    'iR'      => FILTER_VALIDATE_INT,
+    'iR'      => ['filter' => FILTER_VALIDATE_INT, 'options' => ['min_range' => 0]],
     'exclude' => ['filter' => FILTER_VALIDATE_REGEXP, 'options' => ['regexp' => $hostsListRegex]],
 
     'sL'          => ['filter' => FILTER_VALIDATE_REGEXP, 'options' => ['regexp' => $hostsListRegex]],

@@ -10,6 +10,12 @@
 
     <xsl:param name="savedAs" select=""/>
     <xsl:param name="compareWith" select=""/>
+    <xsl:param name="refreshPeriod" select="0"/>
+
+    <xsl:variable name="current" select="./nmaprun"/>
+    <xsl:variable name="stylesheetURL" select="substring-before(substring-after(processing-instruction('xml-stylesheet'),'href=&quot;'),'&quot;')"/>
+    <xsl:variable name="basedir" select="concat($stylesheetURL, '/..')"/>
+    <xsl:variable name="init" select="document($compareWith)/nmaprun"/>
     <xsl:variable name="nextCompareWith">
         <xsl:choose>
             <xsl:when test="$savedAs"><xsl:value-of select="$savedAs"/></xsl:when>
@@ -17,10 +23,6 @@
             <xsl:otherwise></xsl:otherwise>
         </xsl:choose>
     </xsl:variable>
-    <xsl:variable name="current" select="./nmaprun"/>
-    <xsl:variable name="stylesheetURL" select="substring-before(substring-after(processing-instruction('xml-stylesheet'),'href=&quot;'),'&quot;')"/>
-    <xsl:variable name="basedir" select="concat($stylesheetURL, '/..')"/>
-    <xsl:variable name="init" select="document($compareWith)/nmaprun"/>
 
     <xsl:template match="nmaprun">
         <xsl:variable name="targets" select="substring-after(@args, '.xml ')"/>
@@ -40,12 +42,15 @@
         <html lang="fr">
             <head>
                 <meta charset="utf-8"/>
-                <meta http-equiv="refresh">
-                    <xsl:attribute name="content">
-                        <xsl:text>60;URL=</xsl:text>
-                        <xsl:value-of select="$refreshURL"/>
-                    </xsl:attribute>
-                </meta>
+                <xsl:if test="$refreshPeriod > 0">
+                    <meta http-equiv="refresh">
+                        <xsl:attribute name="content">
+                            <xsl:value-of select="$refreshPeriod"/>
+                            <xsl:text>;URL=</xsl:text>
+                            <xsl:value-of select="$refreshURL"/>
+                        </xsl:attribute>
+                    </meta>
+                </xsl:if>
                 <title>
                     <xsl:text>lanScan - </xsl:text>
                     <xsl:value-of select="$targets"/>
@@ -85,6 +90,7 @@ Exemples: 192.168.1.0/24 scanme.nmap.org 10.0-255.0-255.1-254"/>
                                 <i class="satellite dish icon"></i>
                             </div>
                             <input type="hidden" name="compareWith" value="{$nextCompareWith}"/>
+                            <input type="hidden" name="refreshPeriod" value="{$refreshPeriod}"/>
                             <button style="display: none;" type="submit" formmethod="get" formaction="{$basedir}/scan.php"></button>
                         </div>
                         <div class="item">

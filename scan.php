@@ -41,6 +41,7 @@ $xml->load($tempPath);
 $saveAsURL = $saveAs? "$BASEDIR/$SCANSDIR/$saveAs.xml" : "";
 $xml->insertBefore($xml->createProcessingInstruction('xslt-param', "name='savedAs' value='".htmlentities($saveAsURL, ENT_QUOTES)."'"), $xml->documentElement);
 $xml->insertBefore($xml->createProcessingInstruction('xslt-param', "name='compareWith' value='".htmlentities($compareWith, ENT_QUOTES)."'"), $xml->documentElement);
+$xml->insertBefore($xml->createProcessingInstruction('xslt-param', "name='refreshPeriod' value='".htmlentities($refreshPeriod, ENT_QUOTES)."'"), $xml->documentElement);
 
 if ($saveAs) {
     $path = "$SCANSDIR/$saveAs.xml";

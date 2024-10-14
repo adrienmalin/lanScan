@@ -20,3 +20,4 @@ $SCANSDIR = 'scans';
 $DATADIR  = '/usr/share/nmap';
 
 $sudo = true;
+$refreshPeriod = 60;
