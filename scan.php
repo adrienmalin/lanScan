@@ -28,7 +28,7 @@ foreach ($inputs as $arg => $value) {
 
 $tempPath = tempnam(sys_get_temp_dir(), 'scan_').".xml";
 
-exec($sudo ? "sudo " : "" . "nmap$args -oX '$tempPath' $targets 2>&1", $stderr, $code);
+exec(($sudo ? "sudo " : "") . "nmap$args -oX '$tempPath' $targets 2>&1", $stderr, $code);
 if ($code) {
     http_response_code(500);
     die(implode("<br/>\n", $stderr));
