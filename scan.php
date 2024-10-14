@@ -28,7 +28,7 @@ foreach ($inputs as $arg => $value) {
 
 $tempPath = tempnam(sys_get_temp_dir(), 'scan_').".xml";
 
-exec("nmap$args -oX '$tempPath' $targets 2>&1", $stderr, $code);
+exec("sudo nmap$args -oX '$tempPath' $targets 2>&1", $stderr, $code);
 if ($code) {
     http_response_code(500);
     die(implode("<br/>\n", $stderr));
@@ -39,8 +39,7 @@ $xml->load($tempPath);
 `rm "$tempPath"`;
 
 $saveAsURL = $saveAs? "$BASEDIR/$SCANSDIR/$saveAs.xml" : "";
-$xml->insertBefore($xml->createProcessingInstruction('xslt-param', "name='saveAs' value='".htmlentities($saveAsURL, ENT_QUOTES)."'"), $xml->documentElement);
-$xml->insertBefore($xml->createProcessingInstruction('xslt-param', "name='scansDir' value='".htmlentities($SCANSDIR, ENT_QUOTES)."'"), $xml->documentElement);
+$xml->insertBefore($xml->createProcessingInstruction('xslt-param', "name='savedAs' value='".htmlentities($saveAsURL, ENT_QUOTES)."'"), $xml->documentElement);
 $xml->insertBefore($xml->createProcessingInstruction('xslt-param', "name='compareWith' value='".htmlentities($compareWith, ENT_QUOTES)."'"), $xml->documentElement);
 
 if ($saveAs) {

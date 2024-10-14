@@ -54,7 +54,7 @@
                 <link rel="icon" href="{$basedir}/favicon.ico"/>
                 <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/fomantic-ui@2.9.3/dist/semantic.min.css"/>
                 <link href="https://cdn.jsdelivr.net/npm/@yaireo/tagify/dist/tagify.css" rel="stylesheet" type="text/css"/>
-                <link href="https://cdn.datatables.net/v/dt/jszip-3.10.1/dt-2.1.8/b-3.1.2/b-html5-3.1.2/b-print-3.1.2/fh-4.0.1/r-3.0.3/datatables.css" rel="stylesheet"/>
+                <link href="https://cdn.datatables.net/v/dt/jszip-3.10.1/dt-2.1.8/b-3.1.2/b-html5-3.1.2/b-print-3.1.2/fh-4.0.1/r-3.0.3/cr-2.0.4/datatables.css" rel="stylesheet"/>
                 <link href="{$basedir}/style.css" rel="stylesheet" type="text/css"/>
                 <script src="https://code.jquery.com/jquery-3.7.1.js"></script>
                 <script src="https://cdnjs.cloudflare.com/ajax/libs/fomantic-ui/2.9.2/semantic.min.js"></script>
@@ -62,7 +62,7 @@
                 <script src="https://cdn.jsdelivr.net/npm/@yaireo/tagify/dist/tagify.polyfills.min.js"></script>
                 <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.2.7/pdfmake.js"></script>
                 <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.2.7/vfs_fonts.js"></script>
-                <script src="https://cdn.datatables.net/v/dt/jszip-3.10.1/dt-2.1.8/b-3.1.2/b-html5-3.1.2/b-print-3.1.2/fh-4.0.1/r-3.0.3/datatables.js"></script>
+                <script src="https://cdn.datatables.net/v/dt/jszip-3.10.1/dt-2.1.8/b-3.1.2/b-html5-3.1.2/b-print-3.1.2/fh-4.0.1/r-3.0.3/cr-2.0.4/datatables.js"></script>
             </head>
 
             <body>
@@ -130,6 +130,7 @@ var table = $('#scanResultsTable').DataTable({
         [256, 512, 1024, 2048, "All"]
     ],
     responsive: true,
+    colReorder: true
 })
 
 $('.ui.dropdown').dropdown()
@@ -265,6 +266,17 @@ $.toast({
             </td>
             <td>
                 <a>
+                    <xsl:attribute name="class">
+                        <xsl:text>ui mini button </xsl:text>
+                        <xsl:choose>
+                            <xsl:when test="$currentPort/script[@id='http-info']/elem[@key='status']>=500">red</xsl:when>
+                            <xsl:when test="$currentPort/script[@id='http-info']/elem[@key='status']>=400">orange</xsl:when>
+                            <xsl:when test="$currentPort/script[@id='http-info']/elem[@key='status']>=200">green</xsl:when>
+                            <xsl:when test="$currentPort/state/@state='open'">green</xsl:when>
+                            <xsl:when test="$currentPort/state/@state='filtered'">orange</xsl:when>
+                            <xsl:otherwise>red</xsl:otherwise>
+                        </xsl:choose>
+                    </xsl:attribute>
                     <xsl:if test="service/@name='ftp' or service/@name='ssh' or service/@name='http' or service/@name='https'">
                         <xsl:attribute name="href">
                             <xsl:choose>
