@@ -33,13 +33,9 @@ Exemples: <?= $_SERVER['REMOTE_ADDR']; ?>/24 <?= $_SERVER['SERVER_NAME']; ?> 10.
             <i class="satellite dish icon"></i>
           </div>
           <button style="display: none;" type="submit" formmethod="get" formaction="scan.php"></button>
-      </div>
-      <div class="item">
           <button class="ui teal icon submit button" type="submit" formmethod="get" formaction="options.php" onclick="targetsInput.required=false">
               <i class="sliders horizontal icon"></i>
           </button>
-      </div>
-      <div class="item">
         <a class="ui teal icon button" href="https://nmap.org/man/fr/index.html" target="_blank">
           <i class="question circle icon"></i>
         </a>

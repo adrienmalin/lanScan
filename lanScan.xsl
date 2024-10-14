@@ -92,20 +92,14 @@ Exemples: 192.168.1.0/24 scanme.nmap.org 10.0-255.0-255.1-254"/>
                             <input type="hidden" name="compareWith" value="{$nextCompareWith}"/>
                             <input type="hidden" name="refreshPeriod" value="{$refreshPeriod}"/>
                             <button style="display: none;" type="submit" formmethod="get" formaction="{$basedir}/scan.php"></button>
-                        </div>
-                        <div class="item">
                             <button class="ui teal icon submit button" type="submit" formmethod="get" formaction="{$basedir}/options.php" onclick="targetsInput.required=false">
                                 <i class="sliders horizontal icon"></i>
                             </button>
-                        </div>
-                        <div class="item">
                             <button class="ui teal icon submit button" type="submit" formmethod="get" formaction="{$basedir}/scan.php" onclick="this.getElementsByTagName('i')[0].className = 'loading spinner icon'">
                                 <i class="sync icon"></i>
                             </button>
-                        </div>
-                        <div class="item">
                             <a class="ui teal icon button" href="https://nmap.org/man/fr/index.html" target="_blank">
-                            <i class="question circle icon"></i>
+                                <i class="question circle icon"></i>
                             </a>
                         </div>
                     </form>
@@ -121,7 +115,7 @@ Exemples: 192.168.1.0/24 scanme.nmap.org 10.0-255.0-255.1-254"/>
                                 <th>Adresse IP</th>
                                 <th>Nom</th>
                                 <th>Fabricant</th>
-                                <th class="six wide">Services</th>
+                                <th class="eight wide">Services</th>
                                 <th>Scanner les services</th>
                             </tr>
                         </thead>
@@ -132,7 +126,7 @@ Exemples: 192.168.1.0/24 scanme.nmap.org 10.0-255.0-255.1-254"/>
                 </main>
                 
                 <footer class="ui footer segment">
-                  lanScan est basé sur <a href="https://nmap.org/" target="_blank">Nmap</a>
+                    lanScan est basé sur <a href="https://nmap.org/" target="_blank">Nmap</a>
                 </footer>
 
                 <script>
@@ -194,8 +188,21 @@ $.toast({
 })
                         </xsl:if>
 
-lanScanForm.onsubmit = (event) => {
+lanScanForm.onsubmit = function(event) {
     targetsInputDiv.classList.add('loading')
+    $.toast({
+        title: 'Scan en cours...',
+        message: 'Merci de patienter',
+        class: 'info',
+        showIcon: 'satellite dish',
+        displayTime: 0,
+        closeIcon: true,
+        position: 'bottom right',
+    })
+}
+
+function hostScanning(link) {
+    link.getElementsByTagName('i')[0].className = 'loading spinner icon'
     $.toast({
         title: 'Scan en cours...',
         message: 'Merci de patienter',
@@ -267,17 +274,17 @@ lanScanForm.onsubmit = (event) => {
                 </xsl:apply-templates>
             </td>
             <td>
-                <div class="ui buttons">
-                    <a class="ui mini icon labeled teal button" onclick="this.getElementsByTagName('i')[0].className = 'loading spinner icon'">
+                <div class="ui mini right labeled button">
+                    <a class="ui mini icon teal button" onclick="hostScanning(this)">
                         <xsl:attribute name="href">
                             <xsl:value-of select="$basedir"/>
                             <xsl:text>/scan.php?host=</xsl:text>
                             <xsl:value-of select="$hostAddress"/>
                         </xsl:attribute>
                         <i class="satellite dish icon"></i>
-                        <xsl:text>Services</xsl:text>
+                        <xsl:text> Services</xsl:text>
                     </a>
-                    <a class="ui mini icon teal button">
+                    <a class="ui mini icon teal label">
                         <xsl:attribute name="href">
                             <xsl:value-of select="$basedir"/>
                             <xsl:text>/options.php?host=</xsl:text>

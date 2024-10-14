@@ -88,20 +88,14 @@ Exemples: 192.168.1.0/24 scanme.nmap.org 10.0-255.0-255.1-254"/>
                             <input type="hidden" name="compareWith" value="{$nextCompareWith}"/>
                             <input type="hidden" name="refreshPeriod" value="{$refreshPeriod}"/>
                             <button style="display: none;" type="submit" formmethod="get" formaction="{$basedir}/scan.php"></button>
-                        </div>
-                        <div class="item">
                             <button class="ui teal icon submit button" type="submit" formmethod="get" formaction="{$basedir}/options.php" onclick="targetsInput.required=false">
                                 <i class="sliders horizontal icon"></i>
                             </button>
-                        </div>
-                        <div class="item">
                             <button class="ui teal icon submit button" type="submit" formmethod="get" formaction="{$basedir}/scan.php" onclick="this.getElementsByTagName('i')[0].className = 'loading spinner icon'">
                                 <i class="sync icon"></i>
                             </button>
-                        </div>
-                        <div class="item">
                             <a class="ui teal icon button" href="https://nmap.org/man/fr/index.html" target="_blank">
-                            <i class="question circle icon"></i>
+                                <i class="question circle icon"></i>
                             </a>
                         </div>
                     </form>
