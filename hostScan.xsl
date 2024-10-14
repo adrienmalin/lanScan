@@ -130,7 +130,8 @@ var table = $('#scanResultsTable').DataTable({
         [256, 512, 1024, 2048, "All"]
     ],
     responsive: true,
-    colReorder: true
+    colReorder: true,
+    buttons: ['copy', 'excel', 'pdf']
 })
 
 $('.ui.dropdown').dropdown()
