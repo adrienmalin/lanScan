@@ -18,3 +18,5 @@ $HOSTSCAN_OPTIONS = [
 
 $SCANSDIR = 'scans';
 $DATADIR  = '/usr/share/nmap';
+
+$sudo = true;
