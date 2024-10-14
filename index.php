@@ -23,7 +23,7 @@ include_once 'filter_inputs.php';
     <a class="ui teal button item" href=".">
       lan<?php include 'logo.svg'; ?>can
     </a>
-    <form class="right menu" onsubmit="targetsInputDiv.classList.add('loading')">
+    <form id="lanScanForm" class="right menu">
       <div class="ui category search item">
           <div id="targetsInputDiv" class="ui icon input">
             <input class="prompt" type="text" id="targetsInput" name="lan" required
@@ -66,6 +66,20 @@ foreach (scandir($SCANSDIR) as $filename) {
         </div>
       </div>
     </div>
+    <script>
+lanScanForm.onsubmit = (event) => {
+  targetsInputDiv.classList.add('loading')
+  $.toast({
+      title: 'Scan en cours...',
+      message: 'Merci de patienter',
+      class: 'info',
+      showIcon: 'satellite dish',
+      displayTime: 0,
+      closeIcon: true,
+      position: 'bottom right',
+  })
+}
+    </script>
   </main>
   <footer class="ui footer segment">
     lanScan est basé sur <a href="https://nmap.org/" target="_blank">Nmap</a>

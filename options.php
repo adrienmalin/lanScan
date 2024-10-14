@@ -34,7 +34,7 @@ include_once 'filter_inputs.php';
   </nav>
 
   <main class="ui main container">
-    <h1 class="header">Scanner un réseau</h1>
+    <h1 class="header">Scanner un <?=$host? "hôte" : "réseau" ?></h1>
 
     <form id="newScanForm" class="ui form" method="get" action="scan.php">
       <div class="required field">

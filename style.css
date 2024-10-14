@@ -8,7 +8,7 @@ svg {
     min-height: calc(100vh - 4.4285em - 2px);
 }
 
-footer {
+.ui.footer.segment {
     margin-bottom: 0;
 }
 
