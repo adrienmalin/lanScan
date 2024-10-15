@@ -32,7 +32,7 @@ include_once 'filter_inputs.php';
 Exemples: <?= $_SERVER['REMOTE_ADDR']; ?>/24 <?= $_SERVER['SERVER_NAME']; ?> 10.0-255.0-255.1-254" />
             <i class="satellite dish icon"></i>
           </div>
-          <button style="display: none;" type="submit" formmethod="get" formaction="scan.php"></button>
+          <button id="hiddenButton" style="display: none;" type="submit" formmethod="get" formaction="scan.php"></button>
           <button class="ui teal icon submit button" type="submit" formmethod="get" formaction="options.php" onclick="targetsInput.required=false">
               <i class="sliders horizontal icon"></i>
           </button>
@@ -63,7 +63,7 @@ foreach (scandir($SCANSDIR) as $filename) {
       </div>
     </div>
     <script>
-lanScanForm.onsubmit = (event) => {
+hiddenButton.onclick = (event) => {
   targetsInputDiv.classList.add('loading')
   $.toast({
       title: 'Scan en cours...',

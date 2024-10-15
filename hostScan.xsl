@@ -109,7 +109,7 @@ Exemples: 192.168.1.0/24 scanme.nmap.org 10.0-255.0-255.1-254"/>
                   lanScan est basé sur <a href="https://nmap.org/" target="_blank">Nmap</a>
                 </footer>
 
-                <script>
+            <script>
 DataTable.ext.type.detect.unshift(function (d) {
     return /[\d]+\.[\d]+\.[\d]+\.[\d]+/.test(d)
         ? 'ipv4-address'
@@ -122,61 +122,87 @@ DataTable.ext.type.order['ipv4-address-pre'] = function (ipAddress) {
 };
 
 var table = $('#scanResultsTable').DataTable({
-    buttons: ['copy', 'excel', 'pdf'],
+    buttons    : ['copy', 'excel', 'pdf'],
     fixedHeader: true,
-    lengthMenu: [
+    lengthMenu : [
         [256, 512, 1024, 2048, -1],
         [256, 512, 1024, 2048, "All"]
     ],
     responsive: true,
     colReorder: true,
-    buttons: ['copy', 'excel', 'pdf']
+    buttons   : ['copy', 'excel', 'pdf']
 })
+table.order([1, 'asc']).draw()
 
 $('.ui.dropdown').dropdown()
 
-                    <xsl:if test="runstats/finished/@summary">
+<xsl:if test="runstats/finished/@summary">
 $.toast({
-    title: '<xsl:value-of select="runstats/finished/@exit"/>',
-    message: '<xsl:value-of select="runstats/finished/@summary"/>',
-    showIcon: 'satellite dish',
+    title      : '<xsl:value-of select="runstats/finished/@exit"/>',
+    message    : '<xsl:value-of select="runstats/finished/@summary"/>',
+    showIcon   : 'satellite dish',
     displayTime: 0,
-    closeIcon: true,
-    position: 'bottom right',
+    closeIcon  : true,
+    position   : 'bottom right',
 })
-                    </xsl:if>
-                    <xsl:if test="runstats/finished/@errormsg">
+</xsl:if>
+<xsl:if test="runstats/finished/@errormsg">
 $.toast({
-    title: '<xsl:value-of select="runstats/finished/@exit"/>',
-    message: '<xsl:value-of select="runstats/finished/@errormsg"/>',
-    showIcon: 'exclamation triangle',
-    class: 'error',
+    title      : '<xsl:value-of select="runstats/finished/@exit"/>',
+    message    : '<xsl:value-of select="runstats/finished/@errormsg"/>',
+    showIcon   : 'exclamation triangle',
+    class      : 'error',
     displayTime: 0,
-    closeIcon: true,
-    position: 'bottom right',
+    closeIcon  : true,
+    position   : 'bottom right',
 })
-                        </xsl:if>
-                        <xsl:if test="$init">
+</xsl:if>
+<xsl:if test="$init">
 $.toast({
-    message: 'Comparaison avec les résultats du <xsl:value-of select="$init/runstats/finished/@timestr"/>',
-    class: 'info',
-    showIcon: 'calendar',
+    message    : 'Comparaison avec les résultats du <xsl:value-of select="$init/runstats/finished/@timestr"/>',
+    class      : 'info',
+    showIcon   : 'calendar',
     displayTime: 0,
-    closeIcon: true,
-    position: 'bottom right',
+    closeIcon  : true,
+    position   : 'bottom right',
 })
-                        </xsl:if>
+</xsl:if>
 
-lanScanForm.onsubmit = (event) => {
+hiddenButton.onclick = function(event) {
     targetsInputDiv.classList.add('loading')
     $.toast({
-        title: 'Scan en cours...',
-        message: 'Merci de patienter',
-        class: 'info',
-        showIcon: 'satellite dish',
+        title      : 'Scan en cours...',
+        message    : 'Merci de patienter',
+        class      : 'info',
+        showIcon   : 'satellite dish',
         displayTime: 0,
-        closeIcon: true,
-        position: 'bottom right',
+        closeIcon  : true,
+        position   : 'bottom right',
+    })
+}
+refreshButton.onclick = function(event) {
+    refreshButton.getElementsByTagName('i')[0].className = 'loading spinner icon'
+    $.toast({
+        title      : 'Scan en cours...',
+        message    : 'Merci de patienter',
+        class      : 'info',
+        showIcon   : 'satellite dish',
+        displayTime: 0,
+        closeIcon  : true,
+        position   : 'bottom right',
+    })
+}
+
+function hostScanning(link) {
+    link.getElementsByTagName('i')[0].className = 'loading spinner icon'
+    $.toast({
+        title      : 'Scan en cours...',
+        message    : 'Merci de patienter',
+        class      : 'info',
+        showIcon   : 'satellite dish',
+        displayTime: 0,
+        closeIcon  : true,
+        position   : 'bottom right',
     })
 }
                 </script>
