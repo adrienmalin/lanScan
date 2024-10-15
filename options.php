@@ -160,7 +160,7 @@ Exemples: <?= $_SERVER['REMOTE_ADDR']; ?>/24 <?= $_SERVER['SERVER_NAME']; ?> 10.
           </div>
 
           <div class="field">
-            <label for="dnsServersInput" title="dns-servers">Utiliser les serveurs DNS</label>
+            <label for="dnsServersInput" title="--dns-servers">Utiliser les serveurs DNS</label>
             <input type="text" id="dnsServersInput" name="dns-servers" placeholder="serveur"
               pattern="[a-zA-Z0-9._,\-]*" value="<?= $inputs['dns-servers'] ?? "" ?>"
               title="serv1[,serv2],...">
@@ -241,6 +241,27 @@ Exemples: <?= $_SERVER['REMOTE_ADDR']; ?>/24 <?= $_SERVER['SERVER_NAME']; ?> 10.
                 <input type="text" id="scanflagsInput" name="scanflags" placeholder="Drapeaux TCP" list="flagsList"
                   pattern="(URG|ACK|PSH|RST|SYN|FIN|,)+|[1-9]?[0-9]|[1-2][0-9][0-9]" value="<?= $inputs['scanflags'] ?? "" ?>"
                   title="Mélanger simplement les drapeaux URG, ACK, PSH, RST, SYN et FIN.">
+              </div>
+
+              <div class="field" title="-sI">
+                <label for="sIInput">Hôte zombie</label>
+                <input type="text" id="sIInput" name="p" placeholder="zombie host[:probeport]"
+                  pattern="[a-zA-Z0-9._\-]+(:[0-9]+)?" value="<?= $inputs['sI'] ?? "" ?>"
+                  title="zombie host[:probeport]">
+              </div>
+
+              <div class="field" title="-b">
+                <label for="bInput">Rebond FTP</label>
+                <input type="text" id="bInput" name="p" placeholder="[<username>[:<password>]@]<server>[:<port>]"
+                  pattern="([a-zA-Z0-9._\-]+(:.+)?@)?[a-zA-Z0-9._\-]+(:[0-9]+)?" value="<?= $inputs['b'] ?? "" ?>"
+                  title="[<username>[:<password>]@]<server>[:<port>]">
+              </div>
+
+              <div class="field" title="-sO">
+                <div class="ui toggle checkbox">
+                  <input type="checkbox" id="sUCheckbox" name="sU" <?= $inputs['sU'] ?? false ? 'checked' : ''; ?> />
+                  <label for="sUCheckbox">Scan des protocoles supportés par la couche IP</label>
+                </div>
               </div>
             </div>
           </div>
