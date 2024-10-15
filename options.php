@@ -77,25 +77,25 @@ Exemples: <?= $_SERVER['REMOTE_ADDR']; ?>/24 <?= $_SERVER['SERVER_NAME']; ?> 10.
             </div>
           </div>
 
-          <div class="fields">
-            <div class="field" title="-PS">
-              <label for="PSInput">TCP SYN</label>
-              <input type="text" id="PSInput" name="PS" placeholder="Ports" list="servicesList"
-                pattern="([0-9\-]+|[a-z\-]+)(,[0-9\-]+|,[a-z\-]+)*" value="<?= $inputs['PS'] ?? "" ?>"
-                title="Liste de ports ex: 22,23,25,80,200-1024,60000-">
-            </div>
-            <div class="field" title="-PA">
-              <label for="PAInput">TCP ACK</label>
-              <input type="text" id="PAInput" name="PA" placeholder="Ports" list="servicesList"
-                pattern="([0-9\-]+|[a-z\-]+)(,[0-9\-]+|,[a-z\-]+)*" value="<?= $inputs['PA'] ?? "" ?>"
-                title="Liste de ports ex: 22,23,25,80,200-1024,60000-">
-            </div>
-            <div class="field" title="-PU">
-              <label for="PUInput">UDP</label>
-              <input type="text" id="PUInput" name="PU" placeholder="Ports" list="servicesList"
-                pattern="([0-9\-]+|[a-z\-]+)(,[0-9\-]+|,[a-z\-]+)*" value="<?= $inputs['PU'] ?? "" ?>"
-                title="Liste de ports ex: 22,23,25,80,200-1024,60000-">
-            </div>
+          <div class="field" title="-PS">
+            <label for="PSInput">TCP SYN</label>
+            <input type="text" id="PSInput" name="PS" placeholder="Ports" list="servicesList"
+              pattern="([0-9\-]+|[a-z\-]+)(,[0-9\-]+|,[a-z\-]+)*" value="<?= $inputs['PS'] ?? "" ?>"
+              title="Liste de ports ex: 22,23,25,80,200-1024,60000-">
+          </div>
+
+          <div class="field" title="-PA">
+            <label for="PAInput">TCP ACK</label>
+            <input type="text" id="PAInput" name="PA" placeholder="Ports" list="servicesList"
+              pattern="([0-9\-]+|[a-z\-]+)(,[0-9\-]+|,[a-z\-]+)*" value="<?= $inputs['PA'] ?? "" ?>"
+              title="Liste de ports ex: 22,23,25,80,200-1024,60000-">
+          </div>
+
+          <div class="field" title="-PU">
+            <label for="PUInput">UDP</label>
+            <input type="text" id="PUInput" name="PU" placeholder="Ports" list="servicesList"
+              pattern="([0-9\-]+|[a-z\-]+)(,[0-9\-]+|,[a-z\-]+)*" value="<?= $inputs['PU'] ?? "" ?>"
+              title="Liste de ports ex: 22,23,25,80,200-1024,60000-">
           </div>
 
           <div class="field">
@@ -173,7 +173,6 @@ Exemples: <?= $_SERVER['REMOTE_ADDR']; ?>/24 <?= $_SERVER['SERVER_NAME']; ?> 10.
           </div>
           <div class="content">
             <div class="field">
-              <label>Scans</label>
               <div class="fields">
                 <div class="field" title="-sS">
                   <div class="ui toggle checkbox">
