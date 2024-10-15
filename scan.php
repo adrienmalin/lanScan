@@ -28,8 +28,17 @@ foreach ($inputs as $arg => $value) {
 
 $tempPath = tempnam(sys_get_temp_dir(), 'scan_').".xml";
 
-exec(($sudo ? "sudo " : "") . "nmap$args -oX '$tempPath' $targets 2>&1", $stderr, $code);
-if ($code) {
+$command = "nmap$args -oX '$tempPath' $targets 2>&1";
+
+exec($command, $stderr, $retcode);
+
+if ($retcode && strpos(implode($stderr), " root ") !== false) {
+    // Retry with sudo
+    $recode = 0;
+    exec("sudo $command", $stderr, $retcode);
+}
+
+if ($retcode) {
     http_response_code(500);
     die(implode("<br/>\n", $stderr));
 }
