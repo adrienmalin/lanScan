@@ -167,11 +167,90 @@ Exemples: <?= $_SERVER['REMOTE_ADDR']; ?>/24 <?= $_SERVER['SERVER_NAME']; ?> 10.
           </div>
         </div>
 
-        <div class="title">
-          <i class="icon dropdown"></i>
-          Spécifications des ports et ordre du scan
-        </div>
-        <div class="content">
+          <div class="title">
+            <i class="icon dropdown"></i>
+            Techniques de scan de ports
+          </div>
+          <div class="content">
+            <div class="field">
+              <label>Scans</label>
+              <div class="fields">
+                <div class="field" title="-sS">
+                  <div class="ui toggle checkbox">
+                    <input type="checkbox" id="sSCheckbox" name="sS" <?= $inputs['sS'] ?? false ? 'checked' : ''; ?> />
+                    <label for="sSCheckbox">TCP SYN</label>
+                  </div>
+                </div>
+                <div class="field" title="-sT">
+                  <div class="ui toggle checkbox">
+                    <input type="checkbox" id="sTCheckbox" name="sT" <?= $inputs['sT'] ?? false ? 'checked' : ''; ?> />
+                    <label for="sTCheckbox">TCP Connect()</label>
+                  </div>
+                </div>
+                <div class="field" title="-sA">
+                  <div class="ui toggle checkbox">
+                    <input type="checkbox" id="sACheckbox" name="sA" <?= $inputs['sA'] ?? false ? 'checked' : ''; ?> />
+                    <label for="sACheckbox">TCP ACK</label>
+                  </div>
+                </div>
+              </div>
+
+              <div class="fields">
+                <div class="field" title="-sW">
+                  <div class="ui toggle checkbox">
+                    <input type="checkbox" id="sWCheckbox" name="sW" <?= $inputs['sW'] ?? false ? 'checked' : ''; ?> />
+                    <label for="sWCheckbox">Fenêtre TCP</label>
+                  </div>
+                </div>
+                <div class="field" title="-sM">
+                  <div class="ui toggle checkbox">
+                    <input type="checkbox" id="sMCheckbox" name="sM" <?= $inputs['sM'] ?? false ? 'checked' : ''; ?> />
+                    <label for="sMCheckbox">Maimon</label>
+                  </div>
+                </div>
+                <div class="field" title="-sN">
+                  <div class="ui toggle checkbox">
+                    <input type="checkbox" id="sNCheckbox" name="sN" <?= $inputs['sN'] ?? false ? 'checked' : ''; ?> />
+                    <label for="sNCheckbox">TCP Null</label>
+                  </div>
+                </div>
+              </div>
+
+              <div class="fields">
+                <div class="field" title="-sF">
+                  <div class="ui toggle checkbox">
+                    <input type="checkbox" id="sFCheckbox" name="sF" <?= $inputs['sF'] ?? false ? 'checked' : ''; ?> />
+                    <label for="sFCheckbox">TCP FIN</label>
+                  </div>
+                </div>
+                <div class="field" title="-sX">
+                  <div class="ui toggle checkbox">
+                    <input type="checkbox" id="sXCheckbox" name="sX" <?= $inputs['sX'] ?? false ? 'checked' : ''; ?> />
+                    <label for="sXCheckbox">Sapin de Noël</label>
+                  </div>
+                </div>
+                <div class="field" title="-sU">
+                  <div class="ui toggle checkbox">
+                    <input type="checkbox" id="sUCheckbox" name="sU" <?= $inputs['sU'] ?? false ? 'checked' : ''; ?> />
+                    <label for="sUCheckbox">UDP</label>
+                  </div>
+                </div>
+              </div>
+
+              <div class="field" title="-scanflags">
+                <label for="scanflagsInput">Scan TCP personnalisé</label>
+                <input type="text" id="scanflagsInput" name="scanflags" placeholder="Drapeaux TCP" list="flagsList"
+                  pattern="(URG|ACK|PSH|RST|SYN|FIN|,)+|[1-9]?[0-9]|[1-2][0-9][0-9]" value="<?= $inputs['scanflags'] ?? "" ?>"
+                  title="Mélanger simplement les drapeaux URG, ACK, PSH, RST, SYN et FIN.">
+              </div>
+            </div>
+          </div>
+
+          <div class="title">
+            <i class="icon dropdown"></i>
+            Spécifications des ports et ordre du scan
+          </div>
+          <div class="content">
           <div class="inline field" title="-sP">
             <div class="ui toggle checkbox">
               <input type="checkbox" id="sPCheckbox" name="sP" <?= $inputs['sP'] ?? false ? 'checked' : ''; ?> />
@@ -187,7 +266,7 @@ Exemples: <?= $_SERVER['REMOTE_ADDR']; ?>/24 <?= $_SERVER['SERVER_NAME']; ?> 10.
             </div>
           </div>
 
-          <div class="inline field" title="-p">
+          <div class="field" title="-p">
             <label for="pInput">Scanner les ports</label>
             <input type="text" id="pInput" name="p" placeholder="Ports" list="servicesList" <?= $inputs['F'] ?? false ? 'disabled' : ''; ?>
               pattern="(([TU]:)?[0-9\-]+|[a-z\-]+)(,([TU]:)?[0-9\-]+|,[a-z\-]+)*" value="<?= $inputs['p'] ?? "" ?>"
@@ -287,19 +366,27 @@ foreach ($nmap_services as $service) {
   }
 }
 foreach ($services as $name => [$portid, $protocol]) {
-  echo "       <option value='$name'>$name</option>\n";
+  echo "       <option value='$name'>$portid</option>\n";
 }
     ?>
+  </datalist>
+  <datalist id="flagsList">
+    <option value="URG"></option>
+    <option value="ACK"></option>
+    <option value="PSH"></option>
+    <option value="RST"></option>
+    <option value="SYN"></option>
+    <option value="FIN"></option>
   </datalist>
   
   <script>
     class TagsInput extends Tagify {
-      constructor(input, originalInputValueDelimiter = ",") {
+      constructor(input, delim = ",") {
         super(input, {
           delimiters: " |,",
-          originalInputValueFormat: tags => tags.map(tag => tag.value).join(originalInputValueDelimiter),
+          originalInputValueFormat: tags => tags.map(tag => tag.value).join(delim),
         })
-        if (!this.whitelist.length && input.list) this.whitelist = Array.from(input.list.options).map(option => option.value)
+        if (input.list) this.whitelist = Array.from(input.list.options).map(option => option.value)
       }
     }
 
@@ -322,6 +409,7 @@ foreach ($services as $name => [$portid, $protocol]) {
       pInput.disabled = FCheckbox.checked
       pTagsInput.setDisabled(FCheckbox.checked)
     }
+    new TagsInput(scanflagsInput)
 
     newScanForm.onsubmit = function(event) {
       if (this.checkValidity()) {

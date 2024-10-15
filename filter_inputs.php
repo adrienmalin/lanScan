@@ -50,7 +50,7 @@ if ($lan) {
     'sF'         => FILTER_VALIDATE_BOOLEAN,
     'sN'         => FILTER_VALIDATE_BOOLEAN,
     'sX'         => FILTER_VALIDATE_BOOLEAN,
-    'scanflags'  => ['filter' => FILTER_VALIDATE_REGEXP, 'options' => ['regexp' => "/^([URG|ACK|PSH|RST|SYN|FIN]+)$|^([0-2]?\d?\d)$/"]],
+    'scanflags'  => ['filter' => FILTER_VALIDATE_REGEXP, 'options' => ['regexp' => "/^(URG|ACK|PSH|RST|SYN|FIN|,)+|[1-9]?[0-9]|[1-2][0-9][0-9]$/"]],
     'sI'         => ['filter' => FILTER_VALIDATE_REGEXP, 'options' => ['regexp' => "/^[a-zA-Z\d:.-]+(:\d+)?$/"]],
     'sO'         => FILTER_VALIDATE_BOOLEAN,
     'b'          => FILTER_VALIDATE_URL,
