@@ -384,12 +384,8 @@ foreach (scandir($SCANSDIR) as $filename) {
     </form>
   </main>
   
-  <footer class="ui bottom fixed menu">
-    <div class="item">
-      <div class="segment">
-        lanScan est basé sur <a href="https://nmap.org/" target="_blank">Nmap</a>
-      </div>
-    </div>
+  <footer class="ui footer segment">
+    lanScan est basé sur <a href="https://nmap.org/" target="_blank">Nmap</a>
   </footer>
 
   <datalist id='targetsList'>

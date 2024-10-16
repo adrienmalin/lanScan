@@ -105,12 +105,8 @@ Exemples: 192.168.1.0/24 scanme.nmap.org 10.0-255.0-255.1-254"/>
                     <xsl:apply-templates select="host | $init/host[not(address/@addr=$current/host/address/@addr)][not(status/@state='down')]"/>
                 </main>
                 
-                <footer class="ui bottom fixed menu">
-                    <div class="item">
-                        <div class="segment">
-                            lanScan est basé sur <a href="https://nmap.org/" target="_blank">Nmap</a>
-                        </div>
-                    </div>
+                <footer class="ui footer segment">
+                  lanScan est basé sur <a href="https://nmap.org/" target="_blank">Nmap</a>
                 </footer>
 
             <script>
