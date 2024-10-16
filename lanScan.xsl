@@ -125,8 +125,10 @@ Exemples: 192.168.1.0/24 scanme.nmap.org 10.0-255.0-255.1-254"/>
                     </table>
                 </main>
                 
-                <footer class="ui footer segment">
+                <footer class="ui bottom fixed menu">
+                    <div class="item">
                     lanScan est basé sur <a href="https://nmap.org/" target="_blank">Nmap</a>
+                    </div>
                 </footer>
 
                 <script>
@@ -292,7 +294,7 @@ function hostScanning(link) {
                     <a class="ui mini icon teal button" onclick="hostScanning(this)">
                         <xsl:attribute name="href">
                             <xsl:value-of select="$basedir"/>
-                            <xsl:text>/scan.php?preset=services&amp;targets=</xsl:text>
+                            <xsl:text>/scan.php?preset=host&amp;targets=</xsl:text>
                             <xsl:value-of select="$hostAddress"/>
                         </xsl:attribute>
                         <i class="satellite dish icon"></i>
@@ -301,7 +303,7 @@ function hostScanning(link) {
                     <a class="ui mini icon teal label">
                         <xsl:attribute name="href">
                             <xsl:value-of select="$basedir"/>
-                            <xsl:text>/options.php?preset=services&amp;targets=</xsl:text>
+                            <xsl:text>/options.php?preset=host&amp;targets=</xsl:text>
                             <xsl:value-of select="$hostAddress"/>
                         </xsl:attribute>
                         <i class="sliders horizontal icon"></i>

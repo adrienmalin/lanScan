@@ -13,7 +13,7 @@ $presets = [
         'refreshPeriod' => 60,
         'sudo'          => false,
     ],
-    "services" => [
+    "host" => [
         '-Pn'           => true,
         '-F'            => true,
         '-sV'           => true,
