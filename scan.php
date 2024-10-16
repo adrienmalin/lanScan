@@ -9,7 +9,7 @@ foreach ($options as $arg => $value) {
     if (substr($arg, 0, 1) == '-') {
         if (is_null($value)) {
             http_response_code(400);
-            $errorMessage = "Valeur incorecte pour le paramètre <var>$arg</var> : " . filter_input(INPUT_GET, $arg, FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+            $errorMessage = "Valeur incorrecte pour le paramètre <var>$arg</var> : " . filter_input(INPUT_GET, $arg, FILTER_SANITIZE_FULL_SPECIAL_CHARS);
             include_once "options.php";
             die();
         } else if ($value) {
@@ -40,7 +40,7 @@ $xml = new DOMDocument();
 $xml->load($tempPath);
 `rm "$tempPath"`;
 
-$saveAsURL = isset($options["saveAs"])? "$BASEDIR/$SCANSDIR/{$options["saveAs"]}.xml" : "";
+$saveAsURL = $options["saveAs"]?? false ? "$BASEDIR/$SCANSDIR/{$options["saveAs"]}.xml" : "";
 $xml->insertBefore($xml->createProcessingInstruction('xslt-param', "name='savedAs' value='".htmlentities($saveAsURL, ENT_QUOTES)."'"), $xml->documentElement);
 foreach ($options as $arg => $value) {
     if (substr($arg, 0, 1) != '-') {
