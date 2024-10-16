@@ -12,10 +12,6 @@ $fileNameRegex           = '/^[^<>:"\/|?]+$/';
 $targets       = filter_input(INPUT_GET, 'targets', FILTER_VALIDATE_REGEXP, ['options' => ['regexp' => $targetsListRegex], "flags" => FILTER_NULL_ON_FAILURE]);
 $lan           = filter_input(INPUT_GET, 'lan', FILTER_VALIDATE_REGEXP, ['options' => ['regexp' => $targetsListRegex], "flags" => FILTER_NULL_ON_FAILURE]);
 $host          = filter_input(INPUT_GET, 'host', FILTER_VALIDATE_REGEXP, ['options' => ['regexp' => $targetsListRegex], "flags" => FILTER_NULL_ON_FAILURE]);
-$saveAs        = filter_input(INPUT_GET, 'saveAs', FILTER_VALIDATE_REGEXP, ['options' => ['regexp' => $fileNameRegex]]);
-$compareWith   = filter_input(INPUT_GET, 'compareWith', FILTER_VALIDATE_URL);
-$refreshPeriod = filter_input(INPUT_GET, 'refreshPeriod', FILTER_VALIDATE_INT, ['options' => ['min_range' => 0]]);
-$sudo          = filter_input(INPUT_GET, 'sudo', FILTER_VALIDATE_BOOLEAN, FILTER_NULL_ON_FAILURE);
 
 if ($lan) {
   $targets = $lan;
@@ -116,4 +112,9 @@ if ($lan) {
     'h'            => FILTER_VALIDATE_BOOLEAN,
     'stylesheet'   => FILTER_VALIDATE_URL,
   ], false) ?: $LANSCAN_OPTIONS;
+  
+  $saveAs        = filter_input(INPUT_GET, 'saveAs', FILTER_VALIDATE_REGEXP, ['options' => ['regexp' => $fileNameRegex]]);
+  $compareWith   = filter_input(INPUT_GET, 'compareWith', FILTER_VALIDATE_URL);
+  $refreshPeriod = filter_input(INPUT_GET, 'refreshPeriod', FILTER_VALIDATE_INT, ['options' => ['min_range' => 0]]);
+  $sudo          = filter_input(INPUT_GET, 'sudo', FILTER_VALIDATE_BOOLEAN, FILTER_NULL_ON_FAILURE);
 }

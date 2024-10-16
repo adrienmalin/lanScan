@@ -26,7 +26,7 @@ include_once 'filter_inputs.php';
     <form id="lanScanForm" class="right menu">
       <div class="ui category search item">
           <div id="targetsInputDiv" class="ui icon input">
-            <input class="prompt" type="text" id="targetsInput" name="lan" required
+            <input class="prompt" type="text" id="targetsInput" name="lan"
               pattern="[a-zA-Z0-9._\/ \-]+" value="<?= $targets; ?>" placeholder="Scanner un réseau..."
               title="Les cibles peuvent être spécifiées par des noms d'hôtes, des adresses IP, des adresses de réseaux, etc.
 Exemples: <?= $_SERVER['REMOTE_ADDR']; ?>/24 <?= $_SERVER['SERVER_NAME']; ?> 10.0-255.0-255.1-254" />
@@ -64,16 +64,18 @@ foreach (scandir($SCANSDIR) as $filename) {
     </div>
     <script>
 hiddenButton.onclick = (event) => {
-  targetsInputDiv.classList.add('loading')
-  $.toast({
-      title: 'Scan en cours...',
-      message: 'Merci de patienter',
-      class: 'info',
-      showIcon: 'satellite dish',
-      displayTime: 0,
-      closeIcon: true,
-      position: 'bottom right',
-  })
+  if (lanScanForm.form.checkValidity()) {
+    targetsInputDiv.classList.add('loading')
+    $.toast({
+        title: 'Scan en cours...',
+        message: 'Merci de patienter',
+        class: 'info',
+        showIcon: 'satellite dish',
+        displayTime: 0,
+        closeIcon: true,
+        position: 'bottom right',
+    })
+  }
 }
     </script>
   </main>

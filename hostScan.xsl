@@ -79,7 +79,7 @@
                     <form id="lanScanForm" class="right menu" onsubmit="targetsInputDiv.classList.add('loading')">
                         <div class="ui category search item">
                             <div id="targetsInputDiv" class="ui icon input">
-                            <input class="prompt" type="text" id="targetsInput" name="targets" oninput="hiddenInput.value=this.value" required=""
+                            <input class="prompt" type="text" id="targetsInput" name="targets" oninput="hiddenInput.value=this.value"
                                 pattern="[a-zA-Z0-9._\/ \-]+" value="{$targets}" placeholder="Scanner un réseau..."
                                 title="Les cibles peuvent être spécifiées par des noms d'hôtes, des adresses IP, des adresses de réseaux, etc.
 Exemples: 192.168.1.0/24 scanme.nmap.org 10.0-255.0-255.1-254"/>
@@ -88,7 +88,7 @@ Exemples: 192.168.1.0/24 scanme.nmap.org 10.0-255.0-255.1-254"/>
                             <input type="hidden" name="compareWith" value="{$nextCompareWith}"/>
                             <input type="hidden" name="refreshPeriod" value="{$refreshPeriod}"/>
                             <button style="display: none;" type="submit" formmethod="get" formaction="{$basedir}/scan.php"></button>
-                            <button class="ui teal icon submit button" type="submit" formmethod="get" formaction="{$basedir}/options.php" onclick="targetsInput.required=false">
+                            <button class="ui teal icon submit button" type="submit" formmethod="get" formaction="{$basedir}/options.php">
                                 <i class="sliders horizontal icon"></i>
                             </button>
                             <button class="ui teal icon submit button" type="submit" formmethod="get" formaction="{$basedir}/scan.php" onclick="this.getElementsByTagName('i')[0].className = 'loading spinner icon'">
@@ -169,16 +169,18 @@ $.toast({
 </xsl:if>
 
 hiddenButton.onclick = function(event) {
-    targetsInputDiv.classList.add('loading')
-    $.toast({
-        title      : 'Scan en cours...',
-        message    : 'Merci de patienter',
-        class      : 'info',
-        showIcon   : 'satellite dish',
-        displayTime: 0,
-        closeIcon  : true,
-        position   : 'bottom right',
-    })
+    if (lanScanForm.form.checkValidity()) {
+        targetsInputDiv.classList.add('loading')
+        $.toast({
+            title      : 'Scan en cours...',
+            message    : 'Merci de patienter',
+            class      : 'info',
+            showIcon   : 'satellite dish',
+            displayTime: 0,
+            closeIcon  : true,
+            position   : 'bottom right',
+        })
+    }
 }
 refreshButton.onclick = function(event) {
     refreshButton.getElementsByTagName('i')[0].className = 'loading spinner icon'

@@ -46,10 +46,10 @@ include_once 'filter_inputs.php';
     <h1 class="header">Scanner un <?=$host? "hôte" : "réseau" ?></h1>
 
     <form id="newScanForm" class="ui form" method="get" action="scan.php">
-      <div class="required field">
+      <div class="field">
         <label for="targetsInput" title="Les cibles peuvent être spécifiées par des noms d'hôtes, des adresses IP, des adresses de réseaux, etc.
 Exemples: <?= $_SERVER['REMOTE_ADDR']; ?>/24 <?= $_SERVER['SERVER_NAME']; ?> 10.0-255.0-255.1-254">Cibles</label>
-        <input id="targetsInput" type="text" name="targets" placeholder="Cibles" required
+        <input id="targetsInput" type="text" name="targets" placeholder="Cibles"
           pattern="[a-zA-Z0-9._\/ \-]+" value="<?= $targets; ?>" list="targetsList"
           title="Les cibles peuvent être spécifiées par des noms d'hôtes, des adresses IP, des adresses de réseaux, etc.
 Exemples: <?= $_SERVER['REMOTE_ADDR']; ?>/24 <?= $_SERVER['SERVER_NAME']; ?> 10.0-255.0-255.1-254" />

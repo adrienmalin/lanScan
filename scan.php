@@ -2,13 +2,6 @@
 
 include_once 'filter_inputs.php';
 
-if (!$targets) {
-    http_response_code(400);
-    $errorMessage = "Valeur incorecte pour le paramètre <var>targets</var> : " . filter_input(INPUT_GET, "targets", FILTER_SANITIZE_FULL_SPECIAL_CHARS);
-    include_once "options.php";
-    die();
-}
-
 if (!file_exists($SCANSDIR)) mkdir($SCANSDIR);
 
 $args = '';
