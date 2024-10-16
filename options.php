@@ -34,6 +34,15 @@ include_once 'filter_inputs.php';
   </nav>
 
   <main class="ui main container">
+
+<?php if(isset($errorMessage)) { ?>
+    <div class="ui negative message">
+      <i class="close icon"></i>
+      <div class="header">Erreur</div>
+      <p><?=$errorMessage?></p>
+    </div>
+<?php } ?>
+
     <h1 class="header">Scanner un <?=$host? "hôte" : "réseau" ?></h1>
 
     <form id="newScanForm" class="ui form" method="get" action="scan.php">

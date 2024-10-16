@@ -5,7 +5,9 @@ include_once 'filter_inputs.php';
 
 if (!$targets) {
     http_response_code(400);
-    die('Paramètre manquant : targets, lan ou host');
+    $errorMessage = 'Paramètre manquant : targets, lan ou host';
+    include_once "options.php";
+    die();
 }
 
 if (!file_exists($SCANSDIR)) mkdir($SCANSDIR);
@@ -14,7 +16,9 @@ $args = '';
 foreach ($inputs as $arg => $value) {
     if (is_null($value)) {
         http_response_code(400);
-        die("Valeur incorecte pour le paramètre $arg : " . filter_input(INPUT_GET, $arg, FILTER_SANITIZE_FULL_SPECIAL_CHARS));
+        $errorMessage = "Valeur incorecte pour le paramètre $arg : " . filter_input(INPUT_GET, $arg, FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+        include_once "options.php";
+        die();
     } else if ($value) {
         if ($value === true) {
             if (strlen($arg) <= 2) $args .= " -$arg";
@@ -34,13 +38,14 @@ exec($command, $stderr, $retcode);
 
 if ($retcode && strpos(implode($stderr), " root ") !== false) {
     // Retry with sudo
-    $recode = 0;
     exec("sudo $command", $stderr, $retcode);
 }
 
 if ($retcode) {
     http_response_code(500);
-    die(implode("<br/>\n", $stderr));
+    $errorMessage = implode("<br/>\n", $stderr);
+    include_once "options.php";
+    die();
 }
 
 $xml = new DOMDocument();
