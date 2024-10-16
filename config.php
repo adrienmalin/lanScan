@@ -17,6 +17,7 @@ $HOSTSCAN_OPTIONS = [
 ];
 
 $refreshPeriod = 60;
+$use_sudo = false;
 
 $SCANSDIR = 'scans';
 $DATADIR  = '/usr/share/nmap';

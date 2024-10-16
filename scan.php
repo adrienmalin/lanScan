@@ -32,14 +32,9 @@ foreach ($inputs as $arg => $value) {
 
 $tempPath = tempnam(sys_get_temp_dir(), 'scan_').".xml";
 
-$command = "nmap$args -oX '$tempPath' $targets 2>&1";
+$command = ($use_sudo? "sudo " : "") . "nmap$args -oX '$tempPath' $targets 2>&1";
 
 exec($command, $stderr, $retcode);
-
-if ($retcode && strpos(implode($stderr), " root ") !== false) {
-    // Retry with sudo
-    exec("sudo $command", $stderr, $retcode);
-}
 
 if ($retcode) {
     http_response_code(500);

@@ -10,3 +10,7 @@ Pour donner les droits à lanScan sous Linux, installer `sudo` au besoin, puis c
 ```
 www-data ALL = NOPASSWD: /usr/bin/nmap
 ````
+et modifier le fichier `config.php` avec :
+```php
+$use_sudo = true;
+```
