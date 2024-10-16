@@ -4,8 +4,8 @@ include_once 'filter_inputs.php';
 
 if (!file_exists($SCANSDIR)) mkdir($SCANSDIR);
 
-$args = '';
-foreach ($inputs as $arg => $value) {
+$command = ($sudo? "sudo " : "") . "nmap";
+foreach ($args as $arg => $value) {
     if (is_null($value)) {
         http_response_code(400);
         $errorMessage = "Valeur incorecte pour le paramètre <var>$arg</var> : " . filter_input(INPUT_GET, $arg, FILTER_SANITIZE_FULL_SPECIAL_CHARS);
@@ -13,18 +13,18 @@ foreach ($inputs as $arg => $value) {
         die();
     } else if ($value) {
         if ($value === true) {
-            if (strlen($arg) <= 2) $args .= " -$arg";
-            else $args .= " --$arg";
+            if (strlen($arg) <= 2) $command .= " -$arg";
+            else $command .= " --$arg";
         } else {
-            if (strlen($arg) <= 2) $args .= " -$arg$value";
-            else $args .= " --$arg $value";
+            if (strlen($arg) <= 2) $command .= " -$arg$value";
+            else $command .= " --$arg $value";
         }
     }
 }
 
 $tempPath = tempnam(sys_get_temp_dir(), 'scan_').".xml";
 
-$command = ($sudo? "sudo " : "") . "nmap$args -oX '$tempPath' $targets 2>&1";
+$command .= " -oX '$tempPath' $targets 2>&1";
 
 exec($command, $stderr, $retcode);
 

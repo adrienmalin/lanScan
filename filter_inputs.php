@@ -15,12 +15,12 @@ $host          = filter_input(INPUT_GET, 'host', FILTER_VALIDATE_REGEXP, ['optio
 
 if ($lan) {
   $targets = $lan;
-  $inputs = $LANSCAN_OPTIONS;
+  $args = $LANSCAN_OPTIONS;
 } else if ($host) {
   $targets = $host;
-  $inputs = $HOSTSCAN_OPTIONS;
+  $args = $HOSTSCAN_OPTIONS;
 } else {
-  $inputs = filter_input_array(INPUT_GET, [
+  $args = filter_input_array(INPUT_GET, [
     'iR'      => ['filter' => FILTER_VALIDATE_INT, 'options' => ['min_range' => 0]],
     'exclude' => ['filter' => FILTER_VALIDATE_REGEXP, 'options' => ['regexp' => $hostsListRegex]],
 
