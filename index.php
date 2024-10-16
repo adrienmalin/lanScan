@@ -77,9 +77,12 @@ hiddenButton.onclick = (event) => {
 }
     </script>
   </main>
+  
   <footer class="ui bottom fixed menu">
     <div class="item">
-    lanScan est basé sur <a href="https://nmap.org/" target="_blank">Nmap</a>
+      <div class="segment">
+        lanScan est basé sur <a href="https://nmap.org/" target="_blank">Nmap</a>
+      </div>
     </div>
   </footer>
 </body>
