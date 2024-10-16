@@ -9,19 +9,17 @@ $presets = [
         '-PS'          => 'microsoft-ds',
         '-F'           => true,
         '-T5'          => true,
-        '--stylesheet' => "$BASEDIR/lanScan.xsl"
+        '--stylesheet' => "$BASEDIR/lanScan.xsl",
+        'refreshPeriod' => 60,
+        'sudo'          => false,
     ],
     "host" => [
-        '-Pn'          => true,
-        '-F'           => true,
-        '-sV'          => true,
-        '-T5'          => true,
-        '--stylesheet' => "$BASEDIR/hostScan.xsl"
+        '-Pn'           => true,
+        '-F'            => true,
+        '-sV'           => true,
+        '-T5'           => true,
+        '--stylesheet'  => "$BASEDIR/hostScan.xsl",
+        'refreshPeriod' => 60,
+        'sudo'          => false,
     ],
 ];
-
-$saveAs        = null;
-$compareWith   = null;
-$refreshPeriod = 60;
-$sudo          = true;
-

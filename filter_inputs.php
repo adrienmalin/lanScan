@@ -13,9 +13,9 @@ $targets = filter_input(INPUT_GET, 'targets', FILTER_VALIDATE_REGEXP, ['options'
 $preset  = filter_input(INPUT_GET, "preset");
 
 if ($preset && isset($presets[$preset])) {
-  $args = $presets[$preset];
+  $options = $presets[$preset];
 } else {
-  $args = filter_input_array(INPUT_GET, [
+  $options = filter_input_array(INPUT_GET, [
 // TARGET SPECIFICATION:
     '-iR'       => ['filter' => FILTER_VALIDATE_INT, 'options' => ['min_range' => 0]],
     '--exclude' => ['filter' => FILTER_VALIDATE_REGEXP, 'options' => ['regexp' => $hostsListRegex]],
@@ -107,10 +107,10 @@ if ($preset && isset($presets[$preset])) {
     '--unprivileged' => FILTER_VALIDATE_BOOLEAN,
     '-h'             => FILTER_VALIDATE_BOOLEAN,
     '--stylesheet'   => FILTER_VALIDATE_URL,
+// lanScan
+    'saveAs'        => ["filter" => FILTER_VALIDATE_REGEXP, 'options' => ['regexp' => $fileNameRegex]],
+    'compareWith'   => FILTER_VALIDATE_URL,
+    'refreshPeriod' => ["filter" => FILTER_VALIDATE_INT, 'options' => ['min_range' => 0]],
+    'sudo'          => FILTER_VALIDATE_BOOLEAN,
   ], false) ?: $presets["lan"];
-  
-  $saveAs        = filter_input(INPUT_GET, 'saveAs', FILTER_VALIDATE_REGEXP, ['options' => ['regexp' => $fileNameRegex]]);
-  $compareWith   = filter_input(INPUT_GET, 'compareWith', FILTER_VALIDATE_URL);
-  $refreshPeriod = filter_input(INPUT_GET, 'refreshPeriod', FILTER_VALIDATE_INT, ['options' => ['min_range' => 0]]);
-  $sudo          = filter_input(INPUT_GET, 'sudo', FILTER_VALIDATE_BOOLEAN, FILTER_NULL_ON_FAILURE);
 }
