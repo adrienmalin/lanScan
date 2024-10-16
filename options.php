@@ -317,7 +317,7 @@ Exemples: <?= $_SERVER['REMOTE_ADDR']; ?>/24 <?= $_SERVER['SERVER_NAME']; ?> 10.
         <div class="content">
           <div class="field" title="--stylesheet">
             <label for="stylesheetSelect">Feuille de style</label>
-            <select class="ui dropdown" id="stylesheetSelect" name="--stylesheet" value="<?= $options["stylesheet"] ?? ""?>">
+            <select class="ui dropdown" id="stylesheetSelect" name="--stylesheet" value="<?= $options["--stylesheet"] ?? ""?>">
 <?php
 foreach (scandir('.') as $filename) {
   if (substr($filename, -4) === '.xsl') {
