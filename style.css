@@ -3,7 +3,7 @@ svg {
     fill: currentColor;
 }
 
-.main.container {
+main {
     padding-top: 7em;
     min-height: calc(100vh - 4.4285em - 2px);
 }

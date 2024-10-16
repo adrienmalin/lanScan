@@ -105,11 +105,15 @@ Exemples: 192.168.1.0/24 scanme.nmap.org 10.0-255.0-255.1-254"/>
                     </form>
                 </nav>
 
-                <main class="ui main wide container">
-                    <h1 class="ui header"><xsl:value-of select="$targets"/></h1>
+                <main class="ui wide container">
+                    <div class="ui header container">
+                        <h1 class="ui header"><xsl:value-of select="$targets"/></h1>
+                    </div>
 
-                    <div class="ui centered link cards">
-                        <xsl:apply-templates select="host | $init/host[not(address/@addr=$current/host/address/@addr)][not(status/@state='down')]"/>
+                    <div class="ui doubling stackable five column compact grid">
+                        <div class="ui centered link cards">
+                            <xsl:apply-templates select="host | $init/host[not(address/@addr=$current/host/address/@addr)][not(status/@state='down')]"/>
+                        </div>
                     </div>
                 </main>
                 
@@ -227,12 +231,12 @@ function hostScanning(link) {
                                     <xsl:text>ui empty circular label </xsl:text>
                                     <xsl:choose>
                                         <xsl:when test="$currentHost/status/@state='up'">green</xsl:when>
-                                        <xsl:otherwise>red</xsl:otherwise>
+                                        <xsl:otherwise>red disabled</xsl:otherwise>
                                     </xsl:choose>
                                 </xsl:attribute>
                             </div>
                         </xsl:when>
-                        <xsl:otherwise><div class="ui red circular label"></div></xsl:otherwise>
+                        <xsl:otherwise><div class="ui red disabled circular label"></div></xsl:otherwise>
                     </xsl:choose>
                     <xsl:text> </xsl:text>
                     <xsl:choose>
@@ -246,7 +250,10 @@ function hostScanning(link) {
                 </div>
                 <div class="meta">
                     <xsl:if test="substring-after(hostnames/hostname/@name, '.')">
-                        <div><xsl:value-of select="substring-after(hostnames/hostname/@name, '.')"/></div>
+                        <div>
+                            <xsl:text>.</xsl:text>
+                            <xsl:value-of select="substring-after(hostnames/hostname/@name, '.')"/>
+                        </div>
                     </xsl:if>
                     <div><xsl:value-of select="address/@addr"/></div>
                     <xsl:if test="address[@addrtype='mac']/@vendor">
@@ -380,14 +387,14 @@ function hostScanning(link) {
                 <xsl:choose>
                     <xsl:when test="contains($argAndValue, ' ')">
                         <xsl:call-template name="input">
-                            <xsl:with-param name="name" select="substring(substring-before($argAndValue, ' '), 2)"/>
+                            <xsl:with-param name="name" select="substring-before($argAndValue, ' ')"/>
                             <xsl:with-param name="value" select="substring-after($argAndValue, ' ')"/>
                             <xsl:with-param name="asURL" select="$asURL"/>
                         </xsl:call-template>
                     </xsl:when>
                     <xsl:otherwise>
                         <xsl:call-template name="input">
-                            <xsl:with-param name="name" select="substring($argAndValue, 2)"/>
+                            <xsl:with-param name="name" select="$argAndValue"/>
                             <xsl:with-param name="value" select="on"/>
                             <xsl:with-param name="asURL" select="$asURL"/>
                         </xsl:call-template>
@@ -428,6 +435,7 @@ function hostScanning(link) {
         <xsl:param name="asURL" select="false()"/>
         <xsl:choose>
             <xsl:when test="$asURL">
+                <xsl:text>-</xsl:text>
                 <xsl:value-of select="$name"/>
                 <xsl:text>=</xsl:text>
                 <xsl:choose>
@@ -437,7 +445,7 @@ function hostScanning(link) {
                 <xsl:text>&amp;</xsl:text>
             </xsl:when>
             <xsl:otherwise>
-                <input type="hidden" name="{$name}">
+                <input type="hidden" name="-{$name}">
                     <xsl:attribute name="value">
                         <xsl:choose>
                             <xsl:when test="$value"><xsl:value-of select="$value"/></xsl:when>

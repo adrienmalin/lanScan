@@ -407,14 +407,14 @@ function hostScanning(link) {
                 <xsl:choose>
                     <xsl:when test="contains($argAndValue, ' ')">
                         <xsl:call-template name="input">
-                            <xsl:with-param name="name" select="substring(substring-before($argAndValue, ' '), 2)"/>
+                            <xsl:with-param name="name" select="substring-before($argAndValue, ' ')"/>
                             <xsl:with-param name="value" select="substring-after($argAndValue, ' ')"/>
                             <xsl:with-param name="asURL" select="$asURL"/>
                         </xsl:call-template>
                     </xsl:when>
                     <xsl:otherwise>
                         <xsl:call-template name="input">
-                            <xsl:with-param name="name" select="substring($argAndValue, 2)"/>
+                            <xsl:with-param name="name" select="$argAndValue"/>
                             <xsl:with-param name="value" select="on"/>
                             <xsl:with-param name="asURL" select="$asURL"/>
                         </xsl:call-template>
@@ -455,6 +455,7 @@ function hostScanning(link) {
         <xsl:param name="asURL" select="false()"/>
         <xsl:choose>
             <xsl:when test="$asURL">
+                <xsl:text>-</xsl:text>
                 <xsl:value-of select="$name"/>
                 <xsl:text>=</xsl:text>
                 <xsl:choose>
@@ -464,7 +465,7 @@ function hostScanning(link) {
                 <xsl:text>&amp;</xsl:text>
             </xsl:when>
             <xsl:otherwise>
-                <input type="hidden" name="{$name}">
+                <input type="hidden" name="-{$name}">
                     <xsl:attribute name="value">
                         <xsl:choose>
                             <xsl:when test="$value"><xsl:value-of select="$value"/></xsl:when>
