@@ -13,12 +13,12 @@ $presets = [
         'refreshPeriod' => 60,
         'sudo'          => false,
     ],
-    "host" => [
+    "services" => [
         '-Pn'           => true,
         '-F'            => true,
         '-sV'           => true,
         '-T5'           => true,
-        '--stylesheet'  => "$BASEDIR/hostScan.xsl",
+        '--stylesheet'  => "$BASEDIR/servicesDetails.xsl",
         'refreshPeriod' => 60,
         'sudo'          => false,
     ],
