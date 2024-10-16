@@ -42,10 +42,13 @@ $xml->load($tempPath);
 
 $saveAsURL = isset($options["saveAs"])? "$BASEDIR/$SCANSDIR/{$options["saveAs"]}.xml" : "";
 $xml->insertBefore($xml->createProcessingInstruction('xslt-param', "name='savedAs' value='".htmlentities($saveAsURL, ENT_QUOTES)."'"), $xml->documentElement);
-$xml->insertBefore($xml->createProcessingInstruction('xslt-param', "name='compareWith' value='".htmlentities($options["compareWith"] ?? "", ENT_QUOTES)."'"), $xml->documentElement);
-$xml->insertBefore($xml->createProcessingInstruction('xslt-param', "name='refreshPeriod' value='".htmlentities($options["refreshPeriod"] ?? "", ENT_QUOTES)."'"), $xml->documentElement);
+foreach ($options as $arg => $value) {
+    if (substr($arg, 0, 1) != '-') {
+        $xml->insertBefore($xml->createProcessingInstruction('xslt-param', "name='$arg' value='".htmlentities($value, ENT_QUOTES)."'"), $xml->documentElement);
+    }
+}
 
-if (isset($options["saveAs"])) {
+if ($options["saveAs"] ?? false) {
     $path = "$SCANSDIR/{$options["saveAs"]}.xml";
     $xml->save($path);
 
