@@ -363,6 +363,13 @@ foreach (scandir($SCANSDIR) as $filename) {
               <div class="ui label">secondes</div>
             </div>
           </div>
+
+          <div class="inline field">
+            <div class="ui toggle checkbox" title="sudo">
+              <input type="checkbox" id="sudoCheckbox" name="sudo" <?= $sudo ?? false ? 'checked' : ''; ?>/>
+              <label for="sudoCheckbox">Exécuter en tant qu'administrateur</label>
+            </div>
+          </div>
         </div>
       </div>
 

@@ -1,5 +1,7 @@
 <?php
 
+include_once "config.php";
+
 $targetsListRegex        = "/^[\da-zA-Z-. \/]+$/";
 $hostsListRegex          = "/^[\da-zA-Z-.,:\/]+$/";
 $protocolePortsListRegex = "/^(([TU]:)?[0-9\-]+|[a-z\-]+)(,([TU]:)?[0-9\-]+|,[a-z\-]+)*$/";
@@ -7,12 +9,13 @@ $portsListRegex          = "/^([0-9\-]+|[a-z\-]+)(,[0-9\-]+|,[a-z\-]+)*$/";
 $tempoRegex              = "/^\d+[smh]?$/";
 $fileNameRegex           = '/^[^<>:"\/|?]+$/';
 
-$targets       = filter_input(INPUT_GET, 'targets', FILTER_VALIDATE_REGEXP, ['options' => ['regexp' => $targetsListRegex]]);
-$lan           = filter_input(INPUT_GET, 'lan', FILTER_VALIDATE_REGEXP, ['options' => ['regexp' => $targetsListRegex]]);
-$host          = filter_input(INPUT_GET, 'host', FILTER_VALIDATE_REGEXP, ['options' => ['regexp' => $targetsListRegex]]);
+$targets       = filter_input(INPUT_GET, 'targets', FILTER_VALIDATE_REGEXP, ['options' => ['regexp' => $targetsListRegex], "flags" => FILTER_NULL_ON_FAILURE]);
+$lan           = filter_input(INPUT_GET, 'lan', FILTER_VALIDATE_REGEXP, ['options' => ['regexp' => $targetsListRegex], "flags" => FILTER_NULL_ON_FAILURE]);
+$host          = filter_input(INPUT_GET, 'host', FILTER_VALIDATE_REGEXP, ['options' => ['regexp' => $targetsListRegex], "flags" => FILTER_NULL_ON_FAILURE]);
 $saveAs        = filter_input(INPUT_GET, 'saveAs', FILTER_VALIDATE_REGEXP, ['options' => ['regexp' => $fileNameRegex]]);
 $compareWith   = filter_input(INPUT_GET, 'compareWith', FILTER_VALIDATE_URL);
-$refreshPeriod = filter_input(INPUT_GET, 'refreshPeriod', FILTER_VALIDATE_INT, ['options' => ['min_range' => 0]]) ?? $refreshPeriod;
+$refreshPeriod = filter_input(INPUT_GET, 'refreshPeriod', FILTER_VALIDATE_INT, ['options' => ['min_range' => 0]]);
+$sudo          = filter_input(INPUT_GET, 'sudo', FILTER_VALIDATE_BOOLEAN, FILTER_NULL_ON_FAILURE);
 
 if ($lan) {
   $targets = $lan;

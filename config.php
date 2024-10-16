@@ -13,11 +13,9 @@ $HOSTSCAN_OPTIONS = [
     'Pn'         => true,
     'F'          => true,
     'sV'         => true,
+    'T5'         => true,
     'stylesheet' => "$BASEDIR/hostScan.xsl"
 ];
-
-$refreshPeriod = 60;
-$use_sudo = false;
 
 $SCANSDIR = 'scans';
 $DATADIR  = '/usr/share/nmap';

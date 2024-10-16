@@ -1,11 +1,10 @@
 <?php
 
-include_once 'config.php';
 include_once 'filter_inputs.php';
 
 if (!$targets) {
     http_response_code(400);
-    $errorMessage = 'Paramètre manquant : targets, lan ou host';
+    $errorMessage = "Valeur incorecte pour le paramètre <var>targets</var> : " . filter_input(INPUT_GET, "targets", FILTER_SANITIZE_FULL_SPECIAL_CHARS);
     include_once "options.php";
     die();
 }
@@ -16,7 +15,7 @@ $args = '';
 foreach ($inputs as $arg => $value) {
     if (is_null($value)) {
         http_response_code(400);
-        $errorMessage = "Valeur incorecte pour le paramètre $arg : " . filter_input(INPUT_GET, $arg, FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+        $errorMessage = "Valeur incorecte pour le paramètre <var>$arg</var> : " . filter_input(INPUT_GET, $arg, FILTER_SANITIZE_FULL_SPECIAL_CHARS);
         include_once "options.php";
         die();
     } else if ($value) {
@@ -32,7 +31,7 @@ foreach ($inputs as $arg => $value) {
 
 $tempPath = tempnam(sys_get_temp_dir(), 'scan_').".xml";
 
-$command = ($use_sudo? "sudo " : "") . "nmap$args -oX '$tempPath' $targets 2>&1";
+$command = ($sudo? "sudo " : "") . "nmap$args -oX '$tempPath' $targets 2>&1";
 
 exec($command, $stderr, $retcode);
 
