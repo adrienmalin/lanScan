@@ -169,7 +169,7 @@ $.toast({
 </xsl:if>
 
 hiddenButton.onclick = function(event) {
-    if (lanScanForm.form.checkValidity()) {
+    if (lanScanForm.checkValidity()) {
         targetsInputDiv.classList.add('loading')
         $.toast({
             title      : 'Scan en cours...',
@@ -308,7 +308,7 @@ function hostScanning(link) {
             <td>
                 <a>
                     <xsl:attribute name="class">
-                        <xsl:text>ui mini button </xsl:text>
+                        <xsl:text>ui mini fluid button </xsl:text>
                         <xsl:choose>
                             <xsl:when test="$currentPort/script[@id='http-info']/elem[@key='status']>=500">red</xsl:when>
                             <xsl:when test="$currentPort/script[@id='http-info']/elem[@key='status']>=400">orange</xsl:when>

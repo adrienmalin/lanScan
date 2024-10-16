@@ -43,7 +43,7 @@ include_once 'filter_inputs.php';
     </div>
 <?php } ?>
 
-    <h1 class="header">Scanner un <?=$host? "hôte" : "réseau" ?></h1>
+    <h1 class="header">Scanner un <?=$preset == "host"? "hôte" : "réseau" ?></h1>
 
     <form id="newScanForm" class="ui form" method="get" action="scan.php">
       <div class="field">

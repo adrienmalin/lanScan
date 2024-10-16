@@ -189,7 +189,7 @@ $.toast({
 </xsl:if>
 
 hiddenButton.onclick = function(event) {
-    if (lanScanForm.form.checkValidity()) {
+    if (lanScanForm.checkValidity()) {
         targetsInputDiv.classList.add('loading')
         $.toast({
             title      : 'Scan en cours...',
@@ -292,7 +292,7 @@ function hostScanning(link) {
                     <a class="ui mini icon teal button" onclick="hostScanning(this)">
                         <xsl:attribute name="href">
                             <xsl:value-of select="$basedir"/>
-                            <xsl:text>/scan.php?host=</xsl:text>
+                            <xsl:text>/scan.php?preset=host&amp;targets=</xsl:text>
                             <xsl:value-of select="$hostAddress"/>
                         </xsl:attribute>
                         <i class="satellite dish icon"></i>
@@ -301,7 +301,7 @@ function hostScanning(link) {
                     <a class="ui mini icon teal label">
                         <xsl:attribute name="href">
                             <xsl:value-of select="$basedir"/>
-                            <xsl:text>/options.php?host=</xsl:text>
+                            <xsl:text>/options.php?preset=host&amp;targets=</xsl:text>
                             <xsl:value-of select="$hostAddress"/>
                         </xsl:attribute>
                         <i class="sliders horizontal icon"></i>

@@ -9,16 +9,11 @@ $portsListRegex          = "/^([0-9\-]+|[a-z\-]+)(,[0-9\-]+|,[a-z\-]+)*$/";
 $tempoRegex              = "/^\d+[smh]?$/";
 $fileNameRegex           = '/^[^<>:"\/|?]+$/';
 
-$targets       = filter_input(INPUT_GET, 'targets', FILTER_VALIDATE_REGEXP, ['options' => ['regexp' => $targetsListRegex], "flags" => FILTER_NULL_ON_FAILURE]);
-$lan           = filter_input(INPUT_GET, 'lan', FILTER_VALIDATE_REGEXP, ['options' => ['regexp' => $targetsListRegex], "flags" => FILTER_NULL_ON_FAILURE]);
-$host          = filter_input(INPUT_GET, 'host', FILTER_VALIDATE_REGEXP, ['options' => ['regexp' => $targetsListRegex], "flags" => FILTER_NULL_ON_FAILURE]);
+$targets  = filter_input(INPUT_GET, 'targets', FILTER_VALIDATE_REGEXP, ['options' => ['regexp' => $targetsListRegex], "flags" => FILTER_NULL_ON_FAILURE]);
+$preset   = filter_input(INPUT_GET, "preset");
 
-if ($lan) {
-  $targets = $lan;
-  $args = $LANSCAN_OPTIONS;
-} else if ($host) {
-  $targets = $host;
-  $args = $HOSTSCAN_OPTIONS;
+if ($preset && isset($presets[$preset])) {
+  $args = $presets[$preset];
 } else {
   $args = filter_input_array(INPUT_GET, [
     'iR'      => ['filter' => FILTER_VALIDATE_INT, 'options' => ['min_range' => 0]],
@@ -111,7 +106,7 @@ if ($lan) {
     'unprivileged' => FILTER_VALIDATE_BOOLEAN,
     'h'            => FILTER_VALIDATE_BOOLEAN,
     'stylesheet'   => FILTER_VALIDATE_URL,
-  ], false) ?: $LANSCAN_OPTIONS;
+  ], false) ?: $presets["lan"];
   
   $saveAs        = filter_input(INPUT_GET, 'saveAs', FILTER_VALIDATE_REGEXP, ['options' => ['regexp' => $fileNameRegex]]);
   $compareWith   = filter_input(INPUT_GET, 'compareWith', FILTER_VALIDATE_URL);

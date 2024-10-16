@@ -1,7 +1,4 @@
-<?php
-include_once 'config.php';
-include_once 'filter_inputs.php';
-?>
+<?php include_once "config.php"; ?>
 <!DOCTYPE html>
 <html lang="fr">
 
@@ -24,10 +21,11 @@ include_once 'filter_inputs.php';
       lan<?php include 'logo.svg'; ?>can
     </a>
     <form id="lanScanForm" class="right menu">
+      <input type="hidden" name="preset" value="lan"/>
       <div class="ui category search item">
           <div id="targetsInputDiv" class="ui icon input">
-            <input class="prompt" type="text" id="targetsInput" name="lan"
-              pattern="[a-zA-Z0-9._\/ \-]+" value="<?= $targets; ?>" placeholder="Scanner un réseau..."
+            <input class="prompt" type="text" id="targetsInput" name="targets"
+              pattern="[a-zA-Z0-9._\/ \-]+" placeholder="Scanner un réseau..."
               title="Les cibles peuvent être spécifiées par des noms d'hôtes, des adresses IP, des adresses de réseaux, etc.
 Exemples: <?= $_SERVER['REMOTE_ADDR']; ?>/24 <?= $_SERVER['SERVER_NAME']; ?> 10.0-255.0-255.1-254" />
             <i class="satellite dish icon"></i>
@@ -64,7 +62,7 @@ foreach (scandir($SCANSDIR) as $filename) {
     </div>
     <script>
 hiddenButton.onclick = (event) => {
-  if (lanScanForm.form.checkValidity()) {
+  if (lanScanForm.checkValidity()) {
     targetsInputDiv.classList.add('loading')
     $.toast({
         title: 'Scan en cours...',
