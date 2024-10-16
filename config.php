@@ -6,17 +6,17 @@ $DATADIR  = '/usr/share/nmap';
 
 $presets = [
     "lan" => [
-        'PS'         => 'microsoft-ds',
-        'F'          => true,
-        'T5'         => true,
-        'stylesheet' => "$BASEDIR/lanScan.xsl"
+        '-PS'          => 'microsoft-ds',
+        '-F'           => true,
+        '-T5'          => true,
+        '--stylesheet' => "$BASEDIR/lanScan.xsl"
     ],
     "host" => [
-        'Pn'         => true,
-        'F'          => true,
-        'sV'         => true,
-        'T5'         => true,
-        'stylesheet' => "$BASEDIR/hostScan.xsl"
+        '-Pn'          => true,
+        '-F'           => true,
+        '-sV'          => true,
+        '-T5'          => true,
+        '--stylesheet' => "$BASEDIR/hostScan.xsl"
     ],
 ];
 

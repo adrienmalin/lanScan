@@ -13,11 +13,10 @@ foreach ($args as $arg => $value) {
         die();
     } else if ($value) {
         if ($value === true) {
-            if (strlen($arg) <= 2) $command .= " -$arg";
-            else $command .= " --$arg";
+            $command .= " $arg";
         } else {
-            if (strlen($arg) <= 2) $command .= " -$arg$value";
-            else $command .= " --$arg $value";
+            if (substr($arg, 0, 2) == '--') $command .= " $arg $value";
+            else $command .= " $arg$value";
         }
     }
 }
