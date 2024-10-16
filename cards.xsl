@@ -105,10 +105,10 @@ Exemples: 192.168.1.0/24 scanme.nmap.org 10.0-255.0-255.1-254"/>
                     </form>
                 </nav>
 
-                <main class="ui main container">
+                <main class="ui main wide container">
                     <h1 class="ui header"><xsl:value-of select="$targets"/></h1>
 
-                    <div class="ui link cards">
+                    <div class="ui centered link cards">
                         <xsl:apply-templates select="host | $init/host[not(address/@addr=$current/host/address/@addr)][not(status/@state='down')]"/>
                     </div>
                 </main>
