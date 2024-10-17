@@ -242,7 +242,10 @@ function hostScanning(link) {
         <div class="column">
             <div>
                 <xsl:attribute name="class">
-                    <xsl:text>ui fluid mini left icon action input </xsl:text>
+                    <xsl:text>ui fluid mini left icon input </xsl:text>
+                    <xsl:if test="$currentHost/ports/port | $initHost/ports/port[not(@portid=$currentHost/ports/port/@portid)][not(state/@state='closed')]">
+                        <xsl:text>action </xsl:text>
+                    </xsl:if>
                     <xsl:choose>
                         <xsl:when test="$currentHost/status/@state='up'">success</xsl:when>
                         <xsl:otherwise>error</xsl:otherwise>
