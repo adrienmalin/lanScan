@@ -9,7 +9,7 @@ $presets = [
         '-PS'          => 'microsoft-ds',
         '-F'           => true,
         '-T5'          => true,
-        '--stylesheet' => "$BASEDIR/xslt/lanTable.xsl",
+        '--stylesheet' => "$BASEDIR/xslt/hostsTable.xsl",
         'refreshPeriod' => 60,
         'sudo'          => false,
     ],
