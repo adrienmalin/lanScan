@@ -61,8 +61,11 @@
                 <link href="https://cdn.datatables.net/v/se/jszip-3.10.1/dt-2.1.8/b-3.1.2/b-html5-3.1.2/b-print-3.1.2/cr-2.0.4/fc-5.0.3/fh-4.0.1/r-3.0.3/datatables.min.css" rel="stylesheet"/>
                 <link href="{$basedir}/style.css" rel="stylesheet" type="text/css"/>
                 <style>
-.ui.mini.button {
+.ui.icon.buttons .mini.button {
     padding: 0.5em;
+}
+.action {
+    overflow-x: scroll;
 }
                 </style>
                 <script src="https://code.jquery.com/jquery-3.7.1.js"></script>
@@ -113,7 +116,7 @@ Exemples: 192.168.1.0/24 scanme.nmap.org 10.0-255.0-255.1-254"/>
                 <main class="ui wide container">
                     <h1 class="ui header"><xsl:value-of select="$targets"/></h1>
 
-                    <div class="ui doubling stackable three column compact grid">
+                    <div class="ui doubling stackable four column compact grid">
                         <xsl:apply-templates select="host | $init/host[not(address/@addr=$current/host/address/@addr)][not(status/@state='down')]"/>
                     </div>
                 </main>
@@ -244,7 +247,7 @@ function hostScanning(link) {
                 <xsl:attribute name="class">
                     <xsl:text>ui fluid mini left icon input </xsl:text>
                     <xsl:if test="$currentHost/ports/port | $initHost/ports/port[not(@portid=$currentHost/ports/port/@portid)][not(state/@state='closed')]">
-                        <xsl:text>action </xsl:text>
+                        <xsl:text>action buttons </xsl:text>
                     </xsl:if>
                     <xsl:choose>
                         <xsl:when test="$currentHost/status/@state='up'">success</xsl:when>
