@@ -14,7 +14,7 @@
 
     <xsl:variable name="current" select="./nmaprun"/>
     <xsl:variable name="stylesheetURL" select="substring-before(substring-after(processing-instruction('xml-stylesheet'),'href=&quot;'),'&quot;')"/>
-    <xsl:variable name="basedir" select="concat($stylesheetURL, '/..')"/>
+    <xsl:variable name="basedir" select="concat($stylesheetURL, '/../..')"/>
     <xsl:variable name="init" select="document($compareWith)/nmaprun"/>
     <xsl:variable name="nextCompareWith">
         <xsl:choose>
@@ -105,24 +105,16 @@ Exemples: 192.168.1.0/24 scanme.nmap.org 10.0-255.0-255.1-254"/>
                     </form>
                 </nav>
 
-                <main class="ui main container">
-                    <h1 class="ui header"><xsl:value-of select="$targets"/></h1>
+                <main class="ui wide container">
+                    <div class="ui header container">
+                        <h1 class="ui header"><xsl:value-of select="$targets"/></h1>
+                    </div>
 
-                    <table id="scanResultsTable" style="width:100%" role="grid" class="ui sortable small table">
-                        <thead>
-                            <tr>
-                                <th>Etat</th>
-                                <th>Adresse IP</th>
-                                <th>Nom</th>
-                                <th>Fabricant</th>
-                                <th class="eight wide">Services</th>
-                                <th>Scanner les services</th>
-                            </tr>
-                        </thead>
-                        <tbody>
+                    <div class="ui doubling stackable five column compact grid">
+                        <div class="ui centered link cards">
                             <xsl:apply-templates select="host | $init/host[not(address/@addr=$current/host/address/@addr)][not(status/@state='down')]"/>
-                        </tbody>
-                    </table>
+                        </div>
+                    </div>
                 </main>
                 
                 <footer class="ui footer segment">
@@ -130,30 +122,6 @@ Exemples: 192.168.1.0/24 scanme.nmap.org 10.0-255.0-255.1-254"/>
                 </footer>
 
                 <script>
-DataTable.ext.type.detect.unshift(function (d) {
-    return /[\d]+\.[\d]+\.[\d]+\.[\d]+/.test(d)
-        ? 'ipv4-address'
-        : null;
-});
-    
-DataTable.ext.type.order['ipv4-address-pre'] = function (ipAddress) {
-    [a, b, c, d] = ipAddress.split(".").map(Number)
-    return 16777216*a + 65536*b + 256*c + d;
-};
-
-var table = $('#scanResultsTable').DataTable({
-    buttons    : ['copy', 'excel', 'pdf'],
-    fixedHeader: true,
-    lengthMenu : [
-        [256, 512, 1024, 2048, -1],
-        [256, 512, 1024, 2048, "All"]
-    ],
-    responsive: true,
-    colReorder: true,
-    buttons   : ['copy', 'excel', 'pdf']
-})
-table.order([1, 'asc']).draw()
-
 $('.ui.dropdown').dropdown()
 
 <xsl:if test="runstats/finished/@summary">
@@ -216,7 +184,7 @@ refreshButton.onclick = function(event) {
 }
 
 function hostScanning(link) {
-    link.getElementsByTagName('i')[0].className = 'loading spinner icon'
+    link.parentElement.parentElement.classList.add("loading")
     $.toast({
         title      : 'Scan en cours...',
         message    : 'Merci de patienter',
@@ -246,69 +214,81 @@ function hostScanning(link) {
                 </xsl:otherwise>
             </xsl:choose>
         </xsl:variable>
-        <tr>
+        <div>
             <xsl:attribute name="class">
+                <xsl:text>ui card </xsl:text>
                 <xsl:choose>
-                    <xsl:when test="$currentHost/status/@state='up'">positive</xsl:when>
-                    <xsl:otherwise>negative</xsl:otherwise>
+                    <xsl:when test="$currentHost/status/@state='up'">green</xsl:when>
+                    <xsl:otherwise>red</xsl:otherwise>
                 </xsl:choose>
             </xsl:attribute>
-            <td>
-                <xsl:choose>
-                    <xsl:when test="$currentHost">
-                        <div>
-                            <xsl:attribute name="class">
-                                <xsl:text>ui mini circular label </xsl:text>
-                                <xsl:choose>
-                                    <xsl:when test="$currentHost/status/@state='up'">green</xsl:when>
-                                    <xsl:otherwise>red</xsl:otherwise>
-                                </xsl:choose>
-                            </xsl:attribute>
-                            <xsl:value-of select="$currentHost/status/@state"/>
-                        </div>
-                    </xsl:when>
-                    <xsl:otherwise><div class="ui red circular label">down</div></xsl:otherwise>
-                </xsl:choose>
-            </td>
-            <td>
-                <xsl:value-of select="address/@addr"/>
-            </td>
-            <td>
-                <b><xsl:value-of select="hostnames/hostname/@name"/></b>
-            </td>
-            <td>
-                <xsl:value-of select="address[@addrtype='mac']/@vendor"/>
-            </td>
-            <td>
-                <xsl:apply-templates select="$currentHost/ports/port | $initHost/ports/port[not(@portid=$currentHost/ports/port/@portid)][not(state/@state='closed')]">
-                    <xsl:with-param name="initHost" select="$initHost"/>
-                    <xsl:with-param name="currentHost" select="$currentHost"/>
-                    <xsl:with-param name="hostAddress" select="$hostAddress"/>
-                    <xsl:sort select="@portid" order="ascending"/>
-                </xsl:apply-templates>
-            </td>
-            <td>
-                <div class="ui mini right labeled button">
-                    <a class="ui mini icon teal button" onclick="hostScanning(this)">
-                        <xsl:attribute name="href">
-                            <xsl:value-of select="$basedir"/>
-                            <xsl:text>/scan.php?preset=host&amp;targets=</xsl:text>
-                            <xsl:value-of select="$hostAddress"/>
-                        </xsl:attribute>
-                        <i class="satellite dish icon"></i>
-                        <xsl:text> Services</xsl:text>
-                    </a>
-                    <a class="ui mini icon teal label">
-                        <xsl:attribute name="href">
-                            <xsl:value-of select="$basedir"/>
-                            <xsl:text>/options.php?preset=host&amp;targets=</xsl:text>
-                            <xsl:value-of select="$hostAddress"/>
-                        </xsl:attribute>
-                        <i class="sliders horizontal icon"></i>
-                    </a>
+            <div class="content">
+                <div class="header">
+                    <xsl:choose>
+                        <xsl:when test="$currentHost">
+                            <div>
+                                <xsl:attribute name="class">
+                                    <xsl:text>ui empty circular label </xsl:text>
+                                    <xsl:choose>
+                                        <xsl:when test="$currentHost/status/@state='up'">green</xsl:when>
+                                        <xsl:otherwise>red disabled</xsl:otherwise>
+                                    </xsl:choose>
+                                </xsl:attribute>
+                            </div>
+                        </xsl:when>
+                        <xsl:otherwise><div class="ui red disabled circular label"></div></xsl:otherwise>
+                    </xsl:choose>
+                    <xsl:text> </xsl:text>
+                    <xsl:choose>
+                        <xsl:when test="hostnames/hostname/@name">
+                            <xsl:value-of select="substring-before(hostnames/hostname/@name, '.')"/>
+                        </xsl:when>
+                        <xsl:otherwise>
+                        <xsl:value-of select="address/@addr"/>
+                        </xsl:otherwise>
+                    </xsl:choose>
                 </div>
-            </td>
-        </tr>
+                <div class="meta">
+                    <xsl:if test="substring-after(hostnames/hostname/@name, '.')">
+                        <div>
+                            <xsl:text>.</xsl:text>
+                            <xsl:value-of select="substring-after(hostnames/hostname/@name, '.')"/>
+                        </div>
+                    </xsl:if>
+                    <div><xsl:value-of select="address/@addr"/></div>
+                    <xsl:if test="address[@addrtype='mac']/@vendor">
+                        <div><xsl:value-of select="address[@addrtype='mac']/@vendor"/></div>
+                    </xsl:if>
+                </div>
+                <div class="description">
+                    <xsl:apply-templates select="$currentHost/ports/port | $initHost/ports/port[not(@portid=$currentHost/ports/port/@portid)][not(state/@state='closed')]">
+                        <xsl:with-param name="initHost" select="$initHost"/>
+                        <xsl:with-param name="currentHost" select="$currentHost"/>
+                        <xsl:with-param name="hostAddress" select="$hostAddress"/>
+                        <xsl:sort select="@portid" order="ascending"/>
+                    </xsl:apply-templates>
+                </div>
+            </div>
+            <div class="ui buttons">
+                <a class="ui icon labeled teal button" onclick="hostScanning(this)">
+                    <xsl:attribute name="href">
+                        <xsl:value-of select="$basedir"/>
+                        <xsl:text>/scan.php?preset=host&amp;targets=</xsl:text>
+                        <xsl:value-of select="$hostAddress"/>
+                    </xsl:attribute>
+                    <i class="satellite dish icon"></i>
+                    <xsl:text> Services</xsl:text>
+                </a>
+                <a class="ui icon teal button ">
+                    <xsl:attribute name="href">
+                        <xsl:value-of select="$basedir"/>
+                        <xsl:text>/options.php?preset=host&amp;targets=</xsl:text>
+                        <xsl:value-of select="$hostAddress"/>
+                    </xsl:attribute>
+                    <i class="sliders horizontal icon"></i>
+                </a>
+            </div>
+        </div>
     </xsl:template>
 
     <xsl:template match="port">
