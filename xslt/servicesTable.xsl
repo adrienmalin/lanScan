@@ -94,8 +94,8 @@ Exemples: 192.168.1.0/24 scanme.nmap.org 10.0-255.0-255.1-254"/>
                             <input type="hidden" name="compareWith" value="{$nextCompareWith}"/>
                             <input type="hidden" name="refreshPeriod" value="{$refreshPeriod}"/>
                             <input type="hidden" name="sudo" value="{$sudo}"/>
-                            <button style="display: none;" type="submit" formmethod="get" formaction="{$basedir}/scan.php"></button>
-                            <button class="ui teal icon submit button" type="submit" formmethod="get" formaction="{$basedir}/scan.php" onclick="this.getElementsByTagName('i')[0].className = 'loading spinner icon'">
+                            <button id="hiddenButton" style="display: none;" type="submit" formmethod="get" formaction="{$basedir}/scan.php"></button>
+                            <button id="refreshButton" class="ui teal icon submit button" type="submit" formmethod="get" formaction="{$basedir}/scan.php">
                                 <i class="sync icon"></i>
                             </button>
                             <button class="ui teal icon submit button" type="submit" formmethod="get" formaction="{$basedir}/options.php">
@@ -286,8 +286,6 @@ function hostScanning(link) {
                     <xsl:when test="$currentPort/state/@state='open'">positive</xsl:when>
                     <xsl:when test="$currentPort/state/@state='filtered'">warning</xsl:when>
                     <xsl:otherwise>negative</xsl:otherwise>
-                    <xsl:when test="$currentHost/status/@state='up'">positive</xsl:when>
-                    <xsl:otherwise>negative</xsl:otherwise>
                 </xsl:choose>
             </xsl:attribute>
             <td>
@@ -295,9 +293,6 @@ function hostScanning(link) {
                     <xsl:attribute name="class">
                         <xsl:text>ui mini circular label </xsl:text>
                         <xsl:choose>
-                            <xsl:when test="$currentPort/script[@id='http-info']/elem[@key='status']>=500">red</xsl:when>
-                            <xsl:when test="$currentPort/script[@id='http-info']/elem[@key='status']>=400">orange</xsl:when>
-                            <xsl:when test="$currentPort/script[@id='http-info']/elem[@key='status']>=200">green</xsl:when>
                             <xsl:when test="$currentPort/state/@state='open'">green</xsl:when>
                             <xsl:when test="$currentPort/state/@state='filtered'">orange</xsl:when>
                             <xsl:otherwise>red</xsl:otherwise>
@@ -347,6 +342,11 @@ function hostScanning(link) {
                             <xsl:value-of select="$hostAddress"/>
                             <xsl:text>&amp;p=</xsl:text>
                             <xsl:value-of select="@portid"/>
+                        </xsl:attribute>
+                    </xsl:if>
+                    <xsl:if test="script[@id='http-info']/elem[@key='title']">
+                        <xsl:attribute name="title">
+                            <xsl:value-of select="script[@id='http-info']/elem[@key='title']"/>
                         </xsl:attribute>
                     </xsl:if>
                     <xsl:value-of select="service/@name"/>

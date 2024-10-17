@@ -18,8 +18,9 @@ $presets = [
         '-F'            => true,
         '-sV'           => true,
         '-T5'           => true,
+        '--script'      => "scripts",
         '--stylesheet'  => "$BASEDIR/xslt/servicesTable.xsl",
         'refreshPeriod' => 60,
-        'sudo'          => false,
+        'sudo'          => true,
     ],
 ];
