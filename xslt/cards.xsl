@@ -11,6 +11,7 @@
     <xsl:param name="savedAs" select=""/>
     <xsl:param name="compareWith" select=""/>
     <xsl:param name="refreshPeriod" select="0"/>
+    <xsl:param name="sudo" select="false"/>
 
     <xsl:variable name="current" select="./nmaprun"/>
     <xsl:variable name="stylesheetURL" select="substring-before(substring-after(processing-instruction('xml-stylesheet'),'href=&quot;'),'&quot;')"/>
@@ -26,18 +27,6 @@
 
     <xsl:template match="nmaprun">
         <xsl:variable name="targets" select="substring-after(@args, '.xml ')"/>
-        <xsl:variable name="refreshURL">
-            <xsl:value-of select="$basedir"/>
-            <xsl:text>/scan.php?targets=</xsl:text>
-            <xsl:value-of select="$targets"/>
-            <xsl:text>&amp;</xsl:text>
-            <xsl:call-template name="optionsList">
-                <xsl:with-param name="argList" select="substring-before(substring-after(@args, ' -'), ' -oX')"/>
-                <xsl:with-param name="asURL" select="true()"/>
-            </xsl:call-template>
-            <xsl:text>compareWith=</xsl:text>
-            <xsl:value-of select="$nextCompareWith"/>
-        </xsl:variable>
         
         <html lang="fr">
             <head>
@@ -47,7 +36,18 @@
                         <xsl:attribute name="content">
                             <xsl:value-of select="$refreshPeriod"/>
                             <xsl:text>;URL=</xsl:text>
-                            <xsl:value-of select="$refreshURL"/>
+                            <xsl:value-of select="$basedir"/>
+                            <xsl:text>/scan.php?targets=</xsl:text>
+                            <xsl:value-of select="$targets"/>
+                            <xsl:text>&amp;</xsl:text>
+                            <xsl:call-template name="optionsList">
+                                <xsl:with-param name="argList" select="substring-before(substring-after(@args, ' -'), ' -oX')"/>
+                                <xsl:with-param name="asURL" select="true()"/>
+                            </xsl:call-template>
+                            <xsl:text>compareWith=</xsl:text>
+                            <xsl:value-of select="$nextCompareWith"/>
+                            <xsl:text>&amp;sudo=</xsl:text>
+                            <xsl:value-of select="$sudo"/>
                         </xsl:attribute>
                     </meta>
                 </xsl:if>
@@ -91,12 +91,13 @@ Exemples: 192.168.1.0/24 scanme.nmap.org 10.0-255.0-255.1-254"/>
                             </div>
                             <input type="hidden" name="compareWith" value="{$nextCompareWith}"/>
                             <input type="hidden" name="refreshPeriod" value="{$refreshPeriod}"/>
+                            <input type="hidden" name="sudo" value="{$sudo}"/>
                             <button id="hiddenButton" style="display: none;" type="submit" formmethod="get" formaction="{$basedir}/scan.php"></button>
-                            <button class="ui teal icon submit button" type="submit" formmethod="get" formaction="{$basedir}/options.php">
-                                <i class="sliders horizontal icon"></i>
-                            </button>
                             <button id="refreshButton" class="ui teal icon submit button" type="submit" formmethod="get" formaction="{$basedir}/scan.php">
                                 <i class="sync icon"></i>
+                            </button>
+                            <button class="ui teal icon submit button" type="submit" formmethod="get" formaction="{$basedir}/options.php">
+                                <i class="sliders horizontal icon"></i>
                             </button>
                             <a class="ui teal icon button" href="https://nmap.org/man/fr/index.html" target="_blank">
                                 <i class="question circle icon"></i>
@@ -335,8 +336,8 @@ function hostScanning(link) {
             <xsl:value-of select="service/@name"/>
             <div class="detail">
                 <xsl:choose>
-                    <xsl:when test="@protocol='udp'">U:</xsl:when>
-                    <xsl:otherwise>:</xsl:otherwise>
+                    <xsl:when test="@protocol='tcp'">:</xsl:when>
+                    <xsl:otherwise><xsl:value-of select="substring(@protocol, 1, 1)"/>:</xsl:otherwise>
                 </xsl:choose>
                 <xsl:value-of select="@portid"/>
             </div>

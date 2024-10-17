@@ -30,6 +30,7 @@ main {
 
 .ui.label > .detail {
     margin-left: .3em;
+    text-transform: capitalize;
 }
 
 .ui.form .fields > .field {
