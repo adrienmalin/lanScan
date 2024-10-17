@@ -60,6 +60,11 @@
                 <link href="https://cdn.jsdelivr.net/npm/@yaireo/tagify/dist/tagify.css" rel="stylesheet" type="text/css"/>
                 <link href="https://cdn.datatables.net/v/se/jszip-3.10.1/dt-2.1.8/b-3.1.2/b-html5-3.1.2/b-print-3.1.2/cr-2.0.4/fc-5.0.3/fh-4.0.1/r-3.0.3/datatables.min.css" rel="stylesheet"/>
                 <link href="{$basedir}/style.css" rel="stylesheet" type="text/css"/>
+                <style>
+.ui.mini.button {
+    padding: 0.5em;
+}
+                </style>
                 <script src="https://code.jquery.com/jquery-3.7.1.js"></script>
                 <script src="https://cdnjs.cloudflare.com/ajax/libs/fomantic-ui/2.9.2/semantic.min.js"></script>
                 <script src="https://cdn.jsdelivr.net/npm/@yaireo/tagify"></script>
@@ -105,24 +110,12 @@ Exemples: 192.168.1.0/24 scanme.nmap.org 10.0-255.0-255.1-254"/>
                     </form>
                 </nav>
 
-                <main class="ui main container">
+                <main class="ui wide container">
                     <h1 class="ui header"><xsl:value-of select="$targets"/></h1>
 
-                    <table id="scanResultsTable" style="width:100%" role="grid" class="ui sortable small table">
-                        <thead>
-                            <tr>
-                                <th>Etat</th>
-                                <th>Adresse IP</th>
-                                <th>Nom</th>
-                                <th>Fabricant</th>
-                                <th class="eight wide">Services</th>
-                                <th>Scanner les services</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <xsl:apply-templates select="host | $init/host[not(address/@addr=$current/host/address/@addr)][not(status/@state='down')]"/>
-                        </tbody>
-                    </table>
+                    <div class="ui doubling stackable three column compact grid">
+                        <xsl:apply-templates select="host | $init/host[not(address/@addr=$current/host/address/@addr)][not(status/@state='down')]"/>
+                    </div>
                 </main>
                 
                 <footer class="ui footer segment">
@@ -246,69 +239,27 @@ function hostScanning(link) {
                 </xsl:otherwise>
             </xsl:choose>
         </xsl:variable>
-        <tr>
-            <xsl:attribute name="class">
-                <xsl:choose>
-                    <xsl:when test="$currentHost/status/@state='up'">positive</xsl:when>
-                    <xsl:otherwise>negative</xsl:otherwise>
-                </xsl:choose>
-            </xsl:attribute>
-            <td>
-                <xsl:choose>
-                    <xsl:when test="$currentHost">
-                        <div>
-                            <xsl:attribute name="class">
-                                <xsl:text>ui mini circular label </xsl:text>
-                                <xsl:choose>
-                                    <xsl:when test="$currentHost/status/@state='up'">green</xsl:when>
-                                    <xsl:otherwise>red</xsl:otherwise>
-                                </xsl:choose>
-                            </xsl:attribute>
-                            <xsl:value-of select="$currentHost/status/@state"/>
-                        </div>
-                    </xsl:when>
-                    <xsl:otherwise><div class="ui red circular label">down</div></xsl:otherwise>
-                </xsl:choose>
-            </td>
-            <td>
-                <xsl:value-of select="address/@addr"/>
-            </td>
-            <td>
-                <b><xsl:value-of select="hostnames/hostname/@name"/></b>
-            </td>
-            <td>
-                <xsl:value-of select="address[@addrtype='mac']/@vendor"/>
-            </td>
-            <td>
+        <div class="column">
+            <div>
+                <xsl:attribute name="class">
+                    <xsl:text>ui fluid mini left icon action input </xsl:text>
+                    <xsl:choose>
+                        <xsl:when test="$currentHost/status/@state='up'">success</xsl:when>
+                        <xsl:otherwise>error</xsl:otherwise>
+                    </xsl:choose>
+                </xsl:attribute>
+                <i class="server icon"></i>
+                <input type="text" readonly="" value="{substring-before(hostnames/hostname/@name, '.')}" placeholder="{address/@addr}"
+                    onfocus="this.value='{hostnames/hostname/@name}'; this.select()" onblur="this.value='{substring-before(hostnames/hostname/@name, '.')}'"
+                />
                 <xsl:apply-templates select="$currentHost/ports/port | $initHost/ports/port[not(@portid=$currentHost/ports/port/@portid)][not(state/@state='closed')]">
                     <xsl:with-param name="initHost" select="$initHost"/>
                     <xsl:with-param name="currentHost" select="$currentHost"/>
                     <xsl:with-param name="hostAddress" select="$hostAddress"/>
                     <xsl:sort select="@portid" order="ascending"/>
                 </xsl:apply-templates>
-            </td>
-            <td>
-                <div class="ui mini right labeled button">
-                    <a class="ui mini icon teal button" onclick="hostScanning(this)">
-                        <xsl:attribute name="href">
-                            <xsl:value-of select="$basedir"/>
-                            <xsl:text>/scan.php?preset=host&amp;targets=</xsl:text>
-                            <xsl:value-of select="$hostAddress"/>
-                        </xsl:attribute>
-                        <i class="satellite dish icon"></i>
-                        <xsl:text> Services</xsl:text>
-                    </a>
-                    <a class="ui mini icon teal label">
-                        <xsl:attribute name="href">
-                            <xsl:value-of select="$basedir"/>
-                            <xsl:text>/options.php?preset=host&amp;targets=</xsl:text>
-                            <xsl:value-of select="$hostAddress"/>
-                        </xsl:attribute>
-                        <i class="sliders horizontal icon"></i>
-                    </a>
-                </div>
-            </td>
-        </tr>
+            </div>
+        </div>
     </xsl:template>
 
     <xsl:template match="port">
@@ -318,10 +269,17 @@ function hostScanning(link) {
         <xsl:variable name="portid" select="@portid"/>
         <xsl:variable name="initPort" select="$initHost/ports/port[@portid=$portid]"/>
         <xsl:variable name="currentPort" select="$currentHost/ports/port[@portid=$portid]"/>
+        <xsl:variable name="state">
+            <xsl:choose>
+                <xsl:when test="$currentHost/state/@state='open'">green</xsl:when>
+                <xsl:when test="$currentHost/state/@state='filtered'">yellow</xsl:when>
+                <xsl:otherwise>red</xsl:otherwise>
+            </xsl:choose>
+        </xsl:variable>
 
         <a target="_blank">
             <xsl:attribute name="class">
-                <xsl:text>ui label </xsl:text>
+                <xsl:text>ui mini button </xsl:text>
                 <xsl:choose>
                     <xsl:when test="$currentPort/script[@id='http-info']/elem[@key='status']>=500">red</xsl:when>
                     <xsl:when test="$currentPort/script[@id='http-info']/elem[@key='status']>=400">orange</xsl:when>
@@ -330,10 +288,14 @@ function hostScanning(link) {
                     <xsl:when test="$currentPort/state/@state='filtered'">orange disabled</xsl:when>
                     <xsl:otherwise>red disabled</xsl:otherwise>
                 </xsl:choose>
+                <xsl:if test="(service/@name='microsoft-ds' or service/@name='netbios-ssn') and ../../hostscript/script[@id='smb-shares-size']/table"> dropdown share-size</xsl:if>
+            </xsl:attribute>
+            <xsl:attribute name="title">
                 <xsl:choose>
-                    <xsl:when test="(service/@name='microsoft-ds' or service/@name='netbios-ssn') and ../../hostscript/script[@id='smb-shares-size']/table"> mini dropdown button share-size</xsl:when>
-                    <xsl:otherwise> small</xsl:otherwise>
+                    <xsl:when test="@protocol='udp'">U:</xsl:when>
+                    <xsl:otherwise>:</xsl:otherwise>
                 </xsl:choose>
+                <xsl:value-of select="@portid"/>
             </xsl:attribute>
             <xsl:if test="service/@name='ftp' or service/@name='ssh' or service/@name='http' or service/@name='https'">
                 <xsl:attribute name="href">
@@ -353,13 +315,6 @@ function hostScanning(link) {
                 </xsl:attribute>
             </xsl:if>
             <xsl:value-of select="service/@name"/>
-            <div class="detail">
-                <xsl:choose>
-                    <xsl:when test="@protocol='udp'">U:</xsl:when>
-                    <xsl:otherwise>:</xsl:otherwise>
-                </xsl:choose>
-                <xsl:value-of select="@portid"/>
-            </div>
             <xsl:if test="(service/@name='microsoft-ds' or service/@name='netbios-ssn') and ../../hostscript/script[@id='smb-shares-size']/table">
                 <xsl:attribute name="style">
                     <xsl:for-each select="$currentHost/hostscript/script[@id='smb-shares-size']/table">

@@ -299,7 +299,7 @@ function hostScanning(link) {
         <xsl:variable name="initPort" select="$initHost/ports/port[@portid=$portid]"/>
         <xsl:variable name="currentPort" select="$currentHost/ports/port[@portid=$portid]"/>
 
-        <a class="ui label" target="_blank">
+        <a target="_blank">
             <xsl:attribute name="class">
                 <xsl:text>ui label </xsl:text>
                 <xsl:choose>
