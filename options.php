@@ -56,10 +56,7 @@ Exemples: <?= $_SERVER['REMOTE_ADDR']; ?>/24 <?= $_SERVER['SERVER_NAME']; ?> 10.
       </div>
 
       <div class="ui styled fluid accordion field">
-        <div class="title">
-          <i class="icon dropdown"></i>
-          Spécification des cibles
-        </div>
+        <div class="title"><i class="icon dropdown"></i>Spécification des cibles</div>
         <div class="content">
           <div class="field">
             <label for="excludeInput" title="--exclude">Exclure les hôtes ou réseaux</label>
@@ -74,10 +71,7 @@ Exemples: <?= $_SERVER['REMOTE_ADDR']; ?>/24 <?= $_SERVER['SERVER_NAME']; ?> 10.
           </div>
         </div>
 
-        <div class="title">
-          <i class="icon dropdown"></i>
-          Découverte des hôtes actifs
-        </div>
+        <div class="title"><i class="icon dropdown"></i>Découverte des hôtes actifs</div>
         <div class="content">
           <div class="inline field">
             <div class="ui toggle checkbox">
@@ -310,10 +304,77 @@ Exemples: <?= $_SERVER['REMOTE_ADDR']; ?>/24 <?= $_SERVER['SERVER_NAME']; ?> 10.
           </div>
         </div>
 
-        <div class="title">
-          <i class="icon dropdown"></i>
-          Divers
+        <div class="title"><i class="icon dropdown"></i>Détection de services et de versions</div>
+        <div class="content">
+          <div class="inline field">
+            <div class="ui toggle checkbox" title="-sV">
+              <input type="checkbox" id="sVCheckbox" name="-sV" <?= $options['-sV'] ?? false ? 'checked' : ''; ?> />
+              <label for="sVCheckbox">Détection de version</label>
+            </div>
+          </div>
+        
+          <div class="inline field">
+            <div class="ui toggle checkbox">
+              <input type="checkbox" id="allportsCheckbox" name="--allports" <?= $options['--allports'] ?? false ? 'checked' : ''; ?> />
+              <label for="allportsCheckbox" title="--allports">N'exclure aucun port de la détection de version</label>
+            </div>
+          </div>
+
+          <div class="field">
+            <label for="versionIntensitySelect" title="--version-intensity">Intensité des tests de version</label>
+            <select class="ui dropdown" id="versionIntensitySelect" name="--version-intensity" value="<?= $options["--version-intensity"] ?? ""?>">
+              <option value="0">0</option>
+              <option value="1">1</option>
+              <option value="2">Léger</option>
+              <option value="3">3</option>
+              <option value="4">4</option>
+              <option value="5">5</option>
+              <option value="6">6</option>
+              <option value="7">Défaut</option>
+              <option value="8">8</option>
+              <option value="9">Tous</option>
+            </select>
+          </div>
+        
+          <div class="inline field">
+            <div class="ui toggle checkbox">
+              <input type="checkbox" id="sRCheckbox" name="-sR" <?= $options['-sR'] ?? false ? 'checked' : ''; ?> />
+              <label for="sRCheckbox" title="-sR">Scan RPC</label>
+            </div>
+          </div>
         </div>
+
+        <div class="title"><i class="icon dropdown"></i>Détection du système d'exploitation</div>
+        <div class="content">
+          <div class="inline field">
+            <div class="ui toggle checkbox">
+              <input type="checkbox" id="OCheckbox" name="-O" <?= $options['-O'] ?? false ? 'checked' : ''; ?> />
+              <label for="OCheckbox" title="-O">Détecter le système d'exploitation</label>
+            </div>
+          </div>
+        
+          <div class="inline field">
+            <div class="ui toggle checkbox">
+              <input type="checkbox" id="osscan-limitCheckbox" name="--osscan-limit" <?= $options['--osscan-limit'] ?? false ? 'checked' : ''; ?> />
+              <label for="osscan-limitCheckbox" title="--osscan-limit">Seulement les cibles prometteuses</label>
+            </div>
+          </div>
+          
+          <div class="inline field">
+            <div class="ui toggle checkbox">
+              <input type="checkbox" id="osscan-guessCheckbox" name="--osscan-guess" <?= $options['--osscan-guess'] ?? false ? 'checked' : ''; ?> />
+              <label for="osscan-guessCheckbox" title="--osscan-guess">Essayer de deviner</label>
+            </div>
+          </div>
+          
+          <div class="field">
+            <label for="maxOSTriesInput">Nombre d'essais maximum</label>
+            <input type="number" min="0" id="maxOSTriesInput" name="--max-os-tries" placeholder="Nombre d'essais"
+              value="<?= $options["--max-os-tries"] ?? "" ?>">
+          </div>
+        </div>
+
+        <div class="title"><i class="icon dropdown"></i>Divers</div>
         <div class="content">
           <div class="field">
             <label for="stylesheetSelect" title="--stylesheet">Feuille de style</label>
