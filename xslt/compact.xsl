@@ -63,12 +63,18 @@
                 <link href="https://cdn.datatables.net/v/se/jszip-3.10.1/dt-2.1.8/b-3.1.2/b-html5-3.1.2/b-print-3.1.2/cr-2.0.4/fc-5.0.3/fh-4.0.1/r-3.0.3/datatables.min.css" rel="stylesheet"/>
                 <link href="{$basedir}/style.css" rel="stylesheet" type="text/css"/>
                 <style>
-.ui.icon.buttons .mini.button {
-    padding: 0.5em;
-}
-.action {
-    overflow-x: scroll;
-}
+                    .ui.icon.buttons .mini.button {
+                        padding: 0.5em;
+                    }
+                    
+                    .action {
+                        overflow-x: scroll;
+                    }
+                    
+                    .ui.ui.ui.ui[class*="left icon"]:not(.corner).input &gt; input{
+                        min-width: 10em;
+                        padding-right: .1em;
+                    }                    
                 </style>
                 <script src="https://code.jquery.com/jquery-3.7.1.js"></script>
                 <script src="https://cdnjs.cloudflare.com/ajax/libs/fomantic-ui/2.9.2/semantic.min.js"></script>
