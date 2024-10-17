@@ -41,6 +41,10 @@ main {
     margin-top: 0;
 }
 
+.ui.header {
+    text-transform: capitalize;
+}
+
 .share-size {
     --free-ratio: calc(var(--free) / var(--total));
     --used-percent: calc(100% - 100%*var(--free-ratio));

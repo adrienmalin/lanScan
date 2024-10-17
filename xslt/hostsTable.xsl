@@ -46,6 +46,8 @@
                             </xsl:call-template>
                             <xsl:text>compareWith=</xsl:text>
                             <xsl:value-of select="$nextCompareWith"/>
+                            <xsl:text>&amp;refreshPeriod=</xsl:text>
+                            <xsl:value-of select="$refreshPeriod"/>
                             <xsl:text>&amp;sudo=</xsl:text>
                             <xsl:value-of select="$sudo"/>
                         </xsl:attribute>

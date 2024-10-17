@@ -46,6 +46,8 @@
                             </xsl:call-template>
                             <xsl:text>compareWith=</xsl:text>
                             <xsl:value-of select="$nextCompareWith"/>
+                            <xsl:text>&amp;refreshPeriod=</xsl:text>
+                            <xsl:value-of select="$refreshPeriod"/>
                             <xsl:text>&amp;sudo=</xsl:text>
                             <xsl:value-of select="$sudo"/>
                         </xsl:attribute>
@@ -257,6 +259,7 @@ function hostScanning(link) {
                 </xsl:attribute>
                 <i class="server icon"></i>
                 <input type="text" readonly="" value="{substring-before(hostnames/hostname/@name, '.')}" placeholder="{address/@addr}"
+                    title="{$currentHost/hostnames/hostname/@name} ({address/@addr})"
                     onfocus="this.value='{hostnames/hostname/@name}'; this.select()" onblur="this.value='{substring-before(hostnames/hostname/@name, '.')}'"
                 />
                 <xsl:apply-templates select="$currentHost/ports/port | $initHost/ports/port[not(@portid=$currentHost/ports/port/@portid)][not(state/@state='closed')]">
