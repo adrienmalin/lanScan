@@ -45,6 +45,7 @@ if ($preset && isset($presets[$preset])) {
     '-sF'          => FILTER_VALIDATE_BOOLEAN,
     '-sN'          => FILTER_VALIDATE_BOOLEAN,
     '-sX'          => FILTER_VALIDATE_BOOLEAN,
+    '-sU'          => FILTER_VALIDATE_BOOLEAN,
     '--scanflags'  => ['filter' => FILTER_VALIDATE_REGEXP, 'options' => ['regexp' => "/^(URG|ACK|PSH|RST|SYN|FIN|,)+|[1-9]?[0-9]|[1-2][0-9][0-9]$/"]],
     '-sI'          => ['filter' => FILTER_VALIDATE_REGEXP, 'options' => ['regexp' => "/^[a-zA-Z\d:.-]+(:\d+)?$/"]],
     '-sO'          => FILTER_VALIDATE_BOOLEAN,
