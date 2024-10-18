@@ -11,7 +11,7 @@ foreach ($options as $arg => $value) {
         if (is_null($value)) {
             http_response_code(400);
             $errorMessage = "Valeur incorrecte pour le paramètre <var>$arg</var> : " . filter_input(INPUT_GET, $arg, FILTER_SANITIZE_FULL_SPECIAL_CHARS);
-            include_once "options.php";
+            include_once ".";
             die();
         } else if ($value) {
             if ($value === true) {
@@ -33,7 +33,7 @@ exec($command, $stderr, $retcode);
 if ($retcode) {
     http_response_code(500);
     $errorMessage = implode("<br/>\n", $stderr);
-    include_once "options.php";
+    include_once ".";
     die();
 }
 
