@@ -1,5 +1,6 @@
 <?php
 
+include_once 'config.php';
 include_once 'filter_inputs.php';
 
 if (!file_exists($SCANSDIR)) mkdir($SCANSDIR);
@@ -16,8 +17,8 @@ foreach ($options as $arg => $value) {
             if ($value === true) {
                 $command .= " $arg";
             } else {
-                if (substr($arg, 0, 2) == '--') $command .= " $arg $value";
-                else $command .= " $arg$value";
+                if (substr($arg, 0, 2) == '--') $command .= " $arg " . escapeshellarg($value);
+                else $command .= " $arg" . escapeshellarg($value);
             }
         }
     }
