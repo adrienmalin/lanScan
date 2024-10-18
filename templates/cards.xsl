@@ -310,8 +310,8 @@ function hostScanning(link) {
                     <xsl:when test="$currentPort/script[@id='http-info']/elem[@key='status']>=400">orange</xsl:when>
                     <xsl:when test="$currentPort/script[@id='http-info']/elem[@key='status']>=200">green</xsl:when>
                     <xsl:when test="$currentPort/state/@state='open'">green</xsl:when>
-                    <xsl:when test="$currentPort/state/@state='filtered'">orange disabled</xsl:when>
-                    <xsl:otherwise>red disabled</xsl:otherwise>
+                    <xsl:when test="$currentPort/state/@state='filtered'">orange</xsl:when>
+                    <xsl:otherwise>red</xsl:otherwise>
                 </xsl:choose>
                 <xsl:choose>
                     <xsl:when test="(service/@name='microsoft-ds' or service/@name='netbios-ssn') and ../../hostscript/script[@id='smb-shares-size']/table"> mini dropdown button share-size</xsl:when>
@@ -327,22 +327,21 @@ function hostScanning(link) {
                     <xsl:value-of select="@portid"/>
                 </xsl:attribute>
             </xsl:if>
-            <xsl:if test="service/@name='ms-wbt-server'">
-                <xsl:attribute name="href">
-                    <xsl:text>rdp.php?v=</xsl:text>
-                    <xsl:value-of select="$hostAddress"/>
-                    <xsl:text>&amp;p=</xsl:text>
+            <xsl:attribute name="title">
+                <xsl:value-of select="@portid"/>/<xsl:value-of select="@protocol"/>
+            </xsl:attribute>
+            <xsl:choose>
+                <xsl:when test="service/@name='unknown'">
+                    <xsl:choose>
+                        <xsl:when test="@protocol='tcp'">:</xsl:when>
+                        <xsl:otherwise><xsl:value-of select="substring(@protocol, 1, 1)"/>:</xsl:otherwise>
+                    </xsl:choose>
                     <xsl:value-of select="@portid"/>
-                </xsl:attribute>
-            </xsl:if>
-            <xsl:value-of select="service/@name"/>
-            <div class="detail">
-                <xsl:choose>
-                    <xsl:when test="@protocol='tcp'">:</xsl:when>
-                    <xsl:otherwise><xsl:value-of select="substring(@protocol, 1, 1)"/>:</xsl:otherwise>
-                </xsl:choose>
-                <xsl:value-of select="@portid"/>
-            </div>
+                </xsl:when>
+                <xsl:otherwise>
+                    <xsl:value-of select="service/@name"/>
+                </xsl:otherwise>
+            </xsl:choose>
             <xsl:if test="(service/@name='microsoft-ds' or service/@name='netbios-ssn') and ../../hostscript/script[@id='smb-shares-size']/table">
                 <xsl:attribute name="style">
                     <xsl:for-each select="$currentHost/hostscript/script[@id='smb-shares-size']/table">

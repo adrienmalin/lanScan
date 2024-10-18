@@ -397,10 +397,10 @@ Exemples: <?= $_SERVER['REMOTE_ADDR']; ?>/24 <?= $_SERVER['SERVER_NAME']; ?> 10.
             <label for="stylesheetSelect" title="--stylesheet">Feuille de style</label>
             <select class="ui dropdown" id="stylesheetSelect" name="--stylesheet" value="<?= $options["--stylesheet"] ?? ""?>">
 <?php
-foreach (scandir('xslt') as $filename) {
+foreach (scandir('templates') as $filename) {
   if (substr($filename, -4) === '.xsl') {
     $name = substr($filename, 0, -4);
-    $URL = htmlentities("$BASEDIR/xslt/$filename", ENT_QUOTES);
+    $URL = htmlentities("$BASEDIR/templates/$filename", ENT_QUOTES);
     if (isset($options["--stylesheet"]) && $URL == $options["--stylesheet"]) {
       echo "              <option value='$URL' selected>$name</option>\n";
     } else {
