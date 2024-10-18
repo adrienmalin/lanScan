@@ -325,14 +325,14 @@ Exemples: <?= $_SERVER['REMOTE_ADDR']; ?>/24 <?= $_SERVER['SERVER_NAME']; ?> 10.
             <select class="ui dropdown" id="versionIntensitySelect" name="--version-intensity" value="<?= $options["--version-intensity"] ?? ""?>">
               <option value="0">0</option>
               <option value="1">1</option>
-              <option value="2">Léger</option>
+              <option value="2">2 Léger</option>
               <option value="3">3</option>
               <option value="4">4</option>
               <option value="5">5</option>
               <option value="6">6</option>
-              <option value="7">Défaut</option>
+              <option value="7">7 Défaut</option>
               <option value="8">8</option>
-              <option value="9">Tous</option>
+              <option value="9">9 Tous</option>
             </select>
           </div>
         
@@ -341,6 +341,23 @@ Exemples: <?= $_SERVER['REMOTE_ADDR']; ?>/24 <?= $_SERVER['SERVER_NAME']; ?> 10.
               <input type="checkbox" id="sRCheckbox" name="-sR" <?= $options['-sR'] ?? false ? 'checked' : ''; ?> />
               <label for="sRCheckbox" title="-sR">Scan RPC</label>
             </div>
+          </div>
+        </div>
+
+        <div class="title"><i class="icon dropdown"></i>Scripts</div>
+        <div class="content">
+          <div class="inline field">
+            <div class="ui toggle checkbox">
+              <input type="checkbox" id="sCCheckbox" name="-sC" <?= $options['-sC'] ?? false ? 'checked' : ''; ?> />
+              <label for="sCCheckbox" title="-sC">Scripts par défaut</label>
+            </div>
+          </div>
+
+          <div class="field">
+            <label for="scriptInput">Scripts</label>
+            <input id="scriptInput" type="text" name="--script" placeholder="script"
+              title="<catégories|répertoire|nom|all>" list="scripts" pattern="[a-z][a-z0-9\.\/]*+"
+              value="<?= htmlentities($options["--script"] ?? "", ENT_QUOTES); ?>">
           </div>
         </div>
 
@@ -453,8 +470,9 @@ foreach (scandir($SCANSDIR) as $filename) {
     <option value="<?= $_SERVER['REMOTE_ADDR']; ?>/24"></option>
     <option value="<?= $_SERVER['SERVER_NAME']; ?>"></option>
   </datalist>
+
   <datalist id='servicesList'>
-    <?php
+<?php
 $nmap_services = file("$DATADIR/nmap-services");
 $services = [];
 foreach ($nmap_services as $service) {
@@ -464,10 +482,11 @@ foreach ($nmap_services as $service) {
   }
 }
 foreach ($services as $name => [$portid, $protocol]) {
-  echo "       <option value='$name'>$portid</option>\n";
+  echo "    <option value='$name'>$portid</option>\n";
 }
-    ?>
+?>
   </datalist>
+
   <datalist id="flagsList">
     <option value="URG"></option>
     <option value="ACK"></option>
@@ -476,15 +495,48 @@ foreach ($services as $name => [$portid, $protocol]) {
     <option value="SYN"></option>
     <option value="FIN"></option>
   </datalist>
+
+  <datalist id="scripts">
+    <!-- categories -->
+    <option value="auth"></option>
+    <option value="broadcast"></option>
+    <option value="brute"></option>
+    <option value="default"></option>
+    <option value="ddiscovery"></option>
+    <option value="dos"></option>
+    <option value="exploit"></option>
+    <option value="external"></option>
+    <option value="fuzzer"></option>
+    <option value="intrusive"></option>
+    <option value="malware"></option>
+    <option value="safe"></option>
+    <option value="version"></option>
+    <option value="vuln"></option>
+    <!-- names -->
+    <option value="scripts/"></option>
+<?php
+foreach (scandir("scripts") as $filename) {
+  if (substr($filename, -4) === '.nse') {
+    $name = substr($filename, 0, -4);
+    echo "    <option value='scripts/$name'></option>\n";
+  }
+}
+foreach (scandir("$DATADIR/scripts") as $filename) {
+  if (substr($filename, -4) === '.nse') {
+    $name = substr($filename, 0, -4);
+    echo "    <option value='$name'></option>\n";
+  }
+}
+?>
+  </datalist>
   
   <script>
     class TagsInput extends Tagify {
-      constructor(input, delim = ",") {
-        super(input, {
-          delimiters: " |,",
-          originalInputValueFormat: tags => tags.map(tag => tag.value).join(delim),
-        })
-        if (input.list) this.whitelist = Array.from(input.list.options).map(option => option.value)
+      constructor(input, options={}, delim = ",") {
+        options.delimiters = " |,"
+        options.originalInputValueFormat = tags => tags.map(tag => tag.value).join(delim)
+        if (input.list) options.whitelist = Array.from(input.list.options).map(option => option.value)
+        super(input, options)
       }
     }
 
@@ -495,19 +547,20 @@ foreach ($services as $name => [$portid, $protocol]) {
       clearable: true
     })
 
-    new TagsInput(targetsInput, " ")
+    new TagsInput(targetsInput, {}, " ")
     new TagsInput(excludeInput)
     new TagsInput(PSInput)
     new TagsInput(PAInput)
     new TagsInput(PUInput)
     new TagsInput(POInput)
     var pTagsInput = new TagsInput(pInput)
-    new TagsInput(dnsServersInput)
     FCheckbox.onchange = () => {
       pInput.disabled = FCheckbox.checked
       pTagsInput.setDisabled(FCheckbox.checked)
     }
+    new TagsInput(dnsServersInput)
     new TagsInput(scanflagsInput)
+    new TagsInput(scriptInput, {enforceWhitelist: true})
 
     newScanForm.onsubmit = function(event) {
       if (this.checkValidity()) {

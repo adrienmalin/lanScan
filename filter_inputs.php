@@ -64,7 +64,10 @@ if ($preset && isset($presets[$preset])) {
     '--version-intensity' => ['filter' => FILTER_VALIDATE_INT, 'options' => ['min_range' => 0, 'max_range' => 9]],
     '--version-all'       => FILTER_VALIDATE_BOOLEAN,
     '--version-trace'     => FILTER_VALIDATE_BOOLEAN,
-// SERVICE/VERSION DETECTION:
+// SCRIPT SCAN:
+    '-sC'      => FILTER_VALIDATE_BOOLEAN,
+    '--script' => ['filter' => FILTER_VALIDATE_REGEXP, 'options' => ['regexp' => "/^[a-z][a-z0-9\.\/]*$/"]],
+// OS DETECTION:
     '-O'             => FILTER_VALIDATE_BOOLEAN,
     '--osscan-limit' => FILTER_VALIDATE_BOOLEAN,
     '--osscan-guess' => FILTER_VALIDATE_BOOLEAN,
