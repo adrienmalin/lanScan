@@ -268,7 +268,7 @@ function hostScanning(link) {
                         <xsl:with-param name="initHost" select="$initHost"/>
                         <xsl:with-param name="currentHost" select="$currentHost"/>
                         <xsl:with-param name="hostAddress" select="$hostAddress"/>
-                        <xsl:sort select="@portid" order="ascending"/>
+                        <xsl:sort select="number(@portid)" order="ascending"/>
                     </xsl:apply-templates>
                 </div>
             </div>

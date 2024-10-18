@@ -283,11 +283,11 @@ function hostScanning(link) {
                 <xsl:value-of select="address[@addrtype='mac']/@vendor"/>
             </td>
             <td>
-                <xsl:apply-templates select="$currentHost/ports/port | $initHost/ports/port[not(@portid=$currentHost/ports/port/@portid)][not(state/@state='closed')]">
+                <xsl:apply-templates select="$initHost/ports/port[not(@portid=$currentHost/ports/port/@portid)][not(state/@state='closed')] | $currentHost/ports/port">
                     <xsl:with-param name="initHost" select="$initHost"/>
                     <xsl:with-param name="currentHost" select="$currentHost"/>
                     <xsl:with-param name="hostAddress" select="$hostAddress"/>
-                    <xsl:sort select="@portid" order="ascending"/>
+                    <xsl:sort select="number(@portid)" order="ascending"/>
                 </xsl:apply-templates>
             </td>
             <td>

@@ -117,5 +117,7 @@ if ($preset && isset($presets[$preset])) {
     'compareWith'   => FILTER_VALIDATE_URL,
     'refreshPeriod' => ['filter' => FILTER_VALIDATE_INT, 'options' => ['min_range' => 0]],
     'sudo'          => FILTER_VALIDATE_BOOLEAN,
-  ], false);
+  ], false) ?: $preset["lan"];
 }
+
+$options["--datadir"] = $DATADIR;

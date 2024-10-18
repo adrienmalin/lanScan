@@ -41,7 +41,7 @@ main {
     margin-top: 0;
 }
 
-.ui.header {
+.toast-container .ui.header {
     text-transform: capitalize;
 }
 

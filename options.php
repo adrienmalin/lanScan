@@ -473,16 +473,21 @@ foreach (scandir($SCANSDIR) as $filename) {
 
   <datalist id='servicesList'>
 <?php
-$nmap_services = file("$NMAPDIR/nmap-services");
 $services = [];
-foreach ($nmap_services as $service) {
-  if (0 !== strpos($service, '#')) {
-    [$name, $port] = explode("\t", $service);
-    $services[$name] = explode("/", $port);
+foreach ([$DATADIR, $NMAPDIR] as $dir) {
+  echo "<!-- $nmap_services -->\n";
+  if (file_exists("$dir/nmap-services")) {
+    $nmap_services = file("$dir/nmap-services");
+    foreach ($nmap_services as $service) {
+      if (0 !== strpos($service, '#')) {
+        [$name, $port] = explode("\t", $service);
+        $services[$name] = explode("/", $port);
+      }
+    }
   }
 }
 foreach ($services as $name => [$portid, $protocol]) {
-  echo "    <option value='$name'>$portid</option>\n";
+  echo "    <option value='$name'></option>\n";
 }
 ?>
   </datalist>
@@ -514,7 +519,7 @@ foreach ($services as $name => [$portid, $protocol]) {
     <option value="vuln"></option>
     <!-- names -->
 <?php
-foreach ([$NMAPDIR, $DATADIR] as $dir) {
+foreach ([$DATADIR, $NMAPDIR] as $dir) {
   foreach (scandir("$dir/scripts") as $filename) {
     if (substr($filename, -4) === '.nse') {
       $name = substr($filename, 0, -4);
