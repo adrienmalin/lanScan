@@ -277,7 +277,10 @@ function hostScanning(link) {
                 <xsl:value-of select="address/@addr"/>
             </td>
             <td>
-                <b><xsl:value-of select="hostnames/hostname/@name"/></b>
+                <div><b><xsl:value-of select="substring-before(hostnames/hostname/@name, '.')"/></b></div>
+                <xsl:if test="substring-after(hostnames/hostname/@name, '.')">
+                    <div>.<xsl:value-of select="substring-after(hostnames/hostname/@name, '.')"/></div>
+                </xsl:if>
             </td>
             <td>
                 <xsl:value-of select="address[@addrtype='mac']/@vendor"/>
