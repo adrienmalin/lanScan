@@ -6,7 +6,7 @@ $NMAPDIR  = dirname(`which nmap`) . "/../share/nmap";
 $DATADIR  = "datadir";
 
 $presets = [
-    "lan" => [
+    "default" => [
         '-PS'           => 'microsoft-ds',
         '-F'            => true,
         '-T5'           => true,

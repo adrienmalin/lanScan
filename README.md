@@ -7,7 +7,7 @@ Scanne le réseau avec `nmap` et affiche les résultats dans une page web.
 On peut personnaliser les options prédéfinies pour les scans de réseau ou d'hôte dans le fichier `config.php` :
 ```php
 $presets = [
-    "lan" => [
+    "default" => [
         '-PS'          => 'microsoft-ds',
         '-F'           => true,
         '-T5'          => true,
