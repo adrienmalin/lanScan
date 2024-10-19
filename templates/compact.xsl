@@ -122,7 +122,7 @@ Exemples: 192.168.1.0/24 scanme.nmap.org 10.0-255.0-255.1-254"/>
                     </form>
                 </nav>
 
-                <main class="ui wide container">
+                <main class="ui container">
                     <h1 class="ui header"><xsl:value-of select="$targets"/></h1>
 
                     <div class="ui doubling stackable four column compact grid">
