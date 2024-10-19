@@ -66,7 +66,7 @@ if ($preset && isset($presets[$preset])) {
     '--version-trace'     => FILTER_VALIDATE_BOOLEAN,
 // SCRIPT SCAN:
     '-sC'      => FILTER_VALIDATE_BOOLEAN,
-    '--script' => ['filter' => FILTER_VALIDATE_REGEXP, 'options' => ['regexp' => "/^[a-z][a-z0-9\.\/]*$/"]],
+    '--script' => ['filter' => FILTER_VALIDATE_REGEXP, 'options' => ['regexp' => "/^[a-z][a-z0-9,\-\.\/]*$/"]],
 // OS DETECTION:
     '-O'             => FILTER_VALIDATE_BOOLEAN,
     '--osscan-limit' => FILTER_VALIDATE_BOOLEAN,

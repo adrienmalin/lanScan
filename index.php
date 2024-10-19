@@ -356,7 +356,7 @@ Exemples: <?= $_SERVER['REMOTE_ADDR']; ?>/24 <?= $_SERVER['SERVER_NAME']; ?> 10.
           <div class="field">
             <label for="scriptInput">Scripts</label>
             <input id="scriptInput" type="text" name="--script" placeholder="script"
-              title="<catégories|répertoire|nom|all>" list="scripts" pattern="[a-z][a-z0-9\.\/]*+"
+              title="<catégories|répertoire|nom|all>" list="scripts" pattern="[a-z][a-z0-9\-\.\/]*"
               value="<?= htmlentities($options["--script"] ?? "", ENT_QUOTES); ?>">
           </div>
         </div>
