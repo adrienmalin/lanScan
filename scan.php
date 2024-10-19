@@ -6,19 +6,19 @@ include_once 'filter_inputs.php';
 if (!file_exists($SCANSDIR)) mkdir($SCANSDIR);
 
 $command = ($options["sudo"]?? false ? "sudo " : "") . "nmap";
-foreach ($options as $arg => $value) {
-    if (substr($arg, 0, 1) == '-') {
+foreach ($options as $option => $value) {
+    if (substr($option, 0, 1) == '-') {
         if (is_null($value)) {
             http_response_code(400);
-            $errorMessage = "Valeur incorrecte pour le paramètre <var>$arg</var> : " . filter_input(INPUT_GET, $arg, FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+            $errorMessage = "Valeur incorrecte pour le paramètre <var>$option</var> : " . filter_input(INPUT_GET, $option, FILTER_SANITIZE_FULL_SPECIAL_CHARS);
             include_once ".";
             die();
         } else if ($value) {
             if ($value === true) {
-                $command .= " $arg";
+                $command .= " $option";
             } else {
-                if (substr($arg, 0, 2) == '--') $command .= " $arg " . escapeshellarg($value);
-                else $command .= " $arg" . escapeshellarg($value);
+                if (substr($option, 0, 2) == '--') $command .= " $option " . escapeshellarg($value);
+                else $command .= " $option" . escapeshellarg($value);
             }
         }
     }
@@ -43,9 +43,9 @@ $xml->load($tempPath);
 
 $saveAsURL = $options["saveAs"]?? false ? "$BASEDIR/$SCANSDIR/{$options["saveAs"]}.xml" : "";
 $xml->insertBefore($xml->createProcessingInstruction('xslt-param', "name='savedAs' value='".htmlentities($saveAsURL, ENT_QUOTES)."'"), $xml->documentElement);
-foreach ($options as $arg => $value) {
-    if (substr($arg, 0, 1) != '-') {
-        $xml->insertBefore($xml->createProcessingInstruction('xslt-param', "name='$arg' value='".htmlentities($value, ENT_QUOTES)."'"), $xml->documentElement);
+foreach ($options as $option => $value) {
+    if (substr($option, 0, 1) != '-') {
+        $xml->insertBefore($xml->createProcessingInstruction('xslt-param', "name='$option' value='".htmlentities($value, ENT_QUOTES)."'"), $xml->documentElement);
     }
 }
 
