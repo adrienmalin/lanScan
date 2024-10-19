@@ -98,7 +98,7 @@ Exemples: 192.168.1.0/24 scanme.nmap.org 10.0-255.0-255.1-254"/>
                             <button id="refreshButton" class="ui teal icon submit button" type="submit" formmethod="get" formaction="{$basedir}/scan.php">
                                 <i class="sync icon"></i>
                             </button>
-                            <button class="ui teal icon submit button" type="submit" formmethod="get" formaction="{$basedir}/options.php">
+                            <button class="ui teal icon submit button" type="submit" formmethod="get" formaction="{$basedir}/">
                                 <i class="sliders horizontal icon"></i>
                             </button>
                             <a class="ui teal icon button" href="https://nmap.org/man/fr/index.html" target="_blank">
@@ -307,7 +307,7 @@ function hostScanning(link) {
                     <a class="ui mini icon teal label">
                         <xsl:attribute name="href">
                             <xsl:value-of select="$basedir"/>
-                            <xsl:text>/options.php?preset=host&amp;targets=</xsl:text>
+                            <xsl:text>/?preset=host&amp;targets=</xsl:text>
                             <xsl:value-of select="$hostAddress"/>
                         </xsl:attribute>
                         <i class="sliders horizontal icon"></i>

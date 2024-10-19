@@ -1,6 +1,7 @@
 <?php
 
-$BASEDIR  = "{$_SERVER['REQUEST_SCHEME']}://{$_SERVER['SERVER_NAME']}:{$_SERVER['SERVER_PORT']}" . dirname($_SERVER['SCRIPT_NAME']);
+$port = (($_SERVER['REQUEST_SCHEME'] == "http" && $_SERVER['SERVER_PORT'] == 80) || ($_SERVER['REQUEST_SCHEME'] == "https" && $_SERVER['SERVER_PORT'] == 443)) ? "" : ":{$_SERVER['SERVER_PORT']}";
+$BASEDIR  = "{$_SERVER['REQUEST_SCHEME']}://{$_SERVER['SERVER_NAME']}$port" . dirname($_SERVER['SCRIPT_NAME']);
 $SCANSDIR = 'scans';
 $NMAPDIR  = dirname(`which nmap`) . "/../share/nmap";
 $DATADIR  = "datadir";
