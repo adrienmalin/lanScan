@@ -319,21 +319,11 @@ Exemples: <?= $_SERVER['REMOTE_ADDR']; ?>/24 <?= $_SERVER['SERVER_NAME']; ?> 10.
               <label for="allportsCheckbox" title="--allports">N'exclure aucun port de la détection de version</label>
             </div>
           </div>
-
+          
           <div class="field">
-            <label for="versionIntensitySelect" title="--version-intensity">Intensité des tests de version</label>
-            <select class="ui dropdown" id="versionIntensitySelect" name="--version-intensity" value="<?= $options["--version-intensity"] ?? ""?>">
-              <option value="0">0</option>
-              <option value="1">1</option>
-              <option value="2">2 Léger</option>
-              <option value="3">3</option>
-              <option value="4">4</option>
-              <option value="5">5</option>
-              <option value="6">6</option>
-              <option value="7">7 Défaut</option>
-              <option value="8">8</option>
-              <option value="9">9 Tous</option>
-            </select>
+            <label for="versionIntensityInput" title="--version-intensity">Intensité des tests de version</label>
+            <input type="number" min="0" max="9" id="versionIntensityInput" name="--version-intensity" placeholder="Intensité"
+              value="<?= $options["--version-intensity"] ?? "" ?>" title="2: léger, 9: tous, défaut: 7">
           </div>
         
           <div class="inline field">
@@ -385,9 +375,24 @@ Exemples: <?= $_SERVER['REMOTE_ADDR']; ?>/24 <?= $_SERVER['SERVER_NAME']; ?> 10.
           </div>
           
           <div class="field">
-            <label for="maxOSTriesInput">Nombre d'essais maximum</label>
+            <label for="maxOSTriesInput" title="--max-os-tries">Nombre d'essais maximum</label>
             <input type="number" min="0" id="maxOSTriesInput" name="--max-os-tries" placeholder="Nombre d'essais"
               value="<?= $options["--max-os-tries"] ?? "" ?>">
+          </div>
+        </div>
+
+        <div class="title"><i class="icon dropdown"></i>Temporisation et performances</div>
+        <div class="content">
+          <div class="field">
+            <label for="TSelect" title="--T">Intensité des tests de version</label>
+            <select class="ui dropdown" id="TSelect" name="-T" value="<?= $options["-T"] ?? ""?>">
+              <option value="0"<?=($options["-T"]??"")==0?" selected":""?>>Paranoïaque</option>
+              <option value="1"<?=($options["-T"]??"")==1?" selected":""?>>Sournois</option>
+              <option value="2"<?=($options["-T"]??"")==2?" selected":""?>>Poli</option>
+              <option value="3"<?=($options["-T"]??"")==3?" selected":""?>>Normal</option>
+              <option value="4"<?=($options["-T"]??"")==4?" selected":""?>>Aggressif</option>
+              <option value="5"<?=($options["-T"]??"")==5?" selected":""?>>Dément</option>
+            </select>
           </div>
         </div>
 

@@ -8,10 +8,10 @@ On peut personnaliser les options prédéfinies pour les scans de réseau ou d'h
 ```php
 $presets = [
     "default" => [
-        '-PS'          => 'microsoft-ds',
-        '-F'           => true,
-        '-T5'          => true,
-        '--stylesheet' => "$BASEDIR/xslt/hostsTable.xsl",
+        '-PS'           => 'microsoft-ds',
+        '-F'            => true,
+        '-T'            => 5,
+        '--stylesheet'  => "$BASEDIR/templates/hostsTable.xsl",
         'refreshPeriod' => 60,
         'sudo'          => false,
     ],
@@ -19,10 +19,11 @@ $presets = [
         '-Pn'           => true,
         '-F'            => true,
         '-sV'           => true,
-        '-T5'           => true,
-        '--stylesheet'  => "$BASEDIR/xslt/servicesTable.xsl",
+        '-T'            => 5,
+        '--script'      => "http-info,smb-shares-size",
+        '--stylesheet'  => "$BASEDIR/templates/servicesTable.xsl",
         'refreshPeriod' => 60,
-        'sudo'          => false,
+        'sudo'          => true,
     ],
 ];
 ```
