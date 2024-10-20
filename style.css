@@ -51,3 +51,16 @@ main {
     --color: hsl(calc(120*var(--free-ratio)) 100% 50%);
     background-image: linear-gradient(to right, var(--color) var(--used-percent), transparent var(--used-percent), transparent) !important;
 }
+
+.compact .ui.icon.buttons .mini.button {
+    padding: 0.5em;
+}
+
+.compact {
+    overflow-x: scroll;
+}
+
+.compact > input{
+    min-width: 10em;
+    padding-right: .1em;
+}

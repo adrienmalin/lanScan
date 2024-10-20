@@ -6,7 +6,8 @@
 
     <xsl:template match="runstats">
         <xsl:param name="init"/>
-        <xsl:if test="finished/@summary">
+        <script>
+            <xsl:if test="finished/@summary">
 $.toast({
     title      : '<xsl:value-of select="finished/@exit"/>',
     message    : '<xsl:value-of select="finished/@summary"/>',
@@ -15,8 +16,8 @@ $.toast({
     closeIcon  : true,
     position   : 'bottom right',
 })
-        </xsl:if>
-        <xsl:if test="finished/@errormsg">
+            </xsl:if>
+            <xsl:if test="finished/@errormsg">
 $.toast({
     title      : '<xsl:value-of select="finished/@exit"/>',
     message    : '<xsl:value-of select="finished/@errormsg"/>',
@@ -26,8 +27,8 @@ $.toast({
     closeIcon  : true,
     position   : 'bottom right',
 })
-        </xsl:if>
-        <xsl:if test="$init/runstats/finished">
+            </xsl:if>
+            <xsl:if test="$init/runstats/finished">
 $.toast({
     message    : 'Comparaison avec les résultats du <xsl:value-of select="$init/runstats/finished/@timestr"/>',
     class      : 'info',
@@ -36,7 +37,8 @@ $.toast({
     closeIcon  : true,
     position   : 'bottom right',
 })
-        </xsl:if>
+            </xsl:if>
+        </script>
     </xsl:template>
 
 </xsl:stylesheet>
