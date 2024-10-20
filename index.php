@@ -349,6 +349,13 @@ Exemples: <?= $_SERVER['REMOTE_ADDR']; ?>/24 <?= $_SERVER['SERVER_NAME']; ?> 10.
               title="<catégories|répertoire|nom|all>" list="scripts" pattern="[a-z][a-z0-9\-\.\/]*"
               value="<?= htmlentities($options["--script"] ?? "", ENT_QUOTES); ?>">
           </div>
+
+          <div class="field">
+            <label for="scriptArgsInput" title="--script-args">Arguments des scripts</label>
+            <input type="text" id="scriptArgsInput" name="--script-args" placeholder="nom=valeur"
+              pattern='[a-zA-Z][a-zA-Z0-9\-_]*=[^"]+(,[a-zA-Z][a-zA-Z0-9\-_]*=[^"]+)?' value="<?= $options['--script-args'] ?? "" ?>"
+              title="<n1=v1,[n2=v2,...]>">
+          </div>
         </div>
 
         <div class="title"><i class="icon dropdown"></i>Détection du système d'exploitation</div>
@@ -557,8 +564,8 @@ foreach ([$DATADIR, $NMAPDIR] as $dir) {
   <script>
     class TagsInput extends Tagify {
       constructor(input, options={}, delim = ",") {
-        options.delimiters = " |,"
-        options.originalInputValueFormat = tags => tags.map(tag => tag.value).join(delim)
+        if (!options.delimiters) options.delimiters = " |,"
+        if (!options.originalInputValueFormat) options.originalInputValueFormat = tags => tags.map(tag => tag.value).join(delim)
         if (input.list) options.whitelist = Array.from(input.list.options).map(option => option.value)
         super(input, options)
       }
@@ -585,6 +592,7 @@ foreach ([$DATADIR, $NMAPDIR] as $dir) {
     new TagsInput(dnsServersInput)
     new TagsInput(scanflagsInput)
     new TagsInput(scriptInput, {enforceWhitelist: true})
+    new TagsInput(scriptArgsInput, {delimiters: ','})
 
     newScanForm.onsubmit = function(event) {
       if (this.checkValidity()) {

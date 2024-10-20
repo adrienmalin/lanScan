@@ -2,11 +2,11 @@
 
 include_once "config.php";
 
-$targetsListRegex        = "/^[\da-zA-Z-. \/]+$/";
-$hostsListRegex          = "/^[\da-zA-Z-.,:\/]+$/";
-$protocolePortsListRegex = "/^(([TU]:)?[0-9\-]+|[a-z\-]+)(,([TU]:)?[0-9\-]+|,[a-z\-]+)*$/";
-$portsListRegex          = "/^([0-9\-]+|[a-z\-]+)(,[0-9\-]+|,[a-z\-]+)*$/";
-$tempoRegex              = "/^\d+[smh]?$/";
+$targetsListRegex        = '/^[\da-zA-Z-. \/]+$/';
+$hostsListRegex          = '/^[\da-zA-Z-.,:\/]+$/';
+$protocolePortsListRegex = '/^(([TU]:)?[0-9\-]+|[a-z\-]+)(,([TU]:)?[0-9\-]+|,[a-z\-]+)*$/';
+$portsListRegex          = '/^([0-9\-]+|[a-z\-]+)(,[0-9\-]+|,[a-z\-]+)*$/';
+$tempoRegex              = '/^\d+[smh]?$/';
 $fileNameRegex           = '/^[^<>:"\/|?]+$/';
 
 $targets = filter_input(INPUT_GET, 'targets', FILTER_VALIDATE_REGEXP, ['options' => ['regexp' => $targetsListRegex], "flags" => FILTER_NULL_ON_FAILURE]);
@@ -46,8 +46,8 @@ if ($preset && isset($presets[$preset])) {
     '-sN'          => FILTER_VALIDATE_BOOLEAN,
     '-sX'          => FILTER_VALIDATE_BOOLEAN,
     '-sU'          => FILTER_VALIDATE_BOOLEAN,
-    '--scanflags'  => ['filter' => FILTER_VALIDATE_REGEXP, 'options' => ['regexp' => "/^(URG|ACK|PSH|RST|SYN|FIN|,)+|[1-9]?[0-9]|[1-2][0-9][0-9]$/"]],
-    '-sI'          => ['filter' => FILTER_VALIDATE_REGEXP, 'options' => ['regexp' => "/^[a-zA-Z\d:.-]+(:\d+)?$/"]],
+    '--scanflags'  => ['filter' => FILTER_VALIDATE_REGEXP, 'options' => ['regexp' => '/^(URG|ACK|PSH|RST|SYN|FIN|,)+|[1-9]?[0-9]|[1-2][0-9][0-9]$/']],
+    '-sI'          => ['filter' => FILTER_VALIDATE_REGEXP, 'options' => ['regexp' => '/^[a-zA-Z\d:.-]+(:\d+)?$/']],
     '-sO'          => FILTER_VALIDATE_BOOLEAN,
     '-b'           => FILTER_VALIDATE_URL,
     '--traceroute' => FILTER_VALIDATE_BOOLEAN,
@@ -65,8 +65,9 @@ if ($preset && isset($presets[$preset])) {
     '--version-all'       => FILTER_VALIDATE_BOOLEAN,
     '--version-trace'     => FILTER_VALIDATE_BOOLEAN,
 // SCRIPT SCAN:
-    '-sC'      => FILTER_VALIDATE_BOOLEAN,
-    '--script' => ['filter' => FILTER_VALIDATE_REGEXP, 'options' => ['regexp' => "/^[a-z][a-z0-9,\-\.\/]*$/"]],
+    '-sC'           => FILTER_VALIDATE_BOOLEAN,
+    '--script'      => ['filter' => FILTER_VALIDATE_REGEXP, 'options' => ['regexp' => '/^[a-z][a-z0-9,\-\.\/]*$/']],
+    '--script-args' => ['filter' => FILTER_VALIDATE_REGEXP, 'options' => ['regexp' => '/^([a-zA-Z][a-zA-Z0-9\-_]*=[^"]+(,[a-zA-Z][a-zA-Z0-9\-_]*=[^"]+)?)$/']],
 // OS DETECTION:
     '-O'             => FILTER_VALIDATE_BOOLEAN,
     '--osscan-limit' => FILTER_VALIDATE_BOOLEAN,
@@ -90,11 +91,11 @@ if ($preset && isset($presets[$preset])) {
     '--mtu'         => FILTER_VALIDATE_INT,
     '-D'            => ['filter' => FILTER_VALIDATE_REGEXP, 'options' => ['regexp' => $hostsListRegex]],
     '-S'            => ['filter' => FILTER_VALIDATE_IP],
-    '-e'            => ['filter' => FILTER_VALIDATE_REGEXP, 'options' => ['regexp' => "/^[a-z\d]+$/"]],
+    '-e'            => ['filter' => FILTER_VALIDATE_REGEXP, 'options' => ['regexp' => '/^[a-z\d]+$/']],
     '-g'            => FILTER_VALIDATE_INT,
     '--source-port' => FILTER_VALIDATE_INT,
     '--data-length' => FILTER_VALIDATE_INT,
-    '--ip-options'  => ['filter' => FILTER_VALIDATE_REGEXP, 'options' => ['regexp' => "/^\"(R|T|U|L [\da-zA-Z-.: ]+|S [\da-zA-Z-.: ]+|\\\\x[\da-fA-F]{1,2}(\*[\d]+)?|\\\\[0-2]?[\d]{1,2}(\*[\d]+)?)\"$/"]],
+    '--ip-options'  => ['filter' => FILTER_VALIDATE_REGEXP, 'options' => ['regexp' => '/^\"(R|T|U|L [\da-zA-Z-.: ]+|S [\da-zA-Z-.: ]+|\\\\x[\da-fA-F]{1,2}(\*[\d]+)?|\\\\[0-2]?[\d]{1,2}(\*[\d]+)?)\"$/']],
     '--ttl'         => ['filter' => FILTER_VALIDATE_INT, 'options' => ['min_range' => 0, 'max_range' => 255]],
     '--spoof-mac'   => FILTER_VALIDATE_MAC,
     '--badsum'      => FILTER_VALIDATE_BOOLEAN,
