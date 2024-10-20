@@ -5,7 +5,7 @@
     version="1.1">
 
     <xsl:import href="lib/head.xsl"/>
-    <xsl:import href="lib/parseCommand.xsl"/>
+    <xsl:import href="lib/nav.xsl"/>
     <xsl:import href="lib/serviceLabel.xsl"/>
     <xsl:import href="lib/toast.xsl"/>
 
@@ -69,33 +69,6 @@
 
                 <script>
 $('.ui.dropdown').dropdown()
-
-hiddenButton.onclick = function(event) {
-    if (lanScanForm.checkValidity()) {
-        targetsInputDiv.classList.add('loading')
-        $.toast({
-            title      : 'Scan en cours...',
-            message    : 'Merci de patienter',
-            class      : 'info',
-            showIcon   : 'satellite dish',
-            displayTime: 0,
-            closeIcon  : true,
-            position   : 'bottom right',
-        })
-    }
-}
-refreshButton.onclick = function(event) {
-    refreshButton.getElementsByTagName('i')[0].className = 'loading spinner icon'
-    $.toast({
-        title      : 'Scan en cours...',
-        message    : 'Merci de patienter',
-        class      : 'info',
-        showIcon   : 'satellite dish',
-        displayTime: 0,
-        closeIcon  : true,
-        position   : 'bottom right',
-    })
-}
 
 function hostScanning(link) {
     link.parentElement.parentElement.classList.add("loading")

@@ -6,7 +6,6 @@
 
     <xsl:import href="lib/head.xsl"/>
     <xsl:import href="lib/nav.xsl"/>
-    <xsl:import href="lib/parseCommand.xsl"/>
     <xsl:import href="lib/serviceLabel.xsl"/>
     <xsl:import href="lib/toast.xsl"/>
 

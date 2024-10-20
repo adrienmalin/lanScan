@@ -4,6 +4,8 @@
     xmlns:xs="http://www.w3.org/2001/XMLSchema"
     version="1.1">
 
+    <xsl:import href="parseCommand.xsl"/>
+
     <xsl:template match="nmaprun" mode="head">
         <xsl:param name="basedir"/>
         <xsl:param name="targets"/>

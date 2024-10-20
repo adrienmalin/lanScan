@@ -5,7 +5,7 @@
     version="1.1">
 
     <xsl:import href="lib/head.xsl"/>
-    <xsl:import href="lib/parseCommand.xsl"/>
+    <xsl:import href="lib/nav.xsl"/>
     <xsl:import href="lib/toast.xsl"/> 
 
     <xsl:output method="html" encoding="UTF-8"/>
@@ -63,71 +63,7 @@
                 </footer>
 
                 <script>
-DataTable.ext.type.detect.unshift(function (d) {
-    return /[\d]+\.[\d]+\.[\d]+\.[\d]+/.test(d)
-        ? 'ipv4-address'
-        : null;
-});
-    
-DataTable.ext.type.order['ipv4-address-pre'] = function (ipAddress) {
-    [a, b, c, d] = ipAddress.split(".").map(Number)
-    return 16777216*a + 65536*b + 256*c + d;
-};
-
-var table = $('#scanResultsTable').DataTable({
-    buttons    : ['copy', 'excel', 'pdf'],
-    fixedHeader: true,
-    lengthMenu : [
-        [256, 512, 1024, 2048, -1],
-        [256, 512, 1024, 2048, "All"]
-    ],
-    responsive: true,
-    colReorder: true,
-    buttons   : ['copy', 'excel', 'pdf']
-})
-table.order([1, 'asc']).draw()
-
 $('.ui.dropdown').dropdown()
-
-hiddenButton.onclick = function(event) {
-    if (lanScanForm.checkValidity()) {
-        targetsInputDiv.classList.add('loading')
-        $.toast({
-            title      : 'Scan en cours...',
-            message    : 'Merci de patienter',
-            class      : 'info',
-            showIcon   : 'satellite dish',
-            displayTime: 0,
-            closeIcon  : true,
-            position   : 'bottom right',
-        })
-    }
-}
-refreshButton.onclick = function(event) {
-    refreshButton.getElementsByTagName('i')[0].className = 'loading spinner icon'
-    $.toast({
-        title      : 'Scan en cours...',
-        message    : 'Merci de patienter',
-        class      : 'info',
-        showIcon   : 'satellite dish',
-        displayTime: 0,
-        closeIcon  : true,
-        position   : 'bottom right',
-    })
-}
-
-function hostScanning(link) {
-    link.getElementsByTagName('i')[0].className = 'loading spinner icon'
-    $.toast({
-        title      : 'Scan en cours...',
-        message    : 'Merci de patienter',
-        class      : 'info',
-        showIcon   : 'satellite dish',
-        displayTime: 0,
-        closeIcon  : true,
-        position   : 'bottom right',
-    })
-}
                 </script>
 
                 <xsl:apply-templates select="runstats">
