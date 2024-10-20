@@ -68,13 +68,23 @@
         <xsl:param name="name"/>
         <xsl:param name="value" select=""/>
         <xsl:param name="asURL" select="false()"/>
+        <xsl:variable name="valueWithoutQuotes">
+            <xsl:choose>
+                <xsl:when test="substring-after($value, '&quot;')">
+                    <xsl:value-of select="substring-before(substring-after($value, '&quot;'), '&quot;')"/>
+                </xsl:when>
+                <xsl:otherwise>
+                    <xsl:value-of select="$value"/>
+                </xsl:otherwise>
+            </xsl:choose>
+        </xsl:variable>
         <xsl:choose>
             <xsl:when test="$asURL">
                 <xsl:text>-</xsl:text>
                 <xsl:value-of select="$name"/>
                 <xsl:text>=</xsl:text>
                 <xsl:choose>
-                    <xsl:when test="$value"><xsl:value-of select="$value"/></xsl:when>
+                    <xsl:when test="$valueWithoutQuotes"><xsl:value-of select="$valueWithoutQuotes"/></xsl:when>
                     <xsl:otherwise>on</xsl:otherwise>
                 </xsl:choose>
                 <xsl:text>&amp;</xsl:text>
@@ -83,7 +93,7 @@
                 <input type="hidden" name="-{$name}">
                     <xsl:attribute name="value">
                         <xsl:choose>
-                            <xsl:when test="$value"><xsl:value-of select="$value"/></xsl:when>
+                            <xsl:when test="$valueWithoutQuotes"><xsl:value-of select="$valueWithoutQuotes"/></xsl:when>
                             <xsl:otherwise>on</xsl:otherwise>
                         </xsl:choose>
                     </xsl:attribute>
