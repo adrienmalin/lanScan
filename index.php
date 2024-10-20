@@ -347,7 +347,7 @@ Exemples: <?= $_SERVER['REMOTE_ADDR']; ?>/24 <?= $_SERVER['SERVER_NAME']; ?> 10.
             <label for="scriptInput">Scripts</label>
             <input id="scriptInput" type="text" name="--script" placeholder="script"
               title="<catégories|répertoire|nom|all>" list="scripts" pattern="[a-z][a-z0-9\-\.\/]*"
-              value="<?= htmlentities($options["--script"] ?? "", ENT_QUOTES); ?>">
+              value="<?= $options["--script"] ?? ""; ?>">
           </div>
 
           <div class="field">
@@ -467,7 +467,7 @@ foreach (scandir($SCANSDIR) as $filename) {
         <label for="saveAsInput">Enregistrer sous le nom</label>
         <input id="saveAsInput" type="text" name="saveAs" placeholder="Réseau local" pattern='[^&lt;&gt;:&quot;\\\/\|@?]+'
           title="Caractères interdits :  &lt;&gt;:&quot;\/|@?"
-          value="<?= htmlentities($options["saveAs"] ?? "", ENT_QUOTES); ?>">
+          value="<?= $options["saveAs"] ?? ""; ?>">
       </div>
 
       <button type="submit" class="ui teal submit button">Démarrer</button>
@@ -484,7 +484,7 @@ if (!file_exists($SCANSDIR)) {
 foreach (scandir($SCANSDIR) as $filename) {
   if (substr($filename, -4) == '.xml') {
     $name = str_replace('!', '/', substr_replace($filename, '', -4));
-    echo "<a class='item' href='".htmlentities("$SCANSDIR/$filename", ENT_QUOTES)."'>$name</a>\n";
+    echo "<a class='item' href='$SCANSDIR/".rawurlencode($filename)."'>$name</a>\n";
   }
 }
 ?>

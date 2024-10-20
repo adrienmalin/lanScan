@@ -7,7 +7,7 @@ $hostsListRegex          = '/^[\da-zA-Z-.,:\/]+$/';
 $protocolePortsListRegex = '/^(([TU]:)?[0-9\-]+|[a-z\-]+)(,([TU]:)?[0-9\-]+|,[a-z\-]+)*$/';
 $portsListRegex          = '/^([0-9\-]+|[a-z\-]+)(,[0-9\-]+|,[a-z\-]+)*$/';
 $tempoRegex              = '/^\d+[smh]?$/';
-$fileNameRegex           = '/^[^<>:"\/|?]+$/';
+$fileNameRegex           = '/^[^<>:\/|?]+$/';
 
 $targets = filter_input(INPUT_GET, 'targets', FILTER_VALIDATE_REGEXP, ['options' => ['regexp' => $targetsListRegex], "flags" => FILTER_NULL_ON_FAILURE]);
 $preset  = filter_input(INPUT_GET, "preset");
