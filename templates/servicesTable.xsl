@@ -4,7 +4,7 @@
     xmlns:xs="http://www.w3.org/2001/XMLSchema"
     version="1.1">
 
-    <xsl:import href="parseCommand.xsl"/> 
+    <xsl:import href="lib/parseCommand.xsl"/> 
 
     <xsl:output method="html" encoding="UTF-8"/>
     <xsl:output indent="yes"/>
