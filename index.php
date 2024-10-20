@@ -412,7 +412,7 @@ Exemples: <?= $_SERVER['REMOTE_ADDR']; ?>/24 <?= $_SERVER['SERVER_NAME']; ?> 10.
 foreach (scandir('templates') as $filename) {
   if (substr($filename, -4) === '.xsl') {
     $name = substr($filename, 0, -4);
-    $URL = htmlentities("$BASEDIR/templates/$filename", ENT_QUOTES);
+    $URL = "$BASEDIR/templates/".rawurlencode($filename);
     if (isset($options["--stylesheet"]) && $URL == $options["--stylesheet"]) {
       echo "              <option value='$URL' selected>$name</option>\n";
     } else {
@@ -433,7 +433,7 @@ if (!file_exists($SCANSDIR)) mkdir($SCANSDIR);
 foreach (scandir($SCANSDIR) as $filename) {
   if (substr($filename, -4) === '.xml') {
     $name = substr($filename, 0, -4);
-    $URL = htmlentities("$BASEDIR/$SCANSDIR/$filename", ENT_QUOTES);
+    $URL = "$BASEDIR/$SCANSDIR/".rawurlencode($filename);
     if (isset($options["compareWith"]) && $URL == $options["compareWith"]) {
       echo "              <option value='$URL' selected>$name</option>\n";
     } else {

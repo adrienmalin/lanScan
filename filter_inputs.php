@@ -117,3 +117,7 @@ if ($preset && isset($presets[$preset])) {
 }
 
 $options["--datadir"] = $DATADIR;
+
+/*echo "<!--";
+var_dump($options);
+echo "-->\n";*/
