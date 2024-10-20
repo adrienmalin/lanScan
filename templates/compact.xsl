@@ -4,7 +4,8 @@
     xmlns:xs="http://www.w3.org/2001/XMLSchema"
     version="1.1">
 
-    <xsl:import href="lib/parseCommand.xsl"/> 
+    <xsl:import href="lib/parseCommand.xsl"/>
+    <xsl:import href="lib/toast.xsl"/> 
 
     <xsl:output method="html" encoding="UTF-8"/>
     <xsl:output indent="yes"/>
@@ -163,37 +164,9 @@ table.order([1, 'asc']).draw()
 
 $('.ui.dropdown').dropdown()
 
-<xsl:if test="runstats/finished/@summary">
-$.toast({
-    title      : '<xsl:value-of select="runstats/finished/@exit"/>',
-    message    : '<xsl:value-of select="runstats/finished/@summary"/>',
-    showIcon   : 'satellite dish',
-    displayTime: 0,
-    closeIcon  : true,
-    position   : 'bottom right',
-})
-</xsl:if>
-<xsl:if test="runstats/finished/@errormsg">
-$.toast({
-    title      : '<xsl:value-of select="runstats/finished/@exit"/>',
-    message    : '<xsl:value-of select="runstats/finished/@errormsg"/>',
-    showIcon   : 'exclamation triangle',
-    class      : 'error',
-    displayTime: 0,
-    closeIcon  : true,
-    position   : 'bottom right',
-})
-</xsl:if>
-<xsl:if test="$init">
-$.toast({
-    message    : 'Comparaison avec les résultats du <xsl:value-of select="$init/runstats/finished/@timestr"/>',
-    class      : 'info',
-    showIcon   : 'calendar',
-    displayTime: 0,
-    closeIcon  : true,
-    position   : 'bottom right',
-})
-</xsl:if>
+<xsl:apply-templates select="runstats">
+    <xsl:with-param name="init" select="$init"/>
+</xsl:apply-templates>
 
 hiddenButton.onclick = function(event) {
     if (lanScanForm.checkValidity()) {
