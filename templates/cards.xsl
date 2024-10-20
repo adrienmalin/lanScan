@@ -237,12 +237,12 @@ function hostScanning(link) {
                                     <xsl:text>ui empty circular label </xsl:text>
                                     <xsl:choose>
                                         <xsl:when test="$currentHost/status/@state='up'">green</xsl:when>
-                                        <xsl:otherwise>red disabled</xsl:otherwise>
+                                        <xsl:otherwise>red</xsl:otherwise>
                                     </xsl:choose>
                                 </xsl:attribute>
                             </div>
                         </xsl:when>
-                        <xsl:otherwise><div class="ui red disabled circular label"></div></xsl:otherwise>
+                        <xsl:otherwise><div class="ui empty circular label red"></div></xsl:otherwise>
                     </xsl:choose>
                     <xsl:text> </xsl:text>
                     <xsl:choose>
