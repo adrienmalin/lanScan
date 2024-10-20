@@ -356,6 +356,20 @@ Exemples: <?= $_SERVER['REMOTE_ADDR']; ?>/24 <?= $_SERVER['SERVER_NAME']; ?> 10.
               pattern='[a-zA-Z][a-zA-Z0-9\-_]*=[^"]+(,[a-zA-Z][a-zA-Z0-9\-_]*=[^"]+)?' value="<?= $options['--script-args'] ?? "" ?>"
               title="<n1=v1,[n2=v2,...]>">
           </div>
+        
+          <div class="inline field">
+            <div class="ui toggle checkbox">
+              <input type="checkbox" id="scriptTraceCheckbox" name="--script-trace" <?= $options['--script-trace'] ?? false ? 'checked' : ''; ?> />
+              <label for="scriptTraceCheckbox" title="--script-trace">Montrer toutes les données envoyées ou recues</label>
+            </div>
+          </div>
+          
+          <div class="inline field">
+            <div class="ui toggle checkbox">
+              <input type="checkbox" id="scriptUpdateDBCheckbox" name="--script-updatedb" <?= $options['--script-updatedb'] ?? false ? 'checked' : ''; ?> />
+              <label for="scriptUpdateDBCheckbox" title="--script-updatedb">Mettre à jour la base de données des scripts</label>
+            </div>
+          </div>
         </div>
 
         <div class="title"><i class="icon dropdown"></i>Détection du système d'exploitation</div>
@@ -369,15 +383,15 @@ Exemples: <?= $_SERVER['REMOTE_ADDR']; ?>/24 <?= $_SERVER['SERVER_NAME']; ?> 10.
         
           <div class="inline field">
             <div class="ui toggle checkbox">
-              <input type="checkbox" id="osscan-limitCheckbox" name="--osscan-limit" <?= $options['--osscan-limit'] ?? false ? 'checked' : ''; ?> />
-              <label for="osscan-limitCheckbox" title="--osscan-limit">Seulement les cibles prometteuses</label>
+              <input type="checkbox" id="osscanLimitCheckbox" name="--osscan-limit" <?= $options['--osscan-limit'] ?? false ? 'checked' : ''; ?> />
+              <label for="osscanLimitCheckbox" title="--osscan-limit">Seulement les cibles prometteuses</label>
             </div>
           </div>
           
           <div class="inline field">
             <div class="ui toggle checkbox">
-              <input type="checkbox" id="osscan-guessCheckbox" name="--osscan-guess" <?= $options['--osscan-guess'] ?? false ? 'checked' : ''; ?> />
-              <label for="osscan-guessCheckbox" title="--osscan-guess">Essayer de deviner</label>
+              <input type="checkbox" id="osscanGuessCheckbox" name="--osscan-guess" <?= $options['--osscan-guess'] ?? false ? 'checked' : ''; ?> />
+              <label for="osscanGuessCheckbox" title="--osscan-guess">Essayer de deviner</label>
             </div>
           </div>
           
