@@ -41,6 +41,14 @@ main {
     margin-top: 0;
 }
 
+.ui.dropdown.label {
+    min-width: auto;
+}
+
+.ui.dropdown.label> .remove.icon {
+  right: 2.3em;
+}
+
 .toast-container .ui.header {
     text-transform: capitalize;
 }
