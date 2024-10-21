@@ -406,7 +406,7 @@ Exemples: <?= $_SERVER['REMOTE_ADDR']; ?>/24 <?= $_SERVER['SERVER_NAME']; ?> 10.
         <div class="content">
           <div class="field">
             <label for="TSelect" title="--T">Intensité des tests de version</label>
-            <select id="TSelect" class="ui dropdown" name="-T" value="<?= $options["-T"] ?? ""?>">
+            <select id="TSelect" class="ui clearable dropdown" name="-T" value="<?= $options["-T"] ?? ""?>">
               <option value="0"<?=($options["-T"]??"")==0?" selected":""?>>Paranoïaque</option>
               <option value="1"<?=($options["-T"]??"")==1?" selected":""?>>Sournois</option>
               <option value="2"<?=($options["-T"]??"")==2?" selected":""?>>Poli</option>
@@ -461,13 +461,13 @@ Exemples: <?= $_SERVER['REMOTE_ADDR']; ?>/24 <?= $_SERVER['SERVER_NAME']; ?> 10.
                   <input type="number" min="0" id="initialRTTNumber" placeholder="Durée"
                     oninput="initialRTTHidden.value = initialRTTNumber.value? initialRTTNumber.value+initialRTTUnit.value: ''; maxRTTHidden.initial=initialRTTHidden.value"
                     <?= preg_match("/^\d+/", $options["--initial-rtt-timeout"] ?? "", $matches) ? "value='{$matches[0]}'" : "" ?>>
-                    <select id="initialRTTUnit" class="ui dropdown label"
-                      oninput="initialRTTHidden.value = initialRTTNumber.value? initialRTTNumber.value+initialRTTUnit.value: ''">
-                      <option value="">ms</option>
-                      <option value="s" <?=substr($options["--initial-rtt-timeout"]??"", -1)=="s"?"selected":"" ?>>secondes</option>
-                      <option value="m" <?=substr($options["--initial-rtt-timeout"]??"", -1)=="m"?"selected":"" ?>>minutes</option>
-                      <option value="h" <?=substr($options["--initial-rtt-timeout"]??"", -1)=="h"?"selected":"" ?>>heures</option>
-                    </select>
+                  <select id="initialRTTUnit" class="ui clearable dropdown label"
+                    oninput="initialRTTHidden.value = initialRTTNumber.value? initialRTTNumber.value+initialRTTUnit.value: ''">
+                    <option value="">ms</option>
+                    <option value="s" <?=substr($options["--initial-rtt-timeout"]??"", -1)=="s"?"selected":"" ?>>secondes</option>
+                    <option value="m" <?=substr($options["--initial-rtt-timeout"]??"", -1)=="m"?"selected":"" ?>>minutes</option>
+                    <option value="h" <?=substr($options["--initial-rtt-timeout"]??"", -1)=="h"?"selected":"" ?>>heures</option>
+                  </select>
                 </div>
                 <input id="initialRTTHidden" type="hidden" name="--initial-rtt-timeout"
                   value="<?= $options["--initial-rtt-timeout"] ?? "" ?>">
@@ -478,13 +478,13 @@ Exemples: <?= $_SERVER['REMOTE_ADDR']; ?>/24 <?= $_SERVER['SERVER_NAME']; ?> 10.
                   <input type="number" min="0" id="minRTTNumber" placeholder="Durée"
                     oninput="minRTTHidden.value = minRTTNumber.value? minRTTNumber.value+minRTTUnit.value: ''; maxRTTHidden.min=minRTTHidden.value"
                     <?= preg_match("/^\d+/", $options["--min-rtt-timeout"] ?? "", $matches) ? "value='{$matches[0]}'" : "" ?>>
-                    <select id="minRTTUnit" class="ui dropdown label"
-                      oninput="minRTTHidden.value = minRTTNumber.value? minRTTNumber.value+minRTTUnit.value: ''">
-                      <option value="">ms</option>
-                      <option value="s" <?=substr($options["--min-rtt-timeout"]??"", -1)=="s"?"selected":"" ?>>secondes</option>
-                      <option value="m" <?=substr($options["--min-rtt-timeout"]??"", -1)=="m"?"selected":"" ?>>minutes</option>
-                      <option value="h" <?=substr($options["--min-rtt-timeout"]??"", -1)=="h"?"selected":"" ?>>heures</option>
-                    </select>
+                  <select id="minRTTUnit" class="ui clearable dropdown label"
+                    oninput="minRTTHidden.value = minRTTNumber.value? minRTTNumber.value+minRTTUnit.value: ''">
+                    <option value="">ms</option>
+                    <option value="s" <?=substr($options["--min-rtt-timeout"]??"", -1)=="s"?"selected":"" ?>>secondes</option>
+                    <option value="m" <?=substr($options["--min-rtt-timeout"]??"", -1)=="m"?"selected":"" ?>>minutes</option>
+                    <option value="h" <?=substr($options["--min-rtt-timeout"]??"", -1)=="h"?"selected":"" ?>>heures</option>
+                  </select>
                 </div>
                 <input id="minRTTHidden" type="hidden" name="--min-rtt-timeout"
                   value="<?= $options["--min-rtt-timeout"] ?? "" ?>">
@@ -495,7 +495,7 @@ Exemples: <?= $_SERVER['REMOTE_ADDR']; ?>/24 <?= $_SERVER['SERVER_NAME']; ?> 10.
                   <input type="number" min="0" id="maxRTTNumber" placeholder="Durée"
                     oninput="maxRTTHidden.value = maxRTTNumber.value? maxRTTNumber.value+maxRTTUnit.value: ''; minRTTHidden.max=maxRTTHidden.value"
                     <?= preg_match("/^\d+/", $options["--max-rtt-timeout"] ?? "", $matches) ? "value='{$matches[0]}'" : "" ?>>
-                  <select id="maxRTTUnit" class="ui dropdown label"
+                  <select id="maxRTTUnit" class="ui clearable dropdown label"
                     oninput="maxRTTHidden.value = maxRTTNumber.value? maxRTTNumber.value+maxRTTUnit.value: ''">
                     <option value="">ms</option>
                     <option value="s" <?=substr($options["--max-rtt-timeout"]??"", -1)=="s"?"selected":"" ?>>secondes</option>
@@ -521,7 +521,7 @@ Exemples: <?= $_SERVER['REMOTE_ADDR']; ?>/24 <?= $_SERVER['SERVER_NAME']; ?> 10.
               <input type="number" min="0" id="hostTimoutNumber" placeholder="Durée"
                 oninput="hostTimoutHidden.value = hostTimoutNumber.value? hostTimoutNumber.value+hostTimoutUnit.value: ''"
                 <?= preg_match("/^\d+/", $options["--host-timeout"] ?? "", $matches) ? "value='{$matches[0]}'" : "" ?>>
-              <select id="hostTimoutUnit" class="ui dropdown label"
+              <select id="hostTimoutUnit" class="ui clearable dropdown label"
                 oninput="hostTimoutHidden.value = hostTimoutNumber.value? hostTimoutNumber.value+hostTimoutUnit.value: ''">
                 <option value="">ms</option>
                 <option value="s" <?=substr($options["--host-timeout"]??"", -1)=="s"?"selected":"" ?>>secondes</option>
@@ -540,13 +540,13 @@ Exemples: <?= $_SERVER['REMOTE_ADDR']; ?>/24 <?= $_SERVER['SERVER_NAME']; ?> 10.
                 <input type="number" min="0" id="scanDelayNumber" placeholder="Durée"
                   oninput="scanDelayHidden.value = scanDelayNumber.value? scanDelayNumber.value+scanDelayUnit.value: ''"
                   <?= preg_match("/^\d+/", $options["--scan-delay"] ?? "", $matches) ? "value='{$matches[0]}'" : "" ?>>
-                  <select id="scanDelayUnit" class="ui dropdown label"
-                    oninput="scanDelayHidden.value = scanDelayNumber.value? scanDelayNumber.value+scanDelayUnit.value: ''">
-                    <option value="">ms</option>
-                    <option value="s" <?=substr($options["--scan-delay"]??"", -1)=="s"?"selected":"" ?>>secondes</option>
-                    <option value="m" <?=substr($options["--scan-delay"]??"", -1)=="m"?"selected":"" ?>>minutes</option>
-                    <option value="h" <?=substr($options["--scan-delay"]??"", -1)=="h"?"selected":"" ?>>heures</option>
-                  </select>
+                <select id="scanDelayUnit" class="ui clearable dropdown label"
+                  oninput="scanDelayHidden.value = scanDelayNumber.value? scanDelayNumber.value+scanDelayUnit.value: ''">
+                  <option value="">ms</option>
+                  <option value="s" <?=substr($options["--scan-delay"]??"", -1)=="s"?"selected":"" ?>>secondes</option>
+                  <option value="m" <?=substr($options["--scan-delay"]??"", -1)=="m"?"selected":"" ?>>minutes</option>
+                  <option value="h" <?=substr($options["--scan-delay"]??"", -1)=="h"?"selected":"" ?>>heures</option>
+                </select>
               </div>
               <input id="scanDelayHidden" type="hidden" name="--scan-delay"
                 value="<?= $options["--scan-delay"] ?? "" ?>">
@@ -557,7 +557,7 @@ Exemples: <?= $_SERVER['REMOTE_ADDR']; ?>/24 <?= $_SERVER['SERVER_NAME']; ?> 10.
                 <input type="number" min="0" id="maxScanDelay" placeholder="Durée"
                   oninput="maxRTTHidden.value = maxScanDelay.value? maxScanDelay.value+maxRTTUnit.value: ''"
                   <?= preg_match("/^\d+/", $options["--max-scan-delay"] ?? "", $matches) ? "value='{$matches[0]}'" : "" ?>>
-                <select id="maxRTTUnit" class="ui dropdown label"
+                <select id="maxRTTUnit" class="ui clearable dropdown label"
                   oninput="maxRTTHidden.value = maxScanDelay.value? maxScanDelay.value+maxRTTUnit.value: ''">
                   <option value="">ms</option>
                   <option value="s" <?=substr($options["--max-scan-delay"]??"", -1)=="s"?"selected":"" ?>>secondes</option>
@@ -594,7 +594,7 @@ foreach (scandir('templates') as $filename) {
 
           <div class="field">
             <label for="originalURLSelect">Comparer avec un précédent scan</label>
-            <select id="originalURLSelect" class="ui dropdown" name="originalURL" value="<?= $options["originalURL"] ?? "" ?>">
+            <select id="originalURLSelect" class="ui clearable dropdown" name="originalURL" value="<?= $options["originalURL"] ?? "" ?>">
               <option value="">Précédent scan</option>
 <?php
 if (!file_exists($SCANSDIR)) mkdir($SCANSDIR);
@@ -741,8 +741,11 @@ foreach ([$DATADIR, $NMAPDIR] as $dir) {
 
     $(".ui.accordion").accordion()
 
-    $(".ui.dropdown").dropdown({
+    $(".ui.clearable.dropdown").dropdown({
       clearable: true
+    })
+    $(".ui:not(.clearable).dropdown").dropdown({
+      clearable: false
     })
 
     new TagsInput(targetsInput, {}, " ")
