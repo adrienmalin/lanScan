@@ -733,7 +733,7 @@ foreach ([$DATADIR, $NMAPDIR] as $dir) {
     class TagsInput extends Tagify {
       constructor(input, options={}, delim = ",") {
         if (!options.delimiters) options.delimiters = " |,"
-        if (!options.originalURLInputValueFormat) options.originalURLInputValueFormat = tags => tags.map(tag => tag.value).join(delim)
+        if (!options.originalInputValueFormat) options.originalInputValueFormat = tags => tags.map(tag => tag.value).join(delim)
         if (input.list) options.whitelist = Array.from(input.list.options).map(option => option.value)
         super(input, options)
       }
