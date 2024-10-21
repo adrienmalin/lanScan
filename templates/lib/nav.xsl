@@ -39,7 +39,7 @@ Exemples: 192.168.1.0/24 scanme.nmap.org 10.0-255.0-255.1-254"/>
                         <i class="sync icon"></i>
                     </button>
                     <button class="ui teal icon submit button" type="submit" formmethod="get" formaction="{$basedir}/">
-                        <i class="sliders horizontal icon"></i>
+                        <i class="settings icon"></i>
                     </button>
                     <a class="ui teal icon button" href="https://nmap.org/man/fr/index.html" target="_blank">
                         <i class="question circle icon"></i>

@@ -187,7 +187,7 @@ function hostScanning(link) {
                             <xsl:text>/?preset=host&amp;targets=</xsl:text>
                             <xsl:value-of select="$hostAddress"/>
                         </xsl:attribute>
-                        <i class="sliders horizontal icon"></i>
+                        <i class="settings icon"></i>
                     </a>
                 </div>
             </td>
