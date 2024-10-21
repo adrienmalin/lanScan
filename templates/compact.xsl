@@ -13,18 +13,18 @@
     <xsl:strip-space elements='*'/>
 
     <xsl:param name="savedAs" select=""/>
-    <xsl:param name="compareWith" select=""/>
+    <xsl:param name="original" select=""/>
     <xsl:param name="refreshPeriod" select="0"/>
     <xsl:param name="sudo" select="false"/>
 
     <xsl:variable name="current" select="./nmaprun"/>
     <xsl:variable name="stylesheetURL" select="substring-before(substring-after(processing-instruction('xml-stylesheet'),'href=&quot;'),'&quot;')"/>
     <xsl:variable name="basedir" select="concat($stylesheetURL, '/../..')"/>
-    <xsl:variable name="init" select="document($compareWith)/nmaprun"/>
+    <xsl:variable name="init" select="document($original)/nmaprun"/>
     <xsl:variable name="nextCompareWith">
         <xsl:choose>
             <xsl:when test="$savedAs"><xsl:value-of select="$savedAs"/></xsl:when>
-            <xsl:when test="$compareWith"><xsl:value-of select="$compareWith"/></xsl:when>
+            <xsl:when test="$original"><xsl:value-of select="$original"/></xsl:when>
             <xsl:otherwise></xsl:otherwise>
         </xsl:choose>
     </xsl:variable>

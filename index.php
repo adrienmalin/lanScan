@@ -593,8 +593,8 @@ foreach (scandir('templates') as $filename) {
           </div>
 
           <div class="field">
-            <label for="compareWithSelect">Comparer avec un précédent scan</label>
-            <select id="compareWithSelect" class="ui dropdown" name="compareWith" value="<?= $options["compareWith"] ?? "" ?>">
+            <label for="originalSelect">Comparer avec un précédent scan</label>
+            <select id="originalSelect" class="ui dropdown" name="original" value="<?= $options["original"] ?? "" ?>">
               <option value="">Précédent scan</option>
 <?php
 if (!file_exists($SCANSDIR)) mkdir($SCANSDIR);
@@ -602,7 +602,7 @@ foreach (scandir($SCANSDIR) as $filename) {
   if (substr($filename, -4) === '.xml') {
     $name = substr($filename, 0, -4);
     $URL = "$BASEDIR/$SCANSDIR/".rawurlencode($filename);
-    if (isset($options["compareWith"]) && $URL == $options["compareWith"]) {
+    if (isset($options["original"]) && $URL == $options["original"]) {
       echo "              <option value='$URL' selected>$name</option>\n";
     } else {
       echo "              <option value='$URL'>$name</option>\n";

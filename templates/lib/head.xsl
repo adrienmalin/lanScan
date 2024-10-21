@@ -28,7 +28,7 @@
                             <xsl:with-param name="argList" select="substring-before(substring-after(@args, ' -'), ' -oX')"/>
                             <xsl:with-param name="asURL" select="true()"/>
                         </xsl:call-template>
-                        <xsl:text>compareWith=</xsl:text>
+                        <xsl:text>original=</xsl:text>
                         <xsl:value-of select="$nextCompareWith"/>
                         <xsl:text>&amp;refreshPeriod=</xsl:text>
                         <xsl:value-of select="$refreshPeriod"/>
