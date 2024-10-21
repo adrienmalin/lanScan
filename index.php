@@ -60,13 +60,13 @@ Exemples: <?= $_SERVER['REMOTE_ADDR']; ?>/24 <?= $_SERVER['SERVER_NAME']; ?> 10.
         <div class="content">
           <div class="field">
             <label for="excludeInput" title="--exclude">Exclure les hôtes ou réseaux</label>
-            <input type="text" id="excludeInput" name="--exclude" placeholder="Hôte/réseau" list="targetsList"
+            <input id="excludeInput" type="text" name="--exclude" placeholder="Hôte/réseau" list="targetsList"
               pattern="[a-zA-Z0-9._\/,\-]*" value="<?= $options['--exclude'] ?? "" ?>">
           </div>
           
           <div class="field">
             <label for="iRInput" title="-iR">Nombre de cibles au hasard</label>
-            <input type="number" min="0" id="iRInput" name="-iR" placeholder="Nombre de cibles"
+            <input id="iRInput" type="number" min="0" name="-iR" placeholder="Nombre de cibles"
               value="<?= $options['-iR'] ?? "" ?>">
           </div>
         </div>
@@ -75,28 +75,28 @@ Exemples: <?= $_SERVER['REMOTE_ADDR']; ?>/24 <?= $_SERVER['SERVER_NAME']; ?> 10.
         <div class="content">
           <div class="inline field">
             <div class="ui toggle checkbox">
-              <input type="checkbox" id="PnCheckbox" name="-Pn" <?= $options['-Pn'] ?? false ? 'checked' : ''; ?> />
+              <input id="PnCheckbox" type="checkbox" name="-Pn" <?= $options['-Pn'] ?? false ? 'checked' : ''; ?> />
               <label for="PnCheckbox" title="-Pn">Sauter cette étape (considérer tous les hôtes comme actifs)</label>
             </div>
           </div>
 
           <div class="field">
             <label for="PSInput" title="-PS">TCP SYN</label>
-            <input type="text" id="PSInput" name="-PS" placeholder="Ports" list="servicesList"
+            <input id="PSInput" type="text" name="-PS" placeholder="Ports" list="servicesList"
               pattern="([0-9\-]+|[a-z\-]+)(,[0-9\-]+|,[a-z\-]+)*" value="<?= $options['-PS'] ?? "" ?>"
               title="Liste de ports ex: 22,23,25,80,200-1024,60000-">
           </div>
 
           <div class="field">
             <label for="PAInput" title="-PA">TCP ACK</label>
-            <input type="text" id="PAInput" name="-PA" placeholder="Ports" list="servicesList"
+            <input id="PAInput" type="text" name="-PA" placeholder="Ports" list="servicesList"
               pattern="([0-9\-]+|[a-z\-]+)(,[0-9\-]+|,[a-z\-]+)*" value="<?= $options['-PA'] ?? "" ?>"
               title="Liste de ports ex: 22,23,25,80,200-1024,60000-">
           </div>
 
           <div class="field">
             <label for="PUInput" title="-PU">UDP</label>
-            <input type="text" id="PUInput" name="-PU" placeholder="Ports" list="servicesList"
+            <input id="PUInput" type="text" name="-PU" placeholder="Ports" list="servicesList"
               pattern="([0-9\-]+|[a-z\-]+)(,[0-9\-]+|,[a-z\-]+)*" value="<?= $options['-PU'] ?? "" ?>"
               title="Liste de ports ex: 22,23,25,80,200-1024,60000-">
           </div>
@@ -106,19 +106,19 @@ Exemples: <?= $_SERVER['REMOTE_ADDR']; ?>/24 <?= $_SERVER['SERVER_NAME']; ?> 10.
             <div class="inline fields">
               <div class="field">
                 <div class="ui toggle checkbox">
-                  <input type="checkbox" id="PECheckbox" name="-PE" <?= $options['-PE'] ?? false ? 'checked' : ''; ?> />
+                  <input id="PECheckbox" type="checkbox" name="-PE" <?= $options['-PE'] ?? false ? 'checked' : ''; ?> />
                   <label for="PECheckbox" title="-PE">Echo request</label>
                 </div>
               </div>
               <div class="field">
                 <div class="ui toggle checkbox">
-                  <input type="checkbox" id="PPCheckbox" name="-PP" <?= $options['-PP'] ?? false ? 'checked' : ''; ?> />
+                  <input id="PPCheckbox" type="checkbox" name="-PP" <?= $options['-PP'] ?? false ? 'checked' : ''; ?> />
                   <label for="PPCheckbox" title="-PP">Timestamp request</label>
                 </div>
               </div>
               <div class="field">
                 <div class="ui toggle checkbox">
-                  <input type="checkbox" id="PMCheckbox" name="-PM" <?= $options['-PM'] ?? false ? 'checked' : ''; ?> />
+                  <input id="PMCheckbox" type="checkbox" name="-PM" <?= $options['-PM'] ?? false ? 'checked' : ''; ?> />
                   <label for="PMCheckbox" title="-PM">Mask request</label>
                 </div>
               </div>
@@ -127,7 +127,7 @@ Exemples: <?= $_SERVER['REMOTE_ADDR']; ?>/24 <?= $_SERVER['SERVER_NAME']; ?> 10.
 
           <div class="field">
             <label for="POInput" title="-PO">Protocole IP (par type)</label>
-            <input type="text" id="POInput" name="-PO" placeholder="Protocole"
+            <input id="POInput" type="text" name="-PO" placeholder="Protocole"
               pattern="[0-9,\-]+" value="<?= $options['-PO'] ?? "" ?>"
               title="[num de protocole]">
           </div>
@@ -135,13 +135,13 @@ Exemples: <?= $_SERVER['REMOTE_ADDR']; ?>/24 <?= $_SERVER['SERVER_NAME']; ?> 10.
           <div class="inline fields">
             <div class="field">
               <div class="ui toggle checkbox">
-                <input type="checkbox" id="PRCheckbox" name="-PR" <?= $options['-PR'] ?? false ? 'checked' : ''; ?> />
+                <input id="PRCheckbox" type="checkbox" name="-PR" <?= $options['-PR'] ?? false ? 'checked' : ''; ?> />
                 <label for="PRCheckbox" title="-PR">Ping ARP</label>
               </div>
             </div>
             <div class="field">
               <div class="ui toggle checkbox">
-                <input type="checkbox" id="sendIPCheckbox" name="--send-ip" <?= $options['--send-ip'] ?? false ? 'checked' : ''; ?> />
+                <input id="sendIPCheckbox" type="checkbox" name="--send-ip" <?= $options['--send-ip'] ?? false ? 'checked' : ''; ?> />
                 <label for="sendIPCheckbox" title="--send-ip">Pas de scan ARP</label>
               </div>
             </div>
@@ -150,13 +150,13 @@ Exemples: <?= $_SERVER['REMOTE_ADDR']; ?>/24 <?= $_SERVER['SERVER_NAME']; ?> 10.
           <div class="inline fields">
             <div class="field">
               <div class="ui toggle checkbox">
-                <input type="checkbox" id="nCheckbox" name="-n" <?= $options['-n'] ?? false ? 'checked' : ''; ?> />
+                <input id="nCheckbox" type="checkbox" name="-n" <?= $options['-n'] ?? false ? 'checked' : ''; ?> />
                 <label for="nCheckbox" title="-n">Ne jamais résoudre les noms DNS</label>
               </div>
             </div>
             <div class="field">
               <div class="ui toggle checkbox">
-                <input type="checkbox" id="RCheckbox" name="-R" <?= $options['-R'] ?? false ? 'checked' : ''; ?> />
+                <input id="RCheckbox" type="checkbox" name="-R" <?= $options['-R'] ?? false ? 'checked' : ''; ?> />
                 <label for="nCheckbox" title="-R">Toujours résoudre les noms DNS<br />(par défault seuls les hôtes actifs sont résolus)</label>
               </div>
             </div>
@@ -164,7 +164,7 @@ Exemples: <?= $_SERVER['REMOTE_ADDR']; ?>/24 <?= $_SERVER['SERVER_NAME']; ?> 10.
 
           <div class="field">
             <label for="dnsServersInput" title="--dns-servers">Utiliser les serveurs DNS</label>
-            <input type="text" id="dnsServersInput" name="--dns-servers" placeholder="serveur"
+            <input id="dnsServersInput" type="text" name="--dns-servers" placeholder="serveur"
               pattern="[a-zA-Z0-9._,\-]*" value="<?= $options['--dns-servers'] ?? "" ?>"
               title="serv1[,serv2],...">
           </div>
@@ -179,19 +179,19 @@ Exemples: <?= $_SERVER['REMOTE_ADDR']; ?>/24 <?= $_SERVER['SERVER_NAME']; ?> 10.
               <div class="fields">
                 <div class="field">
                   <div class="ui toggle checkbox">
-                    <input type="checkbox" id="sSCheckbox" name="-sS" <?= $options['-sS'] ?? false ? 'checked' : ''; ?> />
+                    <input id="sSCheckbox" type="checkbox" name="-sS" <?= $options['-sS'] ?? false ? 'checked' : ''; ?> />
                     <label for="sSCheckbox" title="-sS">TCP SYN</label>
                   </div>
                 </div>
                 <div class="field">
                   <div class="ui toggle checkbox">
-                    <input type="checkbox" id="sTCheckbox" name="-sT" <?= $options['-sT'] ?? false ? 'checked' : ''; ?> />
+                    <input id="sTCheckbox" type="checkbox" name="-sT" <?= $options['-sT'] ?? false ? 'checked' : ''; ?> />
                     <label for="sTCheckbox" title="-sT">TCP Connect()</label>
                   </div>
                 </div>
                 <div class="field">
                   <div class="ui toggle checkbox">
-                    <input type="checkbox" id="sACheckbox" name="-sA" <?= $options['-sA'] ?? false ? 'checked' : ''; ?> />
+                    <input id="sACheckbox" type="checkbox" name="-sA" <?= $options['-sA'] ?? false ? 'checked' : ''; ?> />
                     <label for="sACheckbox" title="-sA">TCP ACK</label>
                   </div>
                 </div>
@@ -200,19 +200,19 @@ Exemples: <?= $_SERVER['REMOTE_ADDR']; ?>/24 <?= $_SERVER['SERVER_NAME']; ?> 10.
               <div class="fields">
                 <div class="field">
                   <div class="ui toggle checkbox">
-                    <input type="checkbox" id="sWCheckbox" name="-sW" <?= $options['-sW'] ?? false ? 'checked' : ''; ?> />
+                    <input id="sWCheckbox" type="checkbox" name="-sW" <?= $options['-sW'] ?? false ? 'checked' : ''; ?> />
                     <label for="sWCheckbox" title="-sW">Fenêtre TCP</label>
                   </div>
                 </div>
                 <div class="field">
                   <div class="ui toggle checkbox">
-                    <input type="checkbox" id="sMCheckbox" name="-sM" <?= $options['-sM'] ?? false ? 'checked' : ''; ?> />
+                    <input id="sMCheckbox" type="checkbox" name="-sM" <?= $options['-sM'] ?? false ? 'checked' : ''; ?> />
                     <label for="sMCheckbox" title="-sM">Maimon</label>
                   </div>
                 </div>
                 <div class="field">
                   <div class="ui toggle checkbox">
-                    <input type="checkbox" id="sNCheckbox" name="-sN" <?= $options['-sN'] ?? false ? 'checked' : ''; ?> />
+                    <input id="sNCheckbox" type="checkbox" name="-sN" <?= $options['-sN'] ?? false ? 'checked' : ''; ?> />
                     <label for="sNCheckbox" title="-sN">TCP Null</label>
                   </div>
                 </div>
@@ -221,19 +221,19 @@ Exemples: <?= $_SERVER['REMOTE_ADDR']; ?>/24 <?= $_SERVER['SERVER_NAME']; ?> 10.
               <div class="fields">
                 <div class="field">
                   <div class="ui toggle checkbox">
-                    <input type="checkbox" id="sFCheckbox" name="-sF" <?= $options['-sF'] ?? false ? 'checked' : ''; ?> />
+                    <input id="sFCheckbox" type="checkbox" name="-sF" <?= $options['-sF'] ?? false ? 'checked' : ''; ?> />
                     <label for="sFCheckbox" title="-sF">TCP FIN</label>
                   </div>
                 </div>
                 <div class="field">
                   <div class="ui toggle checkbox">
-                    <input type="checkbox" id="sXCheckbox" name="-sX" <?= $options['-sX'] ?? false ? 'checked' : ''; ?> />
+                    <input id="sXCheckbox" type="checkbox" name="-sX" <?= $options['-sX'] ?? false ? 'checked' : ''; ?> />
                     <label for="sXCheckbox" title="-sX">Sapin de Noël</label>
                   </div>
                 </div>
                 <div class="field">
                   <div class="ui toggle checkbox">
-                    <input type="checkbox" id="sUCheckbox" name="-sU" <?= $options['-sU'] ?? false ? 'checked' : ''; ?> />
+                    <input id="sUCheckbox" type="checkbox" name="-sU" <?= $options['-sU'] ?? false ? 'checked' : ''; ?> />
                     <label for="sUCheckbox" title="-sU">UDP</label>
                   </div>
                 </div>
@@ -241,28 +241,28 @@ Exemples: <?= $_SERVER['REMOTE_ADDR']; ?>/24 <?= $_SERVER['SERVER_NAME']; ?> 10.
 
               <div class="field">
                 <label for="scanflagsInput" title="--scanflags">Scan TCP personnalisé</label>
-                <input type="text" id="scanflagsInput" name="--scanflags" placeholder="Drapeaux TCP" list="flagsList"
+                <input id="scanflagsInput" type="text" name="--scanflags" placeholder="Drapeaux TCP" list="flagsList"
                   pattern="(URG|ACK|PSH|RST|SYN|FIN|,)+|[1-9]?[0-9]|[1-2][0-9][0-9]" value="<?= $options['--scanflags'] ?? "" ?>"
                   title="Mélanger simplement les drapeaux URG, ACK, PSH, RST, SYN et FIN.">
               </div>
 
               <div class="field">
                 <label for="sIInput" title="-sI">Hôte zombie</label>
-                <input type="text" id="sIInput" name="-p" placeholder="zombie host[:probeport]"
+                <input id="sIInput" type="text" name="-p" placeholder="zombie host[:probeport]"
                   pattern="[a-zA-Z0-9._\-]+(:[0-9]+)?" value="<?= $options['-sI'] ?? "" ?>"
                   title="zombie host[:probeport]">
               </div>
 
               <div class="field">
                 <label for="bInput" title="-b">Rebond FTP</label>
-                <input type="text" id="bInput" name="-p" placeholder="[<username>[:<password>]@]<server>[:<port>]"
+                <input id="bInput" type="text" name="-p" placeholder="[<username>[:<password>]@]<server>[:<port>]"
                   pattern="([a-zA-Z0-9._\-]+(:.+)?@)?[a-zA-Z0-9._\-]+(:[0-9]+)?" value="<?= $options['-b'] ?? "" ?>"
                   title="[<username>[:<password>]@]<server>[:<port>]">
               </div>
 
               <div class="field">
                 <div class="ui toggle checkbox">
-                  <input type="checkbox" id="sUCheckbox" name="-sU" <?= $options['-sU'] ?? false ? 'checked' : ''; ?> />
+                  <input id="sUCheckbox" type="checkbox" name="-sU" <?= $options['-sU'] ?? false ? 'checked' : ''; ?> />
                   <label for="sUCheckbox" title="-sO">Scan des protocoles supportés par la couche IP</label>
                 </div>
               </div>
@@ -276,14 +276,14 @@ Exemples: <?= $_SERVER['REMOTE_ADDR']; ?>/24 <?= $_SERVER['SERVER_NAME']; ?> 10.
           <div class="content">
           <div class="inline field">
             <div class="ui toggle checkbox" title="-sP">
-              <input type="checkbox" id="sPCheckbox" name="-sP" <?= $options['-sP'] ?? false ? 'checked' : ''; ?> />
+              <input id="sPCheckbox" type="checkbox" name="-sP" <?= $options['-sP'] ?? false ? 'checked' : ''; ?> />
               <label for="sPCheckbox">Sauter cette étape</label>
             </div>
           </div>
 
           <div class="inline field">
             <div class="ui toggle checkbox" title="-F">
-              <input type="checkbox" id="FCheckbox" name="-F" <?= $options['-F'] ?? false ? 'checked' : ''; ?>
+              <input id="FCheckbox" type="checkbox" name="-F" <?= $options['-F'] ?? false ? 'checked' : ''; ?>
                 onchange="pInput.disabled = FCheckbox.checked" />
               <label for="FCheckbox">Scanner les ports connus</label>
             </div>
@@ -291,14 +291,14 @@ Exemples: <?= $_SERVER['REMOTE_ADDR']; ?>/24 <?= $_SERVER['SERVER_NAME']; ?> 10.
 
           <div class="field">
             <label for="pInput" title="-p">Scanner les ports</label>
-            <input type="text" id="pInput" name="-p" placeholder="Ports" list="servicesList" <?= $options['-F'] ?? false ? 'disabled' : ''; ?>
+            <input id="pInput" type="text" name="-p" placeholder="Ports" list="servicesList" <?= $options['-F'] ?? false ? 'disabled' : ''; ?>
               pattern="(([TU]:)?[0-9\-]+|[a-z\-]+)(,([TU]:)?[0-9\-]+|,[a-z\-]+)*" value="<?= $options['-p'] ?? "" ?>"
               title="Liste de ports ex: ssh,ftp,U:53,111,137,T:21-25,80,139,8080">
           </div>
 
           <div class="inline field">
             <div class="ui toggle checkbox" title="-r">
-              <input type="checkbox" id="rCheckbox" name="-r" <?= $options['-r'] ?? false ? 'checked' : ''; ?> />
+              <input id="rCheckbox" type="checkbox" name="-r" <?= $options['-r'] ?? false ? 'checked' : ''; ?> />
               <label for="rCheckbox">Ne pas mélanger les ports</label>
             </div>
           </div>
@@ -308,14 +308,14 @@ Exemples: <?= $_SERVER['REMOTE_ADDR']; ?>/24 <?= $_SERVER['SERVER_NAME']; ?> 10.
         <div class="content">
           <div class="inline field">
             <div class="ui toggle checkbox" title="-sV">
-              <input type="checkbox" id="sVCheckbox" name="-sV" <?= $options['-sV'] ?? false ? 'checked' : ''; ?> />
+              <input id="sVCheckbox" type="checkbox" name="-sV" <?= $options['-sV'] ?? false ? 'checked' : ''; ?> />
               <label for="sVCheckbox">Détection de version</label>
             </div>
           </div>
         
           <div class="inline field">
             <div class="ui toggle checkbox">
-              <input type="checkbox" id="allportsCheckbox" name="--allports" <?= $options['--allports'] ?? false ? 'checked' : ''; ?> />
+              <input id="allportsCheckbox" type="checkbox" name="--allports" <?= $options['--allports'] ?? false ? 'checked' : ''; ?> />
               <label for="allportsCheckbox" title="--allports">N'exclure aucun port de la détection de version</label>
             </div>
           </div>
@@ -328,7 +328,7 @@ Exemples: <?= $_SERVER['REMOTE_ADDR']; ?>/24 <?= $_SERVER['SERVER_NAME']; ?> 10.
         
           <div class="inline field">
             <div class="ui toggle checkbox">
-              <input type="checkbox" id="sRCheckbox" name="-sR" <?= $options['-sR'] ?? false ? 'checked' : ''; ?> />
+              <input id="sRCheckbox" type="checkbox" name="-sR" <?= $options['-sR'] ?? false ? 'checked' : ''; ?> />
               <label for="sRCheckbox" title="-sR">Scan RPC</label>
             </div>
           </div>
@@ -338,7 +338,7 @@ Exemples: <?= $_SERVER['REMOTE_ADDR']; ?>/24 <?= $_SERVER['SERVER_NAME']; ?> 10.
         <div class="content">
           <div class="inline field">
             <div class="ui toggle checkbox">
-              <input type="checkbox" id="sCCheckbox" name="-sC" <?= $options['-sC'] ?? false ? 'checked' : ''; ?> />
+              <input id="sCCheckbox" type="checkbox" name="-sC" <?= $options['-sC'] ?? false ? 'checked' : ''; ?> />
               <label for="sCCheckbox" title="-sC">Scripts par défaut</label>
             </div>
           </div>
@@ -352,21 +352,21 @@ Exemples: <?= $_SERVER['REMOTE_ADDR']; ?>/24 <?= $_SERVER['SERVER_NAME']; ?> 10.
 
           <div class="field">
             <label for="scriptArgsInput" title="--script-args">Arguments des scripts</label>
-            <input type="text" id="scriptArgsInput" name="--script-args" placeholder="nom=valeur"
+            <input id="scriptArgsInput" type="text" name="--script-args" placeholder="nom=valeur"
               pattern='[a-zA-Z][a-zA-Z0-9\-_]*=[^"]+(,[a-zA-Z][a-zA-Z0-9\-_]*=[^"]+)?' value="<?= $options['--script-args'] ?? "" ?>"
               title="<n1=v1,[n2=v2,...]>">
           </div>
         
           <div class="inline field">
             <div class="ui toggle checkbox">
-              <input type="checkbox" id="scriptTraceCheckbox" name="--script-trace" <?= $options['--script-trace'] ?? false ? 'checked' : ''; ?> />
+              <input id="scriptTraceCheckbox" type="checkbox" name="--script-trace" <?= $options['--script-trace'] ?? false ? 'checked' : ''; ?> />
               <label for="scriptTraceCheckbox" title="--script-trace">Montrer toutes les données envoyées ou recues</label>
             </div>
           </div>
           
           <div class="inline field">
             <div class="ui toggle checkbox">
-              <input type="checkbox" id="scriptUpdateDBCheckbox" name="--script-updatedb" <?= $options['--script-updatedb'] ?? false ? 'checked' : ''; ?> />
+              <input id="scriptUpdateDBCheckbox" type="checkbox" name="--script-updatedb" <?= $options['--script-updatedb'] ?? false ? 'checked' : ''; ?> />
               <label for="scriptUpdateDBCheckbox" title="--script-updatedb">Mettre à jour la base de données des scripts</label>
             </div>
           </div>
@@ -376,21 +376,21 @@ Exemples: <?= $_SERVER['REMOTE_ADDR']; ?>/24 <?= $_SERVER['SERVER_NAME']; ?> 10.
         <div class="content">
           <div class="inline field">
             <div class="ui toggle checkbox">
-              <input type="checkbox" id="OCheckbox" name="-O" <?= $options['-O'] ?? false ? 'checked' : ''; ?> />
+              <input id="OCheckbox" type="checkbox" name="-O" <?= $options['-O'] ?? false ? 'checked' : ''; ?> />
               <label for="OCheckbox" title="-O">Détecter le système d'exploitation</label>
             </div>
           </div>
         
           <div class="inline field">
             <div class="ui toggle checkbox">
-              <input type="checkbox" id="osscanLimitCheckbox" name="--osscan-limit" <?= $options['--osscan-limit'] ?? false ? 'checked' : ''; ?> />
+              <input id="osscanLimitCheckbox" type="checkbox" name="--osscan-limit" <?= $options['--osscan-limit'] ?? false ? 'checked' : ''; ?> />
               <label for="osscanLimitCheckbox" title="--osscan-limit">Seulement les cibles prometteuses</label>
             </div>
           </div>
           
           <div class="inline field">
             <div class="ui toggle checkbox">
-              <input type="checkbox" id="osscanGuessCheckbox" name="--osscan-guess" <?= $options['--osscan-guess'] ?? false ? 'checked' : ''; ?> />
+              <input id="osscanGuessCheckbox" type="checkbox" name="--osscan-guess" <?= $options['--osscan-guess'] ?? false ? 'checked' : ''; ?> />
               <label for="osscanGuessCheckbox" title="--osscan-guess">Essayer de deviner</label>
             </div>
           </div>
@@ -406,7 +406,7 @@ Exemples: <?= $_SERVER['REMOTE_ADDR']; ?>/24 <?= $_SERVER['SERVER_NAME']; ?> 10.
         <div class="content">
           <div class="field">
             <label for="TSelect" title="--T">Intensité des tests de version</label>
-            <select class="ui dropdown" id="TSelect" name="-T" value="<?= $options["-T"] ?? ""?>">
+            <select id="TSelect" class="ui dropdown" name="-T" value="<?= $options["-T"] ?? ""?>">
               <option value="0"<?=($options["-T"]??"")==0?" selected":""?>>Paranoïaque</option>
               <option value="1"<?=($options["-T"]??"")==1?" selected":""?>>Sournois</option>
               <option value="2"<?=($options["-T"]??"")==2?" selected":""?>>Poli</option>
@@ -417,11 +417,20 @@ Exemples: <?= $_SERVER['REMOTE_ADDR']; ?>/24 <?= $_SERVER['SERVER_NAME']; ?> 10.
           </div>
           
           <div class="field">
-            <label for="refreshPeriodInput">Rafraîchir toutes les</label>
-            <div class="ui right labeled input">
-              <input type="number" min="0" id="refreshPeriodInput" name="refreshPeriod" placeholder="Période"
-                value="<?= $options["refreshPeriod"] ?? "" ?>">
-              <div class="ui label">secondes</div>
+            <label>Tailles des groupes d'hôtes à scanner en parallèle</label>
+            <div class="two fields">
+              <div class="field">
+                <label for="minHostgroupInput" title="--min-hostgroup">Minimum</label>
+                <input id="minHostgroupInput" type="number" min="0" placeholder="Nombre"
+                value="<?= $options["--min-hostgroup"] ?? "" ?>"
+                oninput="maxHostgroupInput.min = minHostgroupInput.value">
+              </div>
+              <div class="field">
+                <label for="maxHostgroupInput" title="--max-hostgroup">Maximum</label>
+                <input id="maxHostgroupInput" type="number" max="0" placeholder="Nombre"
+                value="<?= $options["--max-hostgroup"] ?? "" ?>"
+                oninput="minHostgroupInput.max = maxHostgroupInput.value">
+              </div>
             </div>
           </div>
 
@@ -429,37 +438,37 @@ Exemples: <?= $_SERVER['REMOTE_ADDR']; ?>/24 <?= $_SERVER['SERVER_NAME']; ?> 10.
             <label>Temps d'aller-retour des paquets de tests</label>
             <div class="two fields">
               <div class="field">
-                <label for="minRTTInput">Minimum</label>
+                <label for="minRTTInput" title="--min-rtt-timeout">Minimum</label>
                 <div class="ui right labeled input">
                   <input type="number" min="0" id="minRTTDuration" placeholder="Durée"
                     oninput="minRTTHidden.value = minRTTDuration.value? minRTTDuration.value+minRTTUnit.value: ''; maxRTTHidden.min=minRTTHidden.value"
                     <?= preg_match("/^\d+/", $options["--min-rtt-timeout"] ?? "", $matches) ? "value='{$matches[0]}'" : "" ?>>
-                    <select class="ui dropdown label" id="minRTTUnit"
+                    <select id="minRTTUnit" class="ui dropdown label"
                       oninput="minRTTHidden.value = minRTTDuration.value? minRTTDuration.value+minRTTUnit.value: ''">
                       <option value="">millisecondes</option>
-                      <option value="s" <?=substr($options["--min-rtt-timeout"] ?? "", -1) == "s" ? "selected" : "" ?>>secondes</option>
-                      <option value="m" <?=substr($options["--min-rtt-timeout"] ?? "", -1) == "m" ? "selected" : "" ?>>minutes</option>
-                      <option value="h" <?=substr($options["--min-rtt-timeout"] ?? "", -1) == "h" ? "selected" : "" ?>>heures</option>
+                      <option value="s" <?=substr($options["--min-rtt-timeout"]??"", -1)=="s"?"selected":"" ?>>secondes</option>
+                      <option value="m" <?=substr($options["--min-rtt-timeout"]??"", -1)=="m"?"selected":"" ?>>minutes</option>
+                      <option value="h" <?=substr($options["--min-rtt-timeout"]??"", -1)=="h"?"selected":"" ?>>heures</option>
                     </select>
                 </div>
-                <input type="hidden" id="minRTTHidden" name="--min-rtt-timeout"
+                <input id="minRTTHidden" type="hidden" name="--min-rtt-timeout"
                   value="<?= $options["--min-rtt-timeout"] ?? "" ?>">
               </div>
               <div class="field">
-                <label for="maxRTTInput">Maximum</label>
+                <label for="maxRTTInput" title="--max-rtt-timeout">Maximum</label>
                 <div class="ui right labeled input">
                   <input type="number" max="0" id="maxRTTDuration" placeholder="Durée"
                     oninput="maxRTTHidden.value = maxRTTDuration.value? maxRTTDuration.value+maxRTTUnit.value: ''; minRTTHidden.max=maxRTTHidden.value"
                     <?= preg_match("/^\d+/", $options["--max-rtt-timeout"] ?? "", $matches) ? "value='{$matches[0]}'" : "" ?>>
-                  <select class="ui dropdown label" id="maxRTTUnit"
+                  <select id="maxRTTUnit" class="ui dropdown label"
                     oninput="maxRTTHidden.value = maxRTTDuration.value? maxRTTDuration.value+maxRTTUnit.value: ''">
                     <option value="">millisecondes</option>
-                    <option value="s" <?=substr($options["--max-rtt-timeout"] ?? "", -1) == "s" ? "selected" : "" ?>>secondes</option>
-                    <option value="m" <?=substr($options["--max-rtt-timeout"] ?? "", -1) == "m" ? "selected" : "" ?>>minutes</option>
-                    <option value="h" <?=substr($options["--max-rtt-timeout"] ?? "", -1) == "h" ? "selected" : "" ?>>heures</option>
+                    <option value="s" <?=substr($options["--max-rtt-timeout"]??"", -1)=="s"?"selected":"" ?>>secondes</option>
+                    <option value="m" <?=substr($options["--max-rtt-timeout"]??"", -1)=="m"?"selected":"" ?>>minutes</option>
+                    <option value="h" <?=substr($options["--max-rtt-timeout"]??"", -1)=="h"?"selected":"" ?>>heures</option>
                   </select>
                 </div>
-                <input type="hidden" id="maxRTTHidden" name="--max-rtt-timeout"
+                <input id="maxRTTHidden" type="hidden" name="--max-rtt-timeout"
                   value="<?= $options["--max-rtt-timeout"] ?? "" ?>">
               </div>
             </div>
@@ -471,7 +480,7 @@ Exemples: <?= $_SERVER['REMOTE_ADDR']; ?>/24 <?= $_SERVER['SERVER_NAME']; ?> 10.
         <div class="content">
           <div class="field">
             <label for="stylesheetSelect" title="--stylesheet">Feuille de style</label>
-            <select class="ui dropdown" id="stylesheetSelect" name="--stylesheet" value="<?= $options["--stylesheet"] ?? ""?>">
+            <select id="stylesheetSelect" class="ui dropdown" name="--stylesheet" value="<?= $options["--stylesheet"] ?? ""?>">
 <?php
 foreach (scandir('templates') as $filename) {
   if (substr($filename, -4) === '.xsl') {
@@ -490,7 +499,7 @@ foreach (scandir('templates') as $filename) {
 
           <div class="field">
             <label for="compareWithSelect">Comparer avec un précédent scan</label>
-            <select class="ui dropdown" id="compareWithSelect" name="compareWith" value="<?= $options["compareWith"] ?? "" ?>">
+            <select id="compareWithSelect" class="ui dropdown" name="compareWith" value="<?= $options["compareWith"] ?? "" ?>">
               <option value="">Précédent scan</option>
 <?php
 if (!file_exists($SCANSDIR)) mkdir($SCANSDIR);
@@ -512,7 +521,7 @@ foreach (scandir($SCANSDIR) as $filename) {
           <div class="field">
             <label for="refreshPeriodInput">Rafraîchir toutes les</label>
             <div class="ui right labeled input">
-              <input type="number" min="0" id="refreshPeriodInput" name="refreshPeriod" placeholder="Période"
+              <input id="refreshPeriodInput" type="number" min="0" name="refreshPeriod" placeholder="Période"
                 value="<?= $options["refreshPeriod"] ?? "" ?>">
               <div class="ui label">secondes</div>
             </div>
@@ -520,7 +529,7 @@ foreach (scandir($SCANSDIR) as $filename) {
 
           <div class="inline field">
             <div class="ui toggle checkbox">
-              <input type="checkbox" id="sudoCheckbox" name="sudo" <?= $options["sudo"] ?? false ? 'checked' : ''; ?>/>
+              <input id="sudoCheckbox" type="checkbox" name="sudo" <?= $options["sudo"] ?? false ? 'checked' : ''; ?>/>
               <label for="sudoCheckbox" title="sudo">Exécuter en tant qu'administrateur</label>
             </div>
           </div>
