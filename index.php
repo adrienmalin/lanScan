@@ -593,8 +593,8 @@ foreach (scandir('templates') as $filename) {
           </div>
 
           <div class="field">
-            <label for="originalSelect">Comparer avec un précédent scan</label>
-            <select id="originalSelect" class="ui dropdown" name="original" value="<?= $options["original"] ?? "" ?>">
+            <label for="originalURLSelect">Comparer avec un précédent scan</label>
+            <select id="originalURLSelect" class="ui dropdown" name="originalURL" value="<?= $options["originalURL"] ?? "" ?>">
               <option value="">Précédent scan</option>
 <?php
 if (!file_exists($SCANSDIR)) mkdir($SCANSDIR);
@@ -602,7 +602,7 @@ foreach (scandir($SCANSDIR) as $filename) {
   if (substr($filename, -4) === '.xml') {
     $name = substr($filename, 0, -4);
     $URL = "$BASEDIR/$SCANSDIR/".rawurlencode($filename);
-    if (isset($options["original"]) && $URL == $options["original"]) {
+    if (isset($options["originalURL"]) && $URL == $options["originalURL"]) {
       echo "              <option value='$URL' selected>$name</option>\n";
     } else {
       echo "              <option value='$URL'>$name</option>\n";
@@ -733,7 +733,7 @@ foreach ([$DATADIR, $NMAPDIR] as $dir) {
     class TagsInput extends Tagify {
       constructor(input, options={}, delim = ",") {
         if (!options.delimiters) options.delimiters = " |,"
-        if (!options.originalInputValueFormat) options.originalInputValueFormat = tags => tags.map(tag => tag.value).join(delim)
+        if (!options.originalURLInputValueFormat) options.originalURLInputValueFormat = tags => tags.map(tag => tag.value).join(delim)
         if (input.list) options.whitelist = Array.from(input.list.options).map(option => option.value)
         super(input, options)
       }

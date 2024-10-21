@@ -41,8 +41,8 @@ $xml = new DOMDocument();
 $xml->load($tempPath);
 `rm "$tempPath"`;
 
-$saveAsURL = $options["saveAs"]?? false ? "$BASEDIR/$SCANSDIR/{$options["saveAs"]}.xml" : "";
-$xml->insertBefore($xml->createProcessingInstruction('xslt-param', "name='savedAs' value='".htmlentities($saveAsURL, ENT_QUOTES)."'"), $xml->documentElement);
+$thisURL = $options["saveAs"]?? false ? "$BASEDIR/$SCANSDIR/{$options["saveAs"]}.xml" : "";
+$xml->insertBefore($xml->createProcessingInstruction('xslt-param', "name='thisURL' value='".htmlentities($thisURL, ENT_QUOTES)."'"), $xml->documentElement);
 foreach ($options as $option => $value) {
     if (substr($option, 0, 1) != '-') {
         $xml->insertBefore($xml->createProcessingInstruction('xslt-param', "name='$option' value='".htmlentities($value, ENT_QUOTES)."'"), $xml->documentElement);

@@ -9,7 +9,7 @@
     <xsl:template match="nmaprun" mode="head">
         <xsl:param name="basedir"/>
         <xsl:param name="targets"/>
-        <xsl:param name="nextCompareWith"/>
+        <xsl:param name="nextComparison"/>
         <xsl:param name="refreshPeriod"/>
         <xsl:param name="sudo"/>
 
@@ -28,8 +28,8 @@
                             <xsl:with-param name="argList" select="substring-before(substring-after(@args, ' -'), ' -oX')"/>
                             <xsl:with-param name="asURL" select="true()"/>
                         </xsl:call-template>
-                        <xsl:text>original=</xsl:text>
-                        <xsl:value-of select="$nextCompareWith"/>
+                        <xsl:text>originalURL=</xsl:text>
+                        <xsl:value-of select="$nextComparison"/>
                         <xsl:text>&amp;refreshPeriod=</xsl:text>
                         <xsl:value-of select="$refreshPeriod"/>
                         <xsl:text>&amp;sudo=</xsl:text>

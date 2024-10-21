@@ -9,7 +9,7 @@
     <xsl:template match="nmaprun" mode="nav">
         <xsl:param name="basedir"/>
         <xsl:param name="targets"/>
-        <xsl:param name="nextCompareWith"/>
+        <xsl:param name="nextComparison"/>
         <xsl:param name="refreshPeriod"/>
         <xsl:param name="sudo"/>
         <nav class="ui inverted teal fixed menu">
@@ -31,7 +31,7 @@
 Exemples: 192.168.1.0/24 scanme.nmap.org 10.0-255.0-255.1-254"/>
                         <i class="satellite dish icon"></i>
                     </div>
-                    <input type="hidden" name="original" value="{$nextCompareWith}"/>
+                    <input type="hidden" name="originalURL" value="{$nextComparison}"/>
                     <input type="hidden" name="refreshPeriod" value="{$refreshPeriod}"/>
                     <input type="hidden" name="sudo" value="{$sudo}"/>
                     <button id="hiddenButton" style="display: none;" type="submit" formmethod="get" formaction="{$basedir}/scan.php"></button>

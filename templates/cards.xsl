@@ -13,19 +13,19 @@
     <xsl:output indent="yes"/>
     <xsl:strip-space elements='*'/>
 
-    <xsl:param name="savedAs" select=""/>
-    <xsl:param name="original" select=""/>
+    <xsl:param name="thisURL" select=""/>
+    <xsl:param name="originalURL" select=""/>
     <xsl:param name="refreshPeriod" select="0"/>
     <xsl:param name="sudo" select="false"/>
 
     <xsl:variable name="current" select="./nmaprun"/>
     <xsl:variable name="stylesheetURL" select="substring-before(substring-after(processing-instruction('xml-stylesheet'),'href=&quot;'),'&quot;')"/>
     <xsl:variable name="basedir" select="concat($stylesheetURL, '/../..')"/>
-    <xsl:variable name="init" select="document($original)/nmaprun"/>
-    <xsl:variable name="nextCompareWith">
+    <xsl:variable name="init" select="document($originalURL)/nmaprun"/>
+    <xsl:variable name="nextComparison">
         <xsl:choose>
-            <xsl:when test="$savedAs"><xsl:value-of select="$savedAs"/></xsl:when>
-            <xsl:when test="$original"><xsl:value-of select="$original"/></xsl:when>
+            <xsl:when test="$thisURL"><xsl:value-of select="$thisURL"/></xsl:when>
+            <xsl:when test="$originalURL"><xsl:value-of select="$originalURL"/></xsl:when>
             <xsl:otherwise></xsl:otherwise>
         </xsl:choose>
     </xsl:variable>
@@ -37,7 +37,7 @@
             <xsl:apply-templates select="." mode="head">
                 <xsl:with-param name="basedir" select="$basedir"/>
                 <xsl:with-param name="targets" select="$targets"/>
-                <xsl:with-param name="nextCompareWith" select="$nextCompareWith"/>
+                <xsl:with-param name="nextComparison" select="$nextComparison"/>
                 <xsl:with-param name="refreshPeriod" select="$refreshPeriod"/>
                 <xsl:with-param name="sudo" select="$sudo"/>
             </xsl:apply-templates>
@@ -46,7 +46,7 @@
                 <xsl:apply-templates select="." mode="nav">
                     <xsl:with-param name="basedir" select="$basedir"/>
                     <xsl:with-param name="targets" select="$targets"/>
-                    <xsl:with-param name="nextCompareWith" select="$nextCompareWith"/>
+                    <xsl:with-param name="nextComparison" select="$nextComparison"/>
                     <xsl:with-param name="refreshPeriod" select="$refreshPeriod"/>
                     <xsl:with-param name="sudo" select="$sudo"/>
                 </xsl:apply-templates>
