@@ -24,10 +24,23 @@
                     <xsl:otherwise>red</xsl:otherwise>
                 </xsl:choose>
                 <xsl:choose>
-                    <xsl:when test="(service/@name='microsoft-ds' or service/@name='netbios-ssn') and ../../hostscript/script[@id='smb-shares-size']/table"> mini dropdown button share-size</xsl:when>
+                    <xsl:when test="$currentPort/script[@id='smb-shares-size']/table"> mini dropdown button share-size</xsl:when>
                     <xsl:otherwise> small</xsl:otherwise>
                 </xsl:choose>
             </xsl:attribute>
+            <xsl:if test="$currentPort/script[@id='smb-shares-size']/table">
+                <xsl:attribute name="style">
+                    <xsl:for-each select="$currentPort/script[@id='smb-shares-size']/table">
+                        <xsl:sort select="elem[@key='FreeSize'] div elem[@key='TotalSize']" order="ascending"/>
+                        <xsl:if test="position()=1">
+                            <xsl:text>--free: </xsl:text>
+                            <xsl:value-of select="elem[@key='FreeSize']"/>
+                            <xsl:text>; --total: </xsl:text>
+                            <xsl:value-of select="elem[@key='TotalSize']"/>
+                        </xsl:if>
+                    </xsl:for-each>
+                </xsl:attribute>
+            </xsl:if>
             <xsl:if test="service/@name='ftp' or service/@name='ssh' or service/@name='http' or service/@name='https'">
                 <xsl:attribute name="href">
                     <xsl:value-of select="service/@name"/>
@@ -60,21 +73,10 @@
                     <xsl:value-of select="service/@name"/>
                 </xsl:otherwise>
             </xsl:choose>
-            <xsl:if test="(service/@name='microsoft-ds' or service/@name='netbios-ssn') and ../../hostscript/script[@id='smb-shares-size']/table">
-                <xsl:attribute name="style">
-                    <xsl:for-each select="$currentHost/hostscript/script[@id='smb-shares-size']/table">
-                        <xsl:sort select="elem[@key='FreeSize'] div elem[@key='TotalSize']" order="ascending"/>
-                        <xsl:if test="position()=1">
-                            <xsl:text>--free: </xsl:text>
-                            <xsl:value-of select="elem[@key='FreeSize']"/>
-                            <xsl:text>; --total: </xsl:text>
-                            <xsl:value-of select="elem[@key='TotalSize']"/>
-                        </xsl:if>
-                    </xsl:for-each>
-                </xsl:attribute>
+            <xsl:if test="$currentPort/script[@id='smb-shares-size']/table">
                 <i class="dropdown icon"></i>
                 <div class="menu">
-                    <xsl:apply-templates select="$currentHost/hostscript/script[@id='smb-shares-size']/table">
+                    <xsl:apply-templates select="$currentPort/script[@id='smb-shares-size']/table">
                         <xsl:with-param name="hostAddress" select="$hostAddress"/>
                     </xsl:apply-templates>
                 </div>

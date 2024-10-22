@@ -118,6 +118,7 @@ $('.ui.dropdown').dropdown()
                     <th>Service</th>
                     <th>Produit</th>
                     <th>Version</th>
+                    <th>Infos</th>
                 </tr>
             </thead>
             <tbody>
@@ -182,7 +183,21 @@ $('.ui.dropdown').dropdown()
                             <xsl:when test="$currentPort/state/@state='filtered'">orange</xsl:when>
                             <xsl:otherwise>red</xsl:otherwise>
                         </xsl:choose>
+                        <xsl:if test="$currentPort/script[@id='smb-shares-size']/table"> dropdown share-size</xsl:if>
                     </xsl:attribute>
+                    <xsl:if test="$currentPort/script[@id='smb-shares-size']/table">
+                        <xsl:attribute name="style">
+                            <xsl:for-each select="$currentPort/script[@id='smb-shares-size']/table">
+                                <xsl:sort select="elem[@key='FreeSize'] div elem[@key='TotalSize']" order="ascending"/>
+                                <xsl:if test="position()=1">
+                                    <xsl:text>--free: </xsl:text>
+                                    <xsl:value-of select="elem[@key='FreeSize']"/>
+                                    <xsl:text>; --total: </xsl:text>
+                                    <xsl:value-of select="elem[@key='TotalSize']"/>
+                                </xsl:if>
+                            </xsl:for-each>
+                        </xsl:attribute>
+                    </xsl:if>
                     <xsl:if test="service/@name='ftp' or service/@name='ssh' or service/@name='http' or service/@name='https'">
                         <xsl:attribute name="href">
                             <xsl:choose>
@@ -213,6 +228,14 @@ $('.ui.dropdown').dropdown()
                         </xsl:attribute>
                     </xsl:if>
                     <xsl:value-of select="service/@name"/>
+                    <xsl:if test="$currentPort/script[@id='smb-shares-size']/table">
+                        <i class="dropdown icon"></i>
+                        <div class="menu">
+                            <xsl:apply-templates select="$currentPort/script[@id='smb-shares-size']/table">
+                                <xsl:with-param name="hostAddress" select="$hostAddress"/>
+                            </xsl:apply-templates>
+                        </div>
+                    </xsl:if>
                 </a>
             </td>
             <td>
@@ -221,8 +244,18 @@ $('.ui.dropdown').dropdown()
             <td>
                 <xsl:value-of select="service/@version"/>
             </td>
+            <td>
+                <xsl:value-of select="service/@extrainfo"/>
+            </td>
         </tr>
 
+    </xsl:template>
+
+    <xsl:template match="table">
+        <xsl:param name="hostAddress"/>
+        <a class="item share-size" href="file://///{$hostAddress}/{@key}" target="_blank" rel="noopener noreferrer" style="--free: {elem[@key='FreeSize']}; --total: {elem[@key='TotalSize']}">
+            <xsl:value-of select="@key"/>
+        </a>
     </xsl:template>
 
 </xsl:stylesheet>

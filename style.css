@@ -58,6 +58,7 @@ main {
     --used-percent: calc(100% - 100%*var(--free-ratio));
     --color: hsl(calc(120*var(--free-ratio)) 100% 50%);
     background-image: linear-gradient(to right, var(--color) var(--used-percent), transparent var(--used-percent), transparent) !important;
+    text-align: center !important;
 }
 
 .compact .ui.icon.buttons .mini.button {
