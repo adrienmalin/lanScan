@@ -6,7 +6,7 @@
 
     <xsl:import href="lib/head.xsl"/>
     <xsl:import href="lib/nav.xsl"/>
-    <xsl:import href="lib/serviceLabel.xsl"/>
+    <xsl:import href="lib/service.xsl"/>
     <xsl:import href="lib/toast.xsl"/>
 
     <xsl:output method="html" encoding="UTF-8"/>
@@ -163,10 +163,11 @@ function hostScanning(link) {
                 <xsl:value-of select="address[@addrtype='mac']/@vendor"/>
             </td>
             <td>
-                <xsl:apply-templates select="$initHost/ports/port[not(@portid=$currentHost/ports/port/@portid)][not(state/@state='closed')] | $currentHost/ports/port">
+                <xsl:apply-templates select="$initHost/ports/port[not(@portid=$currentHost/ports/port/@portid)][not(state/@state='closed')] | $currentHost/ports/port" mode="service">
                     <xsl:with-param name="initHost" select="$initHost"/>
                     <xsl:with-param name="currentHost" select="$currentHost"/>
                     <xsl:with-param name="hostAddress" select="$hostAddress"/>
+                    <xsl:with-param name="class" select="'ui label'"/>
                     <xsl:sort select="number(@portid)" order="ascending"/>
                 </xsl:apply-templates>
             </td>

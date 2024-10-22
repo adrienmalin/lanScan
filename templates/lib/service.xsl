@@ -4,17 +4,19 @@
     xmlns:xs="http://www.w3.org/2001/XMLSchema"
     version="1.1">
 
-    <xsl:template match="port">
+    <xsl:template match="port" mode="service">
         <xsl:param name="hostAddress"/>
         <xsl:param name="initHost"/>
         <xsl:param name="currentHost"/>
+        <xsl:param name="class"/>
         <xsl:variable name="portid" select="@portid"/>
         <xsl:variable name="initPort" select="$initHost/ports/port[@portid=$portid]"/>
         <xsl:variable name="currentPort" select="$currentHost/ports/port[@portid=$portid]"/>
 
         <a target="_blank">
             <xsl:attribute name="class">
-                <xsl:text>ui label </xsl:text>
+                <xsl:value-of select="$class"/>
+                <xsl:text> </xsl:text>
                 <xsl:choose>
                     <xsl:when test="$currentPort/script[@id='http-info']/elem[@key='status']>=500">red</xsl:when>
                     <xsl:when test="$currentPort/script[@id='http-info']/elem[@key='status']>=400">orange</xsl:when>

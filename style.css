@@ -61,15 +61,21 @@ svg {
   text-align: center !important;
 }
 
-.compact .ui.icon.buttons .mini.button {
-  padding: 0.5em;
-}
-
 .compact {
-  overflow-x: scroll;
+  position: static !important;
+  overflow-x: auto;
 }
 
 .compact > input {
   min-width: 10em;
   padding-right: 0.1em;
+}
+
+.compact .ui.icon.buttons .mini.button {
+  padding: 0.5em;
+  position: static;
+}
+
+.compact .ui.dropdown.button:not(.pointing):not(.floating).active {
+  border-radius: 0;
 }
