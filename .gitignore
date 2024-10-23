@@ -1,4 +1,3 @@
 scans/
-datadir/smb-authentication.ini
+datadir/script-arg-file.ini
 test.php
-server.php
