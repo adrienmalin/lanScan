@@ -5,7 +5,7 @@ $BASEDIR    = "{$_SERVER['REQUEST_SCHEME']}://{$_SERVER['SERVER_NAME']}$port" . 
 $SCANSDIR   = 'scans';
 $NMAPDIR    = dirname(`which nmap`) . "/../share/nmap";
 $DATADIR    = "datadir";
-$SCRIPTARGS = "script-arg.ini";
+$SCRIPTARGS = "script-args.ini";
 
 $presets = [
     "default" => [
