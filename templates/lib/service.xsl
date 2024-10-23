@@ -45,7 +45,14 @@
             </xsl:if>
             <xsl:if test="service/@name='ftp' or service/@name='ssh' or service/@name='http' or service/@name='https'">
                 <xsl:attribute name="href">
-                    <xsl:value-of select="service/@name"/>
+                    <xsl:choose>
+                        <xsl:when test="service/@name='http' and service/@tunnel='ssl'">
+                            <xsl:text>https</xsl:text>
+                        </xsl:when>
+                        <xsl:otherwise>
+                            <xsl:value-of select="service/@name"/>
+                        </xsl:otherwise>
+                    </xsl:choose>
                     <xsl:text>://</xsl:text>
                     <xsl:value-of select="$hostAddress"/>
                     <xsl:text>:</xsl:text>
