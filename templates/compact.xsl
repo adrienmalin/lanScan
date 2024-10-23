@@ -54,8 +54,10 @@
                 <main class="ui container">
                     <h1 class="ui header"><xsl:value-of select="$targets"/></h1>
 
-                    <div class="ui doubling stackable four column compact grid">
-                        <xsl:apply-templates select="host | $init/host[not(address/@addr=$current/host/address/@addr)][not(status/@state='down')]"/>
+                    <div class="form">
+                        <div class="ui doubling stackable four column compact grid">
+                            <xsl:apply-templates select="host | $init/host[not(address/@addr=$current/host/address/@addr)][not(status/@state='down')]"/>
+                        </div>
                     </div>
                 </main>
                 
@@ -91,7 +93,7 @@ $('.ui.dropdown').dropdown()
         <div class="column">
             <div>
                 <xsl:attribute name="class">
-                    <xsl:text>ui fluid mini left icon compact input </xsl:text>
+                    <xsl:text>ui fluid mini compact input </xsl:text>
                     <xsl:if test="$currentHost/ports/port | $initHost/ports/port[not(@portid=$currentHost/ports/port/@portid)][not(state/@state='closed')]">
                         <xsl:text>action buttons </xsl:text>
                     </xsl:if>
@@ -100,7 +102,6 @@ $('.ui.dropdown').dropdown()
                         <xsl:otherwise>error</xsl:otherwise>
                     </xsl:choose>
                 </xsl:attribute>
-                <i class="server icon"></i>
                 <input type="text" readonly="" value="{substring-before(hostnames/hostname/@name, '.')}" placeholder="{address/@addr}"
                     title="{$currentHost/hostnames/hostname/@name} ({address/@addr})"
                     onfocus="this.value='{hostnames/hostname/@name}'; this.select()" onblur="this.value='{substring-before(hostnames/hostname/@name, '.')}'"

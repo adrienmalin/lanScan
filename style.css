@@ -71,11 +71,18 @@ svg {
   padding-right: 0.1em;
 }
 
-.compact .ui.icon.buttons .mini.button {
+.compact .ui.buttons .mini.button {
   padding: 0.5em;
   position: static;
 }
 
 .compact .ui.dropdown.button:not(.pointing):not(.floating).active {
   border-radius: 0;
+}
+
+.compact .ui.dropdown .menu {
+  left: 0;
+  right: 0;
+  margin: -.7em .7em;
+  min-width: auto;
 }
