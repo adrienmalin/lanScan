@@ -24,7 +24,7 @@
     <xsl:variable name="init" select="document($originalURL)/nmaprun"/>
     <xsl:variable name="nextComparison">
         <xsl:choose>
-            <xsl:when test="$thisURL"><xsl:value-of select="$saveAs"/></xsl:when>
+            <xsl:when test="$thisURL"><xsl:value-of select="$thisURL"/></xsl:when>
             <xsl:when test="$originalURL"><xsl:value-of select="$originalURL"/></xsl:when>
             <xsl:otherwise></xsl:otherwise>
         </xsl:choose>

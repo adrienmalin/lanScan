@@ -41,7 +41,7 @@ $xml = new DOMDocument();
 $xml->load($tempPath);
 `rm "$tempPath"`;
 
-$thisURL = $options["saveAs"]?? false ? "$BASEDIR/$SCANSDIR/".rawurlencode($options["saveAs"]).".xml" : "";
+$thisURL = $options["name"]?? false ? "$BASEDIR/$SCANSDIR/".rawurlencode($options["name"]).".xml" : "";
 $xml->insertBefore($xml->createProcessingInstruction('xslt-param', "name='thisURL' value='".htmlentities($thisURL, ENT_QUOTES)."'"), $xml->documentElement);
 foreach ($options as $option => $value) {
     if (substr($option, 0, 1) != '-') {
@@ -49,8 +49,8 @@ foreach ($options as $option => $value) {
     }
 }
 
-if ($options["saveAs"] ?? false) {
-    $path = "$SCANSDIR/{$options["saveAs"]}.xml";
+if ($options["name"] ?? false) {
+    $path = "$SCANSDIR/{$options["name"]}.xml";
     $xml->save($path);
 
     header("Location: $path");

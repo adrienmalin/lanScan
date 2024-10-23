@@ -632,10 +632,10 @@ foreach (scandir($SCANSDIR) as $filename) {
       </div>
 
       <div class="field">
-        <label for="saveAsInput">Enregistrer sous le nom</label>
-        <input id="saveAsInput" type="text" name="saveAs" placeholder="Réseau local" pattern='[^&lt;&gt;:&quot;\\\/\|@?]+'
+        <label for="nameInput">Enregistrer sous le nom</label>
+        <input id="nameInput" type="text" name="name" placeholder="Réseau local" pattern='[^&lt;&gt;:&quot;\\\/\|@?]+'
           title="Caractères interdits :  &lt;&gt;:&quot;\/|@?"
-          value="<?= $options["saveAs"] ?? ""; ?>">
+          value="<?= $options["name"] ?? ""; ?>">
       </div>
 
       <button type="submit" class="ui teal submit button">Démarrer</button>

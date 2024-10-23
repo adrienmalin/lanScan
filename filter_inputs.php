@@ -109,7 +109,7 @@ if ($preset && isset($presets[$preset])) {
     '-h'             => FILTER_VALIDATE_BOOLEAN,
     '--stylesheet'   => FILTER_VALIDATE_URL,
 // lanScan
-    'saveAs'        => ['filter' => FILTER_VALIDATE_REGEXP, 'options' => ['regexp' => $fileNameRegex]],
+    'name'        => ['filter' => FILTER_VALIDATE_REGEXP, 'options' => ['regexp' => $fileNameRegex]],
     'originalURL'   => FILTER_VALIDATE_URL,
     'refreshPeriod' => ['filter' => FILTER_VALIDATE_INT, 'options' => ['min_range' => 0]],
     'sudo'          => FILTER_VALIDATE_BOOLEAN,
