@@ -3,6 +3,9 @@
 include_once 'config.php';
 include_once 'filter_inputs.php';
 
+$options["--datadir"] = $DATADIR;
+$options["--script-args-file"] = $SCRIPTARGS;
+
 if (!file_exists($SCANSDIR)) mkdir($SCANSDIR);
 
 $command = ($options["sudo"]?? false ? "sudo " : "") . "nmap";
