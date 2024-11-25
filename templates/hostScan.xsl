@@ -75,7 +75,7 @@ table.order([1, 'asc']).draw()
 
 $('.ui.dropdown').dropdown()
                 </script>
-
+                
                 <xsl:apply-templates select="runstats">
                     <xsl:with-param name="init" select="$init"/>
                 </xsl:apply-templates>

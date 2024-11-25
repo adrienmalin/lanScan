@@ -12,6 +12,10 @@ main {
   min-height: calc(100vh - var(--footer-height) - 1rem)
 }
 
+h1:first-child, h2:first-child, h3:first-child, h4:first-child, h5:first-child, .ui.header:first-child {
+  margin-top: 1rem;
+}
+
 svg {
   margin: -0.3em -0.5em -0.5em -0.4em;
   fill: currentColor;

@@ -8,7 +8,10 @@ $options["--script-args-file"] = $SCRIPTARGS;
 
 if (!file_exists($SCANSDIR)) mkdir($SCANSDIR);
 
-$command = ($options["sudo"]?? false ? "sudo " : "") . "nmap";
+if (!$options["name"]) $options["name"] = str_replace('/', '!', $targets);
+
+//$command = ($options["sudo"]?? false ? "sudo " : "") . "nmap";
+$args = "";
 foreach ($options as $option => $value) {
     if (substr($option, 0, 1) == '-') {
         if (is_null($value)) {
@@ -18,47 +21,20 @@ foreach ($options as $option => $value) {
             die();
         } else if ($value) {
             if ($value === true) {
-                $command .= " $option";
+                $args .= " $option";
             } else {
-                if (substr($option, 0, 2) == '--') $command .= " $option " . escapeshellarg($value);
-                else $command .= " $option" . escapeshellarg($value);
+                if (substr($option, 0, 2) == '--') $args .= " $option " . escapeshellarg($value);
+                else $args .= " $option" . escapeshellarg($value);
             }
         }
     }
 }
 
-$tempPath = tempnam(sys_get_temp_dir(), 'scan_').".xml";
+$path = "$SCANSDIR/{$options["name"]}.xml";
 
-$command .= " -oX '$tempPath' $targets 2>&1";
+$command = "nmap $args -oX - $targets | tee '$path'";
 
-exec($command, $stderr, $retcode);
+header('Content-type: text/xml');
+system($command, $retcode);
 
-if ($retcode) {
-    http_response_code(500);
-    $errorMessage = implode("<br/>\n", $stderr);
-    include_once ".";
-    die();
-}
-
-$xml = new DOMDocument();
-$xml->load($tempPath);
-`rm "$tempPath"`;
-
-$thisURL = $options["name"]?? false ? "$BASEDIR/$SCANSDIR/".rawurlencode($options["name"]).".xml" : "";
-$xml->insertBefore($xml->createProcessingInstruction('xslt-param', "name='thisURL' value='".htmlentities($thisURL, ENT_QUOTES)."'"), $xml->documentElement);
-foreach ($options as $option => $value) {
-    if (substr($option, 0, 1) != '-') {
-        $xml->insertBefore($xml->createProcessingInstruction('xslt-param', "name='$option' value='".htmlentities($value, ENT_QUOTES)."'"), $xml->documentElement);
-    }
-}
-
-if ($options["name"] ?? false) {
-    $path = "$SCANSDIR/{$options["name"]}.xml";
-    $xml->save($path);
-
-    header("Location: $path");
-    exit();
-} else {
-    header('Content-type: text/xml');
-    exit($xml->saveXML());
-}
+exit();

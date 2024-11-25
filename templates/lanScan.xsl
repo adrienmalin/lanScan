@@ -31,7 +31,7 @@
     </xsl:variable>
 
     <xsl:template match="nmaprun">
-        <xsl:variable name="targets" select="substring-after(@args, '.xml ')"/>
+        <xsl:variable name="targets" select="substring-after(@args, '-oX - ')"/>
         
         <html lang="fr">
             <xsl:apply-templates select="." mode="head">
@@ -51,7 +51,7 @@
                     <xsl:with-param name="sudo" select="$sudo"/>
                 </xsl:apply-templates>
 
-                <main class="ui main container">
+                <main class="ui main wide container">
                     <h1 class="ui header"><xsl:value-of select="$targets"/></h1>
 
                     <table id="scanResultsTable" style="width:100%" role="grid" class="ui sortable small table">
@@ -61,7 +61,7 @@
                                 <th>Adresse IP</th>
                                 <th>Nom</th>
                                 <th>Fabricant</th>
-                                <th class="eight wide">Services</th>
+                                <th class="six wide">Services</th>
                                 <th>Scanner les services</th>
                             </tr>
                         </thead>
@@ -177,7 +177,7 @@ function hostScanning(link) {
                         <xsl:attribute name="href">
                             <xsl:value-of select="$basedir"/>
                             <xsl:text>/scan.php?preset=host&amp;targets=</xsl:text>
-                            <xsl:value-of select="$hostAddress"/>
+                            <xsl:value-of select="address/@addr"/>
                         </xsl:attribute>
                         <i class="satellite dish icon"></i>
                         <xsl:text> Services</xsl:text>
@@ -186,7 +186,7 @@ function hostScanning(link) {
                         <xsl:attribute name="href">
                             <xsl:value-of select="$basedir"/>
                             <xsl:text>/?preset=host&amp;targets=</xsl:text>
-                            <xsl:value-of select="$hostAddress"/>
+                            <xsl:value-of select="address/@addr"/>
                         </xsl:attribute>
                         <i class="settings icon"></i>
                     </a>
