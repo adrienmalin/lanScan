@@ -20,7 +20,7 @@ include_once 'filter_inputs.php';
 </head>
 
 <body>
-  <nav class="ui inverted teal menu">
+  <nav class="ui inverted teal fixed menu">
     <a class="ui teal button item" href=".">
       lan<?php include 'logo.svg'; ?>can
     </a>
