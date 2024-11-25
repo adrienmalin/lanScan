@@ -10,7 +10,7 @@
             <xsl:if test="finished/@summary">
 $.toast({
     title      : '<xsl:value-of select="finished/@exit"/>',
-    message    : '<xsl:value-of select="finished/@summary"/>',
+    message    : `<xsl:value-of select="finished/@summary"/>`,
     showIcon   : 'satellite dish',
     displayTime: 0,
     closeIcon  : true,
@@ -20,7 +20,7 @@ $.toast({
             <xsl:if test="finished/@errormsg">
 $.toast({
     title      : '<xsl:value-of select="finished/@exit"/>',
-    message    : '<xsl:value-of select="finished/@errormsg"/>',
+    message    : `<xsl:value-of select="finished/@errormsg"/>`,
     showIcon   : 'exclamation triangle',
     class      : 'error',
     displayTime: 0,
