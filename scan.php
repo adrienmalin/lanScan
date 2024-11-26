@@ -33,7 +33,7 @@ if (isset($options["sudo"])) $command = "sudo $command";
 
 if (isset($options["name"])) {
     $path = "$SCANSDIR/{$options["name"]}.xml";
-    $command .= " | tee '$path'"
+    $command .= " | tee '$path'";
 }
 
 header('Content-type: text/xml');
