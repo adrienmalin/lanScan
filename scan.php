@@ -3,14 +3,10 @@
 include_once 'config.php';
 include_once 'filter_inputs.php';
 
-$options["--datadir"] = $DATADIR;
-$options["--script-args-file"] = $SCRIPTARGS;
-
 if (!file_exists($SCANSDIR)) mkdir($SCANSDIR);
 
 if (!$options["name"]) $options["name"] = str_replace('/', '!', $targets);
 
-//$command = ($options["sudo"]?? false ? "sudo " : "") . "nmap";
 $args = "";
 foreach ($options as $option => $value) {
     if (substr($option, 0, 1) == '-') {
@@ -30,9 +26,15 @@ foreach ($options as $option => $value) {
     }
 }
 
-$path = "$SCANSDIR/{$options["name"]}.xml";
 
-$command = "nmap $args -oX - $targets | tee '$path'";
+$command = "nmap $args -oX - $targets";
+
+if (isset($options["sudo"])) $command = "sudo $command";
+
+if (isset($options["name"])) {
+    $path = "$SCANSDIR/{$options["name"]}.xml";
+    $command .= " | tee '$path'"
+}
 
 header('Content-type: text/xml');
 system($command, $retcode);

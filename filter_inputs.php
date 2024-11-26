@@ -10,7 +10,7 @@ $tempoRegex              = '/^\d+[smh]?$/';
 $fileNameRegex           = '/^[^<>:\/|?]+$/';
 
 $targets = filter_input(INPUT_GET, 'targets', FILTER_VALIDATE_REGEXP, ['options' => ['regexp' => $targetsListRegex], "flags" => FILTER_NULL_ON_FAILURE]);
-$preset  = filter_input(INPUT_GET, "preset");
+$preset  = filter_input(INPUT_GET, "preset", FILTER_SANITIZE_STRING);
 
 if ($preset && isset($presets[$preset])) {
   $options = $presets[$preset];
@@ -115,6 +115,9 @@ if ($preset && isset($presets[$preset])) {
     'sudo'          => FILTER_VALIDATE_BOOLEAN,
   ], false) ?: $presets["default"];
 }
+
+$options["--datadir"] = $DATADIR;
+$options["--script-args-file"] = $SCRIPTARGS;
 
 /*echo "<!--";
 var_dump($options);

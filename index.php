@@ -641,22 +641,16 @@ foreach (scandir($SCANSDIR) as $filename) {
       <button type="submit" class="ui teal submit button">Démarrer</button>
     </form>
 
-    <h2 class="ui header">Derniers scans</h2>
-      <div class="ui relaxed list">
-<?php
-if (!file_exists($SCANSDIR)) {
-  mkdir($SCANSDIR);
-}
-$scans = [];
-foreach (scandir($SCANSDIR) as $filename) {
-  if (substr($filename, -4) == '.xml') {
-    $scans[$filename] = filemtime("$SCANSDIR/$filename");
+    <h2 class="ui header">Scans enregistrés</h2>
+      <div class="ui link list">
+      <?php
+if (file_exists($SCANSDIR)) {
+  foreach (scandir($SCANSDIR) as $filename) {
+    if (substr($filename, -4) == '.xml') {
+      $name = str_replace('!', '/', substr_replace($filename, '', -4));
+      echo "<a class='item' href='$SCANSDIR/".rawurlencode($filename)."'>$name</a>\n";
+    }
   }
-}
-arsort($scans);
-foreach ($scans as $filename => $date) {
-  $name = str_replace('!', '/', substr_replace($filename, '', -4));
-  echo "      <div class='item'><a class='header' href='$SCANSDIR/".rawurlencode($filename)."'>$name</a><div class='description'>".date(DATE_RFC7231, $date)."</div></div>\n";
 }
 ?>
     </div>
