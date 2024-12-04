@@ -569,6 +569,12 @@ Exemples: <?= $_SERVER['REMOTE_ADDR']; ?>/24 <?= $_SERVER['SERVER_NAME']; ?> 10.
                 value="<?= $options["--max-scan-delay"] ?? "" ?>">
             </div>
           </div>
+          <div class="inline field">
+            <div class="ui toggle checkbox">
+              <input id="defeatRSTRateLimitCheckbox" type="checkbox" name="--defeat-rst-ratelimit" <?= $options['--defeat-rst-ratelimit'] ?? false ? 'checked' : ''; ?> />
+              <label for="defeatRSTRateLimitCheckbox" title="--defeat-rst-ratelimit">Ignorer les limitations de paquets RST</label>
+            </div>
+          </div>
         </div>
 
         <div class="title"><i class="icon dropdown"></i>Divers</div>
