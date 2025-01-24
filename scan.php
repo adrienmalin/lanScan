@@ -3,9 +3,10 @@
 include_once 'config.php';
 include_once 'filter_inputs.php';
 
-if (!file_exists($SCANSDIR)) mkdir($SCANSDIR);
-
-if (!$options["name"]) $options["name"] = str_replace('/', '!', $targets);
+$options["--stylesheet"] = "$BASEDIR/$TEMPLATESDIR/${options["--stylesheet"]}?";
+if (isset($options["name"])) {
+    $options["--stylesheet"] .= "name=" . rawurlencode($options["name"]) . "&";
+}
 
 $args = "";
 foreach ($options as $option => $value) {
@@ -27,11 +28,10 @@ foreach ($options as $option => $value) {
 }
 
 
-$command = "nmap $args -oX - $targets";
-
-if (isset($options["sudo"])) $command = "sudo $command";
+$command = "$NMAP $args -oX - $targets";
 
 if (isset($options["name"])) {
+    if (!file_exists($SCANSDIR)) mkdir($SCANSDIR);
     $path = "$SCANSDIR/{$options["name"]}.xml";
     $command .= " | tee '$path'";
 }

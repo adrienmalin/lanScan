@@ -19,7 +19,7 @@
     <xsl:param name="sudo" select="false"/>
 
     <xsl:variable name="current" select="./nmaprun"/>
-    <xsl:variable name="stylesheetURL" select="substring-before(substring-after(processing-instruction('xml-stylesheet'),'href=&quot;'),'&quot;')"/>
+    <xsl:variable name="stylesheetURL" select="substring-before(substring-after(processing-instruction('xml-stylesheet'),'href=&quot;'), '?')"/>
     <xsl:variable name="basedir" select="concat($stylesheetURL, '/../..')"/>
     <xsl:variable name="init" select="document($originalURL)/nmaprun"/>
     <xsl:variable name="nextComparison">
@@ -51,7 +51,7 @@
                     <xsl:with-param name="sudo" select="$sudo"/>
                 </xsl:apply-templates>
 
-                <main class="ui container">
+                <main class="ui wide container">
                     <h1 class="ui header"><xsl:value-of select="$targets"/></h1>
 
                     <div class="form">

@@ -583,10 +583,10 @@ Exemples: <?= $_SERVER['REMOTE_ADDR']; ?>/24 <?= $_SERVER['SERVER_NAME']; ?> 10.
             <label for="stylesheetSelect" title="--stylesheet">Feuille de style</label>
             <select id="stylesheetSelect" class="ui dropdown" name="--stylesheet" value="<?= $options["--stylesheet"] ?? ""?>">
 <?php
-foreach (scandir('templates') as $filename) {
+foreach (scandir($TEMPLATESDIR) as $filename) {
   if (substr($filename, -4) === '.xsl') {
     $name = substr($filename, 0, -4);
-    $URL = "$BASEDIR/templates/".rawurlencode($filename);
+    $URL = rawurlencode($filename);
     if (isset($options["--stylesheet"]) && $URL == $options["--stylesheet"]) {
       echo "              <option value='$URL' selected>$name</option>\n";
     } else {
@@ -627,13 +627,14 @@ foreach (scandir($SCANSDIR) as $filename) {
               <div class="ui label">secondes</div>
             </div>
           </div>
-
+<!--
           <div class="inline field">
             <div class="ui toggle checkbox">
               <input id="sudoCheckbox" type="checkbox" name="sudo" <?= $options["sudo"] ?? false ? 'checked' : ''; ?>/>
               <label for="sudoCheckbox" title="sudo">Exécuter en tant qu'administrateur</label>
             </div>
           </div>
+-->
         </div>
       </div>
 
@@ -768,6 +769,15 @@ foreach ([$DATADIR, $NMAPDIR] as $dir) {
     newScanForm.onsubmit = function(event) {
       if (this.checkValidity()) {
         newScanForm.classList.add("loading")
+        $.toast({
+            title      : 'Scan en cours...',
+            message    : 'Merci de patienter',
+            class      : 'info',
+            showIcon   : 'satellite dish',
+            displayTime: 0,
+            closeIcon  : true,
+            position   : 'bottom right',
+        })
         return true
       } else {
         event.preventDefault()

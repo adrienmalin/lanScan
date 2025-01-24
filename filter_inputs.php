@@ -107,7 +107,7 @@ if ($preset && isset($presets[$preset])) {
     '-V'             => FILTER_VALIDATE_BOOLEAN,
     '--unprivileged' => FILTER_VALIDATE_BOOLEAN,
     '-h'             => FILTER_VALIDATE_BOOLEAN,
-    '--stylesheet'   => FILTER_VALIDATE_URL,
+    '--stylesheet'   => ['filter' => FILTER_VALIDATE_REGEXP, 'options' => ['regexp' => $fileNameRegex]],
 // lanScan
     'name'        => ['filter' => FILTER_VALIDATE_REGEXP, 'options' => ['regexp' => $fileNameRegex]],
     'originalURL'   => FILTER_VALIDATE_URL,
