@@ -16,7 +16,7 @@
     <xsl:param name="thisURL" select=""/>
     <xsl:param name="originalURL" select=""/>
     <xsl:param name="refreshPeriod" select="0"/>
-    <xsl:param name="sudo" select="false"/>
+    <xsl:param name="sudo" select="false()"/>
 
     <xsl:variable name="current" select="./nmaprun"/>
     <xsl:variable name="stylesheetURL" select="substring-before(substring-after(processing-instruction('xml-stylesheet'),'href=&quot;'), '?')"/>
@@ -51,7 +51,7 @@
                     <xsl:with-param name="sudo" select="$sudo"/>
                 </xsl:apply-templates>
 
-                <main class="ui main wide container">
+                <main class="ui main container">
                     <h1 class="ui header"><xsl:value-of select="$targets"/></h1>
 
                     <table id="scanResultsTable" style="width:100%" role="grid" class="ui sortable small table">

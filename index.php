@@ -170,10 +170,7 @@ Exemples: <?= $_SERVER['REMOTE_ADDR']; ?>/24 <?= $_SERVER['SERVER_NAME']; ?> 10.
           </div>
         </div>
 
-          <div class="title">
-            <i class="icon dropdown"></i>
-            Techniques de scan de ports
-          </div>
+          <div class="title"><i class="icon dropdown"></i>Techniques de scan de ports</div>
           <div class="content">
             <div class="field">
               <div class="fields">
@@ -269,10 +266,7 @@ Exemples: <?= $_SERVER['REMOTE_ADDR']; ?>/24 <?= $_SERVER['SERVER_NAME']; ?> 10.
             </div>
           </div>
 
-          <div class="title">
-            <i class="icon dropdown"></i>
-            Spécifications des ports et ordre du scan
-          </div>
+          <div class="title"><i class="icon dropdown"></i>Spécifications des ports et ordre du scan</div>
           <div class="content">
           <div class="inline field">
             <div class="ui toggle checkbox" title="-sP">
@@ -586,11 +580,11 @@ Exemples: <?= $_SERVER['REMOTE_ADDR']; ?>/24 <?= $_SERVER['SERVER_NAME']; ?> 10.
 foreach (scandir($TEMPLATESDIR) as $filename) {
   if (substr($filename, -4) === '.xsl') {
     $name = substr($filename, 0, -4);
-    $URL = rawurlencode($filename);
-    if (isset($options["--stylesheet"]) && $URL == $options["--stylesheet"]) {
-      echo "              <option value='$URL' selected>$name</option>\n";
+    #$URL = rawurlencode($filename);
+    if (isset($options["--stylesheet"]) && $name == $options["--stylesheet"]) {
+      echo "              <option value='$name' selected>$name</option>\n";
     } else {
-      echo "              <option value='$URL'>$name</option>\n";
+      echo "              <option value='$name'>$name</option>\n";
     }
   }
 }
@@ -599,19 +593,19 @@ foreach (scandir($TEMPLATESDIR) as $filename) {
           </div>
 
           <div class="field">
-            <label for="originalURLSelect">Comparer avec un précédent scan</label>
-            <select id="originalURLSelect" class="ui clearable dropdown" name="originalURL" value="<?= $options["originalURL"] ?? "" ?>">
+            <label for="originalSelect">Comparer avec un précédent scan</label>
+            <select id="originalSelect" class="ui clearable dropdown" name="original" value="<?= $options["original"] ?? "" ?>">
               <option value="">Précédent scan</option>
 <?php
 if (!file_exists($SCANSDIR)) mkdir($SCANSDIR);
 foreach (scandir($SCANSDIR) as $filename) {
   if (substr($filename, -4) === '.xml') {
     $name = substr($filename, 0, -4);
-    $URL = "$BASEDIR/$SCANSDIR/".rawurlencode($filename);
-    if (isset($options["originalURL"]) && $URL == $options["originalURL"]) {
-      echo "              <option value='$URL' selected>$name</option>\n";
+    #$URL = "$BASEDIR/$SCANSDIR/".rawurlencode($filename);
+    if (isset($options["original"]) && $name == $options["original"]) {
+      echo "              <option value='$name' selected>$name</option>\n";
     } else {
-      echo "              <option value='$URL'>$name</option>\n";
+      echo "              <option value='$name'>$name</option>\n";
     }
   }
 }

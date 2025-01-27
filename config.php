@@ -14,9 +14,9 @@ $presets = [
         '-PS'           => 'microsoft-ds',
         '-F'            => true,
         '-T'            => 5,
-        '--stylesheet'  => "lanScan.xsl",
+        '--stylesheet'  => "lanScan",
         'refreshPeriod' => 60,
-        'sudo'          => false,
+        #'sudo'          => false,
     ],
     "host" => [
         '-Pn'           => true,
@@ -24,8 +24,8 @@ $presets = [
         '-sV'           => true,
         '-T'            => 5,
         '--script'      => "http-info,smb-shares-size",
-        '--stylesheet'  => "hostScan.xsl",
+        '--stylesheet'  => "hostScan",
         'refreshPeriod' => 60,
-        'sudo'          => true,
+        #'sudo'          => true,
     ],
 ];

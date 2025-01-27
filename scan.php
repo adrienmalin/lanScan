@@ -3,9 +3,15 @@
 include_once 'config.php';
 include_once 'filter_inputs.php';
 
-$options["--stylesheet"] = "$BASEDIR/$TEMPLATESDIR/${options["--stylesheet"]}?";
+$options["--stylesheet"] = "$BASEDIR/$TEMPLATESDIR/${options["--stylesheet"]}.xsl#";
 if (isset($options["name"])) {
     $options["--stylesheet"] .= "name=" . rawurlencode($options["name"]) . "&";
+}
+if (isset($options["original"])) {
+    $options["--stylesheet"] .= "original=" . rawurlencode($options["original"]) . "&";
+}
+if (isset($options["refreshPeriod"])) {
+    $options["--stylesheet"] .= "refreshPeriod={$options["refreshPeriod"]}&";
 }
 
 $args = "";
