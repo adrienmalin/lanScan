@@ -1,0 +1,17 @@
+body {
+  background-color: #1b1c1d;
+}
+
+.logo {
+  display: flex !important;
+  justify-content: center;
+  align-items: center;
+  width: fit-content;
+}
+
+.logo svg {
+  width: 2.5em;
+  height: 2.5em;
+  fill: currentColor;
+  margin: -0.4em;
+}
