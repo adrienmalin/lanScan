@@ -13,5 +13,5 @@ body {
   width: 2.5em;
   height: 2.5em;
   fill: currentColor;
-  margin: -0.4em;
+  margin: -0.4em !important;
 }

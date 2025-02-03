@@ -12,6 +12,10 @@
     body > .grid {
       height: 100%;
     }
+
+    .logo {
+      margin-right: 0 !important;
+    }
   </style>
 </head>
 
@@ -19,7 +23,7 @@
 
   <div class="ui middle aligned center aligned grid inverted">
     <div class="column" style="max-width: 450px;">
-      <h2 class="ui inverted teal header logo">
+      <h2 class="ui inverted teal fluid image header logo">
         lan<?php include 'logo.svg'; ?>can
       </h2>
       <form id="scanForm" class="ui large form initial inverted" action="scan.php" method="get">
