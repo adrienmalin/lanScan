@@ -7,15 +7,13 @@ if ($lan) {
   $cmd = "$lanScanCmd $lan";
 
   if (!file_exists($SCANSDIR)) mkdir($SCANSDIR);
-  $filname = str_replace("/", "!", $lan);
-  $path = "$SCANSDIR/$filname.xml";
+  $filename = str_replace("/", "!", $lan);
+  $path = "$SCANSDIR/$filename.xml";
 
-  if (!file_exists($path)) {
-    $cmd .= " | tee '$path'";
-  }
+  if (!file_exists($path)) $cmd .= " | tee '$path'";
 
   header('Content-type: text/xml');
-  system($cmd, $retcode);
+  system("$cmd", $retcode);
 }
 
 exit();
