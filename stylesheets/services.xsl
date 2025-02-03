@@ -17,6 +17,7 @@
             <xsl:attribute name="class">
                 <xsl:value-of select="$class"/>
                 <xsl:text> </xsl:text>
+                <xsl:if test="$currentPort/script[@id='smb-shares-size']/table">dropdown button share-size</xsl:if>
                 <xsl:choose>
                     <xsl:when test="$currentPort/script[@id='http-info']/elem[@key='status']>=500">red</xsl:when>
                     <xsl:when test="$currentPort/script[@id='http-info']/elem[@key='status']>=400">orange</xsl:when>
@@ -24,10 +25,6 @@
                     <xsl:when test="$currentPort/state/@state='open'">green</xsl:when>
                     <xsl:when test="$currentPort/state/@state='filtered'">orange</xsl:when>
                     <xsl:otherwise>red</xsl:otherwise>
-                </xsl:choose>
-                <xsl:choose>
-                    <xsl:when test="$currentPort/script[@id='smb-shares-size']/table"> mini dropdown button share-size</xsl:when>
-                    <xsl:otherwise> small</xsl:otherwise>
                 </xsl:choose>
             </xsl:attribute>
             <xsl:if test="$currentPort/script[@id='smb-shares-size']/table">
