@@ -28,13 +28,13 @@
       </h2>
       <form id="scanForm" class="ui large form initial inverted" action="." method="get">
         <div class="ui left aligned stacked segment inverted">
-          <h4 class=""ui header">Découvrir ou superviser un réseau</h4>
+          <h4 class="ui header">Découvrir ou superviser un réseau</h4>
           <div class="inverted field">
             <select id="lanSelect" name="lan" class="search clearable selection dropdown">
               <option value=""><?= $_SERVER['REMOTE_ADDR']; ?>/24</option>
 <?php
-if (file_exists($SCANDIR)) {
-  foreach (scandir($SCANDIR) as $filename) {
+if (file_exists($SCANSDIR)) {
+  foreach (scandir($SCANSDIR) as $filename) {
     if (substr($filename, -4) === '.xml') {
       $name = substr($filename, 0, -4);
       $name = str_replace("!", "/", $name);
