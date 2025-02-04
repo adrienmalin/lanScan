@@ -68,7 +68,10 @@ body {
     transparent
   ) !important;
   text-align: center !important;
-  font-size: .64285714rem !important;
+}
+
+.mini.share-size {
+  font-size: 0.64285714rem !important;
 }
 
 .ui.card .table {

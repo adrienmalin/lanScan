@@ -141,7 +141,7 @@ $('.ui.dropdown').dropdown()
           <xsl:if test="distance/@value">
             <td>
               <xsl:value-of select="distance/@value" />
-              <xsl:text> rebonds</xsl:text>
+              <xsl:text> rebond(s)</xsl:text>
             </td>
           </xsl:if>
           <xsl:if test="uptime/@lastboot">
@@ -203,9 +203,11 @@ $('.ui.dropdown').dropdown()
       class="ui inverted card {$color}">
       <div class="content">
         <div class="header">
-          <div class="ui {$color} ribbon label" style="text-transform: uppercase">
-            <xsl:value-of select="@protocol" />
-            <xsl:text>:</xsl:text>
+          <div class="ui {$color} ribbon label">
+            <div class="detail" style="text-transform: uppercase">
+              <xsl:value-of select="@protocol" />
+              <xsl:text>:</xsl:text>
+            </div>
             <xsl:value-of select="@portid" />
 
           </div>
@@ -249,8 +251,8 @@ $('.ui.dropdown').dropdown()
       </div>
       <xsl:if
         test="service/@name='ftp' or service/@name='ssh' or service/@name='http' or service/@name='https' or service/@name='ms-wbt-server'">
-        <a class="ui {$color} button">
-          <xsl:attribute name="href" target="_blank">
+        <a class="ui {$color} button" target="_blank">
+          <xsl:attribute name="href">
             <xsl:choose>
               <xsl:when test="service/@name='ms-wbt-server'">
                 <xsl:text>rdp.php?v=</xsl:text>
@@ -276,8 +278,34 @@ $('.ui.dropdown').dropdown()
               </xsl:otherwise>
             </xsl:choose>
           </xsl:attribute>
-          <i
-            class="external alternate icon"></i> Ouvrir </a>
+          <i class="external alternate icon"></i>
+          <xsl:text>Ouvrir</xsl:text>
+        </a>
+      </xsl:if>
+      <xsl:if test="$currentPort/script[@id='smb-shares-size']/table">
+        <div class="ui {$color} center aligned dropdown share-size button">
+          <xsl:attribute name="style">
+            <xsl:for-each select="$currentPort/script[@id='smb-shares-size']/table">
+              <xsl:sort select="elem[@key='FreeSize'] div elem[@key='TotalSize']"
+                order="ascending" />
+                        <xsl:if test="position()=1">
+                <xsl:text>--free: </xsl:text>
+                            <xsl:value-of select="elem[@key='FreeSize']" />
+                            <xsl:text>; --total: </xsl:text>
+                            <xsl:value-of
+                  select="elem[@key='TotalSize']" />
+              </xsl:if>
+            </xsl:for-each>
+          </xsl:attribute>
+          <i class="external alternate icon"></i>
+          <xsl:text>Ouvrir</xsl:text>
+          <i class="dropdown icon"></i>
+          <div class="menu">
+            <xsl:apply-templates select="$currentPort/script[@id='smb-shares-size']/table">
+              <xsl:with-param name="hostAddress" select="$hostAddress" />
+            </xsl:apply-templates>
+          </div>
+        </div>
       </xsl:if>
     </div>
 
@@ -349,6 +377,15 @@ $('.ui.dropdown').dropdown()
         <xsl:value-of select="." />
       </td>
     </tr>
+  </xsl:template>
+
+  <xsl:template match="table">
+    <xsl:param name="hostAddress" />
+        <a class="item share-size"
+      href="file://///{$hostAddress}/{@key}" target="_blank" rel="noopener noreferrer"
+      style="--free: {elem[@key='FreeSize']}; --total: {elem[@key='TotalSize']}">
+      <xsl:value-of select="@key" />
+    </a>
   </xsl:template>
 
 </xsl:stylesheet>

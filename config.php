@@ -4,5 +4,5 @@ $BASEDIR        = "{$_SERVER['REQUEST_SCHEME']}://{$_SERVER['SERVER_NAME']}$port
 $SCANSDIR       = "scans";
 $STYLESHEETSDIR = "stylesheets";
 
-$lanScanCmd  = "sudo nmap -PSmicrosoft-ds -F -T5 -oX - --stylesheet $BASEDIR/$STYLESHEETSDIR/lanScan.xsl";
-$hostScanCmd = "sudo nmap -A -T5 -oX - --stylesheet $BASEDIR/$STYLESHEETSDIR/hostScan.xsl";
+$lanScanCmd  = "sudo nmap -PSmicrosoft-ds -F -T5 --datadir . --script http-info,smb-shares-size --script-args-file script-args.ini -oX - --stylesheet $BASEDIR/$STYLESHEETSDIR/lanScan.xsl";
+$hostScanCmd = "sudo nmap -A -T5 --datadir . --script http-info,smb-shares-size --script-args-file script-args.ini -oX - --stylesheet $BASEDIR/$STYLESHEETSDIR/hostScan.xsl";
