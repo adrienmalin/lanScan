@@ -41,7 +41,7 @@
           </h1>
 
           <table id="scanResultsTable" style="width:100%" role="grid"
-            class="ui sortable small stuck striped table">
+            class="ui sortable small compact stuck striped table">
             <thead>
               <tr>
                 <th style="width: min-width">Etat</th>
@@ -54,7 +54,7 @@
             </thead>
             <tbody>
               <xsl:apply-templates
-                select="$current/host | $init/host[not(address/@addr=$current/host/address/@addr)][not(status/@state='down')]">
+                select="host | $init/host[not(address/@addr=$current/host/address/@addr)][not(status/@state='down')]">
                 <xsl:with-param name="init" select="$init" />
                 <xsl:with-param name="current" select="$current" />
               </xsl:apply-templates>
@@ -127,7 +127,7 @@ $('.ui.dropdown').dropdown()
               <xsl:value-of select="$currentHost/status/@state" />
             </div>
           </xsl:when>
-          <xsl:otherwise><div class="ui red circular label">down</div></xsl:otherwise>
+          <xsl:otherwise><div class="ui mini circular label red">down</div></xsl:otherwise>
         </xsl:choose>
       </td>
       <td>
@@ -146,7 +146,7 @@ $('.ui.dropdown').dropdown()
       </td>
       <td>
         <xsl:apply-templates
-          select="$initHost/ports/port[not(@portid=$currentHost/ports/port/@portid)][not(state/@state='closed')] | $currentHost/ports/port"
+          select="ports/port | $initHost/ports/port[not(state/@state='closed')][not(@portid=$currentHost/ports/port/@portid)]"
           mode="service">
           <xsl:with-param name="initHost" select="$initHost" />
           <xsl:with-param name="currentHost" select="$currentHost" />
@@ -156,7 +156,7 @@ $('.ui.dropdown').dropdown()
         </xsl:apply-templates>
       </td>
       <td>
-        <a class="ui mini icon teal icon button" target="_blank">
+        <a class="ui mini icon teal icon button" target="_blank" title="Scan intensif">
           <xsl:attribute name="href">scan.php?host=<xsl:value-of select="$hostAddress" /></xsl:attribute>
           <i class="search plus icon"></i>
         </a>

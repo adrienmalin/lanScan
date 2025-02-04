@@ -1,15 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <xsl:stylesheet
-    xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
-    xmlns:xs="http://www.w3.org/2001/XMLSchema"
-    version="1.1">
+  xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
+  xmlns:xs="http://www.w3.org/2001/XMLSchema"
+  version="1.1">
 
-    <xsl:template match="nmaprun" mode="nav">
-        <nav class="ui inverted secondary menu">
-          <h3>
-            <a href="." class="button item logo">lan<svg class="logo" version="1.1" id="Layer_1" x="0px" y="0px" viewBox="0 0 24 24" xml:space="preserve" width="40" height="40"
-              xmlns="http://www.w3.org/2000/svg"
-              xmlns:svg="http://www.w3.org/2000/svg">
+  <xsl:template match="nmaprun" mode="nav">
+    <nav class="ui inverted secondary menu">
+      <a href="." class="ui header button item logo">lan<svg class="logo" version="1.1" id="Layer_1"
+          x="0px"
+          y="0px" viewBox="0 0 24 24" xml:space="preserve" width="40" height="40"
+          xmlns="http://www.w3.org/2000/svg"
+          xmlns:svg="http://www.w3.org/2000/svg">
               <defs id="defs206"></defs>
               <g id="g998" transform="matrix(0,0.04687491,-0.04687491,0,24,2.2682373e-5)">
                 <g id="g147">
@@ -55,7 +56,38 @@
               </g>
             </svg>
     can</a>
-        </h3>
-      </nav>
-    </xsl:template>
+      <div class="right menu">
+        <form class="ui right aligned category search item" id="scanForm" action="scan.php"
+          method="get">
+          <div class="ui inverted icon input" id="targetsInputDiv">
+            <input name="lan" class="prompt" type="text" placeholder="Scanner un réseau"
+              pattern="[a-zA-Z0-9._\/ \-]+"
+              title="Les cibles peuvent être spécifiées par des noms d'hôtes, des adresses IP, des adresses de réseaux, etc.
+Exemples: 192.168.1.0/24 scanme.nmap.org 10.0-255.0-255.1-254" />
+            <i class="satellite dish icon"></i>
+          </div>
+          <a class="button item" href="options.php" title="Actualiser">
+            <i class="settings icon"></i>
+          </a>
+        </form>
+      </div>
+    </nav>
+
+    <script>
+scanForm.onsubmit = function(event) {
+  if (scanForm.checkValidity()) {
+    targetsInputDiv.classList.add('loading')
+    $.toast({
+      title : 'Scan en cours...',
+      message : 'Merci de patienter',
+      class : 'info',
+      showIcon : 'satellite dish',
+      displayTime: 0,
+      closeIcon : true,
+      position : 'bottom right',
+    })
+  }
+}
+    </script>
+  </xsl:template>
 </xsl:stylesheet>
