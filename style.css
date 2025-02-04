@@ -70,3 +70,7 @@ body {
   text-align: center !important;
   font-size: .64285714rem !important;
 }
+
+.ui.card .table {
+  overflow-x: auto;
+}

@@ -65,7 +65,7 @@
                 </xsl:attribute>
             </xsl:if>
             <xsl:attribute name="title">
-                <xsl:value-of select="@portid"/>/<xsl:value-of select="@protocol"/>
+                <xsl:value-of select="@protocol" />:<xsl:value-of select="@portid"/>
             </xsl:attribute>
             <xsl:choose>
                 <xsl:when test="service/@name='unknown'">

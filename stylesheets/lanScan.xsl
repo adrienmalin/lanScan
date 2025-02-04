@@ -26,6 +26,7 @@
       <head>
         <meta charset="utf-8" />
         <title>lanScan - <xsl:value-of select="$targets" /></title>
+        <meta http-equiv="refresh" content="300">
         <base href="{$base}" />
         <link rel="icon" href="favicon.ico" />
         <link rel="stylesheet" type="text/css"
@@ -72,7 +73,7 @@ DataTable.ext.type.order['ipv4-address-pre'] = function (ipAddress) {
           </h1>
 
           <table id="scanResultsTable" style="width:100%" role="grid"
-            class="ui sortable small striped table">
+            class="ui sortable small stuck striped table">
             <thead>
               <tr>
                 <th style="width: min-width">Etat</th>
@@ -185,13 +186,12 @@ $('.ui.dropdown').dropdown()
             </xsl:apply-templates>
         </td>
       <td>
-        <a class="ui mini icon teal icon button">
-          <xsl:attribute name="href">scan.php?host=<xsl:value-of select="address/@addr" /></xsl:attribute>
+        <a class="ui mini icon teal icon button" target="_blank">
+          <xsl:attribute name="href">scan.php?host=<xsl:value-of select="$hostAddress" /></xsl:attribute>
           <i class="search plus icon"></i>
         </a>
       </td>
     </tr>
   </xsl:template>
-
 
 </xsl:stylesheet>
