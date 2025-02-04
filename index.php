@@ -70,7 +70,7 @@ if (file_exists($SCANSDIR)) {
   </div>
 
   <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/semantic-ui/dist/semantic.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/fomantic-ui/2.9.2/semantic.min.js"></script>
   <script>
     $('#lanSelect').dropdown({allowAdditions: true, clearable: true})
 
