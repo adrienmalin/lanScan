@@ -66,7 +66,14 @@ $('.ui.dropdown').dropdown()
       </xsl:choose>
     </xsl:variable>
 
-    <h1 class="ui header">
+    <h1>
+        <xsl:attribute name="class">
+          <xsl:text>ui inverted header </xsl:text>
+          <xsl:choose>
+            <xsl:when test="$currentHost/status/@state='up'">green</xsl:when>
+            <xsl:otherwise>red</xsl:otherwise>
+          </xsl:choose>
+        </xsl:attribute>
       <xsl:choose>
         <xsl:when test="hostnames/hostname/@name">
           <xsl:value-of select="hostnames/hostname/@name" />
@@ -75,16 +82,6 @@ $('.ui.dropdown').dropdown()
           <xsl:value-of select="address/@addr" />
         </xsl:otherwise>
       </xsl:choose>
-      <span>
-        <xsl:attribute name="class">
-          <xsl:text>ui label </xsl:text>
-          <xsl:choose>
-            <xsl:when test="$currentHost/status/@state='up'">green</xsl:when>
-            <xsl:otherwise>red</xsl:otherwise>
-          </xsl:choose>
-        </xsl:attribute>
-        <xsl:value-of select="$currentHost/status/@state" />
-      </span>
     </h1>
 
     <table class="ui inverted table" style="width: max-content">
@@ -106,7 +103,7 @@ $('.ui.dropdown').dropdown()
             <th>Distance</th>
           </xsl:if>
           <xsl:if test="uptime/@lastboot">
-            <th>Dernier démarrage</th>
+            <th>Dernier redémarrage</th>
           </xsl:if>
         </tr>
       </thead>
@@ -135,7 +132,7 @@ $('.ui.dropdown').dropdown()
           <xsl:if test="distance/@value">
             <td>
               <xsl:value-of select="distance/@value" />
-              <xsl:text> hop</xsl:text>
+              <xsl:text> rebonds</xsl:text>
             </td>
           </xsl:if>
           <xsl:if test="uptime/@lastboot">
@@ -238,7 +235,7 @@ $('.ui.dropdown').dropdown()
       </div>
       <xsl:if test="service/@name='ftp' or service/@name='ssh' or service/@name='http' or service/@name='https' or service/@name='ms-wbt-server'">
         <a class="ui {$color} button">
-          <xsl:attribute name="href">
+          <xsl:attribute name="href" target="_blank">
             <xsl:choose>
               <xsl:when test="service/@name='ms-wbt-server'">
                 <xsl:text>rdp.php?v=</xsl:text>
