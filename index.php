@@ -31,6 +31,15 @@ body > .grid {
       <h2 class="ui inverted teal fluid image header logo">
         lan<?php include 'logo.svg'; ?>can
       </h2>
+
+<?php if(isset($errorMessage)) { ?>
+    <div class="ui negative message">
+      <i class="close icon"></i>
+      <div class="header">Erreur</div>
+      <p><?=$errorMessage?></p>
+    </div>
+<?php } ?>
+
       <form id="scanForm" class="ui large form initial inverted" action="scan.php" method="get">
         <div class="ui left aligned stacked segment inverted">
           <h4 class="ui header">Découvrir ou superviser un réseau</h4>

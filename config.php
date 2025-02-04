@@ -4,5 +4,8 @@ $BASEDIR        = "{$_SERVER['REQUEST_SCHEME']}://{$_SERVER['SERVER_NAME']}$port
 $SCANSDIR       = "scans";
 $STYLESHEETSDIR = "stylesheets";
 
-$lanScanCmd  = "sudo nmap -PSmicrosoft-ds -F -T5 --datadir . --script http-info,smb-shares-size --script-args-file script-args.ini -oX - --stylesheet $BASEDIR/$STYLESHEETSDIR/lanScan.xsl";
-$hostScanCmd = "sudo nmap -A -T5 --datadir . --script http-info,smb-shares-size --script-args-file script-args.ini -oX - --stylesheet $BASEDIR/$STYLESHEETSDIR/hostScan.xsl";
+$NMAP = "sudo nmap"; # nmap command, E.g. 'nmap', 'sudo nmap' for root privileges or '/usr/bin/nmap' if not in PATH
+$LANSCANOPTIONS  = "-PSmicrosoft-ds -F -T5 --datadir . --script http-info,smb-shares-size --script-args-file script-args.ini -oX - --stylesheet $BASEDIR/$STYLESHEETSDIR/lanScan.xsl";
+$HOSTSCANOPTIONS = "-A -T5 --datadir . --script http-info,smb-shares-size --script-args-file script-args.ini -oX - --stylesheet $BASEDIR/$STYLESHEETSDIR/hostScan.xsl";
+$DATADIR = ".";
+$SCRIPTARGSFILE = "script-args.ini";

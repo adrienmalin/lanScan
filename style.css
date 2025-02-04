@@ -77,3 +77,7 @@ body {
 .ui.card .table {
   overflow-x: auto;
 }
+
+.inverted tags {
+  background-color: white;
+}
