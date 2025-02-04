@@ -24,10 +24,11 @@
     <xsl:variable name="init"
       select="document(concat($base, 'scans/', translate($targets,'/', '!'), '.xml'))/nmaprun" />
 
-    <html lang="fr">
+    <html
+      lang="fr">
       <xsl:apply-templates select="." mode="head">
-          <xsl:with-param name="base" select="$base"/>
-          <xsl:with-param name="targets" select="$targets"/>
+        <xsl:with-param name="base" select="$base" />
+        <xsl:with-param name="targets" select="$targets" />
       </xsl:apply-templates>
 
       <body>
@@ -78,7 +79,7 @@ table.order([1, 'asc']).draw()
 $('.ui.dropdown').dropdown()
         </script>
         <xsl:apply-templates select="runstats">
-            <xsl:with-param name="init" select="$init"/>
+          <xsl:with-param name="init" select="$init" />
         </xsl:apply-templates>
 
       </body>
@@ -143,18 +144,20 @@ $('.ui.dropdown').dropdown()
       <td>
         <xsl:value-of select="address[@addrtype='mac']/@vendor" />
       </td>
-        <td>
-            <xsl:apply-templates select="$initHost/ports/port[not(@portid=$currentHost/ports/port/@portid)][not(state/@state='closed')] | $currentHost/ports/port" mode="service">
-                <xsl:with-param name="initHost" select="$initHost"/>
-                <xsl:with-param name="currentHost" select="$currentHost"/>
-                <xsl:with-param name="hostAddress" select="$hostAddress"/>
-                <xsl:with-param name="class" select="'ui mini label'"/>
-                <xsl:sort select="number(@portid)" order="ascending"/>
-            </xsl:apply-templates>
-        </td>
+      <td>
+        <xsl:apply-templates
+          select="$initHost/ports/port[not(@portid=$currentHost/ports/port/@portid)][not(state/@state='closed')] | $currentHost/ports/port"
+          mode="service">
+          <xsl:with-param name="initHost" select="$initHost" />
+          <xsl:with-param name="currentHost" select="$currentHost" />
+          <xsl:with-param name="hostAddress" select="$hostAddress" />
+          <xsl:with-param name="class" select="'ui mini label'" />
+          <xsl:sort select="number(@portid)" order="ascending" />
+        </xsl:apply-templates>
+      </td>
       <td>
         <a class="ui mini icon teal icon button" target="_blank">
-          <xsl:attribute name="href">?host=<xsl:value-of select="$hostAddress" /></xsl:attribute>
+          <xsl:attribute name="href">scan.php?host=<xsl:value-of select="$hostAddress" /></xsl:attribute>
           <i class="search plus icon"></i>
         </a>
       </td>
