@@ -5,4 +5,4 @@ $SCANSDIR = "scans";
 $STYLESHEETSDIR = "stylesheets";
 
 $lanScanCmd = "sudo nmap -PSmicrosoft-ds -F -T5 -oX - --stylesheet $BASEDIR/$STYLESHEETSDIR/lanScan.xsl";
-$hostScanCmd = "sudo nmap -A -oX - --stylesheet $BASEDIR/$STYLESHEETSDIR/hostScan.xsl";
+$hostScanCmd = "sudo nmap -A -T5 -oX - --stylesheet $BASEDIR/$STYLESHEETSDIR/hostScan.xsl";
