@@ -8,6 +8,7 @@
 
         <head>
             <meta charset="utf-8" />
+            <meta http-equiv="refresh" content="300" />
             <title>lanScan - <xsl:value-of select="$targets" />
             </title>
             <base href="{$base}" />

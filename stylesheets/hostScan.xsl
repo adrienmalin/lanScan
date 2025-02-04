@@ -90,26 +90,59 @@ $('.ui.dropdown').dropdown()
     <table class="ui inverted table" style="width: max-content">
       <thead>
         <tr>
-          <th>Adresse IPv4</th>
-          <th>Adresse MAC</th>
-          <th>Constructeur</th>
-          <th>OS</th>
+          <xsl:if test="address[@addrtype='ipv4']/@addr">
+            <th>Adresse IPv4</th>
+          </xsl:if>
+          <xsl:if test="address[@addrtype='mac']/@addr">
+            <th>Adresse MAC</th>
+          </xsl:if>
+          <xsl:if test="address/@vendor">
+            <th>Constructeur</th>
+          </xsl:if>
+          <xsl:if test="os/osmatch/@name">
+            <th>OS</th>
+          </xsl:if>
+          <xsl:if test="distance/@value">
+            <th>Distance</th>
+          </xsl:if>
+          <xsl:if test="uptime/@lastboot">
+            <th>Dernier démarrage</th>
+          </xsl:if>
         </tr>
       </thead>
       <tbody>
         <tr>
-          <td>
-            <xsl:value-of select="address[@addrtype='ipv4']/@addr" />
-          </td>
-          <td>
-            <xsl:value-of select="address[@addrtype='mac']/@addr" />
-          </td>
-          <td>
-            <xsl:value-of select="address/@vendor" />
-          </td>
-          <td>
-            <xsl:value-of select="os/osmatch/@name" />
-          </td>
+          <xsl:if test="address[@addrtype='ipv4']/@addr">
+            <td>
+              <xsl:value-of select="address[@addrtype='ipv4']/@addr" />
+            </td>
+          </xsl:if>
+          <xsl:if test="address[@addrtype='mac']/@addr">
+            <td>
+              <xsl:value-of select="address[@addrtype='mac']/@addr" />
+            </td>
+          </xsl:if>
+          <xsl:if test="address/@vendor">
+            <td>
+              <xsl:value-of select="address/@vendor" />
+            </td>
+          </xsl:if>
+          <xsl:if test="os/osmatch/@name">
+            <td>
+              <xsl:value-of select="os/osmatch/@name" />
+            </td>
+          </xsl:if>
+          <xsl:if test="distance/@value">
+            <td>
+              <xsl:value-of select="distance/@value" />
+              <xsl:text> hop</xsl:text>
+            </td>
+          </xsl:if>
+          <xsl:if test="uptime/@lastboot">
+            <td>
+              <xsl:value-of select="uptime/@lastboot" />
+            </td>
+          </xsl:if>
         </tr>
       </tbody>
     </table>
