@@ -20,8 +20,8 @@
 
     <html lang="fr">
       <xsl:apply-templates select="." mode="head">
-          <xsl:with-param name="base" select="$base"/>
-          <xsl:with-param name="targets" select="$targets"/>
+        <xsl:with-param name="base" select="$base" />
+        <xsl:with-param name="targets" select="$targets" />
       </xsl:apply-templates>
 
       <body>
@@ -192,10 +192,7 @@ $('.ui.dropdown').dropdown()
   <xsl:variable name="portid" select="@portid" />
   <xsl:variable name="initPort" select="$initHost/ports/port[@portid=$portid]" />
   <xsl:variable name="currentPort" select="$currentHost/ports/port[@portid=$portid]" />
-
-  <div>
-    <xsl:attribute name="class">
-      <xsl:text>ui inverted card </xsl:text>
+  <xsl:variable name="color">
       <xsl:choose>
         <xsl:when test="$currentPort/script[@id='http-info']/elem[@key='status']>=500">red</xsl:when>
         <xsl:when test="$currentPort/script[@id='http-info']/elem[@key='status']>=400">orange</xsl:when>
@@ -204,21 +201,12 @@ $('.ui.dropdown').dropdown()
         <xsl:when test="$currentPort/state/@state='filtered'">orange</xsl:when>
         <xsl:otherwise>red</xsl:otherwise>
       </xsl:choose>
-    </xsl:attribute>
+  </xsl:variable>
+
+  <div class="ui inverted card {$color}">
     <div class="content">
       <div class="header">
-        <div style="text-transform: uppercase">
-          <xsl:attribute name="class">
-            <xsl:text>ui red ribbon label </xsl:text>
-            <xsl:choose>
-              <xsl:when test="$currentPort/script[@id='http-info']/elem[@key='status']>=500">red</xsl:when>
-              <xsl:when test="$currentPort/script[@id='http-info']/elem[@key='status']>=400">orange</xsl:when>
-              <xsl:when test="$currentPort/script[@id='http-info']/elem[@key='status']>=200">green</xsl:when>
-              <xsl:when test="$currentPort/state/@state='open'">green</xsl:when>
-              <xsl:when test="$currentPort/state/@state='filtered'">orange</xsl:when>
-              <xsl:otherwise>red</xsl:otherwise>
-            </xsl:choose>
-          </xsl:attribute>
+        <div class="ui {$color} ribbon label" style="text-transform: uppercase">
           <xsl:value-of select="@protocol" />
           <xsl:text>:</xsl:text>
           <xsl:value-of select="@portid" />
@@ -264,6 +252,36 @@ $('.ui.dropdown').dropdown()
         </div>
       </div>
     </div>
+    <xsl:if test="service/@name='ftp' or service/@name='ssh' or service/@name='http' or service/@name='https' or service/@name='ms-wbt-server'">
+      <a class="ui {$color} button">
+        <xsl:attribute name="href">
+          <xsl:choose>
+            <xsl:when test="service/@name='ms-wbt-server'">
+              <xsl:text>rdp.php?v=</xsl:text>
+              <xsl:value-of select="$hostAddress" />
+              <xsl:text>&amp;p=</xsl:text>
+              <xsl:value-of select="@portid" />
+            </xsl:when>
+            <xsl:otherwise>
+              <xsl:choose>
+                <xsl:when test="service/@name='http' and service/@tunnel='ssl'">
+                  <xsl:text>https</xsl:text>
+                </xsl:when>
+                <xsl:otherwise>
+                  <xsl:value-of select="service/@name" />
+                </xsl:otherwise>
+              </xsl:choose>
+              <xsl:text>://</xsl:text>
+              <xsl:value-of select="$hostAddress" />
+              <xsl:text>:</xsl:text>
+              <xsl:value-of select="@portid" />
+            </xsl:otherwise>
+          </xsl:choose>
+        </xsl:attribute>
+        <i class="external alternate icon"></i>
+        Ouvrir
+      </a>
+    </xsl:if>
   </div>
 
 </xsl:template>
