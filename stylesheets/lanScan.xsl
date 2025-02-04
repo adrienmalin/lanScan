@@ -5,6 +5,7 @@
   version="1.1">
 
   <xsl:import href="head.xsl" />
+  <xsl:import href="nav.xsl" />
   <xsl:import href="services.xsl" />
   <xsl:import href="toast.xsl" />
 
@@ -153,7 +154,7 @@ $('.ui.dropdown').dropdown()
         </td>
       <td>
         <a class="ui mini icon teal icon button" target="_blank">
-          <xsl:attribute name="href">scan.php?host=<xsl:value-of select="$hostAddress" /></xsl:attribute>
+          <xsl:attribute name="href">?host=<xsl:value-of select="$hostAddress" /></xsl:attribute>
           <i class="search plus icon"></i>
         </a>
       </td>
