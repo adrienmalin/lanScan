@@ -9,13 +9,18 @@
   <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/fomantic-ui@2.9.3/dist/semantic.min.css" />
   <link rel="stylesheet" type="text/css" href="style.css" />
   <style>
-    body > .grid {
-      height: 100%;
-    }
+body {
+  background-image: url(bg.jpg);
+  background-size: cover;
+}
 
-    .logo {
-      margin-right: 0 !important;
-    }
+body > .grid {
+  height: 100%;
+}
+
+.logo {
+  margin-right: 0 !important;
+}
   </style>
 </head>
 
@@ -50,11 +55,8 @@ if (file_exists($SCANSDIR)) {
             <i class="satellite dish icon"></i>Scanner
           </button>
         </div>
-      </form>
-
-      <div class="ui inverted segment">
         <a href="options.php">Options avancées</a>
-      </div>
+      </form>
     </div>
   </div>
 
