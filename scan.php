@@ -124,15 +124,6 @@ if ($targets) {
     'sudo'          => FILTER_VALIDATE_BOOLEAN,
   ], false);
 
-  echo "<!--";
-  var_dump($inputs);
-  echo "-->\n";
-
-  $inputs["--datadir"] = $DATADIR;
-  $inputs["--script-args-file"] = $SCRIPTARGSFILE;
-  $inputs["-oX"] = "-";
-  $inputs["--stylesheet"] = "$BASEDIR/$STYLESHEETSDIR/lanScan.xsl#";
-
   $options = "";
   foreach ($inputs as $option => $value) {
       if (substr($option, 0, 1) == '-') {
@@ -152,7 +143,7 @@ if ($targets) {
       }
   }
   
-  $cmd = "$NMAP$options $targets";
+  $cmd = "$NMAP$options $CUSTOMSCANOPTIONS $targets";
   $filename = str_replace("/", "!", $targets);
 }
 

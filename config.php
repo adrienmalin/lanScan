@@ -9,3 +9,4 @@ $DATADIR = ".";
 $SCRIPTARGSFILE = "script-args.ini";
 $LANSCANOPTIONS  = "-PSmicrosoft-ds -F -T5 --datadir '$DATADIR' --script http-info,smb-shares-size --script-args-file '$SCRIPTARGSFILE' -oX - --stylesheet $BASEDIR/$STYLESHEETSDIR/lanScan.xsl";
 $HOSTSCANOPTIONS = "-A -T5 --datadir '$DATADIR' --script http-info,smb-shares-size --script-args-file '$SCRIPTARGSFILE' -oX - --stylesheet $BASEDIR/$STYLESHEETSDIR/hostScan.xsl";
+$CUSTOMSCANOPTIONS = "--datadir '$DATADIR' --script-args-file '$SCRIPTARGSFILE' -oX - --stylesheet $BASEDIR/$STYLESHEETSDIR/lanScan.xsl";
