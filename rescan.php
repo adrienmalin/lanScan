@@ -10,7 +10,7 @@ $fileNameRegex = '/^[^<>:\/|?]+$/';
 
 $name = filter_input(INPUT_GET, 'name', FILTER_VALIDATE_REGEXP, ['options' => ['regexp' => $fileNameRegex], "flags" => FILTER_NULL_ON_FAILURE]);
 if (!$name) {
-  die("Paramètre manquant : name");
+  die("Paramètre manquant ou incorrect : name");
 }
 
 $path = "$SCANSDIR/$name.xml";

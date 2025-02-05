@@ -26,9 +26,9 @@
 
 <body>
 
-  <div class="ui center aligned inverted grid">
+  <div class="ui middle aligned center aligned inverted grid">
     <div class="column" style="max-width: 450px;">
-      <h2 class="ui inverted teal fluid image header logo" style="margin-top: 15vh">
+      <h2 class="ui inverted teal fluid image header logo">
         lan<?php include 'logo.svg'; ?>can
       </h2>
 
@@ -44,58 +44,52 @@
         <div class="ui left aligned stacked segment inverted">
           <h4 class="ui header">Découvrir ou superviser un réseau</h4>
           <div class="inverted field">
-            <div class="ui large input">
-              <input id="nameInput" type="text" name="lan" placeholder="<?= $_SERVER['REMOTE_ADDR']; ?>" list="targetsList" pattern="[a-zA-Z0-9._\/ \-]+" required
-                title="Les cibles peuvent être spécifiées par des noms d'hôtes, des adresses IP, des adresses de réseaux, etc.
-Exemples: <?= $_SERVER['REMOTE_ADDR']; ?>/24 <?= $_SERVER['SERVER_NAME']; ?> 10.0-255.0-255.1-254" />
-            </div>
-          </div>
-          <div class="field">
-            <label for="nameInput">Enregistrer sous le nom (optionnel)</label>
-            <div class="ui small input">
-              <input id="nameInput" type="text" name="name" placeholder="Réseau local" pattern='[^&lt;&gt;:&quot;\\\/\|@?]+'
-                title="Caractères interdits :  &lt;&gt;:&quot;\/|@?">
-            </div>
+            <select id="lanSelect" name="lan" class="search clearable selection dropdown">
+              <option value=""><?= $_SERVER['REMOTE_ADDR']; ?>/24</option>
+              <?php
+              if (file_exists($SCANSDIR)) {
+                foreach (scandir($SCANSDIR) as $filename) {
+                  if (substr($filename, -4) === '.xml') {
+                    $name = substr($filename, 0, -4);
+                    $name = str_replace("!", "/", $name);
+                    echo "              <option value='$name'>$name</option>\n";
+                  }
+                }
+              }
+              ?>
+            </select>
           </div>
           <div class="ui error message"></div>
           <button type="submit" class="ui fluid large teal labeled icon submit button">
             <i class="satellite dish icon"></i>Scanner
           </button>
-          <div class="ui divider"></div>
-          <a href="options.php">Options avancées</a>
         </div>
+        <a href="options.php">Options avancées</a>
       </form>
-
-      <?php if (file_exists($SCANSDIR)) { ?>
-        <div class="ui inverted fluid card" style="margin-top: 10vh">
-          <div class="content">
-            <div class="header">Scans enregistrés</div>
-          </div>
-          <table class="ui very basic inverted table">
-            <tbody>
-            <?php
-            foreach (scandir($SCANSDIR) as $filename) {
-              if (substr($filename, -4) == '.xml') {
-                $name = str_replace('!', '/', substr_replace($filename, '', -4));
-                echo "<tr><td class='selectable'><a href='$SCANSDIR/" . rawurlencode($filename) . "'>$name</a></td><td><a href='rescan.php?name=$name' class='ui mini labelled button'><i class='sync icon'></i>Rescanner</a></td></tr>\n";
-              }
-            }
-          }
-            ?>
-            </tbody>
-          </table>
-        </div>
     </div>
   </div>
-
-  <datalist id='targetsList'>
-    <option value="<?= $_SERVER['REMOTE_ADDR']; ?>/24"></option>
-    <option value="<?= $_SERVER['SERVER_NAME']; ?>"></option>
-  </datalist>
 
   <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/fomantic-ui/2.9.2/semantic.min.js"></script>
   <script>
+    $('#lanSelect').dropdown({
+      allowAdditions: true,
+      clearable: true
+    })
+
+    $('#scanForm').form({
+      fields: {
+        lan: {
+          identifier: 'lanSelect',
+          rules: [{
+            type: 'regExp',
+            value: /[a-zA-Z0-9._\/ \-]+/,
+            prompt: "Les cibles peuvent être spécifiées par des noms d'hôtes, des adresses IP, des adresses de réseaux, etc.<br/>Exemples : <?= $_SERVER['REMOTE_ADDR']; ?>/24 <?= $_SERVER['SERVER_NAME']; ?> 10.0-255.0-255.1-254"
+          }]
+        }
+      }
+    });
+
     scanForm.onsubmit = function(event) {
       if (this.checkValidity()) {
         scanForm.classList.add("loading")

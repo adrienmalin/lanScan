@@ -434,11 +434,11 @@ Exemples: <?= $_SERVER['REMOTE_ADDR']; ?>/24 <?= $_SERVER['SERVER_NAME']; ?> 10.
                   <select id="initialRTTUnit" class="ui clearable dropdown label"
                     oninput="initialRTTHidden.value = initialRTTNumber.value? initialRTTNumber.value+initialRTTUnit.value: ''">
                     <option value="">ms</option>
-                    <option value="s" <?= substr($options["--initial-rtt-timeout"] ?? "", -1) == "s" ? "selected" : "" ?>>
+                    <option value="s"
                       secondes</option>
-                    <option value="m" <?= substr($options["--initial-rtt-timeout"] ?? "", -1) == "m" ? "selected" : "" ?>>
+                    <option value="m"
                       minutes</option>
-                    <option value="h" <?= substr($options["--initial-rtt-timeout"] ?? "", -1) == "h" ? "selected" : "" ?>>
+                    <option value="h"
                       heures</option>
                   </select>
                 </div>
@@ -453,13 +453,13 @@ Exemples: <?= $_SERVER['REMOTE_ADDR']; ?>/24 <?= $_SERVER['SERVER_NAME']; ?> 10.
                   <select id="minRTTUnit" class="ui clearable dropdown label"
                     oninput="minRTTHidden.value = minRTTNumber.value? minRTTNumber.value+minRTTUnit.value: ''">
                     <option value="">ms</option>
-                    <option value="s" <?= substr($options["--min-rtt-timeout"] ?? "", -1) == "s" ? "selected" : "" ?>>
+                    <option value="s"
                       secondes
                     </option>
-                    <option value="m" <?= substr($options["--min-rtt-timeout"] ?? "", -1) == "m" ? "selected" : "" ?>>
+                    <option value="m"
                       minutes
                     </option>
-                    <option value="h" <?= substr($options["--min-rtt-timeout"] ?? "", -1) == "h" ? "selected" : "" ?>>
+                    <option value="h"
                       heures
                     </option>
                   </select>
@@ -475,13 +475,13 @@ Exemples: <?= $_SERVER['REMOTE_ADDR']; ?>/24 <?= $_SERVER['SERVER_NAME']; ?> 10.
                   <select id="maxRTTUnit" class="ui clearable dropdown label"
                     oninput="maxRTTHidden.value = maxRTTNumber.value? maxRTTNumber.value+maxRTTUnit.value: ''">
                     <option value="">ms</option>
-                    <option value="s" <?= substr($options["--max-rtt-timeout"] ?? "", -1) == "s" ? "selected" : "" ?>>
+                    <option value="s"
                       secondes
                     </option>
-                    <option value="m" <?= substr($options["--max-rtt-timeout"] ?? "", -1) == "m" ? "selected" : "" ?>>
+                    <option value="m"
                       minutes
                     </option>
-                    <option value="h" <?= substr($options["--max-rtt-timeout"] ?? "", -1) == "h" ? "selected" : "" ?>>
+                    <option value="h"
                       heures
                     </option>
                   </select>
@@ -506,11 +506,11 @@ Exemples: <?= $_SERVER['REMOTE_ADDR']; ?>/24 <?= $_SERVER['SERVER_NAME']; ?> 10.
               <select id="hostTimoutUnit" class="ui clearable dropdown label"
                 oninput="hostTimoutHidden.value = hostTimoutNumber.value? hostTimoutNumber.value+hostTimoutUnit.value: ''">
                 <option value="">ms</option>
-                <option value="s" <?= substr($options["--host-timeout"] ?? "", -1) == "s" ? "selected" : "" ?>>secondes
+                <option value="s"secondes
                 </option>
-                <option value="m" <?= substr($options["--host-timeout"] ?? "", -1) == "m" ? "selected" : "" ?>>minutes
+                <option value="m"minutes
                 </option>
-                <option value="h" <?= substr($options["--host-timeout"] ?? "", -1) == "h" ? "selected" : "" ?>>heures
+                <option value="h"heures
                 </option>
               </select>
             </div>
@@ -527,11 +527,11 @@ Exemples: <?= $_SERVER['REMOTE_ADDR']; ?>/24 <?= $_SERVER['SERVER_NAME']; ?> 10.
                 <select id="scanDelayUnit" class="ui clearable dropdown label"
                   oninput="scanDelayHidden.value = scanDelayNumber.value? scanDelayNumber.value+scanDelayUnit.value: ''">
                   <option value="">ms</option>
-                  <option value="s" <?= substr($options["--scan-delay"] ?? "", -1) == "s" ? "selected" : "" ?>>secondes
+                  <option value="s"secondes
                   </option>
-                  <option value="m" <?= substr($options["--scan-delay"] ?? "", -1) == "m" ? "selected" : "" ?>>minutes
+                  <option value="m"minutes
                   </option>
-                  <option value="h" <?= substr($options["--scan-delay"] ?? "", -1) == "h" ? "selected" : "" ?>>heures
+                  <option value="h"heures
                   </option>
                 </select>
               </div>
@@ -546,13 +546,13 @@ Exemples: <?= $_SERVER['REMOTE_ADDR']; ?>/24 <?= $_SERVER['SERVER_NAME']; ?> 10.
                 <select id="maxRTTUnit" class="ui clearable dropdown label"
                   oninput="maxRTTHidden.value = maxScanDelay.value? maxScanDelay.value+maxRTTUnit.value: ''">
                   <option value="">ms</option>
-                  <option value="s" <?= substr($options["--max-scan-delay"] ?? "", -1) == "s" ? "selected" : "" ?>>
+                  <option value="s"
                     secondes
                   </option>
-                  <option value="m" <?= substr($options["--max-scan-delay"] ?? "", -1) == "m" ? "selected" : "" ?>>
+                  <option value="m"
                     minutes
                   </option>
-                  <option value="h" <?= substr($options["--max-scan-delay"] ?? "", -1) == "h" ? "selected" : "" ?>>heures
+                  <option value="h"heures
                   </option>
                 </select>
               </div>

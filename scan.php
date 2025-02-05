@@ -9,13 +9,13 @@ $name = filter_input(INPUT_GET, 'name', FILTER_VALIDATE_REGEXP, ['options' => ['
 
 $lan = filter_input(INPUT_GET, 'lan', FILTER_VALIDATE_REGEXP, ['options' => ['regexp' => $targetsListRegex], "flags" => FILTER_NULL_ON_FAILURE]);
 if ($lan) {
-    $cmd = "$NMAP $LANSCANOPTIONS $lan";
+    $cmd = "$NMAP $LANSCANOPTIONS --stylesheet '$BASEDIR/$STYLESHEETSDIR/lanScan.xsl?name=$name&' -oX - $lan";
     $filename = str_replace("/", "!", $lan);
 }
 
 $host = filter_input(INPUT_GET, 'host', FILTER_VALIDATE_REGEXP, ['options' => ['regexp' => $targetsListRegex], "flags" => FILTER_NULL_ON_FAILURE]);
 if ($host) {
-    $cmd = "$NMAP $HOSTSCANOPTIONS $host";
+    $cmd = "$NMAP $HOSTSCANOPTIONS --stylesheet '$BASEDIR/$STYLESHEETSDIR/hostScan.xsl?name=$name&' -oX - $host";
     $filename = str_replace("/", "!", $host);
 }
 
@@ -145,7 +145,7 @@ if ($targets) {
         }
     }
 
-    $cmd = "$NMAP$options $CUSTOMSCANOPTIONS $targets";
+    $cmd = "$NMAP$options $CUSTOMSCANOPTIONS --stylesheet $BASEDIR/$STYLESHEETSDIR/lanScan.xsl?name=$name&' -oX - $targets";
     $filename = str_replace("/", "!", $targets);
 }
 
@@ -153,8 +153,8 @@ if ($cmd) {
     if ($name) {
         if (!file_exists($SCANSDIR)) mkdir($SCANSDIR);
 
-        $path = "$SCANSDIR/" . escapeshellarg($name) . ".xml";
-        $cmd .= " | tee '$path'";
+        $path = "$SCANSDIR/$name.xml";
+        $cmd .= " | tee " .escapeshellarg($path);
     }
 
     header('Content-type: text/xml');

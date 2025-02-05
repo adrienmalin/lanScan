@@ -4,12 +4,22 @@
 
     <xsl:template match="nmaprun" mode="head">
         <xsl:param name="base" />
+        <xsl:param name="name" />
         <xsl:param name="targets" />
 
         <head>
             <meta charset="utf-8" />
             <meta http-equiv="refresh" content="300" />
-            <title>lanScan - <xsl:value-of select="$targets" />
+            <title>
+            <xsl:text>lanScan - </xsl:text>
+            <xsl:choose>
+              <xsl:when test="$name">
+                <xsl:value-of select="$name" />
+              </xsl:when>
+              <xsl:otherwise>
+                <xsl:value-of select="$targets" />
+              </xsl:otherwise>
+            </xsl:choose>
             </title>
             <base href="{$base}" />
             <link rel="icon" href="favicon.ico" />

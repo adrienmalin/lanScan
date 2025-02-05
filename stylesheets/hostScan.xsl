@@ -11,17 +11,19 @@
   <xsl:output indent="yes" />
   <xsl:strip-space elements='*' />
 
-  <xsl:variable name="stylesheetURL" select="substring-before(substring-after(processing-instruction('xml-stylesheet'),'href=&quot;'), '&quot;')" />
+  <xsl:variable name="stylesheetURL" select="substring-before(substring-after(processing-instruction('xml-stylesheet'),'href=&quot;'), '?')" />
   <xsl:variable name="base" select="concat($stylesheetURL, '/../../')" />
+  <xsl:variable name="name" select="substring-before(substring-after(processing-instruction('xml-stylesheet'),'name='), '&amp;')" />
 
   <xsl:template match="nmaprun">
-    <xsl:variable name="targets" select="substring-after(@args, '.xsl ')" />
+    <xsl:variable name="targets" select="substring-after(@args, '-oX - ')" />
     <xsl:variable name="current" select="." />
-    <xsl:variable name="init" select="document(concat($base, 'scans/', translate($targets,'/', '!'), '.xml'))/nmaprun" />
+    <xsl:variable name="init" select="document(concat($base, 'scans/', $name, '.xml'))/nmaprun" />
 
     <html lang="fr">
       <xsl:apply-templates select="." mode="head">
         <xsl:with-param name="base" select="$base" />
+        <xsl:with-param name="name" select="$name" />
         <xsl:with-param name="targets" select="$targets" />
       </xsl:apply-templates>
 
