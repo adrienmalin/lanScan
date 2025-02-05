@@ -54,8 +54,8 @@ Exemples: <?= $_SERVER['REMOTE_ADDR']; ?>/24 <?= $_SERVER['SERVER_NAME']; ?> 10.
             <div class="field">
               <label for="nameInput">Enregistrer sous le nom (optionnel)</label>
               <div class="ui small input">
-                <input id="nameInput" type="text" name="name" placeholder="Réseau local"
-                  pattern='[^&lt;&gt;:&quot;\\\/\|@?]+' title="Caractères interdits :  &lt;&gt;:&quot;\/|@?">
+                <input id="nameInput" type="text" name="name" placeholder="Reseau local"
+                  pattern='[0-9a-zA-Z\-_\. ]+' title="Caractères autorisés: a-z A-Z 0-9 - _ ."/>
               </div>
             </div>
             <div class="ui error message"></div>
@@ -78,7 +78,7 @@ Exemples: <?= $_SERVER['REMOTE_ADDR']; ?>/24 <?= $_SERVER['SERVER_NAME']; ?> 10.
                     foreach (scandir($SCANSDIR) as $filename) {
                       if (substr($filename, -4) == '.xml') {
                         $name = str_replace('!', '/', substr_replace($filename, '', -4));
-                        echo "<tr><td class='selectable'><a href='$SCANSDIR/" . rawurlencode($filename) . "'><i class='tasks icon'></i>$name</a></td><td class='collapsing'><a href='rescan.php?name=$name' class='ui mini labelled button' onclick='rescan(this)'><i class='sync icon'></i>Rescanner</a></td></tr>\n";
+                        echo "<tr><td class='selectable'><a href='$SCANSDIR/" . rawurlencode($filename) . "'><i class='tasks icon'></i>$name</a></td><td class='collapsing'><a href='rescan.php?name=$name' class='ui mini labelled button' onclick='rescan(this)'><i class='sync icon'></i>Rescanner</a></td><td class='collapsing'><a href='rm.php?name=$name' class='ui mini negative icon button'><i class='trash icon'></i></a></td></td></tr>\n";
                       }
                     }
                     ?>

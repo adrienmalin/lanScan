@@ -13,7 +13,7 @@
 
   <xsl:variable name="stylesheetURL" select="substring-before(substring-after(processing-instruction('xml-stylesheet'),'href=&quot;'), '?')" />
   <xsl:variable name="base" select="concat($stylesheetURL, '/../../')" />
-  <xsl:variable name="name" select="substring-before(substring-after(processing-instruction('xml-stylesheet'),'name='), '&amp;')" />
+  <xsl:variable name="name" select="substring-before(substring-after(processing-instruction('xml-stylesheet'),'name='), '&quot;')" />
 
   <xsl:template match="nmaprun">
     <xsl:variable name="targets" select="substring-after(@args, '-oX - ')" />
