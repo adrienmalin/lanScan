@@ -27,9 +27,9 @@
 
   <body>
 
-    <div class="ui center aligned inverted grid">
+    <div class="ui middle aligned center aligned inverted grid">
       <div class="column" style="max-width: 450px;">
-        <h2 class="ui inverted teal fluid image header logo" style="margin-top: 15vh">
+        <h2 class="ui inverted teal fluid image header logo">
           lan<?php include 'logo.svg'; ?>can
         </h2>
 
@@ -68,9 +68,9 @@ Exemples: <?= $_SERVER['REMOTE_ADDR']; ?>/24 <?= $_SERVER['SERVER_NAME']; ?> 10.
         </form>
 
         <?php if (file_exists($SCANSDIR)) { ?>
-          <div class="ui inverted segment">
+          <div class="ui left aligned stacked segment inverted">
             <div class="ui inverted accordion">
-              <div class="title"><i class="dropdown icon"></i>Scans enregistrés</div>
+              <div class="title"><i class="dropdown icon"></i></i>Scans enregistrés</div>
               <div class="content">
                 <table class="ui very basic inverted compact table">
                   <tbody>
@@ -78,7 +78,7 @@ Exemples: <?= $_SERVER['REMOTE_ADDR']; ?>/24 <?= $_SERVER['SERVER_NAME']; ?> 10.
                     foreach (scandir($SCANSDIR) as $filename) {
                       if (substr($filename, -4) == '.xml') {
                         $name = str_replace('!', '/', substr_replace($filename, '', -4));
-                        echo "<tr><td class='selectable'><a href='$SCANSDIR/" . rawurlencode($filename) . "'>$name</a></td><td class='collapsing'><a href='rescan.php?name=$name' class='ui mini labelled button' onclick='rescan(this)'><i class='sync icon'></i>Rescanner</a></td></tr>\n";
+                        echo "<tr><td class='selectable'><a href='$SCANSDIR/" . rawurlencode($filename) . "'><i class='tasks icon'></i>$name</a></td><td class='collapsing'><a href='rescan.php?name=$name' class='ui mini labelled button' onclick='rescan(this)'><i class='sync icon'></i>Rescanner</a></td></tr>\n";
                       }
                     }
                     ?>

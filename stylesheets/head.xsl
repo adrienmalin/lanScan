@@ -9,7 +9,16 @@
 
         <head>
             <meta charset="utf-8" />
-            <meta http-equiv="refresh" content="300" />
+            <base href="{$base}" />
+            <meta http-equiv="refresh" content="300">
+            <xsl:attribute name="content">
+                <xsl:text>300</xsl:text>
+                <xsl:if test="$name">
+                    <xsl:text>;URL=rescan.php?name=</xsl:text>
+                    <xsl:value-of select="$name" />
+                </xsl:if>
+            </xsl:attribute>
+            </meta>
             <title>
             <xsl:text>lanScan - </xsl:text>
             <xsl:choose>
@@ -21,7 +30,6 @@
               </xsl:otherwise>
             </xsl:choose>
             </title>
-            <base href="{$base}" />
             <link rel="icon" href="favicon.ico" />
             <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/fomantic-ui@2.9.3/dist/semantic.min.css" />
             <link href="https://cdn.jsdelivr.net/npm/@yaireo/tagify/dist/tagify.css" rel="stylesheet" type="text/css" />

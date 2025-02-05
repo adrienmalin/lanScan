@@ -54,7 +54,9 @@
                 <th>Nom</th>
                 <th>Constructeur</th>
                 <th class="six wide">Services</th>
-                <th style="width: min-width"></th>
+                <th style="width: min-width" title="Scan intensif">
+                  <i class="search plus icon"></i>
+                </th>
               </tr>
             </thead>
             <tbody>
@@ -142,7 +144,8 @@ $('.ui.dropdown').dropdown()
         </b>
         <xsl:if test="substring-after(hostnames/hostname/@name, '.')">
           <wbr />
-.          <xsl:value-of select="substring-after(hostnames/hostname/@name, '.')" />
+          <xsl:text>.</xsl:text>
+          <xsl:value-of select="substring-after(hostnames/hostname/@name, '.')" />
         </xsl:if>
       </td>
       <td>
