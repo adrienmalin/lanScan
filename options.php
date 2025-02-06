@@ -1,3 +1,5 @@
+<?php include_once 'config.php'; ?>
+
 <!DOCTYPE html>
 <html lang="fr">
 
@@ -29,14 +31,14 @@
 
   <main class="ui main container">
 
-    <h1 class="ui inverted header">Scanner un <?= $preset == "host" ? "hôte" : "réseau" ?></h1>
+    <h1 class="ui inverted header">Scanner un réseau</h1>
 
     <form id="newScanForm" class="ui inverted form" method="get" action="scan.php">
       <div class="inverted field">
         <label for="targetsInput" title="Les cibles peuvent être spécifiées par des noms d'hôtes, des adresses IP, des adresses de réseaux, etc.
 Exemples: <?= $_SERVER['REMOTE_ADDR']; ?>/24 <?= $_SERVER['SERVER_NAME']; ?> 10.0-255.0-255.1-254">Cibles</label>
         <input id="targetsInput" type="text" name="targets" placeholder="Cibles" spellcheck="false"
-          pattern="[a-zA-Z0-9._\/ \-]+" value="<?= $targets; ?>" list="targetsList" title="Les cibles peuvent être spécifiées par des noms d'hôtes, des adresses IP, des adresses de réseaux, etc.
+          pattern="[a-zA-Z0-9._\/ \-]+" list="targetsList" title="Les cibles peuvent être spécifiées par des noms d'hôtes, des adresses IP, des adresses de réseaux, etc.
 Exemples: <?= $_SERVER['REMOTE_ADDR']; ?>/24 <?= $_SERVER['SERVER_NAME']; ?> 10.0-255.0-255.1-254" />
       </div>
 
@@ -381,12 +383,12 @@ Exemples: <?= $_SERVER['REMOTE_ADDR']; ?>/24 <?= $_SERVER['SERVER_NAME']; ?> 10.
           <div class="inverted field">
             <label for="TSelect" title="--T">Intensité des tests de version</label>
             <select id="TSelect" class="ui clearable dropdown" name="-T">
-              <option value="0" <?= ($options["-T"] ?? "") == 0 ? " selected" : "" ?>>Paranoïaque</option>
-              <option value="1" <?= ($options["-T"] ?? "") == 1 ? " selected" : "" ?>>Sournois</option>
-              <option value="2" <?= ($options["-T"] ?? "") == 2 ? " selected" : "" ?>>Poli</option>
-              <option value="3" <?= ($options["-T"] ?? "") == 3 ? " selected" : "" ?>>Normal</option>
-              <option value="4" <?= ($options["-T"] ?? "") == 4 ? " selected" : "" ?>>Aggressif</option>
-              <option value="5" <?= ($options["-T"] ?? "") == 5 ? " selected" : "" ?>>Dément</option>
+              <option>Paranoïaque</option>
+              <option>Sournois</option>
+              <option>Poli</option>
+              <option>Normal</option>
+              <option>Aggressif</option>
+              <option>Dément</option>
             </select>
           </div>
 
@@ -429,17 +431,13 @@ Exemples: <?= $_SERVER['REMOTE_ADDR']; ?>/24 <?= $_SERVER['SERVER_NAME']; ?> 10.
                 <label for="initialRTTNumber" title="--initial-rtt-timeout">Initial</label>
                 <div class="ui right labeled input">
                   <input type="number" min="0" id="initialRTTNumber" placeholder="Durée"
-                    oninput="initialRTTHidden.value = initialRTTNumber.value? initialRTTNumber.value+initialRTTUnit.value: ''; maxRTTHidden.initial=initialRTTHidden.value"
-                    <?= preg_match("/^\d+/", $options["--initial-rtt-timeout"] ?? "", $matches) ? "value='{$matches[0]}'" : "" ?>>
+                    oninput="initialRTTHidden.value = initialRTTNumber.value? initialRTTNumber.value+initialRTTUnit.value: ''; maxRTTHidden.initial=initialRTTHidden.value">
                   <select id="initialRTTUnit" class="ui clearable dropdown label"
                     oninput="initialRTTHidden.value = initialRTTNumber.value? initialRTTNumber.value+initialRTTUnit.value: ''">
                     <option value="">ms</option>
-                    <option value="s"
-                      secondes</option>
-                    <option value="m"
-                      minutes</option>
-                    <option value="h"
-                      heures</option>
+                    <option value="s">secondes</option>
+                    <option value="m">minutes</option>
+                    <option value="h">heures</option>
                   </select>
                 </div>
                 <input id="initialRTTHidden" type="hidden" name="--initial-rtt-timeout">
@@ -448,20 +446,19 @@ Exemples: <?= $_SERVER['REMOTE_ADDR']; ?>/24 <?= $_SERVER['SERVER_NAME']; ?> 10.
                 <label for="minRTTNumber" title="--min-rtt-timeout">Minimum</label>
                 <div class="ui right labeled input">
                   <input type="number" min="0" id="minRTTNumber" placeholder="Durée"
-                    oninput="minRTTHidden.value = minRTTNumber.value? minRTTNumber.value+minRTTUnit.value: ''; maxRTTHidden.min=minRTTHidden.value"
-                    <?= preg_match("/^\d+/", $options["--min-rtt-timeout"] ?? "", $matches) ? "value='{$matches[0]}'" : "" ?>>
+                    oninput="minRTTHidden.value = minRTTNumber.value? minRTTNumber.value+minRTTUnit.value: ''; maxRTTHidden.min=minRTTHidden.value">
                   <select id="minRTTUnit" class="ui clearable dropdown label"
                     oninput="minRTTHidden.value = minRTTNumber.value? minRTTNumber.value+minRTTUnit.value: ''">
                     <option value="">ms</option>
                     <option value="s"
                       secondes
-                    </option>
+                      </option>
                     <option value="m"
                       minutes
-                    </option>
+                      </option>
                     <option value="h"
                       heures
-                    </option>
+                      </option>
                   </select>
                 </div>
                 <input id="minRTTHidden" type="hidden" name="--min-rtt-timeout">
@@ -470,20 +467,19 @@ Exemples: <?= $_SERVER['REMOTE_ADDR']; ?>/24 <?= $_SERVER['SERVER_NAME']; ?> 10.
                 <label for="maxRTTNumber" title="--max-rtt-timeout">Maximum</label>
                 <div class="ui right labeled input">
                   <input type="number" min="0" id="maxRTTNumber" placeholder="Durée"
-                    oninput="maxRTTHidden.value = maxRTTNumber.value? maxRTTNumber.value+maxRTTUnit.value: ''; minRTTHidden.max=maxRTTHidden.value"
-                    <?= preg_match("/^\d+/", $options["--max-rtt-timeout"] ?? "", $matches) ? "value='{$matches[0]}'" : "" ?>>
+                    oninput="maxRTTHidden.value = maxRTTNumber.value? maxRTTNumber.value+maxRTTUnit.value: ''; minRTTHidden.max=maxRTTHidden.value">
                   <select id="maxRTTUnit" class="ui clearable dropdown label"
                     oninput="maxRTTHidden.value = maxRTTNumber.value? maxRTTNumber.value+maxRTTUnit.value: ''">
                     <option value="">ms</option>
                     <option value="s"
                       secondes
-                    </option>
+                      </option>
                     <option value="m"
                       minutes
-                    </option>
+                      </option>
                     <option value="h"
                       heures
-                    </option>
+                      </option>
                   </select>
                 </div>
                 <input id="maxRTTHidden" type="hidden" name="--max-rtt-timeout">
@@ -501,17 +497,16 @@ Exemples: <?= $_SERVER['REMOTE_ADDR']; ?>/24 <?= $_SERVER['SERVER_NAME']; ?> 10.
             <label for="hostTimoutInput" title="--host-timeout">Délai d'expiration du scan d'un hôte trop lent</label>
             <div class="ui right labeled input">
               <input type="number" min="0" id="hostTimoutNumber" placeholder="Durée"
-                oninput="hostTimoutHidden.value = hostTimoutNumber.value? hostTimoutNumber.value+hostTimoutUnit.value: ''"
-                <?= preg_match("/^\d+/", $options["--host-timeout"] ?? "", $matches) ? "value='{$matches[0]}'" : "" ?>>
+                oninput="hostTimoutHidden.value = hostTimoutNumber.value? hostTimoutNumber.value+hostTimoutUnit.value: ''">
               <select id="hostTimoutUnit" class="ui clearable dropdown label"
                 oninput="hostTimoutHidden.value = hostTimoutNumber.value? hostTimoutNumber.value+hostTimoutUnit.value: ''">
                 <option value="">ms</option>
-                <option value="s"secondes
-                </option>
-                <option value="m"minutes
-                </option>
-                <option value="h"heures
-                </option>
+                <option value="s" secondes
+                  </option>
+                <option value="m" minutes
+                  </option>
+                <option value="h" heures
+                  </option>
               </select>
             </div>
             <input id="hostTimoutHidden" type="hidden" name="--host-timeout">
@@ -522,17 +517,16 @@ Exemples: <?= $_SERVER['REMOTE_ADDR']; ?>/24 <?= $_SERVER['SERVER_NAME']; ?> 10.
               <label for="scanDelayNumber" title="--scan-delay">Délai entre les paquets de tests</label>
               <div class="ui right labeled input">
                 <input type="number" min="0" id="scanDelayNumber" placeholder="Durée"
-                  oninput="scanDelayHidden.value = scanDelayNumber.value? scanDelayNumber.value+scanDelayUnit.value: ''"
-                  <?= preg_match("/^\d+/", $options["--scan-delay"] ?? "", $matches) ? "value='{$matches[0]}'" : "" ?>>
+                  oninput="scanDelayHidden.value = scanDelayNumber.value? scanDelayNumber.value+scanDelayUnit.value: ''">
                 <select id="scanDelayUnit" class="ui clearable dropdown label"
                   oninput="scanDelayHidden.value = scanDelayNumber.value? scanDelayNumber.value+scanDelayUnit.value: ''">
                   <option value="">ms</option>
-                  <option value="s"secondes
-                  </option>
-                  <option value="m"minutes
-                  </option>
-                  <option value="h"heures
-                  </option>
+                  <option value="s" secondes
+                    </option>
+                  <option value="m" minutes
+                    </option>
+                  <option value="h" heures
+                    </option>
                 </select>
               </div>
               <input id="scanDelayHidden" type="hidden" name="--scan-delay">
@@ -541,19 +535,18 @@ Exemples: <?= $_SERVER['REMOTE_ADDR']; ?>/24 <?= $_SERVER['SERVER_NAME']; ?> 10.
               <label for="maxScanDelay" title="--max-scan-delay">Maximum</label>
               <div class="ui right labeled input">
                 <input type="number" min="0" id="maxScanDelay" placeholder="Durée"
-                  oninput="maxRTTHidden.value = maxScanDelay.value? maxScanDelay.value+maxRTTUnit.value: ''"
-                  <?= preg_match("/^\d+/", $options["--max-scan-delay"] ?? "", $matches) ? "value='{$matches[0]}'" : "" ?>>
+                  oninput="maxRTTHidden.value = maxScanDelay.value? maxScanDelay.value+maxRTTUnit.value: ''">
                 <select id="maxRTTUnit" class="ui clearable dropdown label"
                   oninput="maxRTTHidden.value = maxScanDelay.value? maxScanDelay.value+maxRTTUnit.value: ''">
                   <option value="">ms</option>
                   <option value="s"
                     secondes
-                  </option>
+                    </option>
                   <option value="m"
                     minutes
-                  </option>
-                  <option value="h"heures
-                  </option>
+                    </option>
+                  <option value="h" heures
+                    </option>
                 </select>
               </div>
               <input id="maxRTTHidden" type="hidden" name="--max-scan-delay">
@@ -652,7 +645,7 @@ Exemples: <?= $_SERVER['REMOTE_ADDR']; ?>/24 <?= $_SERVER['SERVER_NAME']; ?> 10.
     <?php
     $services = [];
     foreach ([$DATADIR, $NMAPDIR] as $dir) {
-      echo "<!-- $nmap_services -->\n";
+      echo "<!-- nmap_services -->\n";
       if (file_exists("$dir/nmap-services")) {
         $nmap_services = file("$dir/nmap-services");
         foreach ($nmap_services as $service) {

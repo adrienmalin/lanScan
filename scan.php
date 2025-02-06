@@ -2,20 +2,20 @@
 
 include_once 'config.php';
 
-$fileNameRegex = '/^[0-9a-zA-Z-_. ]+$/';
-$targetsListRegex = '/^[\da-zA-Z-. \/]+$/';
+$fileNameRegex = '/^[\da-zA-Z-_. ]+$/';
+$targetsListRegex = '/^[\da-zA-Z-_. \/]+$/';
 
 $name = filter_input(INPUT_GET, 'name', FILTER_VALIDATE_REGEXP, ['options' => ['regexp' => $fileNameRegex], "flags" => FILTER_NULL_ON_FAILURE]);
 
 $lan = filter_input(INPUT_GET, 'lan', FILTER_VALIDATE_REGEXP, ['options' => ['regexp' => $targetsListRegex], "flags" => FILTER_NULL_ON_FAILURE]);
 if ($lan) {
-    $cmd = "$NMAP $LANSCANOPTIONS --stylesheet '$BASEDIR/$STYLESHEETSDIR/lanScan.xsl?name=$name' -oX - $lan";
+    $cmd = "$NMAP $LANSCANOPTIONS $COMMONOPTIONS --stylesheet '$BASEDIR/$STYLESHEETSDIR/lanScan.xsl?name=" . rawurlencode($name) . "' -oX - $lan";
     $filename = str_replace("/", "!", $lan);
 }
 
 $host = filter_input(INPUT_GET, 'host', FILTER_VALIDATE_REGEXP, ['options' => ['regexp' => $targetsListRegex], "flags" => FILTER_NULL_ON_FAILURE]);
 if ($host) {
-    $cmd = "$NMAP $HOSTSCANOPTIONS --stylesheet '$BASEDIR/$STYLESHEETSDIR/hostScan.xsl?name=$name' -oX - $host";
+    $cmd = "$NMAP $HOSTSCANOPTIONS $COMMONOPTIONS --stylesheet '$BASEDIR/$STYLESHEETSDIR/hostScan.xsl?name=" . rawurlencode($name) . "' -oX - $host";
     $filename = str_replace("/", "!", $host);
 }
 
@@ -147,7 +147,7 @@ if ($targets) {
         }
     }
 
-    $cmd = "$NMAP$options $CUSTOMSCANOPTIONS --stylesheet $BASEDIR/$STYLESHEETSDIR/lanScan.xsl?name=$name' -oX - $targets";
+    $cmd = "$NMAP$options $COMMONOPTIONS --stylesheet '$BASEDIR/$STYLESHEETSDIR/lanScan.xsl?name" . rawurlencode($name) . "' -oX - $targets";
     $filename = str_replace("/", "!", $targets);
 }
 

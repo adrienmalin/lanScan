@@ -20,7 +20,7 @@ if (!file_exists($path)) {
 
 $xml = simplexml_load_file($path);
 $cmd = $xml["args"];
-if (substr( $cmd, 0, 5 ) != "nmap ") {
+if (substr($cmd, 0, 5) != "nmap ") {
   die("Erreur : $path n'est pas un fichier de scan nmap");
 }
 
