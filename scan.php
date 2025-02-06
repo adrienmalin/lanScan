@@ -163,6 +163,11 @@ if ($cmd) {
     header('Content-type: text/xml');
     system("$cmd", $retcode);
 
+    if ($retcode) {
+        http_response_code(405);
+        die();
+    }
+
     exit();
 }
 
