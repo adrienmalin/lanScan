@@ -76,7 +76,17 @@
 
         <script>
 var table = $('#scanResultsTable').DataTable({
-    buttons    : ['copy', 'excel', 'pdf'],
+    layout: {
+        topStart: {
+            buttons: [
+                'copy', 'excel', 'pdf'
+            ]
+        },
+        topEnd: 'search',
+        bottomStart: 'pageLength',
+        bottomEnd: 'paging',
+        bottom2Start: 'info',
+    },
     fixedHeader: true,
     lengthMenu : [
         [256, 512, 1024, 2048, -1],
