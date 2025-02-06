@@ -77,14 +77,18 @@ $('.ui.dropdown').dropdown()
       </xsl:choose>
     </xsl:variable>
 
-    <h1>
-      <xsl:attribute name="class">
-        <xsl:text>ui inverted header </xsl:text>
+    <h1
+      class="ui header">
+      <div>
+        <xsl:attribute name="class">
+          <xsl:text>ui horizontal label </xsl:text>
         <xsl:choose>
-          <xsl:when test="$currentHost/status/@state='up'">green</xsl:when>
-          <xsl:otherwise>red</xsl:otherwise>
-        </xsl:choose>
-      </xsl:attribute>
+            <xsl:when test="$currentHost/status/@state='up'">green</xsl:when>
+            <xsl:otherwise>red</xsl:otherwise>
+          </xsl:choose>
+        </xsl:attribute>
+        <xsl:value-of select="$currentHost/status/@state" />
+      </div>
       <xsl:choose>
         <xsl:when test="hostnames/hostname/@name">
           <xsl:value-of select="hostnames/hostname/@name" />
@@ -214,7 +218,6 @@ $('.ui.dropdown').dropdown()
               <xsl:text>:</xsl:text>
             </div>
             <xsl:value-of select="@portid" />
-
           </div>
           <xsl:value-of select="service/@name" />
           <xsl:if test="service/@tunnel">
