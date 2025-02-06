@@ -7,12 +7,12 @@
   <xsl:import href="services.xsl" />
   <xsl:import href="toast.xsl" />
 
-  <xsl:output method="html" encoding="UTF-8" indent="yes" escape-uri-attributes="no" />
+  <xsl:output method="html" encoding="UTF-8" indent="yes" />
   <xsl:strip-space elements='*' />
 
   <xsl:variable name="stylesheetURL" select="substring-before(substring-after(processing-instruction('xml-stylesheet'),'href=&quot;'), '?')" />
   <xsl:variable name="base" select="concat($stylesheetURL, '/../../')" />
-  <xsl:variable name="name" select="substring-before(substring-after(processing-instruction('xml-stylesheet'),'name='), '&quot;')" disable-output-escaping="no"/>
+  <xsl:variable name="name" select="substring-before(substring-after(processing-instruction('xml-stylesheet'),'name='), '&quot;')"/>
 
   <xsl:template match="nmaprun">
     <xsl:variable name="targets" select="substring-after(@args, '-oX - ')" />

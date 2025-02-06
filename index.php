@@ -15,8 +15,17 @@
         background-size: cover;
       }
 
-      body>.grid {
+      body > .grid {
         height: 100%;
+      }
+
+      h2.logo {
+        filter: drop-shadow(0 0 2px);
+      }
+
+      .ui.inverted.segment {
+        background: #1b1c1dc0;
+        backdrop-filter: blur(7px);
       }
 
       .logo {

@@ -3,6 +3,8 @@
   xmlns:xs="http://www.w3.org/2001/XMLSchema" version="1.1">
 
   <xsl:template match="nmaprun" mode="nav">
+    <xsl:param name="name" />
+
     <nav class="ui inverted secondary menu">
       <a href="." class="ui header button item logo">lan<svg class="logo" version="1.1" id="Layer_1" x="0px" y="0px" viewBox="0 0 24 24" xml:space="preserve" width="40" height="40"
         xmlns="http://www.w3.org/2000/svg"
@@ -86,6 +88,7 @@ scanForm.onsubmit = function(event) {
     })
   }
 }
+<xsl:if test="$name">
 refreshLink.onclick = function(event) {
     refreshLink.getElementsByTagName('i')[0].className = 'loading spinner icon'
     $.toast({
@@ -98,6 +101,7 @@ refreshLink.onclick = function(event) {
         position   : 'bottom right',
     })
 }
+</xsl:if>
   </script>
 </xsl:template>
 </xsl:stylesheet>
