@@ -81,6 +81,7 @@ var table = $('#scanResultsTable').DataTable({
         topStart: { search: {text: 'Filtrer', placeholder: 'Filtre'} },
         topEnd: {
             buttons: [
+                'copy',
                 'print',
                 {
                     extend: 'collection',

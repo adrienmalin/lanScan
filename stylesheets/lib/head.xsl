@@ -20,7 +20,6 @@
                 </xsl:attribute>
             </meta>
             <title>
-                <xsl:text>lanScan </xsl:text>
                 <xsl:choose>
                     <xsl:when test="$name">
                         <xsl:value-of select="$name" />
