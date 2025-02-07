@@ -71,7 +71,7 @@ Exemples: 192.168.1.0/24 scanme.nmap.org 10.0-255.0-255.1-254" />
             <i class='sync icon'></i>
           </a>
         </xsl:if>
-        <button id="toggleThemeButton" type="button" class="ui icon link item" title="Thème clair/sombre">
+        <button id="toggleThemeButton" type="button" class="ui icon link item" title="Thème clair/sombre" onclick="toggleTheme()">
           <i class="sun icon"></i>
         </button>
       </div>
@@ -79,15 +79,6 @@ Exemples: 192.168.1.0/24 scanme.nmap.org 10.0-255.0-255.1-254" />
   </nav>
 
   <script>
-toggleThemeButton.onclick = function(event) {
-  if (document.body.classList.contains('inverted')) {
-    $(".inverted").addClass("light").removeClass("inverted")
-    $("#toggleThemeButton i").addClass("moon").removeClass("sun")
-  } else {
-    $(".light").addClass("inverted").removeClass("light")
-    $("#toggleThemeButton i").addClass("sun").removeClass("moon")
-  }
-}
 scanForm.onsubmit = function(event) {
   if (scanForm.checkValidity()) {
     targetsInputDiv.classList.add('loading')

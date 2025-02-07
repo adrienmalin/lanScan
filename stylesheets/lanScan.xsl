@@ -49,7 +49,7 @@
           <table id="scanResultsTable" style="width:100%" role="grid" class="ui sortable small compact stuck striped table">
             <thead>
               <tr>
-                <th style="width: min-width">Etat</th>
+                <th style="width: min-width">État</th>
                 <th>Adresse IP</th>
                 <th>Nom</th>
                 <th>Constructeur</th>
@@ -68,6 +68,7 @@
           </table>
         </main>
 
+        <script src="script.js"></script>
         <script>
 var table = $('#scanResultsTable').DataTable({
     responsive: true,

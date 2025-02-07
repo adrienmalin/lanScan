@@ -39,6 +39,7 @@
           </xsl:apply-templates>
         </main>
 
+        <script src="script.js"></script>
         <script>
 $('.ui.tree.accordion').accordion()
 $('.ui.dropdown').dropdown()
@@ -132,7 +133,7 @@ $('.ui.dropdown').dropdown()
           </xsl:if>
           <xsl:if test="os/osmatch/@name">
             <td>
-              <xsl:value-of select="os/osmatch/@name" />
+              <abbr title="Confiance : {os/osmatch/@accuracy}%"><xsl:value-of select="os/osmatch/@name" /></abbr>
             </td>
           </xsl:if>
           <xsl:if test="distance/@value">

@@ -25,7 +25,7 @@
           <a class="ui icon button item" href="https://nmap.org/man/fr/index.html" target="_blank">
             <i class="question circle icon"></i>
           </a>
-          <button id="toggleThemeButton" type="button" class="ui icon link item" title="Thème clair/sombre">
+          <button id="toggleThemeButton" type="button" class="ui icon link item" title="Thème clair/sombre" onclick="toggleTheme()">
             <i class="sun icon"></i>
           </button>
         </div>
@@ -453,9 +453,9 @@ Exemples: <?= $_SERVER['REMOTE_ADDR']; ?>/24 <?= $_SERVER['SERVER_NAME']; ?> 10.
                     <select id="minRTTUnit" class="ui clearable dropdown label"
                       oninput="minRTTHidden.value = minRTTNumber.value? minRTTNumber.value+minRTTUnit.value: ''">
                       <option value="">ms</option>
-                      <option value="s" secondes </option>
-                      <option value="m" minutes </option>
-                      <option value="h" heures </option>
+                      <option value="s">secondes</option>
+                      <option value="m">minutes</option>
+                      <option value="h">heures</option>
                     </select>
                   </div>
                   <input id="minRTTHidden" type="hidden" name="--min-rtt-timeout">
@@ -468,9 +468,9 @@ Exemples: <?= $_SERVER['REMOTE_ADDR']; ?>/24 <?= $_SERVER['SERVER_NAME']; ?> 10.
                     <select id="maxRTTUnit" class="ui clearable dropdown label"
                       oninput="maxRTTHidden.value = maxRTTNumber.value? maxRTTNumber.value+maxRTTUnit.value: ''">
                       <option value="">ms</option>
-                      <option value="s" secondes </option>
-                      <option value="m" minutes </option>
-                      <option value="h" heures </option>
+                      <option value="s">secondes</option>
+                      <option value="m">minutes</option>
+                      <option value="h">heures</option>
                     </select>
                   </div>
                   <input id="maxRTTHidden" type="hidden" name="--max-rtt-timeout">
@@ -492,9 +492,9 @@ Exemples: <?= $_SERVER['REMOTE_ADDR']; ?>/24 <?= $_SERVER['SERVER_NAME']; ?> 10.
                 <select id="hostTimoutUnit" class="ui clearable dropdown label"
                   oninput="hostTimoutHidden.value = hostTimoutNumber.value? hostTimoutNumber.value+hostTimoutUnit.value: ''">
                   <option value="">ms</option>
-                  <option value="s" secondes </option>
-                  <option value="m" minutes </option>
-                  <option value="h" heures </option>
+                    <option value="s">secondes</option>
+                    <option value="m">minutes</option>
+                    <option value="h">heures</option>
                 </select>
               </div>
               <input id="hostTimoutHidden" type="hidden" name="--host-timeout">
@@ -509,9 +509,9 @@ Exemples: <?= $_SERVER['REMOTE_ADDR']; ?>/24 <?= $_SERVER['SERVER_NAME']; ?> 10.
                   <select id="scanDelayUnit" class="ui clearable dropdown label"
                     oninput="scanDelayHidden.value = scanDelayNumber.value? scanDelayNumber.value+scanDelayUnit.value: ''">
                     <option value="">ms</option>
-                    <option value="s" secondes </option>
-                    <option value="m" minutes </option>
-                    <option value="h" heures </option>
+                    <option value="s">secondes</option>
+                    <option value="m">minutes</option>
+                    <option value="h">heures</option>
                   </select>
                 </div>
                 <input id="scanDelayHidden" type="hidden" name="--scan-delay">
@@ -524,9 +524,9 @@ Exemples: <?= $_SERVER['REMOTE_ADDR']; ?>/24 <?= $_SERVER['SERVER_NAME']; ?> 10.
                   <select id="maxRTTUnit" class="ui clearable dropdown label"
                     oninput="maxRTTHidden.value = maxScanDelay.value? maxScanDelay.value+maxRTTUnit.value: ''">
                     <option value="">ms</option>
-                    <option value="s" secondes </option>
-                    <option value="m" minutes </option>
-                    <option value="h" heures </option>
+                    <option value="s">secondes</option>
+                    <option value="m">minutes</option>
+                    <option value="h">heures</option>
                   </select>
                 </div>
                 <input id="maxRTTHidden" type="hidden" name="--max-scan-delay">
@@ -680,17 +680,8 @@ Exemples: <?= $_SERVER['REMOTE_ADDR']; ?>/24 <?= $_SERVER['SERVER_NAME']; ?> 10.
       ?>
     </datalist>
 
+    <script src="script.js"></script>
     <script>
-      toggleThemeButton.onclick = function(event) {
-        if (document.body.classList.contains('inverted')) {
-          $(".inverted").addClass("light").removeClass("inverted")
-          $("#toggleThemeButton i").addClass("moon").removeClass("sun")
-        } else {
-          $(".light").addClass("inverted").removeClass("light")
-          $("#toggleThemeButton i").addClass("sun").removeClass("moon")
-        }
-      }
-
       $(".ui.accordion").accordion()
 
       $(".ui.clearable.dropdown").dropdown({
