@@ -10,18 +10,14 @@
   <xsl:output method="html" encoding="UTF-8" indent="yes" />
   <xsl:strip-space elements='*' />
 
-  <xsl:variable name="stylesheetURL"
-    select="substring-before(substring-after(processing-instruction('xml-stylesheet'),'href=&quot;'), '?')" />
+  <xsl:variable name="stylesheetURL" select="substring-before(substring-after(processing-instruction('xml-stylesheet'),'href=&quot;'), '?')" />
   <xsl:variable name="base" select="concat($stylesheetURL, '/../../')" />
-  <xsl:variable name="name"
-    select="substring-before(substring-after(processing-instruction('xml-stylesheet'),'name='), '&quot;')" />
+  <xsl:variable name="name" select="substring-before(substring-after(processing-instruction('xml-stylesheet'),'name='), '&quot;')" />
 
   <xsl:template match="nmaprun">
     <xsl:variable name="targets" select="substring-after(@args, '-oX - ')" />
-    <xsl:variable
-      name="current" select="." />
-    <xsl:variable name="init"
-      select="document(concat($base, 'scans/', $name, '.xml'))/nmaprun" />
+    <xsl:variable name="current" select="." />
+    <xsl:variable name="init" select="document(concat($base, 'scans/', $name, '.xml'))/nmaprun" />
 
     <html lang="fr">
       <xsl:apply-templates select="." mode="head">
@@ -50,8 +46,7 @@
             </xsl:choose>
           </h1>
 
-          <table id="scanResultsTable" style="width:100%" role="grid"
-            class="ui sortable small compact stuck striped table">
+          <table id="scanResultsTable" style="width:100%" role="grid" class="ui sortable small compact stuck striped table">
             <thead>
               <tr>
                 <th style="width: min-width">Etat</th>
@@ -65,8 +60,7 @@
               </tr>
             </thead>
             <tbody>
-              <xsl:apply-templates
-                select="host | $init/host[not(address/@addr=$current/host/address/@addr)][not(status/@state='down')]">
+              <xsl:apply-templates select="host | $init/host[not(address/@addr=$current/host/address/@addr)][not(status/@state='down')]">
                 <xsl:with-param name="init" select="$init" />
                 <xsl:with-param name="current" select="$current" />
               </xsl:apply-templates>
@@ -76,25 +70,29 @@
 
         <script>
 var table = $('#scanResultsTable').DataTable({
+    responsive: true,
+    colReorder: true,
+    fixedHeader: true,
+    lengthMenu : [256, 512, 1024, 2048, { label: 'Tout', value: -1 }],
+    language: {
+        lengthMenu: 'Afficher _MENU_ résultats'
+    },
     layout: {
-        topStart: {
+        topStart: { search: {text: 'Filtrer', placeholder: 'Filtre'} },
+        topEnd: {
             buttons: [
-                'copy', 'excel', 'pdf'
-            ]
+                'print',
+                {
+                    extend: 'collection',
+                    text: 'Exporter',
+                    buttons: ['csv', 'excel', 'pdf']
+                },
+            ],
         },
-        topEnd: 'search',
         bottomStart: 'pageLength',
         bottomEnd: 'paging',
         bottom2Start: 'info',
     },
-    fixedHeader: true,
-    lengthMenu : [
-        [256, 512, 1024, 2048, -1],
-        [256, 512, 1024, 2048, "All"]
-    ],
-    responsive: true,
-    colReorder: true,
-    buttons   : ['copy', 'excel', 'pdf']
 })
 table.order([1, 'asc']).draw()
 
@@ -112,12 +110,9 @@ $('.ui.dropdown').dropdown()
   <xsl:template match="host">
     <xsl:param name="init" />
     <xsl:param name="current" />
-    <xsl:variable name="addr"
-      select="address/@addr" />
-    <xsl:variable name="initHost"
-      select="$init/host[address/@addr=$addr]" />
-    <xsl:variable name="currentHost"
-      select="$current/host[address/@addr=$addr]" />
+    <xsl:variable name="addr" select="address/@addr" />
+    <xsl:variable name="initHost" select="$init/host[address/@addr=$addr]" />
+    <xsl:variable name="currentHost" select="$current/host[address/@addr=$addr]" />
     <xsl:variable name="hostAddress">
       <xsl:choose>
         <xsl:when test="hostnames/hostname/@name">
@@ -164,17 +159,14 @@ $('.ui.dropdown').dropdown()
         <xsl:if test="substring-after(hostnames/hostname/@name, '.')">
           <wbr />
           <xsl:text>.</xsl:text>
-          <xsl:value-of
-            select="substring-after(hostnames/hostname/@name, '.')" />
+          <xsl:value-of select="substring-after(hostnames/hostname/@name, '.')" />
         </xsl:if>
       </td>
       <td>
         <xsl:value-of select="address[@addrtype='mac']/@vendor" />
       </td>
       <td>
-        <xsl:apply-templates
-          select="ports/port | $initHost/ports/port[not(state/@state='closed')][not(@portid=$currentHost/ports/port/@portid)]"
-          mode="service">
+        <xsl:apply-templates select="ports/port | $initHost/ports/port[not(state/@state='closed')][not(@portid=$currentHost/ports/port/@portid)]" mode="service">
           <xsl:with-param name="initHost" select="$initHost" />
           <xsl:with-param name="currentHost" select="$currentHost" />
           <xsl:with-param name="hostAddress" select="$hostAddress" />
