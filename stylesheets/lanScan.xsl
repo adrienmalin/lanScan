@@ -26,12 +26,12 @@
         <xsl:with-param name="targets" select="$targets" />
       </xsl:apply-templates>
 
-      <body>
+      <body class="inverted">
         <xsl:apply-templates select="." mode="nav">
           <xsl:with-param name="name" select="$name" />
         </xsl:apply-templates>
 
-        <main class="ui main container inverted segment">
+        <main class="ui main container inverted vertical segment">
           <h1 class="ui header">
             <xsl:choose>
               <xsl:when test="$name">

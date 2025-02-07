@@ -11,18 +11,14 @@
   <xsl:output indent="yes" />
   <xsl:strip-space elements='*' />
 
-  <xsl:variable name="stylesheetURL"
-    select="substring-before(substring-after(processing-instruction('xml-stylesheet'),'href=&quot;'), '?')" />
+  <xsl:variable name="stylesheetURL" select="substring-before(substring-after(processing-instruction('xml-stylesheet'),'href=&quot;'), '?')" />
   <xsl:variable name="base" select="concat($stylesheetURL, '/../../')" />
-  <xsl:variable name="name"
-    select="substring-before(substring-after(processing-instruction('xml-stylesheet'),'name='), '&quot;')" />
+  <xsl:variable name="name" select="substring-before(substring-after(processing-instruction('xml-stylesheet'),'name='), '&quot;')" />
 
   <xsl:template match="nmaprun">
     <xsl:variable name="targets" select="substring-after(@args, '-oX - ')" />
-    <xsl:variable
-      name="current" select="." />
-    <xsl:variable name="init"
-      select="document(concat($base, 'scans/', $name, '.xml'))/nmaprun" />
+    <xsl:variable name="current" select="." />
+    <xsl:variable name="init" select="document(concat($base, 'scans/', $name, '.xml'))/nmaprun" />
 
     <html lang="fr">
       <xsl:apply-templates select="." mode="head">
@@ -31,14 +27,13 @@
         <xsl:with-param name="targets" select="$targets" />
       </xsl:apply-templates>
 
-      <body>
+      <body class="inverted">
         <xsl:apply-templates select="." mode="nav">
           <xsl:with-param name="name" select="$name" />
         </xsl:apply-templates>
 
         <main class="ui main container inverted segment">
-          <xsl:apply-templates
-            select="$current/host | $init/host[not(address/@addr=$current/host/address/@addr)][not(status/@state='down')]">
+          <xsl:apply-templates select="$current/host | $init/host[not(address/@addr=$current/host/address/@addr)][not(status/@state='down')]">
             <xsl:with-param name="init" select="$init" />
             <xsl:with-param name="current" select="$current" />
           </xsl:apply-templates>
@@ -60,12 +55,9 @@ $('.ui.dropdown').dropdown()
   <xsl:template match="host">
     <xsl:param name="init" />
     <xsl:param name="current" />
-    <xsl:variable name="addr"
-      select="address/@addr" />
-    <xsl:variable name="initHost"
-      select="$init/host[address/@addr=$addr]" />
-    <xsl:variable name="currentHost"
-      select="$current/host[address/@addr=$addr]" />
+    <xsl:variable name="addr" select="address/@addr" />
+    <xsl:variable name="initHost" select="$init/host[address/@addr=$addr]" />
+    <xsl:variable name="currentHost" select="$current/host[address/@addr=$addr]" />
     <xsl:variable name="hostAddress">
       <xsl:choose>
         <xsl:when test="hostnames/hostname/@name">
@@ -77,12 +69,11 @@ $('.ui.dropdown').dropdown()
       </xsl:choose>
     </xsl:variable>
 
-    <h1
-      class="ui header">
+    <h1 class="ui header">
       <div>
         <xsl:attribute name="class">
           <xsl:text>ui horizontal label </xsl:text>
-        <xsl:choose>
+          <xsl:choose>
             <xsl:when test="$currentHost/status/@state='up'">green</xsl:when>
             <xsl:otherwise>red</xsl:otherwise>
           </xsl:choose>
@@ -99,8 +90,7 @@ $('.ui.dropdown').dropdown()
       </xsl:choose>
     </h1>
 
-    <table
-      class="ui inverted table" style="width: max-content">
+    <table class="ui inverted table" style="width: max-content">
       <thead>
         <tr>
           <xsl:if test="address[@addrtype='ipv4']/@addr">
@@ -160,8 +150,7 @@ $('.ui.dropdown').dropdown()
       </tbody>
     </table>
 
-    <xsl:if
-      test="hostscript/script">
+    <xsl:if test="hostscript/script">
       <div class="ui inverted tree accordion">
         <div class="title">
           <i class="dropdown icon"></i> Informations supplémentaires </div>
@@ -171,32 +160,26 @@ $('.ui.dropdown').dropdown()
       </div>
     </xsl:if>
 
-    <h2
-      class="ui header">Services</h2>
+    <h2 class="ui header">Services</h2>
 
     <div class="ui cards">
-      <xsl:apply-templates
-        select="$currentHost/ports/port | $initHost/ports/port[not(@portid=$currentHost/ports/port/@portid)][not(state/@state='closed')]">
+      <xsl:apply-templates select="$currentHost/ports/port | $initHost/ports/port[not(@portid=$currentHost/ports/port/@portid)][not(state/@state='closed')]">
         <xsl:with-param name="initHost" select="$initHost" />
         <xsl:with-param name="currentHost" select="$currentHost" />
         <xsl:with-param name="hostAddress" select="$hostAddress" />
       </xsl:apply-templates>
     </div>
 
-    <xsl:apply-templates
-      select="trace" />
+    <xsl:apply-templates select="trace" />
   </xsl:template>
 
   <xsl:template match="port">
     <xsl:param name="hostAddress" />
     <xsl:param name="initHost" />
     <xsl:param name="currentHost" />
-    <xsl:variable
-      name="portid" select="@portid" />
-    <xsl:variable name="initPort"
-      select="$initHost/ports/port[@portid=$portid]" />
-    <xsl:variable name="currentPort"
-      select="$currentHost/ports/port[@portid=$portid]" />
+    <xsl:variable name="portid" select="@portid" />
+    <xsl:variable name="initPort" select="$initHost/ports/port[@portid=$portid]" />
+    <xsl:variable name="currentPort" select="$currentHost/ports/port[@portid=$portid]" />
     <xsl:variable name="color">
       <xsl:choose>
         <xsl:when test="$currentPort/script[@id='http-info']/elem[@key='status']>=500">red</xsl:when>
@@ -208,8 +191,7 @@ $('.ui.dropdown').dropdown()
       </xsl:choose>
     </xsl:variable>
 
-    <div
-      class="ui inverted card {$color}">
+    <div class="ui inverted card {$color}">
       <div class="content">
         <div class="header">
           <div class="ui {$color} ribbon label">
@@ -257,8 +239,7 @@ $('.ui.dropdown').dropdown()
           </div>
         </div>
       </div>
-      <xsl:if
-        test="service/@name='ftp' or service/@name='ssh' or service/@name='http' or service/@name='https' or service/@name='ms-wbt-server'">
+      <xsl:if test="service/@name='ftp' or service/@name='ssh' or service/@name='http' or service/@name='https' or service/@name='ms-wbt-server'">
         <a class="ui {$color} button" target="_blank">
           <xsl:attribute name="href">
             <xsl:choose>
@@ -266,8 +247,7 @@ $('.ui.dropdown').dropdown()
                 <xsl:text>rdp.php?v=</xsl:text>
                 <xsl:value-of select="$hostAddress" />
                 <xsl:text>&amp;p=</xsl:text>
-                <xsl:value-of
-                  select="@portid" />
+                <xsl:value-of select="@portid" />
               </xsl:when>
               <xsl:otherwise>
                 <xsl:choose>
@@ -279,8 +259,7 @@ $('.ui.dropdown').dropdown()
                   </xsl:otherwise>
                 </xsl:choose>
                 <xsl:text>://</xsl:text>
-                <xsl:value-of
-                  select="$hostAddress" />
+                <xsl:value-of select="$hostAddress" />
                 <xsl:text>:</xsl:text>
                 <xsl:value-of select="@portid" />
               </xsl:otherwise>
@@ -295,13 +274,11 @@ $('.ui.dropdown').dropdown()
           <xsl:attribute name="style">
             <xsl:for-each select="$currentPort/script[@id='smb-shares-size']/table">
               <xsl:sort select="elem[@key='FreeSize'] div elem[@key='TotalSize']" order="ascending" />
-              <xsl:if
-                test="position()=1">
+              <xsl:if test="position()=1">
                 <xsl:text>--free: </xsl:text>
                 <xsl:value-of select="elem[@key='FreeSize']" />
                 <xsl:text>; --total: </xsl:text>
-                <xsl:value-of
-                  select="elem[@key='TotalSize']" />
+                <xsl:value-of select="elem[@key='TotalSize']" />
               </xsl:if>
             </xsl:for-each>
           </xsl:attribute>
@@ -335,8 +312,7 @@ $('.ui.dropdown').dropdown()
                 </tbody>
               </table>
             </xsl:if>
-            <xsl:apply-templates
-              select="table" />
+            <xsl:apply-templates select="table" />
           </xsl:when>
           <xsl:otherwise>
             <xsl:value-of select="@output" />
@@ -389,9 +365,7 @@ $('.ui.dropdown').dropdown()
 
   <xsl:template match="table">
     <xsl:param name="hostAddress" />
-    <a class="item share-size"
-      href="file://///{$hostAddress}/{@key}" target="_blank" rel="noopener noreferrer"
-      style="--free: {elem[@key='FreeSize']}; --total: {elem[@key='TotalSize']}">
+    <a class="item share-size" href="file://///{$hostAddress}/{@key}" target="_blank" rel="noopener noreferrer" style="--free: {elem[@key='FreeSize']}; --total: {elem[@key='TotalSize']}">
       <xsl:value-of select="@key" />
     </a>
   </xsl:template>

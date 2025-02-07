@@ -15,7 +15,7 @@
         background-size: cover;
       }
 
-      body > .grid {
+      body>.grid {
         height: 100%;
       }
 
@@ -34,7 +34,7 @@
     </style>
   </head>
 
-  <body>
+  <body class="inverted">
 
     <div class="ui middle aligned center aligned inverted grid">
       <div class="column" style="max-width: 450px;">
@@ -51,7 +51,7 @@
         <?php } ?>
 
         <form id="scanForm" class="ui large form initial inverted" action="scan.php" method="get">
-          <div class="ui left aligned stacked segment inverted">
+          <div class="ui left aligned raised segment inverted">
             <h4 class="ui header">Découvrir ou superviser un réseau</h4>
             <div class="inverted field">
               <div class="ui large input">
@@ -63,8 +63,8 @@ Exemples: <?= $_SERVER['REMOTE_ADDR']; ?>/24 <?= $_SERVER['SERVER_NAME']; ?> 10.
             <div class="field">
               <label for="nameInput">Enregistrer sous le nom (optionnel)</label>
               <div class="ui small input">
-                <input id="nameInput" type="text" name="name" placeholder="Reseau local"
-                  pattern='[0-9a-zA-Z\-_\. ]+' title="Caractères autorisés: a-z A-Z 0-9 - _ ."/>
+                <input id="nameInput" type="text" name="name" placeholder="Reseau local" pattern='[0-9a-zA-Z\-_\. ]+'
+                  title="Caractères autorisés: a-z A-Z 0-9 - _ ." />
               </div>
             </div>
             <div class="ui error message"></div>
@@ -77,7 +77,7 @@ Exemples: <?= $_SERVER['REMOTE_ADDR']; ?>/24 <?= $_SERVER['SERVER_NAME']; ?> 10.
         </form>
 
         <?php if (file_exists($SCANSDIR)) { ?>
-          <div class="ui left aligned stacked segment inverted">
+          <div class="ui left aligned raised segment inverted">
             <div class="ui inverted accordion">
               <div class="title"><i class="dropdown icon"></i></i>Scans enregistrés</div>
               <div class="content">
@@ -108,39 +108,39 @@ Exemples: <?= $_SERVER['REMOTE_ADDR']; ?>/24 <?= $_SERVER['SERVER_NAME']; ?> 10.
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/fomantic-ui/2.9.2/semantic.min.js"></script>
     <script>
-$('.ui.accordion').accordion()
+      $('.ui.accordion').accordion()
 
-scanForm.onsubmit = function (event) {
-  if (this.checkValidity()) {
-    scanForm.classList.add("loading")
-    $.toast({
-      title: 'Scan en cours...',
-      message: 'Merci de patienter',
-      class: 'info',
-      showIcon: 'satellite dish',
-      displayTime: 0,
-      closeIcon: true,
-      position: 'bottom right',
-    })
-    return true
-  } else {
-    event.preventDefault()
-    this.reportValidity()
-  }
-}
+      scanForm.onsubmit = function (event) {
+        if (this.checkValidity()) {
+          scanForm.classList.add("loading")
+          $.toast({
+            title: 'Scan en cours...',
+            message: 'Merci de patienter',
+            class: 'info',
+            showIcon: 'satellite dish',
+            displayTime: 0,
+            closeIcon: true,
+            position: 'bottom right',
+          })
+          return true
+        } else {
+          event.preventDefault()
+          this.reportValidity()
+        }
+      }
 
-function rescan(link) {
-    link.getElementsByTagName('i')[0].className = 'loading spinner icon'
-    $.toast({
-        title      : 'Scan en cours...',
-        message    : 'Merci de patienter',
-        class      : 'info',
-        showIcon   : 'satellite dish',
-        displayTime: 0,
-        closeIcon  : true,
-        position   : 'bottom right',
-    })
-}
+      function rescan(link) {
+        link.getElementsByTagName('i')[0].className = 'loading spinner icon'
+        $.toast({
+          title: 'Scan en cours...',
+          message: 'Merci de patienter',
+          class: 'info',
+          showIcon: 'satellite dish',
+          displayTime: 0,
+          closeIcon: true,
+          position: 'bottom right',
+        })
+      }
     </script>
 
   </body>

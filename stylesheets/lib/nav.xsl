@@ -55,25 +55,39 @@
       </svg>
     can</a>
     <div class="right menu">
-      <form class="ui right aligned category search item" id="scanForm" action="scan.php" method="get">
-        <div class="ui inverted icon input" id="targetsInputDiv">
-          <input name="lan" class="prompt" type="text" placeholder="Scanner un réseau" pattern="[a-zA-Z0-9._\/ \-]+" title="Les cibles peuvent être spécifiées par des noms d'hôtes, des adresses IP, des adresses de réseaux, etc.
+      <div class="ui right aligned category search item">
+        <form id="scanForm" action="scan.php" method="get">
+          <div class="ui inverted icon input" id="targetsInputDiv">
+            <input name="lan" class="prompt" type="text" placeholder="Scanner un réseau" pattern="[a-zA-Z0-9._\/ \-]+" title="Les cibles peuvent être spécifiées par des noms d'hôtes, des adresses IP, des adresses de réseaux, etc.
 Exemples: 192.168.1.0/24 scanme.nmap.org 10.0-255.0-255.1-254" />
-          <i class="satellite dish icon"></i>
-        </div>
-        <a class="button item" href="options.php" title="Options avancées">
+            <i class="satellite dish icon"></i>
+          </div>
+        </form>
+        <a class="ui icon button item" href="options.php" title="Options avancées">
           <i class="settings icon"></i>
         </a>
         <xsl:if test="$name">
-          <a class="button item" id="refreshLink" href="rescan.php?name={$name}" title="Actualiser">
+          <a class="ui icon button item" id="refreshLink" href="rescan.php?name={$name}" title="Actualiser">
             <i class='sync icon'></i>
           </a>
         </xsl:if>
-      </form>
+        <button id="toggleThemeButton" type="button" class="ui icon link item" title="Thème clair/sombre">
+          <i class="sun icon"></i>
+        </button>
+      </div>
     </div>
   </nav>
 
   <script>
+toggleThemeButton.onclick = function(event) {
+  if (document.body.classList.contains('inverted')) {
+    $(".inverted").addClass("light").removeClass("inverted")
+    $("#toggleThemeButton i").addClass("moon").removeClass("sun")
+  } else {
+    $(".light").addClass("inverted").removeClass("light")
+    $("#toggleThemeButton i").addClass("sun").removeClass("moon")
+  }
+}
 scanForm.onsubmit = function(event) {
   if (scanForm.checkValidity()) {
     targetsInputDiv.classList.add('loading')
@@ -88,7 +102,7 @@ scanForm.onsubmit = function(event) {
     })
   }
 }
-<xsl:if test="$name">
+    <xsl:if test="$name">
 refreshLink.onclick = function(event) {
     refreshLink.getElementsByTagName('i')[0].className = 'loading spinner icon'
     $.toast({
@@ -101,7 +115,7 @@ refreshLink.onclick = function(event) {
         position   : 'bottom right',
     })
 }
-</xsl:if>
+    </xsl:if>
   </script>
 </xsl:template>
 </xsl:stylesheet>

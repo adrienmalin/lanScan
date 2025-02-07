@@ -24,7 +24,7 @@
   </style>
 </head>
 
-<body>
+<body class="inverted">
 
   <div class="ui middle aligned center aligned inverted grid">
     <div class="column" style="max-width: 450px;">
