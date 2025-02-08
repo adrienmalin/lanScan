@@ -3,24 +3,15 @@
 include_once 'config.php';
 
 $fileNameRegex = '/^[\da-zA-Z-_. ]+$/';
-$targetsListRegex = '/^[\da-zA-Z-_. \/]+$/';
+$targetListRegex = '/^[\da-zA-Z-_. \/]+$/';
 
+$target = filter_input(INPUT_GET, 'target', FILTER_VALIDATE_REGEXP, ['options' => ['regexp' => $targetListRegex], "flags" => FILTER_NULL_ON_FAILURE]);
 $name = filter_input(INPUT_GET, 'name', FILTER_VALIDATE_REGEXP, ['options' => ['regexp' => $fileNameRegex], "flags" => FILTER_NULL_ON_FAILURE]);
 
-$lan = filter_input(INPUT_GET, 'lan', FILTER_VALIDATE_REGEXP, ['options' => ['regexp' => $targetsListRegex], "flags" => FILTER_NULL_ON_FAILURE]);
-if ($lan) {
-    $cmd = "$NMAP $LANSCANOPTIONS $COMMONOPTIONS --stylesheet '$BASEDIR/$STYLESHEETSDIR/lanScan.xsl?name=" . rawurlencode($name) . "' -oX - $lan";
-    $filename = str_replace("/", "!", $lan);
-}
-
-$host = filter_input(INPUT_GET, 'host', FILTER_VALIDATE_REGEXP, ['options' => ['regexp' => $targetsListRegex], "flags" => FILTER_NULL_ON_FAILURE]);
-if ($host) {
-    $cmd = "$NMAP $HOSTSCANOPTIONS $COMMONOPTIONS --stylesheet '$BASEDIR/$STYLESHEETSDIR/hostScan.xsl?name=" . rawurlencode($name) . "' -oX - $host";
-    $filename = str_replace("/", "!", $host);
-}
-
-$targets = filter_input(INPUT_GET, 'targets', FILTER_VALIDATE_REGEXP, ['options' => ['regexp' => $targetsListRegex], "flags" => FILTER_NULL_ON_FAILURE]);
-if ($targets) {
+$preset = filter_input(INPUT_GET, "preset", FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+if ($preset && isset($PRESETS[$preset])) {
+    $inputs = $PRESETS[$preset];
+} else {
     $hostsListRegex = '/^[\da-zA-Z-.,:\/]+$/';
     $protocolePortsListRegex = '/^(([TU]:)?[0-9\-]+|[a-z\-]+)(,([TU]:)?[0-9\-]+|,[a-z\-]+)*$/';
     $portsListRegex = '/^([0-9\-]+|[a-z\-]+)(,[0-9\-]+|,[a-z\-]+)*$/';
@@ -115,41 +106,38 @@ if ($targets) {
         '-A' => FILTER_VALIDATE_BOOLEAN,
         '--send-eth' => FILTER_VALIDATE_BOOLEAN,
         '--privileged' => FILTER_VALIDATE_BOOLEAN,
-        '-V' => FILTER_VALIDATE_BOOLEAN,
         '--unprivileged' => FILTER_VALIDATE_BOOLEAN,
-        '-h' => FILTER_VALIDATE_BOOLEAN,
         '--stylesheet' => ['filter' => FILTER_VALIDATE_REGEXP, 'options' => ['regexp' => $fileNameRegex]],
-        // lanScan
-        'name' => ['filter' => FILTER_VALIDATE_REGEXP, 'options' => ['regexp' => $fileNameRegex]],
-        'originalURL' => FILTER_VALIDATE_URL,
-        'refreshPeriod' => ['filter' => FILTER_VALIDATE_INT, 'options' => ['min_range' => 0]],
-        'sudo' => FILTER_VALIDATE_BOOLEAN,
     ], false);
+}
 
-    $options = "";
-    foreach ($inputs as $option => $value) {
-        if (substr($option, 0, 1) == '-') {
-            if (is_null($value)) {
-                http_response_code(400);
-                $errorMessage = "Valeur incorrecte pour le paramètre <var>$option</var> : " . filter_input(INPUT_GET, $option, FILTER_SANITIZE_FULL_SPECIAL_CHARS);
-                include_once "index.php";
-                die();
-            } else if ($value) {
-                if ($value === true) {
-                    $options .= " $option";
-                } else {
-                    if (substr($option, 0, 2) == '--')
-                        $options .= " $option " . escapeshellarg($value);
-                    else
-                        $options .= " $option" . escapeshellarg($value);
-                }
+$inputs = array_merge($COMMONOPTIONS, $inputs);
+
+$inputs['--stylesheet'] = "$BASEDIR/$STYLESHEETSDIR/{$inputs['--stylesheet']}?";
+if($name) $inputs['--stylesheet'] .= "name=$name";
+
+$options = "";
+foreach ($inputs as $option => $value) {
+    if (substr($option, 0, 1) == '-') {
+        if (is_null($value)) {
+            http_response_code(400);
+            $errorMessage = "Valeur incorrecte pour le paramètre <var>$option</var> : " . filter_input(INPUT_GET, $option, FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+            include_once "index.php";
+            die();
+        } else if ($value) {
+            if ($value === true) {
+                $options .= " $option";
+            } else {
+                if (substr($option, 0, 2) == '--')
+                    $options .= " $option " . escapeshellarg($value);
+                else
+                    $options .= " $option" . escapeshellarg($value);
             }
         }
     }
-
-    $cmd = "$NMAP$options $COMMONOPTIONS --stylesheet '$BASEDIR/$STYLESHEETSDIR/lanScan.xsl?name" . rawurlencode($name) . "' -oX - $targets";
-    $filename = str_replace("/", "!", $targets);
 }
+
+$cmd = "$NMAP$options -oX - $target";
 
 if ($cmd) {
     if ($name) {

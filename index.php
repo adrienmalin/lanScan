@@ -27,10 +27,6 @@
         background: #1b1c1dc0;
         backdrop-filter: blur(7px);
       }
-
-      .logo {
-        margin-right: 0 !important;
-      }
     </style>
   </head>
 
@@ -55,11 +51,12 @@
             <h4 class="ui header">Découvrir ou superviser un réseau</h4>
             <div class="inverted field">
               <div class="ui large input">
-                <input id="nameInput" type="text" name="lan" placeholder="<?= $_SERVER['REMOTE_ADDR']; ?>"
-                  list="targetsList" pattern="[a-zA-Z0-9._\/ \-]+" required title="Les cibles peuvent être spécifiées par des noms d'hôtes, des adresses IP, des adresses de réseaux, etc.
+                <input id="nameInput" type="text" name="target" placeholder="<?= $_SERVER['REMOTE_ADDR']; ?>"
+                  list="targetList" pattern="[a-zA-Z0-9._\/ \-]+" required title="Les cibles peuvent être spécifiées par des noms d'hôtes, des adresses IP, des adresses de réseaux, etc.
 Exemples: <?= $_SERVER['REMOTE_ADDR']; ?>/24 <?= $_SERVER['SERVER_NAME']; ?> 10.0-255.0-255.1-254" />
               </div>
             </div>
+            <input type="hidden" name="preset" value="lanScan" />
             <div class="field">
               <label for="nameInput">Enregistrer sous le nom (optionnel)</label>
               <div class="ui small input">
@@ -100,7 +97,7 @@ Exemples: <?= $_SERVER['REMOTE_ADDR']; ?>/24 <?= $_SERVER['SERVER_NAME']; ?> 10.
       </div>
     </div>
 
-    <datalist id='targetsList'>
+    <datalist id='targetList'>
       <option value="<?= $_SERVER['REMOTE_ADDR']; ?>/24"></option>
       <option value="<?= $_SERVER['SERVER_NAME']; ?>"></option>
     </datalist>

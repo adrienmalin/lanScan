@@ -2,6 +2,10 @@ body.inverted {
   background-color: #1b1c1d;
 }
 
+.ui.menu .header.item {
+  margin: 0;
+}
+
 .logo {
   display: flex !important;
   justify-content: center;

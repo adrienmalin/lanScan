@@ -57,7 +57,7 @@
     <div class="right menu">
       <div class="ui right aligned category search item">
         <form id="scanForm" action="scan.php" method="get">
-          <div class="ui inverted icon input" id="targetsInputDiv">
+          <div class="ui inverted icon input" id="targetInputDiv">
             <input name="lan" class="prompt" type="text" placeholder="Scanner un réseau" pattern="[a-zA-Z0-9._\/ \-]+" title="Les cibles peuvent être spécifiées par des noms d'hôtes, des adresses IP, des adresses de réseaux, etc.
 Exemples: 192.168.1.0/24 scanme.nmap.org 10.0-255.0-255.1-254" />
             <i class="satellite dish icon"></i>
@@ -81,7 +81,7 @@ Exemples: 192.168.1.0/24 scanme.nmap.org 10.0-255.0-255.1-254" />
   <script>
 scanForm.onsubmit = function(event) {
   if (scanForm.checkValidity()) {
-    targetsInputDiv.classList.add('loading')
+    targetInputDiv.classList.add('loading')
     $.toast({
       title : 'Scan en cours...',
       message : 'Merci de patienter',

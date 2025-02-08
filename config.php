@@ -9,4 +9,22 @@ $DATADIR           = ".";
 $SCRIPTARGSFILE    = "script-args.ini";
 $LANSCANOPTIONS    = "-PSmicrosoft-ds -F -T5 --datadir '$DATADIR' --script http-info,smb-shares-size --script-args-file '$SCRIPTARGSFILE'";
 $HOSTSCANOPTIONS   = "-A -T5 --datadir '$DATADIR' --script http-info,smb-shares-size --script-args-file '$SCRIPTARGSFILE'";
-$COMMONOPTIONS = "--datadir '$DATADIR' --script-args-file '$SCRIPTARGSFILE'";
+$COMMONOPTIONS     = [
+    "--datadir" => $DATADIR,
+    "--script-args-file" => $SCRIPTARGSFILE,
+];
+$PRESETS           = [
+    "lanScan" => [
+        "-PS" => "microsoft-ds",
+        "-F" => true,
+        "-T" => 5,
+        "--script" => "http-info,smb-shares-size",
+        "--stylesheet" => "lanTable.xsl",
+    ],
+    "host" => [
+        "-A" => true,
+        "-T" => 5,
+        "--script" => "http-info,smb-shares-size",
+        "--stylesheet" => "hostDetails.xsl",
+    ],
+];

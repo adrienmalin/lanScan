@@ -25,7 +25,8 @@
           <a class="ui icon button item" href="https://nmap.org/man/fr/index.html" target="_blank">
             <i class="question circle icon"></i>
           </a>
-          <button id="toggleThemeButton" type="button" class="ui icon link item" title="Thème clair/sombre" onclick="toggleTheme()">
+          <button id="toggleThemeButton" type="button" class="ui icon link item" title="Thème clair/sombre"
+            onclick="toggleTheme()">
             <i class="sun icon"></i>
           </button>
         </div>
@@ -38,10 +39,10 @@
 
       <form id="newScanForm" class="ui inverted form" method="get" action="scan.php">
         <div class="inverted field">
-          <label for="targetsInput" title="Les cibles peuvent être spécifiées par des noms d'hôtes, des adresses IP, des adresses de réseaux, etc.
+          <label for="targetInput" title="Les cibles peuvent être spécifiées par des noms d'hôtes, des adresses IP, des adresses de réseaux, etc.
 Exemples: <?= $_SERVER['REMOTE_ADDR']; ?>/24 <?= $_SERVER['SERVER_NAME']; ?> 10.0-255.0-255.1-254">Cibles</label>
-          <input id="targetsInput" type="text" name="targets" placeholder="Cibles" spellcheck="false"
-            pattern="[a-zA-Z0-9._\/ \-]+" list="targetsList" title="Les cibles peuvent être spécifiées par des noms d'hôtes, des adresses IP, des adresses de réseaux, etc.
+          <input id="targetInput" type="text" name="target" placeholder="Cibles" spellcheck="false"
+            pattern="[a-zA-Z0-9._\/ \-]+" list="targetList" title="Les cibles peuvent être spécifiées par des noms d'hôtes, des adresses IP, des adresses de réseaux, etc.
 Exemples: <?= $_SERVER['REMOTE_ADDR']; ?>/24 <?= $_SERVER['SERVER_NAME']; ?> 10.0-255.0-255.1-254" />
         </div>
 
@@ -50,7 +51,7 @@ Exemples: <?= $_SERVER['REMOTE_ADDR']; ?>/24 <?= $_SERVER['SERVER_NAME']; ?> 10.
           <div class="content">
             <div class="inverted field">
               <label for="excludeInput" title="--exclude">Exclure les hôtes ou réseaux</label>
-              <input id="excludeInput" type="text" name="--exclude" placeholder="Hôte/réseau" list="targetsList"
+              <input id="excludeInput" type="text" name="--exclude" placeholder="Hôte/réseau" list="targetList"
                 pattern="[a-zA-Z0-9._\/,\-]*">
             </div>
 
@@ -384,12 +385,12 @@ Exemples: <?= $_SERVER['REMOTE_ADDR']; ?>/24 <?= $_SERVER['SERVER_NAME']; ?> 10.
           <div class="title"><i class="icon dropdown"></i>Temporisation et performances</div>
           <div class="content">
             <div class="inverted field">
-              <label for="TSelect" title="--T">Intensité des tests de version</label>
+              <label for="TSelect" title="-T">Intensité des tests de version</label>
               <select id="TSelect" class="ui clearable dropdown" name="-T">
                 <option>Paranoïaque</option>
                 <option>Sournois</option>
                 <option>Poli</option>
-                <option>Normal</option>
+                <option selected>Normal</option>
                 <option>Aggressif</option>
                 <option>Dément</option>
               </select>
@@ -492,9 +493,9 @@ Exemples: <?= $_SERVER['REMOTE_ADDR']; ?>/24 <?= $_SERVER['SERVER_NAME']; ?> 10.
                 <select id="hostTimoutUnit" class="ui clearable dropdown label"
                   oninput="hostTimoutHidden.value = hostTimoutNumber.value? hostTimoutNumber.value+hostTimoutUnit.value: ''">
                   <option value="">ms</option>
-                    <option value="s">secondes</option>
-                    <option value="m">minutes</option>
-                    <option value="h">heures</option>
+                  <option value="s">secondes</option>
+                  <option value="m">minutes</option>
+                  <option value="h">heures</option>
                 </select>
               </div>
               <input id="hostTimoutHidden" type="hidden" name="--host-timeout">
@@ -545,59 +546,75 @@ Exemples: <?= $_SERVER['REMOTE_ADDR']; ?>/24 <?= $_SERVER['SERVER_NAME']; ?> 10.
           <div class="content">
             <div class="inverted field">
               <div class="ui toggle inverted checkbox">
-                <input type="checkbox" id="f" name="-f">
-                <label for="f" title="-f">Fragmentation des paquets</label>
+                <input id="fInput" type="checkbox" name="-f">
+                <label for="fInput" title="-f">Fragmentation des paquets</label>
               </div>
             </div>
 
             <div class="two inverted fields">
               <div class="inverted field">
-                <label for="mtu" title="--mtu">Taille des paquets</label>
-                <input type="number" id="mtu" name="--mtu" min="0">
+                <label for="mtuInput" title="--mtu">Taille des paquets</label>
+                <input id="mtuInput" type="number" name="--mtu" min="0">
               </div>
 
               <div class="inverted field">
-                <label for="d" title="-d">Délai entre les paquets</label>
-                <input type="number" id="d" name="-d" min="0">
+                <label for="dInput" title="-d">Délai entre les paquets</label>
+                <input id="dInput" type="number" name="-d" min="0">
               </div>
             </div>
 
             <div class="inverted field">
-              <label for="g" title="-g">Port source</label>
-              <input type="number" id="g" name="-g" min="0" max="65535">
+              <label for="gInput" title="-g">Port source</label>
+              <input id="gInput" type="number" name="-g" min="0" max="65535">
             </div>
 
             <div class="inverted field">
-              <label for="data-length" title="--data-length">Longueur des données</label>
-              <input type="number" id="data-length" name="--data-length" min="0">
+              <label for="dataLengthInput" title="--data-length">Longueur des données</label>
+              <input id="dataLengthInput" type="number" name="--data-length" min="0">
             </div>
 
             <div class="inverted field">
-              <label for="D" title="-D">Leurre</label>
-              <input type="text" id="D" name="-D">
+              <label for="DInput" title="-D">Leurre</label>
+              <input id="DInput" type="text" name="-D">
             </div>
 
             <div class="inverted field">
-              <label for="S" title="-S">Usurpation d'adresse IP</label>
-              <input type="text" id="S" name="-S">
+              <label for="SInput" title="-S">Usurpation d'adresse IP</label>
+              <input id="SInput" type="text" name="-S">
             </div>
 
             <div class="inverted field">
-              <label for="ttl" title="--ttl">Valeur TTL</label>
-              <input type="number" id="ttl" name="--ttl" min="0" max="255">
+              <label for="ttlInput" title="--ttl">Valeur TTL</label>
+              <input id="ttlInput" type="number" name="--ttl" min="0" max="255">
             </div>
 
             <div class="inverted field">
-              <label for="scan-delay" title="--scan-delay">Délai entre les scans</label>
-              <input type="number" id="scan-delay" name="--scan-delay" min="0">
+              <label for="scanDelayInput" title="--scan-delay">Délai entre les scans</label>
+              <input id="scanDelayInput" type="number" name="--scan-delay" min="0">
             </div>
 
             <div class="inverted field">
               <div class="ui checkbox">
-                <input type="checkbox" id="badsum" name="--badsum">
-                <label for="badsum" title="--badsum">Checksum incorrect</label>
+                <input id="badsumCheckbox" type="checkbox" name="--badsum">
+                <label for="badsumCheckbox" title="--badsum">Checksum incorrect</label>
               </div>
             </div>
+          </div>
+        </div>
+
+        <div class="field">
+          <label for="stylesheetSelect" title="--stylesheet">Affichage des résultats</label>
+          <select id="stylesheetSelect" class="ui dropdown" name="--stylesheet" required>
+            <option value='lanTable.xsl' selected>Tableau du réseau</option>
+            <option value='hostDetails.xsl'>Détails de l'hôte</option>
+          </select>
+        </div>
+
+        <div class="field">
+          <label for="nameInput">Enregistrer sous le nom (optionnel)</label>
+          <div class="ui small input">
+            <input id="nameInput" type="text" name="name" placeholder="Reseau local" pattern='[0-9a-zA-Z\-_\. ]+'
+              title="Caractères autorisés: a-z A-Z 0-9 - _ ." />
           </div>
         </div>
 
@@ -605,7 +622,7 @@ Exemples: <?= $_SERVER['REMOTE_ADDR']; ?>/24 <?= $_SERVER['SERVER_NAME']; ?> 10.
       </form>
     </main>
 
-    <datalist id='targetsList'>
+    <datalist id='targetList'>
       <option value="<?= $_SERVER['REMOTE_ADDR']; ?>/24"></option>
       <option value="<?= $_SERVER['SERVER_NAME']; ?>"></option>
       <?php
@@ -682,6 +699,15 @@ Exemples: <?= $_SERVER['REMOTE_ADDR']; ?>/24 <?= $_SERVER['SERVER_NAME']; ?> 10.
 
     <script src="script.js"></script>
     <script>
+      class TagsInput extends Tagify {
+        constructor(input, options = {}, delim = ",") {
+          if (!options.delimiters) options.delimiters = " |,"
+          if (!options.originalInputValueFormat) options.originalInputValueFormat = tags => tags.map(tag => tag.value).join(delim)
+          if (input.list) options.whitelist = Array.from(input.list.options).map(option => option.value)
+          super(input, options)
+        }
+      }
+
       $(".ui.accordion").accordion()
 
       $(".ui.clearable.dropdown").dropdown({
@@ -691,7 +717,7 @@ Exemples: <?= $_SERVER['REMOTE_ADDR']; ?>/24 <?= $_SERVER['SERVER_NAME']; ?> 10.
         clearable: false
       })
 
-      new TagsInput(targetsInput, {}, " ")
+      new TagsInput(targetInput, {}, " ")
       new TagsInput(excludeInput)
       new TagsInput(PSInput)
       new TagsInput(PAInput)

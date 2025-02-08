@@ -16,7 +16,7 @@
   <xsl:variable name="name" select="substring-before(substring-after(processing-instruction('xml-stylesheet'),'name='), '&quot;')" />
 
   <xsl:template match="nmaprun">
-    <xsl:variable name="targets" select="substring-after(@args, '-oX - ')" />
+    <xsl:variable name="target" select="substring-after(@args, '-oX - ')" />
     <xsl:variable name="current" select="." />
     <xsl:variable name="init" select="document(concat($base, 'scans/', $name, '.xml'))/nmaprun" />
 
@@ -24,7 +24,7 @@
       <xsl:apply-templates select="." mode="head">
         <xsl:with-param name="base" select="$base" />
         <xsl:with-param name="name" select="$name" />
-        <xsl:with-param name="targets" select="$targets" />
+        <xsl:with-param name="target" select="$target" />
       </xsl:apply-templates>
 
       <body class="inverted">
@@ -133,7 +133,9 @@ $('.ui.dropdown').dropdown()
           </xsl:if>
           <xsl:if test="os/osmatch/@name">
             <td>
-              <abbr title="Confiance : {os/osmatch/@accuracy}%"><xsl:value-of select="os/osmatch/@name" /></abbr>
+              <abbr title="Confiance : {os/osmatch/@accuracy}%">
+                <xsl:value-of select="os/osmatch/@name" />
+              </abbr>
             </td>
           </xsl:if>
           <xsl:if test="distance/@value">

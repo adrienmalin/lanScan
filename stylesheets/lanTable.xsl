@@ -15,7 +15,7 @@
   <xsl:variable name="name" select="substring-before(substring-after(processing-instruction('xml-stylesheet'),'name='), '&quot;')" />
 
   <xsl:template match="nmaprun">
-    <xsl:variable name="targets" select="substring-after(@args, '-oX - ')" />
+    <xsl:variable name="target" select="substring-after(@args, '-oX - ')" />
     <xsl:variable name="current" select="." />
     <xsl:variable name="init" select="document(concat($base, 'scans/', $name, '.xml'))/nmaprun" />
 
@@ -23,7 +23,7 @@
       <xsl:apply-templates select="." mode="head">
         <xsl:with-param name="base" select="$base" />
         <xsl:with-param name="name" select="$name" />
-        <xsl:with-param name="targets" select="$targets" />
+        <xsl:with-param name="target" select="$target" />
       </xsl:apply-templates>
 
       <body class="inverted">
@@ -32,16 +32,17 @@
         </xsl:apply-templates>
 
         <main class="ui main container inverted vertical segment">
+
           <h1 class="ui header">
             <xsl:choose>
               <xsl:when test="$name">
                 <xsl:value-of select="$name" disable-output-escaping="yes" />
                 <div class="sub header">
-                  <xsl:value-of select="$targets" />
+                  <xsl:value-of select="$target" />
                 </div>
               </xsl:when>
               <xsl:otherwise>
-                <xsl:value-of select="$targets" />
+                <xsl:value-of select="$target" />
               </xsl:otherwise>
             </xsl:choose>
           </h1>
@@ -52,7 +53,9 @@
                 <th style="width: min-width">État</th>
                 <th>Adresse IP</th>
                 <th>Nom</th>
-                <th>Constructeur</th>
+                <xsl:if test="host/address[@addrtype='mac']/@vendor">
+                  <th>Constructeur</th>
+                </xsl:if>
                 <th class="six wide">Services</th>
                 <th style="width: min-width" title="Scan intensif">
                   <i class="search plus icon"></i>
@@ -178,8 +181,7 @@ $('.ui.dropdown').dropdown()
       </td>
       <td>
         <a class="ui mini icon teal icon button" target="_blank" title="Scan intensif">
-          <xsl:attribute name="href">scan.php?host=<xsl:value-of select="$hostAddress" />
-          </xsl:attribute>
+          <xsl:attribute name="href">scan.php?target=<xsl:value-of select="$hostAddress" />&amp;preset=host</xsl:attribute>
           <i class="search plus icon"></i>
         </a>
       </td>
