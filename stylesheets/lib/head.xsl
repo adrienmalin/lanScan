@@ -28,6 +28,7 @@
                         <xsl:value-of select="$target" />
                     </xsl:otherwise>
                 </xsl:choose>
+                <xsl:text> - lanScan</xsl:text>
             </title>
             <link rel="icon" href="favicon.ico" />
             <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/fomantic-ui@2.9.3/dist/semantic.min.css" />

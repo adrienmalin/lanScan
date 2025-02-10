@@ -14,7 +14,7 @@ $.toast({
     showIcon   : 'calendar',
     displayTime: 0,
     closeIcon  : true,
-    position   : 'bottom right',
+    position   : 'bottom left',
 })
             </xsl:if>
             <xsl:if test="finished/@summary">
@@ -24,7 +24,7 @@ $.toast({
     showIcon   : 'satellite dish',
     displayTime: 0,
     closeIcon  : true,
-    position   : 'bottom right',
+    position   : 'bottom left',
 })
             </xsl:if>
             <xsl:if test="finished/@errormsg">
@@ -35,7 +35,7 @@ $.toast({
     class      : 'error',
     displayTime: 0,
     closeIcon  : true,
-    position   : 'bottom right',
+    position   : 'bottom left',
 })
             </xsl:if>
         </script>

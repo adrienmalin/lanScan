@@ -29,6 +29,7 @@
 
       <body class="inverted">
         <xsl:apply-templates select="." mode="nav">
+          <xsl:with-param name="target" select="$target" />
           <xsl:with-param name="name" select="$name" />
         </xsl:apply-templates>
 
@@ -38,6 +39,11 @@
             <xsl:with-param name="current" select="$current" />
           </xsl:apply-templates>
         </main>
+
+        <footer class="ui footer inverted segment">
+            Résultat de la commande :<br/>
+            <code><xsl:value-of select="@args"/></code>
+        </footer>
 
         <script src="script.js"></script>
         <script>

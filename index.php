@@ -48,10 +48,10 @@
 
         <form id="scanForm" class="ui large form initial inverted" action="scan.php" method="get">
           <div class="ui left aligned raised segment inverted">
-            <h4 class="ui header">Découvrir ou superviser un réseau</h4>
+            <h2 class="ui header">Découvrir ou superviser un réseau</h2>
             <div class="inverted field">
               <div class="ui large input">
-                <input id="nameInput" type="text" name="target" placeholder="<?= $_SERVER['REMOTE_ADDR']; ?>"
+                <input id="nameInput" type="text" name="target" placeholder="<?= $_SERVER['REMOTE_ADDR']; ?>/24"
                   list="targetList" pattern="[a-zA-Z0-9._\/ \-]+" required title="Les cibles peuvent être spécifiées par des noms d'hôtes, des adresses IP, des adresses de réseaux, etc.
 Exemples: <?= $_SERVER['REMOTE_ADDR']; ?>/24 <?= $_SERVER['SERVER_NAME']; ?> 10.0-255.0-255.1-254" />
               </div>

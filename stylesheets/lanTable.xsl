@@ -28,6 +28,7 @@
 
       <body class="inverted">
         <xsl:apply-templates select="." mode="nav">
+          <xsl:with-param name="target" select="$target" />
           <xsl:with-param name="name" select="$name" />
         </xsl:apply-templates>
 
@@ -70,6 +71,11 @@
             </tbody>
           </table>
         </main>
+        
+        <footer class="ui footer inverted segment">
+            Résultat de la commande :<br/>
+            <code><xsl:value-of select="@args"/></code>
+        </footer>
 
         <script src="script.js"></script>
         <script>
@@ -89,7 +95,7 @@ var table = $('#scanResultsTable').DataTable({
                 'print',
                 {
                     extend: 'collection',
-                    text: 'Exporter',
+                    text: 'Export',
                     buttons: ['csv', 'excel', 'pdf']
                 },
             ],
@@ -167,9 +173,11 @@ $('.ui.dropdown').dropdown()
           <xsl:value-of select="substring-after(hostnames/hostname/@name, '.')" />
         </xsl:if>
       </td>
-      <td>
-        <xsl:value-of select="address[@addrtype='mac']/@vendor" />
-      </td>
+      <xsl:if test="../host/address[@addrtype='mac']/@vendor">
+        <td>
+          <xsl:value-of select="address[@addrtype='mac']/@vendor" />
+        </td>
+      </xsl:if>
       <td>
         <xsl:apply-templates select="ports/port | $initHost/ports/port[not(state/@state='closed')][not(@portid=$currentHost/ports/port/@portid)]" mode="service">
           <xsl:with-param name="initHost" select="$initHost" />
@@ -181,7 +189,8 @@ $('.ui.dropdown').dropdown()
       </td>
       <td>
         <a class="ui mini icon teal icon button" target="_blank" title="Scan intensif">
-          <xsl:attribute name="href">scan.php?target=<xsl:value-of select="$hostAddress" />&amp;preset=host</xsl:attribute>
+          <xsl:attribute name="href">scan.php?target=<xsl:value-of select="$hostAddress" />
+&amp;preset=host</xsl:attribute>
           <i class="search plus icon"></i>
         </a>
       </td>

@@ -41,7 +41,7 @@
         <div class="inverted field">
           <label for="targetInput" title="Les cibles peuvent être spécifiées par des noms d'hôtes, des adresses IP, des adresses de réseaux, etc.
 Exemples: <?= $_SERVER['REMOTE_ADDR']; ?>/24 <?= $_SERVER['SERVER_NAME']; ?> 10.0-255.0-255.1-254">Cibles</label>
-          <input id="targetInput" type="text" name="target" placeholder="Cibles" spellcheck="false"
+          <input id="targetInput" type="text" name="target" placeholder="Cibles" spellcheck="false" required
             pattern="[a-zA-Z0-9._\/ \-]+" list="targetList" title="Les cibles peuvent être spécifiées par des noms d'hôtes, des adresses IP, des adresses de réseaux, etc.
 Exemples: <?= $_SERVER['REMOTE_ADDR']; ?>/24 <?= $_SERVER['SERVER_NAME']; ?> 10.0-255.0-255.1-254" />
         </div>
@@ -544,10 +544,19 @@ Exemples: <?= $_SERVER['REMOTE_ADDR']; ?>/24 <?= $_SERVER['SERVER_NAME']; ?> 10.
 
           <div class="title"><i class="icon dropdown"></i>Évitement de pare-feux/IDS et mystification</div>
           <div class="content">
-            <div class="inverted field">
-              <div class="ui toggle inverted checkbox">
-                <input id="fInput" type="checkbox" name="-f">
-                <label for="fInput" title="-f">Fragmentation des paquets</label>
+
+            <div class="two inverted fields">
+              <div class="inverted field">
+                <div class="ui toggle inverted checkbox">
+                  <input id="fInput" type="checkbox" name="-f">
+                  <label for="fInput" title="-f">Fragmentation des paquets</label>
+                </div>
+              </div>
+              <div class="inverted field">
+                <div class="ui toggle inverted checkbox">
+                  <input id="badsumCheckbox" type="checkbox" name="--badsum">
+                  <label for="badsumCheckbox" title="--badsum">Checksum incorrect</label>
+                </div>
               </div>
             </div>
 
@@ -564,23 +573,24 @@ Exemples: <?= $_SERVER['REMOTE_ADDR']; ?>/24 <?= $_SERVER['SERVER_NAME']; ?> 10.
             </div>
 
             <div class="inverted field">
-              <label for="gInput" title="-g">Port source</label>
-              <input id="gInput" type="number" name="-g" min="0" max="65535">
-            </div>
-
-            <div class="inverted field">
               <label for="dataLengthInput" title="--data-length">Longueur des données</label>
               <input id="dataLengthInput" type="number" name="--data-length" min="0">
             </div>
 
             <div class="inverted field">
               <label for="DInput" title="-D">Leurre</label>
-              <input id="DInput" type="text" name="-D">
+              <input id="DInput" type="text" name="-D" pattern="[a-zA-Z0-9._,\-]*"
+                placeholder="decoy1[,decoy2][,ME],..." title="decoy1[,decoy2][,ME],...">
             </div>
 
             <div class="inverted field">
               <label for="SInput" title="-S">Usurpation d'adresse IP</label>
-              <input id="SInput" type="text" name="-S">
+              <input id="SInput" type="text" name="-S" pattern="[0-9.]*">
+            </div>
+
+            <div class="inverted field">
+              <label for="gInput" title="-g">Port source</label>
+              <input id="gInput" type="number" name="-g" min="0" max="65535">
             </div>
 
             <div class="inverted field">
@@ -591,13 +601,6 @@ Exemples: <?= $_SERVER['REMOTE_ADDR']; ?>/24 <?= $_SERVER['SERVER_NAME']; ?> 10.
             <div class="inverted field">
               <label for="scanDelayInput" title="--scan-delay">Délai entre les scans</label>
               <input id="scanDelayInput" type="number" name="--scan-delay" min="0">
-            </div>
-
-            <div class="inverted field">
-              <div class="ui checkbox">
-                <input id="badsumCheckbox" type="checkbox" name="--badsum">
-                <label for="badsumCheckbox" title="--badsum">Checksum incorrect</label>
-              </div>
             </div>
           </div>
         </div>
@@ -736,6 +739,7 @@ Exemples: <?= $_SERVER['REMOTE_ADDR']; ?>/24 <?= $_SERVER['SERVER_NAME']; ?> 10.
       new TagsInput(scriptArgsInput, {
         delimiters: ','
       })
+      new TagsInput(DInput)
 
       newScanForm.onsubmit = function (event) {
         if (this.checkValidity()) {

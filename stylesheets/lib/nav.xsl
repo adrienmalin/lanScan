@@ -3,6 +3,7 @@
   xmlns:xs="http://www.w3.org/2001/XMLSchema" version="1.1">
 
   <xsl:template match="nmaprun" mode="nav">
+    <xsl:param name="target" />
     <xsl:param name="name" />
 
     <nav class="ui inverted secondary menu">
@@ -58,10 +59,12 @@
       <div class="ui right aligned category search item">
         <form id="scanForm" action="scan.php" method="get">
           <div class="ui inverted icon input" id="targetInputDiv">
-            <input name="lan" class="prompt" type="text" placeholder="Scanner un réseau" pattern="[a-zA-Z0-9._\/ \-]+" title="Les cibles peuvent être spécifiées par des noms d'hôtes, des adresses IP, des adresses de réseaux, etc.
+            <input name="target" class="prompt" type="text" placeholder="Scanner un réseau" pattern="[a-zA-Z0-9._\/ \-]+" value="{$target}"
+            title="Les cibles peuvent être spécifiées par des noms d'hôtes, des adresses IP, des adresses de réseaux, etc.
 Exemples: 192.168.1.0/24 scanme.nmap.org 10.0-255.0-255.1-254" />
             <i class="satellite dish icon"></i>
           </div>
+          <input type="hidden" name="preset" value="lanScan" />
         </form>
         <a class="ui icon button item" href="options.php" title="Options avancées">
           <i class="settings icon"></i>
