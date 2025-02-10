@@ -212,17 +212,16 @@ $('.ui.dropdown').dropdown()
 
   <xsl:template match="port">
     <xsl:param name="hostAddress" />
-        <xsl:param name="initHost" />
-        <xsl:param name="currentHost" />
-        <xsl:variable
+      <xsl:param name="initHost" />
+      <xsl:param name="currentHost" />
+      <xsl:variable
       name="portid" select="@portid" />
-        <xsl:variable
-      name="initPort" select="$initHost/ports/port[@portid=$portid]" />
-        <xsl:variable
-      name="currentPort" select="$currentHost/ports/port[@portid=$portid]" />
+      <xsl:variable name="initPort"
+      select="$initHost/ports/port[@portid=$portid]" />
+      <xsl:variable name="currentPort"
+      select="$currentHost/ports/port[@portid=$portid]" />
 
-        <a
-      target="_blank">
+      <a target="_blank">
       <xsl:attribute name="class">
         <xsl:text>ui mini label </xsl:text>
                 <xsl:if

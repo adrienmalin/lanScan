@@ -222,7 +222,7 @@ $('.ui.dropdown').dropdown()
       class="ui inverted card {$color}">
       <div class="content">
         <div class="header">
-          <div class="ui {$color} ribbon label">
+          <div class="ui {$color} ribbon label" title="{state/@state}">
             <div class="detail" style="text-transform: uppercase">
               <xsl:value-of select="@protocol" />
               <xsl:text>:</xsl:text>
