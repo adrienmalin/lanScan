@@ -102,22 +102,21 @@ if ($preset && isset($PRESETS[$preset])) {
         '--spoof-mac' => FILTER_VALIDATE_MAC,
         '--badsum' => FILTER_VALIDATE_BOOLEAN,
         // MISC:
-        // '6' => FILTER_VALIDATE_BOOLEAN,
+        // '-6' => FILTER_VALIDATE_BOOLEAN,
         '-A' => FILTER_VALIDATE_BOOLEAN,
         '--send-eth' => FILTER_VALIDATE_BOOLEAN,
+        '--send-ip' => FILTER_VALIDATE_BOOLEAN,
         '--privileged' => FILTER_VALIDATE_BOOLEAN,
         '--unprivileged' => FILTER_VALIDATE_BOOLEAN,
         '--stylesheet' => ['filter' => FILTER_VALIDATE_REGEXP, 'options' => ['regexp' => $fileNameRegex]],
     ], false);
 }
 
-$inputs = array_merge($COMMONOPTIONS, $inputs);
-
 $inputs['--stylesheet'] = "$BASEDIR/$STYLESHEETSDIR/{$inputs['--stylesheet']}?";
 if ($name) $inputs['--stylesheet'] .= "name=$name";
 
 $options = "";
-foreach ($inputs as $option => $value) {
+foreach (array_merge($COMMONOPTIONS, $inputs) as $option => $value) {
     if (substr($option, 0, 1) == '-') {
         if (is_null($value)) {
             http_response_code(400);

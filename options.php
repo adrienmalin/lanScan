@@ -542,7 +542,6 @@ Exemples: <?= $_SERVER['REMOTE_ADDR']; ?>/24 <?= $_SERVER['SERVER_NAME']; ?> 10.
 
         <div class="title"><i class="icon dropdown"></i>Évitement de pare-feux/IDS et mystification</div>
         <div class="content">
-
           <div class="inline inverted fields">
             <div class="inverted field">
               <div class="ui toggle inverted checkbox">
@@ -616,16 +615,55 @@ Exemples: <?= $_SERVER['REMOTE_ADDR']; ?>/24 <?= $_SERVER['SERVER_NAME']; ?> 10.
               <label for="randomizeHostsInput" title="--randomize-hosts">Scanner les cibles dans un ordre aléatoire</label>
             </div>
           </div>
-
         </div>
-      </div>
 
-      <div class="field">
-        <label for="stylesheetSelect" title="--stylesheet">Affichage des résultats</label>
-        <select id="stylesheetSelect" class="ui dropdown" name="--stylesheet" required>
-          <option value='lanTable.xsl' selected>Tableau du réseau</option>
-          <option value='hostDetails.xsl'>Détails de l'hôte</option>
-        </select>
+        <div class="title"><i class="icon dropdown"></i>Options diverses</div>
+        <div class="content">
+          <div class="field">
+            <label for="stylesheetSelect" title="--stylesheet">Affichage des résultats</label>
+            <select id="stylesheetSelect" class="ui dropdown" name="--stylesheet" required>
+              <option value='lanTable.xsl' selected>Tableau du réseau</option>
+              <option value='hostDetails.xsl'>Détails de l'hôte</option>
+            </select>
+          </div>
+
+          <div class="inverted field">
+            <div class="ui toggle inverted checkbox">
+              <input id="AInput" name="-A" type="checkbox">
+              <label for="AInput" title="-A">Scan agressif</label>
+            </div>
+          </div>
+
+          <div class="two inverted fields">
+            <div class="inverted field">
+              <div class="ui toggle inverted checkbox">
+                <input id="sendEthInput" name="--send-eth" type="checkbox">
+                <label for="sendEthInput" title="--send-eth">Envoie des paquets en utilisant des trames Ethernet brutes</label>
+              </div>
+            </div>
+            <div class="inverted field">
+              <div class="ui toggle inverted checkbox">
+                <input id="sendIPInput" name="--send-ip" type="checkbox">
+                <label for="sendIPInput" title="--send-ip">Envoie des paquets en utilisant des paquets IP bruts</label>
+              </div>
+            </div>
+          </div>
+
+          <div class="two inverted fields">
+            <div class="inverted field">
+              <div class="ui toggle inverted checkbox">
+                <input id="privilegedInput" name="--privileged" type="checkbox">
+                <label for="privilegedInput" title="--privileged">Mode privilégié</label>
+              </div>
+            </div>
+            <div class="inverted field">
+              <div class="ui toggle inverted checkbox">
+                <input id="unprivilegedInput" name="--unprivileged" type="checkbox">
+                <label for="unprivilegedInput" title="--unprivileged">Mode non privilégié</label>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
 
       <div class="field">
