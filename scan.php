@@ -97,7 +97,7 @@ if ($preset && isset($PRESETS[$preset])) {
         '-g' => FILTER_VALIDATE_INT,
         '--source-port' => FILTER_VALIDATE_INT,
         '--data-length' => FILTER_VALIDATE_INT,
-        '--ip-options' => ['filter' => FILTER_VALIDATE_REGEXP, 'options' => ['regexp' => '/^\"(R|T|U|L [\da-zA-Z-.: ]+|S [\da-zA-Z-.: ]+|\\\\x[\da-fA-F]{1,2}(\*[\d]+)?|\\\\[0-2]?[\d]{1,2}(\*[\d]+)?)\"$/']],
+        '--ip-options' => ['filter' => FILTER_VALIDATE_REGEXP, 'options' => ['regexp' => '/^(R|T|U|L [\da-zA-Z-.: ]+|S [\da-zA-Z-.: ]+|\\\\x[\da-fA-F]{1,2}(\*[\d]+)?|\\\\[0-2]?[\d]{1,2}(\*[\d]+)?)$/']],
         '--ttl' => ['filter' => FILTER_VALIDATE_INT, 'options' => ['min_range' => 0, 'max_range' => 255]],
         '--spoof-mac' => FILTER_VALIDATE_MAC,
         '--badsum' => FILTER_VALIDATE_BOOLEAN,
@@ -114,7 +114,7 @@ if ($preset && isset($PRESETS[$preset])) {
 $inputs = array_merge($COMMONOPTIONS, $inputs);
 
 $inputs['--stylesheet'] = "$BASEDIR/$STYLESHEETSDIR/{$inputs['--stylesheet']}?";
-if($name) $inputs['--stylesheet'] .= "name=$name";
+if ($name) $inputs['--stylesheet'] .= "name=$name";
 
 $options = "";
 foreach ($inputs as $option => $value) {

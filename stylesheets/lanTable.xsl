@@ -55,14 +55,14 @@
             class="ui sortable small compact stuck striped table">
             <thead>
               <tr>
-                <th style="width: min-width">État</th>
+                <th style="width: min-content">État</th>
                 <th>Adresse IP</th>
                 <th>Nom</th>
                 <xsl:if test="host/address[@addrtype='mac']/@vendor">
                   <th>Constructeur</th>
                 </xsl:if>
                 <th class="six wide">Services</th>
-                <th style="width: min-width" title="Scan intensif">
+                <th style="width: min-content" title="Scan intensif">
                   <i class="search plus icon"></i>
                 </th>
               </tr>
@@ -197,7 +197,7 @@ $('.ui.dropdown').dropdown()
           <xsl:sort select="number(@portid)" order="ascending" />
         </xsl:apply-templates>
       </td>
-      <td>
+      <td style="width: min-content">
         <a class="ui mini icon teal icon button" target="_blank" title="Scan intensif">
           <xsl:attribute name="href">
             <xsl:text>scan.php?target=</xsl:text>
