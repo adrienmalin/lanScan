@@ -73,14 +73,14 @@ Exemples: <?= $_SERVER['REMOTE_ADDR']; ?>/24 <?= $_SERVER['SERVER_NAME']; ?> 10.
           </div>
         </form>
 
-        <?php if (file_exists($SCANSDIR)) { ?>
-          <div class="ui left aligned raised segment inverted">
-            <div class="ui inverted accordion">
-              <div class="title"><i class="dropdown icon"></i></i>Scans enregistrés</div>
-              <div class="content">
-                <table class="ui very basic inverted compact table">
-                  <tbody>
-                    <?php
+<?php if (file_exists($SCANSDIR)) { ?>
+        <div class="ui left aligned raised segment inverted">
+          <div class="ui inverted accordion">
+            <div class="title"><i class="dropdown icon"></i></i>Scans enregistrés</div>
+            <div class="content">
+              <table class="ui very basic inverted compact table">
+                <tbody>
+                  <?php
                     foreach (scandir($SCANSDIR) as $filename) {
                       if (substr($filename, -4) == '.xml') {
                         $name = str_replace('!', '/', substr_replace($filename, '', -4));
@@ -88,12 +88,12 @@ Exemples: <?= $_SERVER['REMOTE_ADDR']; ?>/24 <?= $_SERVER['SERVER_NAME']; ?> 10.
                       }
                     }
                     ?>
-                  </tbody>
-                </table>
-              </div>
+                </tbody>
+              </table>
             </div>
           </div>
-        <?php } ?>
+        </div>
+<?php } ?>
       </div>
     </div>
 
