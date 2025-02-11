@@ -45,6 +45,14 @@ Exemples: <?= $_SERVER['REMOTE_ADDR']; ?>/24 <?= $_SERVER['SERVER_NAME']; ?> 10.
           pattern="[a-zA-Z0-9._\/ \-]+" list="targetList" title="Les cibles peuvent être spécifiées par des noms d'hôtes, des adresses IP, des adresses de réseaux, etc.
 Exemples: <?= $_SERVER['REMOTE_ADDR']; ?>/24 <?= $_SERVER['SERVER_NAME']; ?> 10.0-255.0-255.1-254" />
       </div>
+      <div class="ui fluid popup">
+        <div class="header">Spécification des cibles</div>
+        <p>Le cas le plus simple est de spécifier une adresse IP cible ou un nom d'hôte à scanner.</p>
+        <p>Si vous désirez scanner un réseau entier d'hôtes consécutifs, Nmap supporte l'adressage du style CIDR. Vous pouvez ajouter / &lt;numbits&gt; à une adresse IP ou à un nom d'hôte de référence et Nmap scannera toutes les adresses IP dont les &lt;numbits&gt; bits de poids fort sont les mêmes que la cible de référence. Par exemple, 192.168.10.0/24 scannerait les 256 hôtes entre 192.168.10.0 (en binaire: 11000000 10101000 00001010 00000000) et 192.168.10.255 (en binaire:11000000 10101000 00001010 11111111) inclusivement. 192.168.10.40/24 ferait donc aussi la même chose. Étant donné que l'hôte scanme.nmap.org est à l'adresse IP 205.217.153.62, scanme.nmap.org/16 scannerait les 65 536 adresses IP entre 205.217.0.0 et 205.217.255.255. La plus petite valeur autorisée est /1 qui scanne la moitié d'Internet. La plus grande valeur autorisée est 32, ainsi Nmap ne scanne que la cible de référence car tous les bits de l'adresse sont fixés.</p>
+        <p>La notation CIDR est concise mais pas toujours des plus pratiques. Par exemple, vous voudriez scanner 192.168.0.0/16 mais éviter toutes les adresses se terminant par .0 ou .255 car se sont souvent des adresses de diffusion (broadcast). Nmap permet de le faire grâce à l'adressage par intervalles. Plutôt que de spécifier une adresse IP normale, vous pouvez spécifier pour chaque octet de l'IP une liste d'intervalles séparés par des virgules. Par exemple, 192.168.0-255.1-254 évitera toutes les adresses se terminant par .0 ou .255. Les intervalles ne sont pas limités aux octets finals: 0-255.0-255.13.37 exécutera un scan de toutes les adresses IP se terminant par 137.37. Ce genre de spécifications peut s'avérer utile pour des statistiques sur Internet ou pour les chercheurs.</p>
+        <p>Les adresses IPv6 ne peuvent être spécifiées que par une adresse IPv6 pleinement qualifiée ou un nom d'hôte. L'adressage CIDR ou par intervalles n'est pas géré avec IPv6 car les adresses ne sont que rarement utiles.</p>
+        <p>Nmap accepte les spécifications de plusieurs hôtes à la ligne de commande, sans qu'elles soient nécessairement de même type. La commande nmap scanme.nmap.org 192.168.0.0/8 10.0.0,1,3-7.0-255 fait donc ce à quoi vous vous attendez.</p>
+      </div>
 
       <div class="ui styled fluid accordion inverted field">
         <div class="title"><i class="icon dropdown"></i>Spécification des cibles</div>
@@ -763,6 +771,7 @@ Exemples: <?= $_SERVER['REMOTE_ADDR']; ?>/24 <?= $_SERVER['SERVER_NAME']; ?> 10.
         super(input, options)
       }
     }
+    $('.field').popup()
 
     $(".ui.accordion").accordion()
 
