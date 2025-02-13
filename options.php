@@ -385,12 +385,12 @@ Exemples: <?= $_SERVER['REMOTE_ADDR']; ?>/24 <?= $_SERVER['SERVER_NAME']; ?> 10.
           <div class="inverted field">
             <label for="TSelect" title="-T">Intensité des tests de version</label>
             <select id="TSelect" class="ui clearable dropdown" name="-T">
-              <option>Paranoïaque</option>
-              <option>Sournois</option>
-              <option>Poli</option>
-              <option selected>Normal</option>
-              <option>Aggressif</option>
-              <option>Dément</option>
+              <option value="">Normal</option>
+              <option value="0">Paranoïaque</option>
+              <option value="1">Sournois</option>
+              <option value="2">Poli</option>
+              <option value="4">Aggressif</option>
+              <option value="5">Dément</option>
             </select>
           </div>
 
@@ -813,6 +813,11 @@ Exemples: <?= $_SERVER['REMOTE_ADDR']; ?>/24 <?= $_SERVER['SERVER_NAME']; ?> 10.
           closeIcon: true,
           position: 'bottom right',
         })
+        for (input of document.querySelectorAll("input[name]")) {
+          if (!input.value || (input.type == "checkbox" && !input.checked)) {
+            input.name = ""
+          }
+        }
         return true
       } else {
         event.preventDefault()
