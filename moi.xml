@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE nmaprun>
+<?xml-stylesheet href="https://adrien.malingrey.fr/dev/lanScan4/stylesheets/lanScan.xsl?name=Chez moi&amp;" type="text/xsl"?>
+<!-- Nmap 7.93 scan initiated Wed Feb  5 20:27:12 2025 as: nmap -PSmicrosoft-ds -F -T5 -&#45;datadir . -&#45;script http-info,smb-shares-size -&#45;script-args-file script-args.ini -&#45;stylesheet &quot;https://adrien.malingrey.fr/dev/lanScan4/stylesheets/lanScan.xsl?name=Chez moi&amp;&quot; -oX - 192.168.1.0/24 -->
+<nmaprun scanner="nmap" args="nmap -PSmicrosoft-ds -F -T5 -&#45;datadir . -&#45;script http-info,smb-shares-size -&#45;script-args-file script-args.ini -&#45;stylesheet &quot;https://adrien.malingrey.fr/dev/lanScan4/stylesheets/lanScan.xsl?name=Chez moi&amp;&quot; -oX - 192.168.1.0/24" start="1738783632" startstr="Wed Feb  5 20:27:12 2025" version="7.93" xmloutputversion="1.05">
+<scaninfo type="syn" protocol="tcp" numservices="100" services="7,9,13,21-23,25-26,37,53,79-81,88,106,110-111,113,119,135,139,143-144,179,199,389,427,443-445,465,513-515,543-544,548,554,587,631,646,873,990,993,995,1025-1029,1110,1433,1720,1723,1755,1900,2000-2001,2049,2121,2717,3000,3128,3306,3389,3986,4899,5000,5009,5051,5060,5101,5190,5357,5432,5631,5666,5800,5900,6000-6001,6646,7070,8000,8008-8009,8080-8081,8443,8888,9100,9999-10000,32768,49152-49157"/>
+<verbose level="0"/>
+<debugging level="0"/>
+<hosthint><status state="up" reason="arp-response" reason_ttl="0"/>
+<address addr="192.168.1.20" addrtype="ipv4"/>
+<address addr="DA:08:9B:45:7C:FC" addrtype="mac"/>
+<hostnames>
+</hostnames>
+</hosthint>
+<hosthint><status state="up" reason="arp-response" reason_ttl="0"/>
+<address addr="192.168.1.46" addrtype="ipv4"/>
+<address addr="BE:80:98:8E:1D:16" addrtype="mac"/>
+<hostnames>
+</hostnames>
+</hosthint>
+<hosthint><status state="up" reason="arp-response" reason_ttl="0"/>
+<address addr="192.168.1.69" addrtype="ipv4"/>
+<address addr="28:DF:EB:55:22:A6" addrtype="mac" vendor="Intel Corporate"/>
+<hostnames>
+</hostnames>
+</hosthint>
+<hosthint><status state="up" reason="arp-response" reason_ttl="0"/>
+<address addr="192.168.1.254" addrtype="ipv4"/>
+<address addr="20:66:CF:18:E5:A2" addrtype="mac" vendor="Freebox SAS"/>
+<hostnames>
+</hostnames>
+</hosthint>
+<hosthint><status state="up" reason="arp-response" reason_ttl="0"/>
+<address addr="192.168.1.98" addrtype="ipv4"/>
+<address addr="E4:F0:42:AE:34:1E" addrtype="mac" vendor="Google"/>
+<hostnames>
+</hostnames>
+</hosthint>
+<host starttime="1738783635" endtime="1738783636"><status state="up" reason="arp-response" reason_ttl="0"/>
+<address addr="192.168.1.20" addrtype="ipv4"/>
+<address addr="DA:08:9B:45:7C:FC" addrtype="mac"/>
+<hostnames>
+</hostnames>
+<ports><extraports state="closed" count="97">
+<extrareasons reason="reset" count="97" proto="tcp" ports="7,9,13,21,23,25-26,37,79,81,88,106,110-111,113,119,135,139,143-144,179,199,389,427,443-445,465,513-515,543-544,548,554,587,631,646,873,990,993,995,1025-1029,1110,1433,1720,1723,1755,1900,2000-2001,2049,2121,2717,3000,3128,3306,3389,3986,4899,5000,5009,5051,5060,5101,5190,5357,5432,5631,5666,5800,5900,6000-6001,6646,7070,8000,8008-8009,8080-8081,8443,8888,9100,9999-10000,32768,49152-49157"/>
+</extraports>
+<port protocol="tcp" portid="22"><state state="open" reason="syn-ack" reason_ttl="64"/><service name="ssh" method="table" conf="3"/></port>
+<port protocol="tcp" portid="53"><state state="open" reason="syn-ack" reason_ttl="64"/><service name="domain" method="table" conf="3"/></port>
+<port protocol="tcp" portid="80"><state state="open" reason="syn-ack" reason_ttl="64"/><service name="http" method="table" conf="3"/><script id="http-info" output="&#xa;  status-line: HTTP/1.1 200 OK&#xd;&#xa;&#xa;  status: 200&#xa;  title: Welcome page"><elem key="status-line">HTTP/1.1 200 OK&#xd;&#xa;</elem>
+<elem key="status">200</elem>
+<elem key="title">Welcome page</elem>
+</script></port>
+</ports>
+<times srtt="186" rttvar="26" to="50000"/>
+</host>
+<host starttime="1738783635" endtime="1738783636"><status state="up" reason="arp-response" reason_ttl="0"/>
+<address addr="192.168.1.46" addrtype="ipv4"/>
+<address addr="BE:80:98:8E:1D:16" addrtype="mac"/>
+<hostnames>
+</hostnames>
+<ports><extraports state="closed" count="100">
+<extrareasons reason="reset" count="100" proto="tcp" ports="7,9,13,21-23,25-26,37,53,79-81,88,106,110-111,113,119,135,139,143-144,179,199,389,427,443-445,465,513-515,543-544,548,554,587,631,646,873,990,993,995,1025-1029,1110,1433,1720,1723,1755,1900,2000-2001,2049,2121,2717,3000,3128,3306,3389,3986,4899,5000,5009,5051,5060,5101,5190,5357,5432,5631,5666,5800,5900,6000-6001,6646,7070,8000,8008-8009,8080-8081,8443,8888,9100,9999-10000,32768,49152-49157"/>
+</extraports>
+</ports>
+<times srtt="10978" rttvar="8968" to="50000"/>
+</host>
+<host starttime="1738783635" endtime="1738783635"><status state="up" reason="arp-response" reason_ttl="0"/>
+<address addr="192.168.1.69" addrtype="ipv4"/>
+<address addr="28:DF:EB:55:22:A6" addrtype="mac" vendor="Intel Corporate"/>
+<hostnames>
+</hostnames>
+<ports><extraports state="closed" count="100">
+<extrareasons reason="reset" count="100" proto="tcp" ports="7,9,13,21-23,25-26,37,53,79-81,88,106,110-111,113,119,135,139,143-144,179,199,389,427,443-445,465,513-515,543-544,548,554,587,631,646,873,990,993,995,1025-1029,1110,1433,1720,1723,1755,1900,2000-2001,2049,2121,2717,3000,3128,3306,3389,3986,4899,5000,5009,5051,5060,5101,5190,5357,5432,5631,5666,5800,5900,6000-6001,6646,7070,8000,8008-8009,8080-8081,8443,8888,9100,9999-10000,32768,49152-49157"/>
+</extraports>
+</ports>
+<times srtt="4760" rttvar="809" to="50000"/>
+</host>
+<host starttime="1738783635" endtime="1738783636"><status state="up" reason="arp-response" reason_ttl="0"/>
+<address addr="192.168.1.98" addrtype="ipv4"/>
+<address addr="E4:F0:42:AE:34:1E" addrtype="mac" vendor="Google"/>
+<hostnames>
+</hostnames>
+<ports><extraports state="closed" count="97">
+<extrareasons reason="reset" count="97" proto="tcp" ports="7,9,13,21-23,25-26,37,53,79-81,88,106,110-111,113,119,135,139,143-144,179,199,389,427,443-445,465,513-515,543-544,548,554,587,631,646,873,990,993,995,1025-1029,1110,1433,1720,1723,1755,1900,2000-2001,2049,2121,2717,3000,3128,3306,3389,3986,4899,5000,5009,5051,5060,5101,5190,5357,5432,5631,5666,5800,5900,6000-6001,6646,7070,8000,8080-8081,8888,9100,9999-10000,32768,49152-49157"/>
+</extraports>
+<port protocol="tcp" portid="8008"><state state="open" reason="syn-ack" reason_ttl="64"/><service name="http" method="table" conf="3"/><script id="http-info" output="&#xa;  status-line: HTTP/1.1 404 Not Found&#xd;&#xa;&#xa;  status: 404"><elem key="status-line">HTTP/1.1 404 Not Found&#xd;&#xa;</elem>
+<elem key="status">404</elem>
+</script></port>
+<port protocol="tcp" portid="8009"><state state="open" reason="syn-ack" reason_ttl="64"/><service name="ajp13" method="table" conf="3"/></port>
+<port protocol="tcp" portid="8443"><state state="open" reason="syn-ack" reason_ttl="64"/><service name="https-alt" method="table" conf="3"/><script id="http-info" output="&#xa;  status-line: HTTP/1.1 404 Not Found&#xd;&#xa;&#xa;  status: 404"><elem key="status-line">HTTP/1.1 404 Not Found&#xd;&#xa;</elem>
+<elem key="status">404</elem>
+</script></port>
+</ports>
+<times srtt="5186" rttvar="720" to="50000"/>
+</host>
+<host starttime="1738783635" endtime="1738783636"><status state="up" reason="arp-response" reason_ttl="0"/>
+<address addr="192.168.1.254" addrtype="ipv4"/>
+<address addr="20:66:CF:18:E5:A2" addrtype="mac" vendor="Freebox SAS"/>
+<hostnames>
+<hostname name="mafreebox.freebox.fr" type="PTR"/>
+</hostnames>
+<ports><extraports state="closed" count="93">
+<extrareasons reason="reset" count="93" proto="tcp" ports="7,9,13,22-23,25-26,37,79,81,88,106,110-111,113,119,135,139,143-144,179,199,389,427,444,465,513-515,543-544,548,587,631,646,873,990,993,995,1025-1029,1110,1433,1720,1723,1755,1900,2000-2001,2049,2121,2717,3000,3128,3306,3389,3986,4899,5000,5009,5051,5060,5101,5190,5432,5631,5666,5800,5900,6000-6001,6646,7070,8000,8008-8009,8080-8081,8443,8888,9100,9999-10000,32768,49152-49157"/>
+</extraports>
+<port protocol="tcp" portid="21"><state state="open" reason="syn-ack" reason_ttl="64"/><service name="ftp" method="table" conf="3"/></port>
+<port protocol="tcp" portid="53"><state state="open" reason="syn-ack" reason_ttl="64"/><service name="domain" method="table" conf="3"/></port>
+<port protocol="tcp" portid="80"><state state="open" reason="syn-ack" reason_ttl="64"/><service name="http" method="table" conf="3"/><script id="http-info" output="&#xa;  status-line: HTTP/1.1 200 OK&#xd;&#xa;&#xa;  status: 200&#xa;  title: Freebox OS&#xa;  favicon: /favicon.ico"><elem key="status-line">HTTP/1.1 200 OK&#xd;&#xa;</elem>
+<elem key="status">200</elem>
+<elem key="title">Freebox OS</elem>
+<elem key="favicon">/favicon.ico</elem>
+</script></port>
+<port protocol="tcp" portid="443"><state state="open" reason="syn-ack" reason_ttl="64"/><service name="https" method="table" conf="3"/><script id="http-info" output="&#xa;  status-line: HTTP/1.1 200 OK&#xd;&#xa;&#xa;  status: 200&#xa;  title: Freebox OS&#xa;  favicon: /favicon.ico"><elem key="status-line">HTTP/1.1 200 OK&#xd;&#xa;</elem>
+<elem key="status">200</elem>
+<elem key="title">Freebox OS</elem>
+<elem key="favicon">/favicon.ico</elem>
+</script></port>
+<port protocol="tcp" portid="445"><state state="open" reason="syn-ack" reason_ttl="64"/><service name="microsoft-ds" method="table" conf="3"/></port>
+<port protocol="tcp" portid="554"><state state="open" reason="syn-ack" reason_ttl="64"/><service name="rtsp" method="table" conf="3"/></port>
+<port protocol="tcp" portid="5357"><state state="open" reason="syn-ack" reason_ttl="64"/><service name="wsdapi" method="table" conf="3"/></port>
+</ports>
+<times srtt="98" rttvar="15" to="50000"/>
+</host>
+<host starttime="1738783636" endtime="1738783637"><status state="up" reason="localhost-response" reason_ttl="0"/>
+<address addr="192.168.1.100" addrtype="ipv4"/>
+<hostnames>
+<hostname name="adrien.malingrey.fr" type="PTR"/>
+</hostnames>
+<ports><extraports state="closed" count="93">
+<extrareasons reason="reset" count="93" proto="tcp" ports="7,9,13,21-23,26,37,79,81,88,106,110-111,113,119,135,139,144,179,199,389,427,444-445,465,513-515,543-544,548,554,631,646,873,990,995,1025-1029,1110,1433,1720,1723,1755,1900,2000-2001,2049,2121,2717,3000,3128,3306,3389,3986,4899,5000,5009,5051,5060,5101,5190,5357,5432,5631,5666,5800,5900,6000-6001,6646,7070,8000,8008-8009,8080-8081,8443,8888,9100,9999-10000,32768,49152-49157"/>
+</extraports>
+<port protocol="tcp" portid="25"><state state="open" reason="syn-ack" reason_ttl="64"/><service name="smtp" method="table" conf="3"/></port>
+<port protocol="tcp" portid="53"><state state="open" reason="syn-ack" reason_ttl="64"/><service name="domain" method="table" conf="3"/></port>
+<port protocol="tcp" portid="80"><state state="open" reason="syn-ack" reason_ttl="64"/><service name="http" method="table" conf="3"/><script id="http-info" output="&#xa;  status-line: HTTP/1.1 301 Moved Permanently&#xd;&#xa;&#xa;  status: 301"><elem key="status-line">HTTP/1.1 301 Moved Permanently&#xd;&#xa;</elem>
+<elem key="status">301</elem>
+</script></port>
+<port protocol="tcp" portid="143"><state state="open" reason="syn-ack" reason_ttl="64"/><service name="imap" method="table" conf="3"/></port>
+<port protocol="tcp" portid="443"><state state="open" reason="syn-ack" reason_ttl="64"/><service name="https" method="table" conf="3"/><script id="http-info" output="&#xa;  status-line: HTTP/1.1 302 Moved Temporarily&#xd;&#xa;&#xa;  status: 302"><elem key="status-line">HTTP/1.1 302 Moved Temporarily&#xd;&#xa;</elem>
+<elem key="status">302</elem>
+</script></port>
+<port protocol="tcp" portid="587"><state state="open" reason="syn-ack" reason_ttl="64"/><service name="submission" method="table" conf="3"/></port>
+<port protocol="tcp" portid="993"><state state="open" reason="syn-ack" reason_ttl="64"/><service name="imaps" method="table" conf="3"/></port>
+</ports>
+<times srtt="16" rttvar="3" to="50000"/>
+</host>
+<runstats><finished time="1738783637" timestr="Wed Feb  5 20:27:17 2025" summary="Nmap done at Wed Feb  5 20:27:17 2025; 256 IP addresses (6 hosts up) scanned in 4.98 seconds" elapsed="4.98" exit="success"/><hosts up="6" down="250" total="256"/>
+</runstats>
+</nmaprun>
