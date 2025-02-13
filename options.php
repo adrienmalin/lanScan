@@ -45,14 +45,6 @@ Exemples: <?= $_SERVER['REMOTE_ADDR']; ?>/24 <?= $_SERVER['SERVER_NAME']; ?> 10.
           pattern="[a-zA-Z0-9._\/ \-]+" list="targetList" title="Les cibles peuvent être spécifiées par des noms d'hôtes, des adresses IP, des adresses de réseaux, etc.
 Exemples: <?= $_SERVER['REMOTE_ADDR']; ?>/24 <?= $_SERVER['SERVER_NAME']; ?> 10.0-255.0-255.1-254" />
       </div>
-      <div class="ui fluid popup">
-        <div class="header">Spécification des cibles</div>
-        <p>Le cas le plus simple est de spécifier une adresse IP cible ou un nom d'hôte à scanner.</p>
-        <p>Si vous désirez scanner un réseau entier d'hôtes consécutifs, Nmap supporte l'adressage du style CIDR. Vous pouvez ajouter / &lt;numbits&gt; à une adresse IP ou à un nom d'hôte de référence et Nmap scannera toutes les adresses IP dont les &lt;numbits&gt; bits de poids fort sont les mêmes que la cible de référence. Par exemple, 192.168.10.0/24 scannerait les 256 hôtes entre 192.168.10.0 (en binaire: 11000000 10101000 00001010 00000000) et 192.168.10.255 (en binaire:11000000 10101000 00001010 11111111) inclusivement. 192.168.10.40/24 ferait donc aussi la même chose. Étant donné que l'hôte scanme.nmap.org est à l'adresse IP 205.217.153.62, scanme.nmap.org/16 scannerait les 65 536 adresses IP entre 205.217.0.0 et 205.217.255.255. La plus petite valeur autorisée est /1 qui scanne la moitié d'Internet. La plus grande valeur autorisée est 32, ainsi Nmap ne scanne que la cible de référence car tous les bits de l'adresse sont fixés.</p>
-        <p>La notation CIDR est concise mais pas toujours des plus pratiques. Par exemple, vous voudriez scanner 192.168.0.0/16 mais éviter toutes les adresses se terminant par .0 ou .255 car se sont souvent des adresses de diffusion (broadcast). Nmap permet de le faire grâce à l'adressage par intervalles. Plutôt que de spécifier une adresse IP normale, vous pouvez spécifier pour chaque octet de l'IP une liste d'intervalles séparés par des virgules. Par exemple, 192.168.0-255.1-254 évitera toutes les adresses se terminant par .0 ou .255. Les intervalles ne sont pas limités aux octets finals: 0-255.0-255.13.37 exécutera un scan de toutes les adresses IP se terminant par 137.37. Ce genre de spécifications peut s'avérer utile pour des statistiques sur Internet ou pour les chercheurs.</p>
-        <p>Les adresses IPv6 ne peuvent être spécifiées que par une adresse IPv6 pleinement qualifiée ou un nom d'hôte. L'adressage CIDR ou par intervalles n'est pas géré avec IPv6 car les adresses ne sont que rarement utiles.</p>
-        <p>Nmap accepte les spécifications de plusieurs hôtes à la ligne de commande, sans qu'elles soient nécessairement de même type. La commande nmap scanme.nmap.org 192.168.0.0/8 10.0.0,1,3-7.0-255 fait donc ce à quoi vous vous attendez.</p>
-      </div>
 
       <div class="ui styled fluid accordion inverted field">
         <div class="title"><i class="icon dropdown"></i>Spécification des cibles</div>
@@ -82,7 +74,7 @@ Exemples: <?= $_SERVER['REMOTE_ADDR']; ?>/24 <?= $_SERVER['SERVER_NAME']; ?> 10.
             <label for="PSInput" title="-PS">TCP SYN</label>
             <input id="PSInput" name="-PS" type="text" placeholder="Ports" list="servicesList"
               pattern="([0-9\-]+|[a-z\-]+)(,[0-9\-]+|,[a-z\-]+)*"
-              title="Liste de ports ex: 22,23,25,80,200-1024,60000-">
+              title="Liste de ports ex: 22,23,25,80,200-1024,60000-" />
           </div>
 
           <div class="inverted field">
@@ -188,74 +180,74 @@ Exemples: <?= $_SERVER['REMOTE_ADDR']; ?>/24 <?= $_SERVER['SERVER_NAME']; ?> 10.
                 <label for="sACheckbox" title="-sA">TCP ACK</label>
               </div>
             </div>
+          </div>
 
-            <div class="inverted fields">
-              <div class="inverted field">
-                <div class="ui toggle inverted checkbox">
-                  <input id="sWCheckbox" name="-sW" type="checkbox" />
-                  <label for="sWCheckbox" title="-sW">Fenêtre TCP</label>
-                </div>
-              </div>
-              <div class="inverted field">
-                <div class="ui toggle inverted checkbox">
-                  <input id="sMCheckbox" name="-sM" type="checkbox" />
-                  <label for="sMCheckbox" title="-sM">Maimon</label>
-                </div>
-              </div>
-              <div class="inverted field">
-                <div class="ui toggle inverted checkbox">
-                  <input id="sNCheckbox" name="-sN" type="checkbox" />
-                  <label for="sNCheckbox" title="-sN">TCP Null</label>
-                </div>
-              </div>
-            </div>
-
-            <div class="inverted fields">
-              <div class="inverted field">
-                <div class="ui toggle inverted checkbox">
-                  <input id="sFCheckbox" name="-sF" type="checkbox" />
-                  <label for="sFCheckbox" title="-sF">TCP FIN</label>
-                </div>
-              </div>
-              <div class="inverted field">
-                <div class="ui toggle inverted checkbox">
-                  <input id="sXCheckbox" name="-sX" type="checkbox" />
-                  <label for="sXCheckbox" title="-sX">Sapin de Noël</label>
-                </div>
-              </div>
-              <div class="inverted field">
-                <div class="ui toggle inverted checkbox">
-                  <input id="sUCheckbox" name="-sU" type="checkbox" />
-                  <label for="sUCheckbox" title="-sU">UDP</label>
-                </div>
-              </div>
-            </div>
-
+          <div class="inverted fields">
             <div class="inverted field">
-              <label for="scanflagsInput" title="--scanflags">Scan TCP personnalisé</label>
-              <input id="scanflagsInput" name="--scanflags" type="text" placeholder="Drapeaux TCP" list="flagsList"
-                pattern="(URG|ACK|PSH|RST|SYN|FIN|,)+|[1-9]?[0-9]|[1-2][0-9][0-9]"
-                title="Mélanger simplement les drapeaux URG, ACK, PSH, RST, SYN et FIN.">
+              <div class="ui toggle inverted checkbox">
+                <input id="sWCheckbox" name="-sW" type="checkbox" />
+                <label for="sWCheckbox" title="-sW">Fenêtre TCP</label>
+              </div>
             </div>
-
             <div class="inverted field">
-              <label for="sIInput" title="-sI">Hôte zombie</label>
-              <input id="sIInput" name="-p" type="text" placeholder="zombie host[:probeport]"
-                pattern="[a-zA-Z0-9._\-]+(:[0-9]+)?" title="zombie host[:probeport]">
+              <div class="ui toggle inverted checkbox">
+                <input id="sMCheckbox" name="-sM" type="checkbox" />
+                <label for="sMCheckbox" title="-sM">Maimon</label>
+              </div>
             </div>
-
             <div class="inverted field">
-              <label for="bInput" title="-b">Rebond FTP</label>
-              <input id="bInput" name="-p" type="text" placeholder="[<username>[:<password>]@]<server>[:<port>]"
-                pattern="([a-zA-Z0-9._\-]+(:.+)?@)?[a-zA-Z0-9._\-]+(:[0-9]+)?"
-                title="[<username>[:<password>]@]<server>[:<port>]">
+              <div class="ui toggle inverted checkbox">
+                <input id="sNCheckbox" name="-sN" type="checkbox" />
+                <label for="sNCheckbox" title="-sN">TCP Null</label>
+              </div>
             </div>
+          </div>
 
+          <div class="inverted fields">
+            <div class="inverted field">
+              <div class="ui toggle inverted checkbox">
+                <input id="sFCheckbox" name="-sF" type="checkbox" />
+                <label for="sFCheckbox" title="-sF">TCP FIN</label>
+              </div>
+            </div>
+            <div class="inverted field">
+              <div class="ui toggle inverted checkbox">
+                <input id="sXCheckbox" name="-sX" type="checkbox" />
+                <label for="sXCheckbox" title="-sX">Sapin de Noël</label>
+              </div>
+            </div>
             <div class="inverted field">
               <div class="ui toggle inverted checkbox">
                 <input id="sUCheckbox" name="-sU" type="checkbox" />
-                <label for="sUCheckbox" title="-sO">Scan des protocoles supportés par la couche IP</label>
+                <label for="sUCheckbox" title="-sU">UDP</label>
               </div>
+            </div>
+          </div>
+
+          <div class="inverted field">
+            <label for="scanflagsInput" title="--scanflags">Scan TCP personnalisé</label>
+            <input id="scanflagsInput" name="--scanflags" type="text" placeholder="Drapeaux TCP" list="flagsList"
+              pattern="(URG|ACK|PSH|RST|SYN|FIN|,)+|[1-9]?[0-9]|[1-2][0-9][0-9]"
+              title="Mélanger simplement les drapeaux URG, ACK, PSH, RST, SYN et FIN.">
+          </div>
+
+          <div class="inverted field">
+            <label for="sIInput" title="-sI">Hôte zombie</label>
+            <input id="sIInput" name="-p" type="text" placeholder="zombie host[:probeport]"
+              pattern="[a-zA-Z0-9._\-]+(:[0-9]+)?" title="zombie host[:probeport]">
+          </div>
+
+          <div class="inverted field">
+            <label for="bInput" title="-b">Rebond FTP</label>
+            <input id="bInput" name="-p" type="text" placeholder="[<username>[:<password>]@]<server>[:<port>]"
+              pattern="([a-zA-Z0-9._\-]+(:.+)?@)?[a-zA-Z0-9._\-]+(:[0-9]+)?"
+              title="[<username>[:<password>]@]<server>[:<port>]">
+          </div>
+
+          <div class="inverted field">
+            <div class="ui toggle inverted checkbox">
+              <input id="sUCheckbox" name="-sU" type="checkbox" />
+              <label for="sUCheckbox" title="-sO">Scan des protocoles supportés par la couche IP</label>
             </div>
           </div>
         </div>
@@ -596,7 +588,10 @@ Exemples: <?= $_SERVER['REMOTE_ADDR']; ?>/24 <?= $_SERVER['SERVER_NAME']; ?> 10.
             </div>
             <div class="inverted field">
               <label for="SInput" title="-S">Usurpation d'adresse MAC</label>
-              <input id="SInput" name="-S" type="text" pattern="[0-9a-fA-F]{2}[:\-][0-9a-fA-F]{2}[:\-][0-9a-fA-F]{2}[:\-][0-9a-fA-F]{2}[:\-][0-9a-fA-F]{2}[:\-][0-9a-fA-F]{2}" title="Adresse MAC, préfix ou nom de constructeur" placeholder=" Adresse MAC, préfix ou nom de constructeur">
+              <input id="SInput" name="-S" type="text"
+                pattern="[0-9a-fA-F]{2}[:\-][0-9a-fA-F]{2}[:\-][0-9a-fA-F]{2}[:\-][0-9a-fA-F]{2}[:\-][0-9a-fA-F]{2}[:\-][0-9a-fA-F]{2}"
+                title="Adresse MAC, préfix ou nom de constructeur"
+                placeholder=" Adresse MAC, préfix ou nom de constructeur">
             </div>
           </div>
 
@@ -613,14 +608,16 @@ Exemples: <?= $_SERVER['REMOTE_ADDR']; ?>/24 <?= $_SERVER['SERVER_NAME']; ?> 10.
 
           <div class="inverted field">
             <label for="ipOptionsInput" title="--ip-options">Envoyer des paquets avec les options IP suivantes</label>
-            <input id="ipOptionsInput" name="--ip-options" type="text" pattern='(R|T|U|L [0-9a-zA-Z\-.: ]+|S [0-9a-zA-Z\-.: ]+|\x[0-9a-fA-F]{1,2}(\*[0-9]+)?|\[0-2]?[0-9]{1,2}(\*[0-9]+)?)'
+            <input id="ipOptionsInput" name="--ip-options" type="text"
+              pattern='(R|T|U|L [0-9a-zA-Z\-.: ]+|S [0-9a-zA-Z\-.: ]+|\x[0-9a-fA-F]{1,2}(\*[0-9]+)?|\[0-2]?[0-9]{1,2}(\*[0-9]+)?)'
               placeholder="S|R [route]|L [route]|T|U ... >;" title="S|R [route]|L [route]|T|U ... >;">
           </div>
 
           <div class="inverted field">
             <div class="ui toggle inverted checkbox">
               <input id="randomizeHostsInput" name="--randomize-hosts" type="checkbox">
-              <label for="randomizeHostsInput" title="--randomize-hosts">Scanner les cibles dans un ordre aléatoire</label>
+              <label for="randomizeHostsInput" title="--randomize-hosts">Scanner les cibles dans un ordre
+                aléatoire</label>
             </div>
           </div>
         </div>
@@ -646,13 +643,15 @@ Exemples: <?= $_SERVER['REMOTE_ADDR']; ?>/24 <?= $_SERVER['SERVER_NAME']; ?> 10.
             <div class="inverted field">
               <div class="ui toggle inverted checkbox">
                 <input id="sendEthInput" name="--send-eth" type="checkbox">
-                <label for="sendEthInput" title="--send-eth">Envoie des paquets en utilisant des trames Ethernet brutes</label>
+                <label for="sendEthInput" title="--send-eth">Envoie des paquets en utilisant des trames Ethernet
+                  brutes</label>
               </div>
             </div>
             <div class="inverted field">
               <div class="ui toggle inverted checkbox">
                 <input id="sendIPInput" name="--send-ip" type="checkbox">
-                <label for="sendIPInput" title="--send-ip">Envoie des paquets en utilisant des paquets IP bruts</label>
+                <label for="sendIPInput" title="--send-ip">Envoie des paquets en utilisant des paquets IP
+                  bruts</label>
               </div>
             </div>
           </div>
@@ -771,7 +770,6 @@ Exemples: <?= $_SERVER['REMOTE_ADDR']; ?>/24 <?= $_SERVER['SERVER_NAME']; ?> 10.
         super(input, options)
       }
     }
-    $('.field').popup()
 
     $(".ui.accordion").accordion()
 
