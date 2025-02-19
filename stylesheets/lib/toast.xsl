@@ -1,13 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<xsl:stylesheet
-    xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
-    xmlns:xs="http://www.w3.org/2001/XMLSchema"
-    version="1.1">
+<xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
+    xmlns:xs="http://www.w3.org/2001/XMLSchema" version="1.1">
 
     <xsl:template match="runstats">
         <xsl:param name="init"/>
         <script>
-            <xsl:if test="$init/runstats/finished">
+            <xsl:if test="$init/runstats/finished and (finished/@timestr != $init/runstats/finished/@timestr)">
 $.toast({
     message    : 'Comparaison avec les résultats du ' + new Date("<xsl:value-of select="$init/runstats/finished/@timestr"/>").toLocaleString(),
     class      : 'info',
@@ -26,8 +24,8 @@ $.toast({
     closeIcon  : true,
     position   : 'bottom left',
 })
-            </xsl:if>
-            <xsl:if test="finished/@errormsg">
+        </xsl:if>
+        <xsl:if test="finished/@errormsg">
 $.toast({
     title      : '<xsl:value-of select="finished/@exit"/>',
     message    : `<xsl:value-of select="finished/@errormsg"/>`,
@@ -37,8 +35,8 @@ $.toast({
     closeIcon  : true,
     position   : 'bottom left',
 })
-            </xsl:if>
-        </script>
-    </xsl:template>
+    </xsl:if>
+</script>
+</xsl:template>
 
 </xsl:stylesheet>

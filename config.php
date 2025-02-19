@@ -15,7 +15,7 @@ $PRESETS           = [
     "lanScan" => [
         "-PS"          => "microsoft-ds",
         "-F"           => true,
-        "-T"           => 5,
+        "-T"           => 4,
         "--script"     => "http-info,smb-shares-size",
         "--stylesheet" => "lanTable.xsl",
     ],

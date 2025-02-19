@@ -249,11 +249,11 @@ $('.ui.dropdown').dropdown()
         </div>
       </div>
     </div>
-    <xsl:if test="service/@name='ftp' or service/@name='ssh' or service/@name='http' or service/@name='https' or service/@name='ms-wbt-server'">
+    <xsl:if test="service/@name='ftp' or service/@name='ssh' or service/@name='http' or service/@name='https' or service/@name='ms-wbt-server' or service/@name='msrpc'">
       <a class="ui {$color} button" target="_blank">
         <xsl:attribute name="href">
           <xsl:choose>
-            <xsl:when test="service/@name='ms-wbt-server'">
+            <xsl:when test="service/@name='ms-wbt-server' or service/@name='msrpc'">
               <xsl:text>rdp.php?v=</xsl:text>
               <xsl:value-of select="$hostAddress" />
               <xsl:text>&amp;p=</xsl:text>

@@ -249,7 +249,7 @@ $('.ui.dropdown').dropdown()
         <xsl:value-of select="@portid" />
       </xsl:attribute>
     </xsl:if>
-    <xsl:if test="service/@name='ms-wbt-server'">
+    <xsl:if test="service/@name='ms-wbt-server' or service/@name='msrpc'">
       <xsl:attribute name="href">
         <xsl:text>rdp.php?v=</xsl:text>
         <xsl:value-of select="$hostAddress" />
@@ -259,7 +259,7 @@ $('.ui.dropdown').dropdown()
     </xsl:if>
     <xsl:attribute name="title">
       <xsl:value-of select="@protocol" />
-:      <xsl:value-of select="@portid" />
+      <xsl:text>:</xsl:text><xsl:value-of select="@portid" />
     </xsl:attribute>
     <xsl:choose>
       <xsl:when test="service/@name='unknown'">
@@ -267,7 +267,8 @@ $('.ui.dropdown').dropdown()
           <xsl:when test="@protocol='tcp'">:</xsl:when>
           <xsl:otherwise>
             <xsl:value-of select="substring(@protocol, 1, 1)" />
-:</xsl:otherwise>
+            <xsl:text>:</xsl:text>
+          </xsl:otherwise>
         </xsl:choose>
         <xsl:value-of select="@portid" />
       </xsl:when>

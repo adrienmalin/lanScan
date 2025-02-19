@@ -112,7 +112,7 @@ if ($preset && isset($PRESETS[$preset])) {
     ], false);
 }
 
-$inputs['--stylesheet'] = "$BASEDIR/$STYLESHEETSDIR/{$inputs['--stylesheet']}?";
+$inputs['--stylesheet'] = "$STYLESHEETSDIR/{$inputs['--stylesheet']}?";
 if ($name) $inputs['--stylesheet'] .= "name=$name";
 
 $options = "";
