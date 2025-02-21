@@ -92,7 +92,7 @@ scanForm.onsubmit = function(event) {
       showIcon : 'satellite dish',
       displayTime: 0,
       closeIcon : true,
-      position : 'bottom right',
+      position : 'bottom left',
     })
   }
 }
@@ -106,7 +106,7 @@ refreshLink.onclick = function(event) {
         showIcon   : 'satellite dish',
         displayTime: 0,
         closeIcon  : true,
-        position   : 'bottom right',
+        position   : 'bottom left',
     })
 }
     </xsl:if>
